@@ -1,5 +1,5 @@
-import { component$ } from '@builder.io/qwik';
-import styles from './hero.module.css';
+import { component$ } from "@builder.io/qwik";
+import styles from "./hero.module.css";
 
 export default component$(() => {
   return (
@@ -13,7 +13,7 @@ export default component$(() => {
             gravity: 0,
             decay: 0.95,
             startVelocity: 30,
-            colors: ['006ce9', 'ac7ff4', '18b6f6', '713fc2', 'ffffff'],
+            colors: ["006ce9", "ac7ff4", "18b6f6", "713fc2", "ffffff"],
             origin: {
               x: 0.5,
               y: 0.245,
@@ -25,10 +25,11 @@ export default component$(() => {
               if ((globalThis as any).confetti) {
                 return resolve((globalThis as any).confetti as any);
               }
-              const script = document.createElement('script');
+              const script = document.createElement("script");
               script.src =
-                'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
-              script.onload = () => resolve((globalThis as any).confetti as any);
+                "https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js";
+              script.onload = () =>
+                resolve((globalThis as any).confetti as any);
               script.onerror = reject;
               document.head.appendChild(script);
               script.remove();

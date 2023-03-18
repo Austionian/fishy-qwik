@@ -17,9 +17,14 @@
 }
 
 body {
-  background: linear-gradient(90deg, rgba(24, 182, 246, 0.3) 0%, rgba(172, 127, 244, 0.3) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(24, 182, 246, 0.3) 0%,
+    rgba(172, 127, 244, 0.3) 100%
+  );
   /* background-color: #e1e1e1; */
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    sans-serif;
   font-weight: 200;
   padding: 60px 0px;
 }
@@ -56,7 +61,7 @@ h2 {
   color: var(--qwik-dark-purple);
 }
 
-input[type='text'],
+input[type="text"],
 button {
   background-color: transparent;
   color: white;
@@ -118,7 +123,11 @@ ul {
   width: 70vw;
   max-width: 1200px;
   margin: 0 auto;
-  background: linear-gradient(90deg, rgba(24, 182, 246, 0.6) 0%, rgba(172, 127, 244, 0.6) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(24, 182, 246, 0.6) 0%,
+    rgba(172, 127, 244, 0.6) 100%
+  );
   overflow: hidden;
   border-radius: 6px;
 }
@@ -145,7 +154,7 @@ ul {
 .icon:before {
   width: 18px;
   height: 18px;
-  content: '';
+  content: "";
   display: inline-block;
   margin-right: 5px;
   position: relative;
