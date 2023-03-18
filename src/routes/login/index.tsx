@@ -1,7 +1,7 @@
 import { component$, Resource, useResource$ } from "@builder.io/qwik";
 
 interface Fish {
-  name: String;
+  name: string;
 }
 
 export default component$(() => {
