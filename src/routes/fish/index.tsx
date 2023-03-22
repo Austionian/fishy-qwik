@@ -25,7 +25,7 @@ export default component$(() => {
       },
       signal: abortController.signal,
     });
-    let data = await res.json();
+    const data = await res.json();
     return data.map((fish: Fish) => ({
       id: fish.id,
       name: fish.name,

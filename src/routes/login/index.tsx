@@ -26,8 +26,8 @@ export default component$(() => {
           onResolved={(data) => {
             return (
               <ul>
-                {data.map((fish) => (
-                  <li>{fish.name}</li>
+                {data.map((fish, i) => (
+                  <li key={i}>{fish.name}</li>
                 ))}
               </ul>
             );
