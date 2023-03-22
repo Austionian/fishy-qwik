@@ -41,5 +41,8 @@
     "vite": "4.1.4",
     "vite-tsconfig-paths": "3.5.0",
     "wrangler": "latest"
+  },
+  "dependencies": {
+    "zod": "^3.21.4"
   }
 }

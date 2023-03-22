@@ -6,8 +6,8 @@ export default component$(() => {
   return (
     <header class={styles.header}>
       <div class={styles.logo}>
-        <a href="/" title="qwik">
-          <QwikLogo />
+        <a class="font-bold text-white text-3xl" href="/" title="Fish App">
+          Gigiigoo App
         </a>
       </div>
       <ul>

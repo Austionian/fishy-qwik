@@ -1,11 +1,6 @@
 .header {
   display: flex;
   align-items: center;
-  padding: 20px 70px 0;
-}
-
-.header .logo a {
-  display: inline-block;
 }
 
 .header ul {

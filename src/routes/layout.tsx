@@ -1,19 +1,12 @@
 import { component$, Slot } from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
 
 import Header from "~/components/starter/header/header";
 import Footer from "~/components/starter/footer/footer";
 
-export const useServerTimeLoader = routeLoader$(() => {
-  return {
-    date: new Date().toISOString(),
-  };
-});
-
 export default component$(() => {
   return (
-    <div class="page">
-      <main>
+    <div class="fixed w-full h-full bg-gradient-to-r from-cyan-700 to-purple-700">
+      <main class="w-full md: max-w-xl m-auto">
         <Header />
         <Slot />
       </main>
