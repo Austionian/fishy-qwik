@@ -11,7 +11,7 @@ import {
   Form,
   routeAction$,
 } from "@builder.io/qwik-city";
-import Fish from "~/types/Fish";
+import type Fish from "~/types/Fish";
 
 // export const onPost: RequestHandler<FishForm> = async ({ request }) => {
 //   const formData = await request.formData();
@@ -41,7 +41,7 @@ import Fish from "~/types/Fish";
 //   }
 // }
 //
-const submitFishForm = routeAction$(
+export const useFishFormAction = routeAction$(
   (fish) => {
     const name = fish.name;
     return {
@@ -78,7 +78,7 @@ export default component$(() => {
 
   const loc = useLocation();
   const title = useSignal("");
-  const action = submitFishForm();
+  const action = useFishFormAction();
   return (
     <Form action={action}>
       <div class="m-5">
@@ -86,7 +86,7 @@ export default component$(() => {
           value={fishResource}
           onPending={() => <div>Loading...</div>}
           onResolved={(data) => {
-            let fish = data.filter((fish) => fish.id == loc.params.fishId);
+            const fish = data.filter((fish) => fish.id == loc.params.fishId);
             return (
               <>
                 <input

@@ -4,7 +4,7 @@ import {
   useResource$,
   useSignal,
 } from "@builder.io/qwik";
-import Fish from "~/types/Fish";
+import type Fish from "~/types/Fish";
 
 export default component$(() => {
   const filter = useSignal("");

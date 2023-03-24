@@ -1,6 +1,6 @@
 import { component$, Resource, useResource$ } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
-import Fish from "~/types/Fish";
+import type Fish from "~/types/Fish";
 
 export default component$(() => {
   const fishResource = useResource$<Fish[]>(async ({ cleanup }) => {
@@ -31,7 +31,7 @@ export default component$(() => {
         value={fishResource}
         onPending={() => <div>Loading...</div>}
         onResolved={(data) => {
-          let fish = data.filter((fish) => fish.id == loc.params.fishId);
+          const fish = data.filter((fish) => fish.id == loc.params.fishId);
           return (
             <>
               <h1 class="text-white my-5 font-bold text-3xl">
