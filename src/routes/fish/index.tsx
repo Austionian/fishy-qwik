@@ -4,15 +4,7 @@ import {
   useResource$,
   useSignal,
 } from "@builder.io/qwik";
-
-export interface Fish {
-  id: string;
-  name: string;
-  anishinaabe_name: string;
-  fish_data: {
-    fish_image: string;
-  };
-}
+import Fish from "~/types/Fish";
 
 export default component$(() => {
   const filter = useSignal("");
