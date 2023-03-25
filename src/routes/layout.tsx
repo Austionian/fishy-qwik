@@ -5,7 +5,7 @@ import Footer from "~/components/starter/footer/footer";
 
 export default component$(() => {
   return (
-    <div class="fixed w-full h-full bg-gradient-to-r from-cyan-700 to-purple-700">
+    <div class="fixed w-full h-full bg-gradient-to-r from-cyan-700 to-purple-700 overflow-auto">
       <main class="w-full md: max-w-xl m-auto">
         <Header />
         <Slot />

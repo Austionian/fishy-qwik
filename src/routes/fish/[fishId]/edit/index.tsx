@@ -42,8 +42,19 @@ import type Fish from "~/types/Fish";
 // }
 //
 export const useFishFormAction = routeAction$(
-  (fish) => {
+  async (fish) => {
     const name = fish.name;
+    const response = await fetch("https://mcwfishapp.com/update").then((res) =>
+      res.json()
+    );
+    if (!response.success) {
+      return {
+        success: false,
+        fieldErrors: {
+          name: response.message,
+        },
+      };
+    }
     return {
       success: true,
       name,
@@ -77,7 +88,7 @@ export default component$(() => {
   });
 
   const loc = useLocation();
-  const title = useSignal("");
+  const name = useSignal("");
   const action = useFishFormAction();
   return (
     <Form action={action}>
@@ -91,9 +102,8 @@ export default component$(() => {
               <>
                 <input
                   class="my-5 text-3xl"
-                  onInput$={(e) => (title.value = (e.target as any).value)}
                   placeholder={fish[0].anishinaabe_name}
-                  value={title.value}
+                  bind:value={name}
                   name="name"
                 />
                 {action.value?.fieldErrors?.name && (

@@ -22,6 +22,7 @@ export default component$(() => {
       id: fish.id,
       name: fish.name,
       anishinaabe_name: fish.anishinaabe_name,
+      lake: fish.lake,
       fish_data: {
         fish_image: fish.fish_data.fish_image,
       },
@@ -30,8 +31,7 @@ export default component$(() => {
   });
 
   return (
-    <div>
-      <h1 class="text-black m-2 font-bold">Hello</h1>
+    <div class="mt-5">
       <input
         class="p-2 m-2 rounded"
         placeholder="Search"
@@ -57,9 +57,19 @@ export default component$(() => {
                   )
                   .map((fish) => (
                     <>
-                      <li>
-                        <a href={"/fish/" + fish.id + "/"}>{fish.name}</a> -{" "}
-                        {fish.anishinaabe_name} - {fish.fish_data.fish_image}
+                      <li class="border-solid border-2 border-sky-500 p-5 my-5">
+                        <img
+                          src={`/images/${fish.fish_data.fish_image}`}
+                          alt={fish.name}
+                          class="w-48"
+                        />
+                        <a
+                          class="text-white underline"
+                          href={"/fish/" + fish.id + "/"}
+                        >
+                          {fish.name}
+                        </a>{" "}
+                        - {fish.anishinaabe_name} - {fish.lake}
                       </li>
                     </>
                   ))}
