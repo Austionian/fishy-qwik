@@ -66,7 +66,7 @@ export const useFishFormAction = routeAction$(
 );
 
 export default component$(() => {
-  const fishResource = useResource$<Fish[]>(async ({ track, cleanup }) => {
+  const fishResource = useResource$<Fish[]>(async ({ cleanup }) => {
     const abortController = new AbortController();
     cleanup(() => abortController.abort("cleanup"));
     const res = await fetch("https://mcwfishapp.com/fishs/", {
