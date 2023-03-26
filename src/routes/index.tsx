@@ -1,117 +1,96 @@
-import { component$ } from "@builder.io/qwik";
+import {
+  component$,
+  Resource,
+  useResource$,
+  useSignal,
+} from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-
-import Counter from "~/components/starter/counter/counter";
-import Hero from "~/components/starter/hero/hero";
-import Infobox from "~/components/starter/infobox/infobox";
-import Starter from "~/components/starter/next-steps/next-steps";
+import type Fish from "~/types/Fish";
 
 export default component$(() => {
+  const filter = useSignal("");
+
+  const fishResource = useResource$<Fish[]>(async ({ cleanup }) => {
+    const abortController = new AbortController();
+    cleanup(() => abortController.abort("cleanup"));
+    const res = await fetch("https://mcwfishapp.com/fishs/", {
+      headers: {
+        Authorization: `Token c0934beac2979a5740b175d96aeff4ed4b057860`,
+      },
+      signal: abortController.signal,
+    });
+    const data = await res.json();
+    return data.map((fish: Fish) => ({
+      id: fish.id,
+      name: fish.name,
+      anishinaabe_name: fish.anishinaabe_name,
+      lake: fish.lake,
+      fish_data: {
+        fish_image: fish.fish_data.fish_image.replace(".png", ".webp"),
+      },
+    }));
+    // return res.json(); This would serialize all the data from the response in the html
+  });
+
   return (
-    <>
-      <Hero />
-
-      <div class="section bright">
-        <div class="container center">
-          <Starter />
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="container center">
-          <h3>
-            You can <b>count</b> on me
-          </h3>
-          <Counter />
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="container topics">
-          <Infobox>
-            <div q:slot="title" class="icon icon-cli">
-              CLI Commands
-            </div>
-            <>
-              <p>
-                <code>npm run dev</code>
-                <br />
-                Starts the development server and watches for changes
-              </p>
-              <p>
-                <code>npm run preview</code>
-                <br />
-                Creates production build and starts a server to preview it
-              </p>
-              <p>
-                <code>npm run build</code>
-                <br />
-                Creates production build
-              </p>
-              <p>
-                <code>npm run qwik add</code>
-                <br />
-                Runs the qwik CLI to add integrations
-              </p>
-            </>
-          </Infobox>
-
-          <div>
-            <Infobox>
-              <div q:slot="title" class="icon icon-apps">
-                Example Apps
-              </div>
-              <p>
-                Have a look at the <a href="/demo/flower">Flower App</a> or the{" "}
-                <a href="/demo/todolist">Todo App</a>.
-              </p>
-            </Infobox>
-
-            <Infobox>
-              <div q:slot="title" class="icon icon-community">
-                Community
-              </div>
+    <div class="mt-5">
+      <input
+        class="p-2 m-2 rounded"
+        placeholder="Search"
+        onInput$={(event) => {
+          filter.value = (event.target as HTMLInputElement).value;
+        }}
+      />
+      <ul>
+        <Resource
+          value={fishResource}
+          onPending={() => <div>Loading...</div>}
+          onResolved={(data) => {
+            return (
               <ul>
-                <li>
-                  <span>Questions or just want to say hi? </span>
-                  <a href="https://qwik.builder.io/chat" target="_blank">
-                    Chat on discord!
-                  </a>
-                </li>
-                <li>
-                  <span>Follow </span>
-                  <a href="https://twitter.com/QwikDev" target="_blank">
-                    @QwikDev
-                  </a>
-                  <span> on Twitter</span>
-                </li>
-                <li>
-                  <span>Open issues and contribute on </span>
-                  <a href="https://github.com/BuilderIO/qwik" target="_blank">
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <span>Watch </span>
-                  <a href="https://qwik.builder.io/media/" target="_blank">
-                    Presentations, Podcasts, Videos, etc.
-                  </a>
-                </li>
+                {data
+                  .filter(
+                    (c) =>
+                      c.name.toLowerCase().indexOf(filter.value.toLowerCase()) >
+                        -1 ||
+                      c.anishinaabe_name
+                        .toLowerCase()
+                        .indexOf(filter.value.toLowerCase()) > -1
+                  )
+                  .map((fish) => (
+                    <>
+                      <li class="border-solid border-2 border-sky-500 p-5 my-5">
+                        <img
+                          src={`/images/${fish.fish_data.fish_image}`}
+                          alt={fish.name}
+                          class="w-48"
+                        />
+                        <a
+                          class="text-white underline"
+                          href={"/fish/" + fish.id + "/"}
+                        >
+                          {fish.name}
+                        </a>{" "}
+                        - {fish.anishinaabe_name} - {fish.lake}
+                      </li>
+                    </>
+                  ))}
               </ul>
-            </Infobox>
-          </div>
-        </div>
-      </div>
-    </>
+            );
+          }}
+        />
+      </ul>
+    </div>
   );
 });
 
 export const head: DocumentHead = {
-  title: "Welcome to Qwik",
+  title: "Gigiigoo App",
   meta: [
     {
       name: "description",
-      content: "Qwik site description",
+      content:
+        "Learn healthy, personalized fish portions and nutritional contents",
     },
   ],
 };

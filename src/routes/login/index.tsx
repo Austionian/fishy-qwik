@@ -30,14 +30,38 @@ export default component$(() => {
   const action = useSignUpFormAction();
 
   return (
-    <Form action={action}>
-      <label>email</label>
-      <br />
-      <input type="text" name="email" placeholder="email" />
-      {!action.value?.success && <div>{action.value?.fieldErrors?.email}</div>}
-      <br />
-      <br />
-      <button type="submit">Submit</button>
-    </Form>
+    <div class="mt-36 max-w-sm m-auto">
+      <div class="py-7">
+        <h1 class="text-5xl text-white font-bold">Boozhoo!</h1>
+      </div>
+      <div class="text-left">
+        <p class="text-white">
+          This app calculates your safe consumption levels of fish that are
+          caught in the 1836 Treaty territories monitored by the Chippewa-Ottawa
+          Resource Authority!
+        </p>
+      </div>
+      <div class="mt-72">
+        <Form action={action}>
+          <div class="text-left mb-7">
+            <label class="text-white font-bold text-xs">Email Address</label>
+            <br />
+            <input type="text" name="email" class="min-w-full p-3 rounded" />
+          </div>
+          {!action.value?.success && (
+            <div>{action.value?.fieldErrors?.email}</div>
+          )}
+          <div class="mb-7">
+            <button
+              type="submit"
+              class="bg-teal-600 rounded p-3 min-w-full text-white font-bold"
+            >
+              SIGN UP
+            </button>
+          </div>
+          <div class="text-teal-600 font-bold">CONTINUE AS GUEST</div>
+        </Form>
+      </div>
+    </div>
   );
 });
