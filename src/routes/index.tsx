@@ -40,6 +40,7 @@ export default component$(() => {
         onInput$={(event) => {
           filter.value = (event.target as HTMLInputElement).value;
         }}
+        autoFocus
       />
       <ul>
         <Resource
