@@ -8,6 +8,7 @@ import type Fish from "~/types/Fish";
 
 export default component$(() => {
   const filter = useSignal("");
+
   const fishResource = useResource$<Fish[]>(async ({ cleanup }) => {
     const abortController = new AbortController();
     cleanup(() => abortController.abort("cleanup"));
@@ -24,7 +25,7 @@ export default component$(() => {
       anishinaabe_name: fish.anishinaabe_name,
       lake: fish.lake,
       fish_data: {
-        fish_image: fish.fish_data.fish_image,
+        fish_image: fish.fish_data.fish_image.replace(".png", ".webp"),
       },
     }));
     // return res.json(); This would serialize all the data from the response in the html

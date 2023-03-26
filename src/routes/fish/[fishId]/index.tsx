@@ -18,7 +18,7 @@ export default component$(() => {
       name: fish.name,
       anishinaabe_name: fish.anishinaabe_name,
       fish_data: {
-        fish_image: fish.fish_data.fish_image,
+        fish_image: fish.fish_data.fish_image.replace(".png", ".webp"),
       },
     }));
     // return res.json(); This would serialize all the data from the response in the html

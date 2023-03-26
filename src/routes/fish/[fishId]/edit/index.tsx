@@ -66,7 +66,7 @@ export const useFishFormAction = routeAction$(
 );
 
 export default component$(() => {
-  const fishResource = useResource$<Fish[]>(async ({ cleanup }) => {
+  const fishResource = useResource$<Fish[]>(async ({ track, cleanup }) => {
     const abortController = new AbortController();
     cleanup(() => abortController.abort("cleanup"));
     const res = await fetch("https://mcwfishapp.com/fishs/", {
@@ -81,7 +81,7 @@ export default component$(() => {
       name: fish.name,
       anishinaabe_name: fish.anishinaabe_name,
       fish_data: {
-        fish_image: fish.fish_data.fish_image,
+        fish_image: fish.fish_data.fish_image.replace(".png", ".webp"),
       },
     }));
     // return res.json(); This would serialize all the data from the response in the html
@@ -96,6 +96,7 @@ export default component$(() => {
         <Resource
           value={fishResource}
           onPending={() => <div>Loading...</div>}
+          onRejected={() => <div>Error...</div>}
           onResolved={(data) => {
             const fish = data.filter((fish) => fish.id == loc.params.fishId);
             return (
