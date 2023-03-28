@@ -6,8 +6,8 @@ interface Fish {
   name: string;
 }
 
-export const useNeonData = routeLoader$<Fish[]>(async () => {
-  const token = getAPIKey();
+export const useNeonData = routeLoader$<Fish[]>(async ({ env }) => {
+  const token = getAPIKey(env);
 
   const res = await fetch(
     "https://fishy-edge-tvp4i.ondigitalocean.app/v1/fishs",

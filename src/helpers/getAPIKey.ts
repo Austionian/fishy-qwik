@@ -1,8 +1,10 @@
-import { useServerData } from "@builder.io/qwik";
+interface EnvGetter {
+  get(key: string): string | undefined;
+}
 
-export default (): string => {
+export default (env: EnvGetter): string => {
   if (import.meta.env.PROD) {
-    return useServerData("API_KEY") || "";
+    return env.get("API_KEY") || "";
   }
   return import.meta.env.VITE_API_KEY;
 };
