@@ -4,18 +4,23 @@ import {
   useResource$,
   useSignal,
 } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import type Fish from "~/types/Fish";
+
+export const useApiKey = routeLoader$(async () => {
+  return "c0934beac2979a5740b175d96aeff4ed4b057860";
+});
 
 export default component$(() => {
   const filter = useSignal("");
+  const apiKey = useApiKey();
 
   const fishResource = useResource$<Fish[]>(async ({ cleanup }) => {
     const abortController = new AbortController();
     cleanup(() => abortController.abort("cleanup"));
     const res = await fetch("https://mcwfishapp.com/fishs/", {
       headers: {
-        Authorization: `Token c0934beac2979a5740b175d96aeff4ed4b057860`,
+        Authorization: `Token ${apiKey.value}`,
       },
       signal: abortController.signal,
     });
