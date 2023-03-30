@@ -1,4 +1,5 @@
 import { component$, Resource, useResource$ } from "@builder.io/qwik";
+import { isServer } from "@builder.io/qwik/build";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import getAPIKey from "~/helpers/getAPIKey";
 import type Fish from "~/types/Fish";
@@ -10,15 +11,18 @@ export const useApiKey = routeLoader$(async ({ env }) => {
 export default component$(() => {
   const apiKey = useApiKey();
   const fishResource = useResource$<Fish[]>(async () => {
-    const res = await fetch(
-      "https://fishy-edge-tvp4i.ondigitalocean.app/v1/fishs",
-      {
-        headers: {
-          Authorization: `Bearer ${apiKey.value}`,
-        },
-      }
-    );
-    return res.json();
+    if (isServer) {
+      const res = await fetch(
+        "https://fishy-edge-tvp4i.ondigitalocean.app/v1/fishs",
+        {
+          headers: {
+            Authorization: `Bearer ${apiKey.value}`,
+          },
+        }
+      );
+      return res.json();
+    }
+    throw new Error();
   });
 
   return (
