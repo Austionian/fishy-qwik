@@ -41,7 +41,7 @@ export default component$(() => {
           }}
           class={{
             host: true,
-            pride: loc.query.get("pride") === "true",
+            pride: loc.params.pride === "true",
           }}
         >
           {Array.from({ length: state.number }, (_, i) => (
