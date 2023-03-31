@@ -18,6 +18,9 @@ export const useSignUpFormAction = routeAction$(
     cookie.set("fish-login", "true", {
       path: "/",
     });
+    cookie.set("email", "true", {
+      path: "/",
+    });
     const redirectUrl = new URL(url).searchParams.get("redirect") || "/fish/";
     throw redirect(303, redirectUrl);
   },
@@ -26,8 +29,22 @@ export const useSignUpFormAction = routeAction$(
   })
 );
 
+export const useGuestOption = routeAction$(
+  async (_, { url, cookie, redirect }) => {
+    cookie.set("fish-login", "true", {
+      path: "/",
+    });
+    cookie.set("guest", "true", {
+      path: "/",
+    });
+    const redirectUrl = new URL(url).searchParams.get("redirect") || "/fish/";
+    throw redirect(303, redirectUrl);
+  }
+);
+
 export default component$(() => {
   const action = useSignUpFormAction();
+  const guestAction = useGuestOption();
 
   return (
     <div class="mt-36 max-w-sm m-auto">
@@ -43,15 +60,17 @@ export default component$(() => {
       </div>
       <div class="mt-72">
         <Form action={action}>
-          <div class="text-left mb-7">
+          <div class="text-left">
             <label class="text-white font-bold text-xs">Email Address</label>
             <br />
             <input type="text" name="email" class="min-w-full p-3 rounded" />
           </div>
           {!action.value?.success && (
-            <div>{action.value?.fieldErrors?.email}</div>
+            <div class="text-left text-red-400">
+              {action.value?.fieldErrors?.email}
+            </div>
           )}
-          <div class="mb-7">
+          <div class="my-7">
             <button
               type="submit"
               class="bg-teal-600 rounded p-3 min-w-full text-white font-bold"
@@ -59,7 +78,11 @@ export default component$(() => {
               SIGN UP
             </button>
           </div>
-          <div class="text-teal-600 font-bold">CONTINUE AS GUEST</div>
+        </Form>
+        <Form action={guestAction}>
+          <div class="text-teal-600 font-bold">
+            <button type="submit">CONTINUE AS GUEST</button>
+          </div>
         </Form>
       </div>
     </div>

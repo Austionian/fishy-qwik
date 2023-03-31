@@ -3,7 +3,7 @@ import { routeLoader$ } from "@builder.io/qwik-city";
 import getAPIKey from "~/helpers/getAPIKey";
 import type Fish from "~/types/Fish";
 
-const useFishApi = routeLoader$<Fish[]>(async ({ env }) => {
+export const useFishApi = routeLoader$<Fish[]>(async ({ env }) => {
   const apiKey = getAPIKey(env);
   const res = await fetch(
     "https://fishy-edge-tvp4i.ondigitalocean.app/v1/fishs",
