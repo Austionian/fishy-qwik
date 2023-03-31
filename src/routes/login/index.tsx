@@ -12,6 +12,7 @@ export const useSignUpFormAction = routeAction$(
         method: "POST",
         headers: {
           Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/x-www-form-urlencoded",
         },
         body: new URLSearchParams({
           email,
@@ -32,7 +33,7 @@ export const useSignUpFormAction = routeAction$(
     cookie.set("email", "true", {
       path: "/",
     });
-    const redirectUrl = new URL(url).searchParams.get("redirect") || "/fish/";
+    const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
     throw redirect(303, redirectUrl);
   },
   zod$({
