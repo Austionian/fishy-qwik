@@ -1,50 +1,30 @@
-import { component$, Resource, useResource$ } from "@builder.io/qwik";
-import { isServer } from "@builder.io/qwik/build";
+import { component$ } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import getAPIKey from "~/helpers/getAPIKey";
 import type Fish from "~/types/Fish";
 
-export const useApiKey = routeLoader$(async ({ env }) => {
-  return getAPIKey(env);
+export const useFishApi = routeLoader$<Fish[]>(async ({ env }) => {
+  const apiKey = getAPIKey(env);
+  const res = await fetch(
+    "https://fishy-edge-tvp4i.ondigitalocean.app/v1/fishs",
+    {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+      },
+    }
+  );
+  return res.json();
 });
 
 export default component$(() => {
-  const apiKey = useApiKey();
-  const fishResource = useResource$<Fish[]>(async () => {
-    if (isServer) {
-      const res = await fetch(
-        "https://fishy-edge-tvp4i.ondigitalocean.app/v1/fishs",
-        {
-          headers: {
-            Authorization: `Bearer ${apiKey.value}`,
-          },
-        }
-      );
-      return res.json();
-    }
-    throw new Error();
-  });
-
+  const fishData = useFishApi();
   return (
     <div>
       <h1 class="text-black">Hello</h1>
       <ul>
-        <Resource
-          value={fishResource}
-          onPending={() => <div>Loading...</div>}
-          onResolved={(data) => {
-            return (
-              <ul>
-                {data.map((fish, i) => (
-                  <li key={i}>{fish.name}</li>
-                ))}
-              </ul>
-            );
-          }}
-          onRejected={() => (
-            <div>Failed to load fish data. Please refresh your page.</div>
-          )}
-        />
+        {fishData.value.map((fish, i) => (
+          <li key={i}>{fish.name}</li>
+        ))}
       </ul>
     </div>
   );

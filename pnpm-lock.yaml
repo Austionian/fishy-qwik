@@ -1,8 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@builder.io/qwik': 0.24.0
-  '@builder.io/qwik-city': 0.7.0
+  '@builder.io/qwik': 0.100.0
+  '@builder.io/qwik-city': 0.100.0
   '@types/eslint': 8.21.2
   '@types/node': ^18.15.3
   '@types/node-fetch': latest
@@ -22,11 +22,11 @@ specifiers:
   wrangler: latest
 
 devDependencies:
-  '@builder.io/qwik': 0.24.0_undici@5.21.0
-  '@builder.io/qwik-city': 0.7.0_@builder.io+qwik@0.24.0
+  '@builder.io/qwik': 0.100.0_undici@5.21.0
+  '@builder.io/qwik-city': 0.100.0_@builder.io+qwik@0.100.0
   '@types/eslint': 8.21.2
   '@types/node': 18.15.5
-  '@types/node-fetch': 2.6.2
+  '@types/node-fetch': 2.6.3
   '@typescript-eslint/eslint-plugin': 5.55.0_342y7v4tc7ytrrysmit6jo4wri
   '@typescript-eslint/parser': 5.55.0_vgl77cfdswitgr47lm5swmv43m
   autoprefixer: 10.4.14_postcss@8.4.21
@@ -44,13 +44,13 @@ devDependencies:
 
 packages:
 
-  /@builder.io/qwik-city/0.7.0_@builder.io+qwik@0.24.0:
-    resolution: {integrity: sha512-+P/nLl8tpQVfTGkFybYlag4atUkwXQpsFE+8yAmxAH+lcxHPW3GwtYPS6QwMKkL5dlFM0VML4kKFiQYQ1r7CGw==}
+  /@builder.io/qwik-city/0.100.0_@builder.io+qwik@0.100.0:
+    resolution: {integrity: sha512-EEZ8q10vmEjOOe5qQIel+jLcuuFYOjakIIgHt5KOWnY/L0HBw9xzFDkFDcdmPJlrCmHTm3y4T1ZtqKPEFNgO9w==}
     engines: {node: '>=16.8.0 <18.0.0 || >=18.11'}
     peerDependencies:
       '@builder.io/qwik': '>=0.22.0'
     dependencies:
-      '@builder.io/qwik': 0.24.0_undici@5.21.0
+      '@builder.io/qwik': 0.100.0_undici@5.21.0
       '@mdx-js/mdx': 2.3.0
       '@types/mdx': 2.0.3
       source-map: 0.7.4
@@ -60,8 +60,8 @@ packages:
       - supports-color
     dev: true
 
-  /@builder.io/qwik/0.24.0_undici@5.21.0:
-    resolution: {integrity: sha512-IOlcV1g37MJpFovbNLgcEoEBIOkeGaAvTqi2xdM4/pR0VmGubLFBpgsdQ8kUV6rp8ON7GmAZP0tOsxOAyYRt8g==}
+  /@builder.io/qwik/0.100.0_undici@5.21.0:
+    resolution: {integrity: sha512-p2DAHZTkPFVN3fz3I6Ael6pLLdlzf89owPJVAIoQ9vt5jULnDJRf096qGc84Y+gaoqfoFWBYHYVnHOP0fnRjQg==}
     engines: {node: '>=16.8.0 <18.0.0 || >=18.11'}
     hasBin: true
     peerDependencies:
@@ -830,8 +830,8 @@ packages:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: true
 
-  /@types/node-fetch/2.6.2:
-    resolution: {integrity: sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A==}
+  /@types/node-fetch/2.6.3:
+    resolution: {integrity: sha512-ETTL1mOEdq/sxUtgtOhKjyB2Irra4cjxksvcMUR5Zr4n+PxVhsCD9WS46oPbHL3et9Zde7CNRr+WUNlcHvsX+w==}
     dependencies:
       '@types/node': 18.15.5
       form-data: 3.0.1
