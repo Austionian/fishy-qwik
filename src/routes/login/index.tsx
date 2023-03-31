@@ -1,17 +1,28 @@
 import { component$ } from "@builder.io/qwik";
 import { zod$, z, Form, routeAction$ } from "@builder.io/qwik-city";
+import getAPIKey from "~/helpers/getAPIKey";
 
 export const useSignUpFormAction = routeAction$(
-  async (signUpForm, { url, redirect, cookie }) => {
+  async (signUpForm, { env, url, redirect, cookie }) => {
     const email = signUpForm.email;
-    // const response = await fetch("https://mcwfishapp.com/update", {
-    //   body: email,
-    // }).then((res) => res.json());
-    if (email !== "austin@austin.com") {
+    const apiKey = getAPIKey(env);
+    const response = await fetch(
+      "https://fishy-edge-tvp4i.ondigitalocean.app/v1/register",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: new URLSearchParams({
+          email,
+        }),
+      }
+    );
+    if (!response.ok) {
       return {
         success: false,
         fieldErrors: {
-          email: "Unable to register new user",
+          email: `Error: ${response.status} - ${response.statusText}`,
         },
       };
     }
