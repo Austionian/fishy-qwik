@@ -50,7 +50,7 @@ export default component$(() => {
                 <img
                   src={`/images/${fish.fish_data.fish_image}`}
                   alt={fish.name}
-                  class="w-48"
+                  class="w-48 h-36"
                 />
                 <a class="text-white underline" href={"/fish/" + fish.id + "/"}>
                   {fish.name}
