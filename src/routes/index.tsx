@@ -7,7 +7,6 @@ interface Fish {
   fish_id: string;
   name: string;
   anishinaabe_name: string;
-  lake: string;
   fish_image: string;
 }
 
@@ -27,8 +26,7 @@ export const useFishData = routeLoader$<Fish[]>(async ({ env }) => {
     fish_id: fish.fish_id,
     name: fish.name,
     anishinaabe_name: fish.anishinaabe_name || "",
-    lake: fish.lake,
-    fish_image: fish.fish_image.replace(".png", ".webp"),
+    fish_image: fish.fish_image,
   }));
 });
 

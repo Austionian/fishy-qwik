@@ -37,10 +37,7 @@ export default component$(() => {
           fishData.value.name
         )}
       </h1>
-      <img
-        class="h-full"
-        src={`/images/${fishData.value.fish_image.replace(".png", ".webp")}`}
-      />
+      <img class="h-full" src={`/images/${fishData.value.fish_image}`} />
       <a href={`/fish/${fishData.value.id}/edit`}>[Edit]</a>
     </div>
   );
