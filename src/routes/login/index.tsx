@@ -49,7 +49,7 @@ export const useGuestOption = routeAction$(
     cookie.set("guest", "true", {
       path: "/",
     });
-    const redirectUrl = new URL(url).searchParams.get("redirect") || "/fish/";
+    const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
     throw redirect(303, redirectUrl);
   }
 );
