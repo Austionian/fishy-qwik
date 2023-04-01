@@ -67,10 +67,10 @@ export default component$(() => {
                   class="text-white underline font-bold"
                   href={"/fish/" + fish.fish_id + "/"}
                 >
-                  {!!fish.anishinaabe_name ? fish.anishinaabe_name : fish.name}
+                  {fish.anishinaabe_name ? fish.anishinaabe_name : fish.name}
                 </a>
                 <span class="text-sm">
-                  {!!fish.anishinaabe_name ? ` ${fish.name}` : null}
+                  {fish.anishinaabe_name ? ` ${fish.name}` : null}
                 </span>
               </li>
             </>
