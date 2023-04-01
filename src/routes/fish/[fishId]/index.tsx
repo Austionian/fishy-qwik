@@ -1,63 +1,47 @@
-import { component$, Resource, useResource$ } from "@builder.io/qwik";
-import { isServer } from "@builder.io/qwik/build";
-import { routeLoader$, useLocation } from "@builder.io/qwik-city";
-import type Fish from "~/types/Fish";
+import { component$ } from "@builder.io/qwik";
+import { routeLoader$ } from "@builder.io/qwik-city";
+import getAPIKey from "~/helpers/getAPIKey";
 
-export const useFishApi = routeLoader$(
-  async () => "c0934beac2979a5740b175d96aeff4ed4b057860"
-);
+interface Fish {
+  id: string;
+  name: string;
+  anishinaabe_name: string;
+  lake: string;
+  fish_image: string;
+}
+
+export const useFishData = routeLoader$<Fish>(async ({ env, params }) => {
+  const apiKey = getAPIKey(env);
+  const res = await fetch(
+    `https://fishy-edge-tvp4i.ondigitalocean.app/v1/fish/${params.fishId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+      },
+    }
+  );
+  return await res.json();
+});
 
 export default component$(() => {
-  const apiKey = useFishApi();
-  const fishResource = useResource$<Fish[]>(async () => {
-    if (isServer) {
-      const res = await fetch("https://mcwfishapp.com/fishs/", {
-        headers: {
-          Authorization: `Token ${apiKey.value}`,
-        },
-      });
-      const data = await res.json();
-      return data.map((fish: Fish) => ({
-        id: fish.id,
-        name: fish.name,
-        anishinaabe_name: fish.anishinaabe_name,
-        fish_data: {
-          fish_image: fish.fish_data.fish_image.replace(".png", ".webp"),
-        },
-      }));
-    }
-
-    // return res.json(); This would serialize all the data from the response in the html
-  });
-
-  const loc = useLocation();
+  const fishData = useFishData();
   return (
-    <div class="m-5">
-      <Resource
-        value={fishResource}
-        onPending={() => <div>Loading...</div>}
-        onResolved={(data) => {
-          const fish = data.filter((fish) => fish.id == loc.params.fishId);
-          return (
-            <>
-              <h1 class="text-white my-5 font-bold text-3xl">
-                {fish[0].anishinaabe_name ? (
-                  <>
-                    {fish[0].anishinaabe_name}
-                    <span class="text-black text-xs pl-2">
-                      [{fish[0].name}]
-                    </span>
-                  </>
-                ) : (
-                  fish[0].name
-                )}
-              </h1>
-              <img src={`/images/${fish[0].fish_data.fish_image}`} />
-            </>
-          );
-        }}
+    <div class="m-5 h-96">
+      <h1 class="text-white my-5 font-bold text-3xl">
+        {fishData.value.anishinaabe_name ? (
+          <>
+            {fishData.value.anishinaabe_name}
+            <span class="text-black text-xs pl-2">[{fishData.value.name}]</span>
+          </>
+        ) : (
+          fishData.value.name
+        )}
+      </h1>
+      <img
+        class="h-full"
+        src={`/images/${fishData.value.fish_image.replace(".png", ".webp")}`}
       />
-      <a href={`/fish/${loc.params.fishId}/edit`}>[Edit]</a>
+      <a href={`/fish/${fishData.value.id}/edit`}>[Edit]</a>
     </div>
   );
 });

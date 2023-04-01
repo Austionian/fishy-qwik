@@ -1,23 +1,34 @@
 import { component$, useSignal } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
-import type Fish from "~/types/Fish";
+import getAPIKey from "~/helpers/getAPIKey";
 
-export const useFishData = routeLoader$<Fish[]>(async () => {
-  const apiKey = "c0934beac2979a5740b175d96aeff4ed4b057860";
-  const res = await fetch("https://mcwfishapp.com/fishs/", {
-    headers: {
-      Authorization: `Token ${apiKey}`,
-    },
-  });
+interface Fish {
+  id: string;
+  fish_id: string;
+  name: string;
+  anishinaabe_name: string;
+  lake: string;
+  fish_image: string;
+}
+
+export const useFishData = routeLoader$<Fish[]>(async ({ env }) => {
+  const apiKey = getAPIKey(env);
+  const res = await fetch(
+    "https://fishy-edge-tvp4i.ondigitalocean.app/v1/fishs",
+    {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+      },
+    }
+  );
   const data = await res.json();
   return data.map((fish: Fish) => ({
     id: fish.id,
+    fish_id: fish.fish_id,
     name: fish.name,
-    anishinaabe_name: fish.anishinaabe_name,
+    anishinaabe_name: fish.anishinaabe_name || "",
     lake: fish.lake,
-    fish_data: {
-      fish_image: fish.fish_data.fish_image.replace(".png", ".webp"),
-    },
+    fish_image: fish.fish_image.replace(".png", ".webp"),
   }));
 });
 
@@ -48,14 +59,19 @@ export default component$(() => {
             <>
               <li class="border-solid border-2 border-sky-500 p-5 my-5">
                 <img
-                  src={`/images/${fish.fish_data.fish_image}`}
+                  src={`/images/${fish.fish_image}`}
                   alt={fish.name}
-                  class="w-48 h-36"
+                  class="min-w-48 h-36"
                 />
-                <a class="text-white underline" href={"/fish/" + fish.id + "/"}>
-                  {fish.name}
-                </a>{" "}
-                - {fish.anishinaabe_name} - {fish.lake}
+                <a
+                  class="text-white underline font-bold"
+                  href={"/fish/" + fish.fish_id + "/"}
+                >
+                  {!!fish.anishinaabe_name ? fish.anishinaabe_name : fish.name}
+                </a>
+                <span class="text-sm">
+                  {!!fish.anishinaabe_name ? ` ${fish.name}` : null}
+                </span>
               </li>
             </>
           ))}
