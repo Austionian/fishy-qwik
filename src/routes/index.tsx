@@ -1,4 +1,4 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { component$ } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import getAPIKey from "~/helpers/getAPIKey";
 
@@ -42,6 +42,7 @@ export default component$(() => {
       {fishData.value.map((fish, i) => {
         return (
           <div
+            key={i}
             class={classNames(
               i === 0 ? "rounded-tl-lg rounded-tr-lg sm:rounded-tr-none" : "",
               i === 1 ? "sm:rounded-tr-lg" : "",
