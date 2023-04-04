@@ -41,5 +41,8 @@
     "vite": "4.1.4",
     "vite-tsconfig-paths": "3.5.0",
     "wrangler": "latest"
+  },
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.3"
   }
 }

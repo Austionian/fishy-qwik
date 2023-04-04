@@ -30,50 +30,56 @@ export const useFishData = routeLoader$<Fish[]>(async ({ env }) => {
   }));
 });
 
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(" ");
+}
+
 export default component$(() => {
   const fishData = useFishData();
-  const filter = useSignal("");
 
   return (
-    <div class="mt-5">
-      <input
-        class="p-2 m-2 rounded"
-        placeholder="Search"
-        onInput$={(event) => {
-          filter.value = (event.target as HTMLInputElement).value;
-        }}
-        autoFocus
-      />
-      <ul>
-        {fishData.value
-          .filter(
-            (c) =>
-              c.name.toLowerCase().indexOf(filter.value.toLowerCase()) > -1 ||
-              c.anishinaabe_name
-                .toLowerCase()
-                .indexOf(filter.value.toLowerCase()) > -1
-          )
-          .map((fish) => (
-            <>
-              <li class="border-solid border-2 border-sky-500 p-5 my-5">
+    <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
+      {fishData.value.map((fish, i) => {
+        return (
+          <div
+            class={classNames(
+              i === 0 ? "rounded-tl-lg rounded-tr-lg sm:rounded-tr-none" : "",
+              i === 1 ? "sm:rounded-tr-lg" : "",
+              i === fishData.value.length - 2 ? "sm:rounded-bl-lg" : "",
+              i === fishData.value.length - 1
+                ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
+                : "",
+              "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
+            )}
+          >
+            <a href={"/fish/" + fish.fish_id + "/"}>
+              <div>
                 <img
                   src={`/images/${fish.fish_image}`}
                   alt={fish.name}
                   class="min-w-48 h-36"
                 />
-                <a
-                  class="text-white underline font-bold"
-                  href={"/fish/" + fish.fish_id + "/"}
-                >
+              </div>
+              <div class="mt-8">
+                <p class="font-bold underline">
                   {fish.anishinaabe_name ? fish.anishinaabe_name : fish.name}
-                </a>
+                </p>
                 <span class="text-sm">
                   {fish.anishinaabe_name ? ` ${fish.name}` : null}
                 </span>
-              </li>
-            </>
-          ))}
-      </ul>
+              </div>
+              <span
+                class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-gray-400"
+                aria-hidden="true"
+              >
+                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z" />
+                </svg>
+              </span>
+            </a>
+          </div>
+        );
+      })}
     </div>
   );
 });
