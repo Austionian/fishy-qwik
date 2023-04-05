@@ -2,7 +2,7 @@ import { component$ } from "@builder.io/qwik";
 
 export default component$(() => {
   return (
-    <div class="mt-36 max-w-sm m-auto">
+    <div class="container mx-auto sm:px-6 lg:px-8">
       <div class="py-7">
         <h1 class="text-5xl text-white font-bold">Boozhoo!</h1>
       </div>
@@ -20,14 +20,14 @@ export default component$(() => {
       </div>
       <div class="mt-7">
         <a href="https://www.1836cora.org/">
-          <button class="bg-teal-600 rounded p-3 min-w-full text-white font-bold">
+          <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             CORA
           </button>
         </a>
       </div>
       <div class="my-5">
         <a href="/">
-          <button class="bg-teal-600 rounded p-3 min-w-full text-white font-bold">
+          <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             NEXT
           </button>
         </a>

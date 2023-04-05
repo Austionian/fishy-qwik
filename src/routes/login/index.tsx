@@ -57,45 +57,69 @@ export const useGuestOption = routeAction$(
 export default component$(() => {
   const action = useSignUpFormAction();
   const guestAction = useGuestOption();
-
   return (
-    <div class="mt-36 max-w-sm m-auto">
-      <div class="py-7">
-        <h1 class="text-5xl text-white font-bold">Boozhoo!</h1>
+    <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <img
+          class="mx-auto h-12 w-auto"
+          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+          alt="Your Company"
+        />
+
+        <h1 class="my-6 text-center text-5xl text-white font-bold tracking-tight">
+          Boozhoo!
+        </h1>
+        <div class="text-left px-2">
+          <p class="text-white">
+            This app calculates your safe consumption levels of fish that are
+            caught in the 1836 Treaty territories monitored by the
+            Chippewa-Ottawa Resource Authority!
+          </p>
+        </div>
       </div>
-      <div class="text-left">
-        <p class="text-white">
-          This app calculates your safe consumption levels of fish that are
-          caught in the 1836 Treaty territories monitored by the Chippewa-Ottawa
-          Resource Authority!
-        </p>
-      </div>
-      <div class="mt-72">
-        <Form action={action}>
-          <div class="text-left">
-            <label class="text-white font-bold text-xs">Email Address</label>
-            <br />
-            <input type="text" name="email" class="min-w-full p-3 rounded" />
-          </div>
-          {!action.value?.success && (
-            <div class="text-left text-red-400">
-              {action.value?.fieldErrors?.email}
+
+      <div class="mt-14 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
+          <Form action={action} class="space-y-6">
+            <div>
+              <label
+                for="email"
+                class="text-left block text-sm font-medium leading-6 text-gray-900"
+              >
+                Email address
+              </label>
+              <div class="mt-2">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+                {!action.value?.success && (
+                  <div class="text-left text-red-400">
+                    {action.value?.fieldErrors?.email}
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-          <div class="my-7">
-            <button
-              type="submit"
-              class="bg-teal-600 rounded p-3 min-w-full text-white font-bold"
-            >
-              SIGN UP
-            </button>
-          </div>
-        </Form>
-        <Form action={guestAction}>
-          <div class="text-teal-600 font-bold">
-            <button type="submit">CONTINUE AS GUEST</button>
-          </div>
-        </Form>
+
+            <div>
+              <button
+                type="submit"
+                class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                SIGN UP
+              </button>
+            </div>
+          </Form>
+          <Form action={guestAction} class="mt-7">
+            <div class="text-indigo-500 font-bold">
+              <button type="submit">CONTINUE AS GUEST</button>
+            </div>
+          </Form>
+        </div>
       </div>
     </div>
   );
