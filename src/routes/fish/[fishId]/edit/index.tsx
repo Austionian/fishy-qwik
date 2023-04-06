@@ -80,9 +80,6 @@ export default component$(() => {
       id: fish.id,
       name: fish.name,
       anishinaabe_name: fish.anishinaabe_name,
-      fish_data: {
-        fish_image: fish.fish_data.fish_image.replace(".png", ".webp"),
-      },
     }));
     // return res.json(); This would serialize all the data from the response in the html
   });
@@ -111,7 +108,6 @@ export default component$(() => {
                   <div>{action.value.fieldErrors.name}</div>
                 )}
                 {action.value?.success && <div>Fish updated successfully!</div>}
-                <img src={`/images/${fish[0].fish_data.fish_image}`} />
               </>
             );
           }}

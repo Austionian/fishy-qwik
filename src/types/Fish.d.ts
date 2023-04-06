@@ -1,9 +1,8 @@
 export default interface Fish {
   id: string;
+  fish_id: string;
   name: string;
   anishinaabe_name: string;
   lake: string;
-  fish_data: {
-    fish_image: string;
-  };
+  fish_image: string;
 }

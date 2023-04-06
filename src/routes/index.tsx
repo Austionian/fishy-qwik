@@ -1,19 +1,12 @@
 import { component$ } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import getAPIKey from "~/helpers/getAPIKey";
-
-interface Fish {
-  id: string;
-  fish_id: string;
-  name: string;
-  anishinaabe_name: string;
-  fish_image: string;
-}
+import type Fish from "~/types/Fish";
 
 export const useFishData = routeLoader$<Fish[]>(async ({ env }) => {
   const apiKey = getAPIKey(env);
   const res = await fetch(
-    "https://fishy-edge-tvp4i.ondigitalocean.app/v1/fishs",
+    "https://fishy-edge-tvp4i.ondigitalocean.app/v1/fishs?lake=Store",
     {
       headers: {
         Authorization: `Bearer ${apiKey}`,

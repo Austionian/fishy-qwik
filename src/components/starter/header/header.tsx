@@ -16,17 +16,27 @@ export default component$(() => {
     },
     {
       title: "Lakes",
-      pathname: "/lake",
-      href: "/lake",
+      pathname: "/lake/",
+      href: "/lake/",
     },
     {
       title: "Recipes",
-      pathname: "/recipes",
-      href: "/recipes",
+      pathname: "/recipes/",
+      href: "/recipes/",
     },
   ];
   return (
-    <nav class="border-b border-indigo-300 border-opacity-25 bg-gradient-to-r from-cyan-700 to-purple-700 lg:border-none">
+    <nav
+      class="border-b border-indigo-300 border-opacity-25 bg-gradient-to-r from-cyan-700 to-purple-700 lg:border-none"
+      document:onKeyDown$={(e) => {
+        if (e.which === 27) {
+          showSearch.value = false;
+        }
+        if (e.which === 75 && e.metaKey) {
+          showSearch.value = !showSearch.value;
+        }
+      }}
+    >
       <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
         <div class="relative flex h-16 items-center justify-between lg:border-b lg:border-indigo-400 lg:border-opacity-25">
           <div class="flex items-center px-2 lg:px-0">
@@ -61,7 +71,7 @@ export default component$(() => {
               </label>
               <button
                 type="button"
-                class="block w-full rounded-md border-0 bg-white py-4 pl-10 pr-3 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600 sm:text-sm sm:leading-6 relative text-gray-400 focus-within:text-gray-600"
+                class="block w-full rounded-md border-0 bg-white py-5 sm:py-3.5 pl-10 pr-3 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600 sm:text-sm sm:leading-3 relative text-gray-400 focus-within:text-gray-600"
                 onClick$={() => (showSearch.value = !showSearch.value)}
               >
                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -77,6 +87,13 @@ export default component$(() => {
                       clip-rule="evenodd"
                     />
                   </svg>
+                </div>
+                <div class="flex justify-start sm:justify-between">
+                  <div class="hidden sm:flex">Quick search...</div>
+                  <div class="hidden sm:flex">
+                    <kbd class="font-sans">⌘</kbd>
+                    <kbd class="font-sans">K</kbd>
+                  </div>
                 </div>
               </button>
             </div>
@@ -236,7 +253,7 @@ export default component$(() => {
           </div>
         </div>
       ) : null}
-      {showSearch.value ? <Search /> : null}
+      {showSearch.value ? <Search showSearch={showSearch} /> : null}
     </nav>
   );
 });

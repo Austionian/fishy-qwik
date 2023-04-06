@@ -1,14 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import getAPIKey from "~/helpers/getAPIKey";
-
-interface Fish {
-  id: string;
-  name: string;
-  anishinaabe_name: string;
-  lake: string;
-  fish_image: string;
-}
+import type Fish from "~/types/Fish";
 
 export const useFishData = routeLoader$<Fish>(async ({ env, params }) => {
   const apiKey = getAPIKey(env);
