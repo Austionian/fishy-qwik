@@ -34,7 +34,9 @@ export default component$<Props>(({ showSearch }) => {
     (c) => c.name.toLowerCase().indexOf(search.value.toLowerCase()) > -1
   );
 
-  useVisibleTask$(() => inputRef.value?.focus()); // eslint-disable-line
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  useVisibleTask$(() => inputRef.value?.focus());
 
   useVisibleTask$(async () => {
     const res = await fetch(
