@@ -97,8 +97,8 @@ export default component$<Props>(({ showSearch }) => {
                               .toLowerCase()
                               .indexOf(search.value.toLowerCase()) > -1
                         )
-                        .map((fish) => (
-                          <a href={"/fish/" + fish.fish_id + "/"}>
+                        .map((fish, i) => (
+                          <a href={"/fish/" + fish.fish_id + "/"} key={i}>
                             <li class="group flex cursor-default select-none items-center rounded-md px-3 py-2">
                               <img
                                 src={`/images/${fish.fish_image}`}
