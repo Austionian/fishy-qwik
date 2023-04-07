@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
+import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import getAPIKey from "~/helpers/getAPIKey";
 import type Fish from "~/types/Fish";
 
@@ -413,3 +413,13 @@ export default component$(() => {
     </div>
   );
 });
+
+export const head: DocumentHead = {
+  title: "Fish Details",
+  meta: [
+    {
+      name: "description",
+      content: "Learn the nutritional details of a specific fish",
+    },
+  ],
+};
