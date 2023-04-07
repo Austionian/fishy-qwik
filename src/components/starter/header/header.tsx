@@ -3,7 +3,7 @@ import { useLocation } from "@builder.io/qwik-city";
 import Search from "../search/search";
 
 export default component$(() => {
-  const userMenu = useSignal(false);
+  const showUserMenu = useSignal(false);
   const mobileMenu = useSignal(false);
   const showSearch = useSignal(false);
   const location = useLocation();
@@ -31,6 +31,7 @@ export default component$(() => {
       document:onKeyDown$={(e) => {
         if (e.which === 27) {
           showSearch.value = false;
+          showUserMenu.value = false;
         }
         if (e.which === 75 && e.metaKey) {
           showSearch.value = !showSearch.value;
@@ -40,7 +41,7 @@ export default component$(() => {
       <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
         <div class="relative flex h-16 items-center justify-between lg:border-b lg:border-indigo-400 lg:border-opacity-25">
           <div class="flex items-center px-2 lg:px-0">
-            <div class="flex-shrink-0">
+            <div class="flex-shrink-0" tabIndex={0}>
               <a href="/">
                 <h1 class="font-bold text-white text-3xl">Gigiigoo</h1>
               </a>
@@ -58,7 +59,7 @@ export default component$(() => {
                       " text-white rounded-md py-2 px-3 text-sm font-medium"
                     }
                   >
-                    {link.title}
+                    <span tabIndex={0}>{link.title}</span>
                   </a>
                 ))}
               </div>
@@ -71,7 +72,11 @@ export default component$(() => {
               </label>
               <button
                 type="button"
-                class="block w-full rounded-md border-0 bg-white py-5 sm:py-3.5 pl-10 pr-3 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600 sm:text-sm sm:leading-3 relative text-gray-400 focus-within:text-gray-600"
+                class="block w-full rounded-md border-0 bg-white py-5 sm:py-3.5
+                    pl-10 pr-3 focus:ring-2 focus:ring-white focus:ring-offset-2 
+                    focus:ring-offset-indigo-600 sm:text-sm sm:leading-3 relative 
+                    text-gray-400 focus-within:text-gray-600 transition ease-in-out
+                    delay-50 hover:scale-105 duration-100"
                 onClick$={() => (showSearch.value = !showSearch.value)}
               >
                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -147,48 +152,43 @@ export default component$(() => {
                     id="user-menu-button"
                     aria-expanded="false"
                     aria-haspopup="true"
-                    onClick$={() => (userMenu.value = !userMenu.value)}
+                    onClick$={() => (showUserMenu.value = !showUserMenu.value)}
                   >
                     <span class="sr-only">Open user menu</span>
-                    <svg
-                      viewBox="0 0 32 32"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="white"
-                    >
-                      <title />
-                      <g
-                        data-name="user people person users man"
-                        id="user_people_person_users_man"
+                    <span class="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100">
+                      <svg
+                        class="h-full w-full text-gray-300"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
                       >
-                        <path d="M23.74,16.18a1,1,0,1,0-1.41,1.42A9,9,0,0,1,25,24c0,1.22-3.51,3-9,3s-9-1.78-9-3a9,9,0,0,1,2.63-6.37,1,1,0,0,0,0-1.41,1,1,0,0,0-1.41,0A10.92,10.92,0,0,0,5,24c0,3.25,5.67,5,11,5s11-1.75,11-5A10.94,10.94,0,0,0,23.74,16.18Z" />
-                        <path d="M16,17a7,7,0,1,0-7-7A7,7,0,0,0,16,17ZM16,5a5,5,0,1,1-5,5A5,5,0,0,1,16,5Z" />
-                      </g>
-                    </svg>
+                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                      </svg>
+                    </span>
                   </button>
                 </div>
 
-                {userMenu.value ? (
+                {showUserMenu.value ? (
                   <div
                     class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
-                    tabIndex={parseInt("-1")}
+                    tabIndex={0}
                   >
                     <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700"
+                      href="/settings/"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
                       role="menuitem"
-                      tabIndex={parseInt("-1")}
+                      tabIndex={0}
                       id="user-menu-item-0"
                     >
                       Your Profile
                     </a>
                     <a
                       href="#"
-                      class="block px-4 py-2 text-sm text-gray-700"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
                       role="menuitem"
-                      tabIndex={parseInt("-1")}
+                      tabIndex={0}
                       id="user-menu-item-2"
                     >
                       Sign out
@@ -237,7 +237,7 @@ export default component$(() => {
             </div>
             <div class="mt-3 space-y-1 px-2">
               <a
-                href="#"
+                href="/settings/"
                 class="text-white hover:bg-gradient-to-r from-cyan-600 to-purple-600 hover:bg-opacity-75 block rounded-md py-2 px-3 text-base font-medium"
               >
                 Your Profile

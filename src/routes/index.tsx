@@ -54,13 +54,20 @@ export default component$(() => {
                   class="min-w-48 h-36"
                 />
               </div>
-              <div class="mt-8">
-                <p class="font-bold underline">
-                  {fish.anishinaabe_name ? fish.anishinaabe_name : fish.name}
-                </p>
-                <span class="text-sm">
-                  {fish.anishinaabe_name ? ` ${fish.name}` : null}
-                </span>
+              <div class="mt-8 flex justify-between">
+                <div>
+                  <p class="font-bold underline">
+                    {fish.anishinaabe_name ? fish.anishinaabe_name : fish.name}
+                  </p>
+                  <span class="text-sm">
+                    {fish.anishinaabe_name ? ` ${fish.name}` : null}
+                  </span>
+                </div>
+                <div>
+                  <span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-0.5 text-sm font-medium text-blue-800">
+                    ? servings per week
+                  </span>
+                </div>
               </div>
               <span
                 class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-gray-400"
