@@ -5,4 +5,5 @@ export default interface Fish {
   anishinaabe_name: string;
   lake: string;
   fish_image: string;
+  woodland_fish_image: string;
 }

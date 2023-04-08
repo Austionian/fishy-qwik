@@ -1,14 +1,13 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { component$ } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
+import FishList from "~/components/fish-list/fish-list";
 import { getAPIKey } from "~/helpers";
 import type Fish from "~/types/Fish";
-import FishList from "~/components/fish-list/fish-list";
-import InfoModal from "~/components/info-modal/infoModal";
 
-export const useFishData = routeLoader$<Fish[]>(async ({ env }) => {
+export const useFishData = routeLoader$<Fish[]>(async ({ env, params }) => {
   const apiKey = getAPIKey(env);
   const res = await fetch(
-    "https://fishy-edge-tvp4i.ondigitalocean.app/v1/fishs?lake=Store",
+    `https://fishy-edge-tvp4i.ondigitalocean.app/v1/fishs?lake=${params.lakeName}`,
     {
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -25,26 +24,10 @@ export const useFishData = routeLoader$<Fish[]>(async ({ env }) => {
   }));
 });
 
-export const useUserDetails = routeLoader$<boolean>(async ({ cookie }) => {
-  if (!cookie.get("user-details")) {
-    return true;
-  }
-  return false;
-});
-
 export default component$(() => {
-  const userDetailsCookie = useUserDetails();
   const fishData = useFishData();
-  const showUserInputModal = useSignal(userDetailsCookie.value);
 
-  return (
-    <div>
-      {showUserInputModal.value && (
-        <InfoModal showUserInputModal={showUserInputModal} />
-      )}
-      <FishList fishData={fishData} />
-    </div>
-  );
+  return <FishList fishData={fishData} />;
 });
 
 export const head: DocumentHead = {

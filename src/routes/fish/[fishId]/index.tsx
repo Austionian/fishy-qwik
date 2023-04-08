@@ -26,20 +26,28 @@ export default component$(() => {
           <div class="flex items-center flex-wrap space-x-5">
             <div class="flex-shrink-0">
               <div class="relative">
-                <img
-                  class="h-56 -mt-24"
-                  src={`/images/${fishData.value.fish_image}`}
-                />
+                {fishData.value.woodland_fish_image ? (
+                  <img
+                    class="h-56"
+                    src={`/images/${fishData.value.woodland_fish_image.replace(
+                      ".png",
+                      ".webp"
+                    )}`}
+                  />
+                ) : (
+                  <img
+                    class="h-56"
+                    src={`/images/${fishData.value.fish_image}`}
+                  />
+                )}
               </div>
             </div>
             <div>
-              <h1 class="text-4xl text-white font-bold">
+              <h1 class="text-4xl font-bold">
                 {fishData.value.anishinaabe_name ? (
                   <>
                     {fishData.value.anishinaabe_name}
-                    <span class="text-white text-xs pl-2">
-                      [{fishData.value.name}]
-                    </span>
+                    <span class="text-xs pl-2">[{fishData.value.name}]</span>
                   </>
                 ) : (
                   fishData.value.name
@@ -50,7 +58,7 @@ export default component$(() => {
           <div class="mt-10 sm:mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-3 sm:space-y-0 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
             <button
               type="button"
-              class="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              class="inline-flex items-center justify-center rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +87,7 @@ export default component$(() => {
                   >
                     Servings per week
                   </h2>
-                  <span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-0.5 text-sm font-medium text-blue-800">
+                  <span class="inline-flex items-center rounded-full bg-pink-100 px-3 py-0.5 text-sm font-medium text-pink-800">
                     ?
                   </span>
                 </div>
@@ -151,7 +159,7 @@ export default component$(() => {
                             <div class="ml-4 flex-shrink-0">
                               <a
                                 href="#"
-                                class="font-medium text-blue-600 hover:text-blue-500"
+                                class="font-medium text-pink-600 hover:text-pink-500"
                               >
                                 Download
                               </a>
@@ -179,7 +187,7 @@ export default component$(() => {
                             <div class="ml-4 flex-shrink-0">
                               <a
                                 href="#"
-                                class="font-medium text-blue-600 hover:text-blue-500"
+                                class="font-medium text-pink-600 hover:text-pink-500"
                               >
                                 Download
                               </a>
@@ -257,7 +265,7 @@ export default component$(() => {
                       ></span>
                       <div class="relative flex space-x-3">
                         <div>
-                          <span class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white">
+                          <span class="h-8 w-8 rounded-full bg-pink-500 flex items-center justify-center ring-8 ring-white">
                             <svg
                               class="h-5 w-5 text-white"
                               viewBox="0 0 20 20"
@@ -333,7 +341,7 @@ export default component$(() => {
                       ></span>
                       <div class="relative flex space-x-3">
                         <div>
-                          <span class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white">
+                          <span class="h-8 w-8 rounded-full bg-pink-500 flex items-center justify-center ring-8 ring-white">
                             <svg
                               class="h-5 w-5 text-white"
                               viewBox="0 0 20 20"
@@ -401,7 +409,7 @@ export default component$(() => {
               <div class="mt-6 flex flex-col justify-stretch">
                 <button
                   type="button"
-                  class="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                  class="inline-flex items-center justify-center rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
                 >
                   Advance to offer
                 </button>

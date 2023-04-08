@@ -1,6 +1,7 @@
 import { component$, useSignal } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
 import Search from "../search/search";
+import LINKS from "~/constants/links";
 
 export default component$(() => {
   const showUserMenu = useSignal(false);
@@ -8,26 +9,9 @@ export default component$(() => {
   const showSearch = useSignal(false);
   const location = useLocation();
 
-  const LINKS = [
-    {
-      title: "Fish",
-      pathname: "/",
-      href: "/",
-    },
-    {
-      title: "Lakes",
-      pathname: "/lake/",
-      href: "/lake/",
-    },
-    {
-      title: "Recipes",
-      pathname: "/recipes/",
-      href: "/recipes/",
-    },
-  ];
   return (
     <nav
-      class="border-b border-indigo-300 border-opacity-25 bg-gradient-to-r from-cyan-700 to-purple-700 lg:border-none"
+      class="bg-gray-800"
       document:onKeyDown$={(e) => {
         if (e.which === 27) {
           showSearch.value = false;
@@ -54,9 +38,9 @@ export default component$(() => {
                     key={i}
                     class={
                       (location.url.pathname === link.pathname
-                        ? "bg-black bg-opacity-30"
-                        : "hover:bg-black hover:bg-opacity-20") +
-                      " text-white rounded-md py-2 px-3 text-sm font-medium"
+                        ? "bg-black text-white"
+                        : "text-gray-300 hover:bg-gray-700 hover:text-white") +
+                      " rounded-md py-2 px-3 text-sm font-medium"
                     }
                   >
                     <span tabIndex={0}>{link.title}</span>
@@ -106,40 +90,45 @@ export default component$(() => {
           <div class="flex lg:hidden">
             <button
               type="button"
-              class="inline-flex items-center justify-center rounded-md bg-purple-600 p-2 text-indigo-200 hover:bg-purple-500 hover:bg-opacity-75 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
+              class="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-200 hover:bg-gray-600 hover:bg-opacity-75 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-600"
               aria-controls="mobile-menu"
               aria-expanded="false"
               onClick$={() => (mobileMenu.value = !mobileMenu.value)}
             >
-              <span class="sr-only">Open main menu</span>
-              <svg
-                class="block h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
-              <svg
-                class="hidden h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              {!mobileMenu.value ? (
+                <>
+                  <span class="sr-only">Open main menu</span>
+                  <svg
+                    class="block h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                    />
+                  </svg>
+                </>
+              ) : (
+                <svg
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              )}
             </button>
           </div>
           <div class="hidden lg:ml-4 lg:block">
@@ -148,7 +137,7 @@ export default component$(() => {
                 <div>
                   <button
                     type="button"
-                    class="flex h-8 w-8 rounded-full text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
+                    class="flex h-8 w-8 rounded-full text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-600"
                     id="user-menu-button"
                     aria-expanded="false"
                     aria-haspopup="true"
@@ -210,8 +199,8 @@ export default component$(() => {
                 key={i}
                 class={
                   (location.url.pathname === link.pathname
-                    ? "bg-gradient-to-r from-cyan-800 to-purple-800"
-                    : "hover:bg-gradient-to-r from-cyan-600 to-purple-600 hover:bg-opacity-75") +
+                    ? "bg-gray-900 text-white"
+                    : "text-gray-300 hover:bg-gray-700 hover:text-white") +
                   " text-white block rounded-md py-2 px-3 text-base font-medium"
                 }
               >
@@ -219,33 +208,37 @@ export default component$(() => {
               </a>
             ))}
           </div>
-          <div class="border-t border-indigo-700 pb-3 pt-4">
+          <div class="border-t border-gray-700 pb-3 pt-4">
             <div class="flex items-center px-5">
               <div class="flex-shrink-0">
-                <img
-                  class="h-10 w-10 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                />
+                <span class="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100">
+                  <svg
+                    class="h-full w-full text-gray-300"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                </span>
               </div>
               <div class="ml-3">
-                <div class="text-base font-medium text-white">Tom Cook</div>
-                <div class="text-sm font-medium text-indigo-300">
-                  tom@example.com
+                <div class="text-base font-medium text-white">Austin</div>
+                <div class="text-sm font-medium text-gray-400">
+                  austin@example.com
                 </div>
               </div>
             </div>
             <div class="mt-3 space-y-1 px-2">
               <a
                 href="/settings/"
-                class="text-white hover:bg-gradient-to-r from-cyan-600 to-purple-600 hover:bg-opacity-75 block rounded-md py-2 px-3 text-base font-medium"
+                class="text-gray-400 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium"
               >
                 Your Profile
               </a>
 
               <a
                 href="#"
-                class="text-white hover:bg-gradient-to-r from-cyan-600 to-purple-600 hover:bg-opacity-75 block rounded-md py-2 px-3 text-base font-medium"
+                class="text-gray-400 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium"
               >
                 Sign out
               </a>
