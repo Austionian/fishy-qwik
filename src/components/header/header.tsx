@@ -23,7 +23,7 @@ export default component$(() => {
       }}
     >
       <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-        <div class="relative flex h-16 items-center justify-between lg:border-b lg:border-indigo-400 lg:border-opacity-25">
+        <div class="relative flex h-16 items-center justify-between lg:border-b lg:border-pink-400 lg:border-opacity-25">
           <div class="flex items-center px-2 lg:px-0">
             <div class="flex-shrink-0" tabIndex={0}>
               <a href="/">
@@ -58,7 +58,7 @@ export default component$(() => {
                 type="button"
                 class="block w-full rounded-md border-0 bg-white py-5 sm:py-3.5
                     pl-10 pr-3 focus:ring-2 focus:ring-white focus:ring-offset-2 
-                    focus:ring-offset-indigo-600 sm:text-sm sm:leading-3 relative 
+                    focus:ring-offset-pink-600 sm:text-sm sm:leading-3 relative 
                     text-gray-400 focus-within:text-gray-600 transition ease-in-out
                     delay-50 hover:scale-105 duration-100"
                 onClick$={() => (showSearch.value = !showSearch.value)}
