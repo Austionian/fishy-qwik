@@ -1,8 +1,8 @@
 import { component$, Slot } from "@builder.io/qwik";
 import { type RequestHandler } from "@builder.io/qwik-city";
 
-import Header from "~/components/starter/header/header";
-import Footer from "~/components/starter/footer/footer";
+import Header from "~/components/header/header";
+import Footer from "~/components/footer/footer";
 
 export const onRequest: RequestHandler = async ({
   cookie,
