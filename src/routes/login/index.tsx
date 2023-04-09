@@ -62,15 +62,15 @@ export default component$(() => {
       <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <img
           class="mx-auto h-12 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+          src="https://tailwindui.com/img/logos/mark.svg?color=pink&shade=600"
           alt="Your Company"
         />
 
-        <h1 class="my-6 text-center text-5xl text-white font-bold tracking-tight">
+        <h1 class="my-6 text-center text-5xl text-gray-100 font-bold tracking-tight">
           Boozhoo!
         </h1>
-        <div class="text-left px-2">
-          <p class="text-white">
+        <div class="text-left text-gray-100 px-2">
+          <p>
             This app calculates your safe consumption levels of fish that are
             caught in the 1836 Treaty territories monitored by the
             Chippewa-Ottawa Resource Authority!
@@ -97,7 +97,7 @@ export default component$(() => {
                   required
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 
                     shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
-                    focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm 
+                    focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm 
                     sm:leading-6"
                 />
                 {!action.value?.success && (
@@ -111,15 +111,20 @@ export default component$(() => {
             <div>
               <button
                 type="submit"
-                class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                class="flex w-full justify-center rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
               >
                 SIGN UP
               </button>
             </div>
           </Form>
-          <Form action={guestAction} class="mt-7">
-            <div class="text-indigo-500 font-bold">
-              <button type="submit">CONTINUE AS GUEST</button>
+          <Form action={guestAction} class="mt-5">
+            <div>
+              <button
+                type="submit"
+                class="text-pink-600 text-sm w-full font-bold rounded hover:bg-gray-100 p-2"
+              >
+                CONTINUE AS GUEST
+              </button>
             </div>
           </Form>
         </div>
