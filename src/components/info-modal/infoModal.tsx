@@ -79,6 +79,7 @@ export default component$(({ showUserInputModal }: infoModalProps) => (
                 class="block w-full rounded-md border-0 py-1.5  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
                 placeholder="200"
                 aria-describedby="weight-currency"
+                autoFocus
               />
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                 <span class="text-gray-500 sm:text-sm" id="weight-format">
