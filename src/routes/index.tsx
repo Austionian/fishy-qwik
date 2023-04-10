@@ -47,7 +47,7 @@ export default component$(() => {
       {showUserInputModal.value && (
         <InfoModal showUserInputModal={showUserInputModal} />
       )}
-      <FishList fishData={fishData} userDetails={userDetails.value} />
+      <FishList fishData={fishData.value} userDetails={userDetails.value} />
     </div>
   );
 });

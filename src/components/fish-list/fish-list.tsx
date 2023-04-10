@@ -4,23 +4,21 @@ import type Fish from "~/types/Fish";
 import type UserDetails from "~/types/UserDetails";
 
 interface Props {
-  fishData: {
-    value: Fish[];
-  };
+  fishData: Fish[];
   userDetails: UserDetails;
 }
 
 export default component$(({ fishData, userDetails }: Props) => (
   <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
-    {fishData.value.map((fish, i) => {
+    {fishData.map((fish, i) => {
       return (
         <div
           key={i}
           class={classNames(
             i === 0 ? "rounded-tl-lg rounded-tr-lg sm:rounded-tr-none" : "",
             i === 1 ? "sm:rounded-tr-lg" : "",
-            i === fishData.value.length - 2 ? "sm:rounded-bl-lg" : "",
-            i === fishData.value.length - 1
+            i === fishData.length - 2 ? "sm:rounded-bl-lg" : "",
+            i === fishData.length - 1
               ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
               : "",
             "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-pink-500"

@@ -77,7 +77,7 @@ export default component$(() => {
     });
     const data = await res.json();
     return data.map((fish: Fish) => ({
-      id: fish.id,
+      id: fish.fish_id,
       name: fish.name,
       anishinaabe_name: fish.anishinaabe_name,
     }));
@@ -95,7 +95,9 @@ export default component$(() => {
           onPending={() => <div>Loading...</div>}
           onRejected={() => <div>Error...</div>}
           onResolved={(data) => {
-            const fish = data.filter((fish) => fish.id == loc.params.fishId);
+            const fish = data.filter(
+              (fish) => fish.fish_id == loc.params.fishId
+            );
             return (
               <>
                 <input

@@ -3,6 +3,7 @@ import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import FishList from "~/components/fish-list/fish-list";
 import { getAPIKey } from "~/helpers";
 import type Fish from "~/types/Fish";
+import type UserDetails from "~/types/UserDetails";
 
 export const useFishData = routeLoader$<Fish[]>(async ({ env, params }) => {
   const apiKey = getAPIKey(env);
@@ -16,7 +17,7 @@ export const useFishData = routeLoader$<Fish[]>(async ({ env, params }) => {
   );
   const data = await res.json();
   return data.map((fish: Fish) => ({
-    id: fish.id,
+    id: fish.fish_id,
     fish_id: fish.fish_id,
     name: fish.name,
     anishinaabe_name: fish.anishinaabe_name || "",
@@ -24,10 +25,28 @@ export const useFishData = routeLoader$<Fish[]>(async ({ env, params }) => {
   }));
 });
 
+export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
+  if (!cookie.get("user-details")) {
+    return {
+      needed: true,
+      weight: undefined,
+      age: undefined,
+      portion: undefined,
+    };
+  }
+  return {
+    needed: false,
+    weight: cookie.get("weight")?.value,
+    age: cookie.get("age")?.value,
+    portion: cookie.get("portion")?.value,
+  };
+});
+
 export default component$(() => {
   const fishData = useFishData();
+  const userDetails = useUserDetails();
 
-  return <FishList fishData={fishData} />;
+  return <FishList fishData={fishData.value} userDetails={userDetails.value} />;
 });
 
 export const head: DocumentHead = {
