@@ -100,7 +100,7 @@ export default component$(() => {
                     focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm 
                     sm:leading-6"
                 />
-                {!action.value?.success && (
+                {action.value?.failed && (
                   <div class="text-left text-red-400">
                     {action.value?.fieldErrors?.email}
                   </div>

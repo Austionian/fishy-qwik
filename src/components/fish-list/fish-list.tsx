@@ -1,14 +1,16 @@
 import { component$ } from "@builder.io/qwik";
-import { classNames } from "~/helpers";
+import { classNames, calculateServings } from "~/helpers";
 import type Fish from "~/types/Fish";
+import type UserDetails from "~/types/UserDetails";
 
 interface Props {
   fishData: {
     value: Fish[];
   };
+  userDetails: UserDetails;
 }
 
-export default component$(({ fishData }: Props) => (
+export default component$(({ fishData, userDetails }: Props) => (
   <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
     {fishData.value.map((fish, i) => {
       return (
@@ -43,7 +45,17 @@ export default component$(({ fishData }: Props) => (
               </div>
               <div>
                 <span class="ml-4 inline-flex items-center rounded-full bg-pink-100 px-3 py-0.5 text-sm font-medium text-pink-800">
-                  ? servings per week
+                  {!userDetails.needed &&
+                  userDetails.weight !== undefined &&
+                  userDetails.age !== undefined &&
+                  userDetails.portion !== undefined
+                    ? calculateServings(
+                        userDetails.age,
+                        userDetails.weight,
+                        userDetails.portion,
+                        fish
+                      )
+                    : "? servings per week"}
                 </span>
               </div>
             </div>

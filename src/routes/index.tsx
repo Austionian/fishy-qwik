@@ -2,8 +2,10 @@ import { component$, useSignal } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import { getAPIKey } from "~/helpers";
 import type Fish from "~/types/Fish";
+import type UserDetails from "~/types/UserDetails";
+
 import FishList from "~/components/fish-list/fish-list";
-import InfoModal from "~/components/info-modal/infoModal";
+import InfoModal from "~/components/info-modal/info-modal";
 
 export const useFishData = routeLoader$<Fish[]>(async ({ env }) => {
   const apiKey = getAPIKey(env);
@@ -15,34 +17,37 @@ export const useFishData = routeLoader$<Fish[]>(async ({ env }) => {
       },
     }
   );
-  const data = await res.json();
-  return data.map((fish: Fish) => ({
-    id: fish.id,
-    fish_id: fish.fish_id,
-    name: fish.name,
-    anishinaabe_name: fish.anishinaabe_name || "",
-    fish_image: fish.fish_image,
-  }));
+  return await res.json();
 });
 
-export const useUserDetails = routeLoader$<boolean>(async ({ cookie }) => {
+export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
   if (!cookie.get("user-details")) {
-    return true;
+    return {
+      needed: true,
+      weight: undefined,
+      age: undefined,
+      portion: undefined,
+    };
   }
-  return false;
+  return {
+    needed: false,
+    weight: cookie.get("weight")?.value,
+    age: cookie.get("age")?.value,
+    portion: cookie.get("portion")?.value,
+  };
 });
 
 export default component$(() => {
-  const userDetailsCookie = useUserDetails();
+  const userDetails = useUserDetails();
   const fishData = useFishData();
-  const showUserInputModal = useSignal(userDetailsCookie.value);
+  const showUserInputModal = useSignal(userDetails.value.needed);
 
   return (
     <div>
       {showUserInputModal.value && (
         <InfoModal showUserInputModal={showUserInputModal} />
       )}
-      <FishList fishData={fishData} />
+      <FishList fishData={fishData} userDetails={userDetails.value} />
     </div>
   );
 });
