@@ -44,7 +44,7 @@ export default component$<Props>(({ showSearch }) => {
       !window.localStorage.getItem("recipes")
     ) {
       const res = await fetch(
-        `https://fishy-edge-tvp4i.ondigitalocean.app/public/`,
+        `https://fishy-edge-tvp4i.ondigitalocean.app/search/`,
         {
           headers: {
             Authorization: `Bearer ${import.meta.env.VITE_PUBLIC_KEY}`,
@@ -52,8 +52,8 @@ export default component$<Props>(({ showSearch }) => {
         }
       );
       const data = await res.json();
-      const fish = data[0].FishResult;
-      const recipes = data[1].RecipeResult;
+      const fish = data.FishResult;
+      const recipes = data.RecipeResult;
 
       fishResults.value = fish;
       recipeResults.value = recipes;
