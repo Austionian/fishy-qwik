@@ -15,14 +15,7 @@ export const useFishData = routeLoader$<Fish[]>(async ({ env, params }) => {
       },
     }
   );
-  const data = await res.json();
-  return data.map((fish: Fish) => ({
-    id: fish.fish_id,
-    fish_id: fish.fish_id,
-    name: fish.name,
-    anishinaabe_name: fish.anishinaabe_name || "",
-    fish_image: fish.fish_image,
-  }));
+  return await res.json();
 });
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {

@@ -111,13 +111,13 @@ function getString(a: number): string {
   if (a < 0.24) {
     return "None, ever";
   } else if (a > 0.25 && a <= 0.49) {
-    return "1 per month";
+    return "1 meal per month";
   } else if (a > 0.5 && a <= 0.74) {
-    return "2 per month";
+    return "2 meals per month";
   } else if (a > 0.75 && a <= 1) {
-    return "3 per month";
+    return "3 meals per month";
   } else if (a > 1 && a <= 14) {
-    return `${Math.round(a * 1) / 1} per week`;
+    return `${Math.round(a * 1) / 1} meal(s) per week`;
   } else if (a > 14) {
     return "Unrestricted";
   } else {
