@@ -13,6 +13,9 @@ export const useSignUpFormAction = globalAction$(
     const weight = infoForm.weight;
     const age = infoForm.age;
     const portion = infoForm.portion;
+    // if (cookie.get("email")) {
+    //   // save to db
+    // }
     cookie.set("age", age, {
       path: "/",
     });
@@ -102,7 +105,7 @@ export default component$(({ showUserInputModal }: infoModalProps) => {
               action={formAction}
               onSubmitCompleted$={() => {
                 if (!formAction.value?.failed) {
-                  showUserInputModal.value = false;
+                  window.location.reload();
                 }
               }}
             >

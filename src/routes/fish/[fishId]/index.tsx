@@ -1,7 +1,9 @@
 import { component$ } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
+import { calculateServings } from "~/helpers";
 import getAPIKey from "~/helpers/getAPIKey";
 import type Fish from "~/types/Fish";
+import type UserDetails from "~/types/UserDetails";
 
 export const useFishData = routeLoader$<Fish>(async ({ env, params }) => {
   const apiKey = getAPIKey(env);
@@ -16,9 +18,27 @@ export const useFishData = routeLoader$<Fish>(async ({ env, params }) => {
   return await res.json();
 });
 
+export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
+  if (!cookie.get("user-details")) {
+    return {
+      needed: true,
+      weight: undefined,
+      age: undefined,
+      portion: undefined,
+    };
+  }
+  return {
+    needed: false,
+    weight: cookie.get("weight")?.value,
+    age: cookie.get("age")?.value,
+    portion: cookie.get("portion")?.value,
+  };
+});
 //   <a href={`/fish/${fishData.value.id}/edit`}>[Edit]</a>
 export default component$(() => {
   const fishData = useFishData();
+  const userDetails = useUserDetails();
+
   return (
     <div class="min-h-full">
       <main class="pb-10">
@@ -29,10 +49,7 @@ export default component$(() => {
                 {fishData.value.woodland_fish_image ? (
                   <img
                     class="h-56"
-                    src={`/images/${fishData.value.woodland_fish_image.replace(
-                      ".png",
-                      ".webp"
-                    )}`}
+                    src={`/images/${fishData.value.woodland_fish_image}`}
                   />
                 ) : (
                   <img
@@ -88,7 +105,17 @@ export default component$(() => {
                     Servings per week
                   </h2>
                   <span class="inline-flex items-center rounded-full bg-pink-100 px-3 py-0.5 text-sm font-medium text-pink-800">
-                    ?
+                    {!userDetails.value.needed &&
+                    userDetails.value.weight !== undefined &&
+                    userDetails.value.age !== undefined &&
+                    userDetails.value.portion !== undefined
+                      ? calculateServings(
+                          userDetails.value.age,
+                          userDetails.value.weight,
+                          userDetails.value.portion,
+                          fishData.value
+                        )
+                      : "? servings per week"}
                   </span>
                 </div>
                 <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
@@ -96,27 +123,30 @@ export default component$(() => {
                     <div class="sm:col-span-1">
                       <dt class="text-sm font-medium text-gray-500">Protien</dt>
                       <dd class="mt-1 text-sm text-gray-900">
-                        Backend Developer
+                        {fishData.value.protein}
+                        <span class="text-xs text-gray-700">g per 100g</span>
+                      </dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                      <dt class="text-sm font-medium text-gray-500">PCB</dt>
+                      <dd class="mt-1 text-sm text-gray-900">
+                        {fishData.value.pcb}{" "}
+                        <span class="text-xs text-gray-700">ppm</span>
                       </dd>
                     </div>
                     <div class="sm:col-span-1">
                       <dt class="text-sm font-medium text-gray-500">
-                        Email address
+                        Omega 3/6 Ratio
                       </dt>
                       <dd class="mt-1 text-sm text-gray-900">
-                        ricardocooper@example.com
+                        {fishData.value.omega_3_ratio}
                       </dd>
                     </div>
                     <div class="sm:col-span-1">
-                      <dt class="text-sm font-medium text-gray-500">
-                        Salary expectation
-                      </dt>
-                      <dd class="mt-1 text-sm text-gray-900">$120,000</dd>
-                    </div>
-                    <div class="sm:col-span-1">
-                      <dt class="text-sm font-medium text-gray-500">Phone</dt>
+                      <dt class="text-sm font-medium text-gray-500">Mercury</dt>
                       <dd class="mt-1 text-sm text-gray-900">
-                        +1 555-555-5555
+                        {fishData.value.mercury}{" "}
+                        <span class="text-xs text-gray-700">ppm</span>
                       </dd>
                     </div>
                     <div class="sm:col-span-2">
@@ -129,82 +159,7 @@ export default component$(() => {
                         mollit ad adipisicing reprehenderit deserunt qui eu.
                       </dd>
                     </div>
-                    <div class="sm:col-span-2">
-                      <dt class="text-sm font-medium text-gray-500">
-                        Attachments
-                      </dt>
-                      <dd class="mt-1 text-sm text-gray-900">
-                        <ul
-                          role="list"
-                          class="divide-y divide-gray-200 rounded-md border border-gray-200"
-                        >
-                          <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
-                            <div class="flex w-0 flex-1 items-center">
-                              <svg
-                                class="h-5 w-5 flex-shrink-0 text-gray-400"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                              >
-                                <path
-                                  fill-rule="evenodd"
-                                  d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                                  clip-rule="evenodd"
-                                />
-                              </svg>
-                              <span class="ml-2 w-0 flex-1 truncate">
-                                resume_front_end_developer.pdf
-                              </span>
-                            </div>
-                            <div class="ml-4 flex-shrink-0">
-                              <a
-                                href="#"
-                                class="font-medium text-pink-600 hover:text-pink-500"
-                              >
-                                Download
-                              </a>
-                            </div>
-                          </li>
-
-                          <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
-                            <div class="flex w-0 flex-1 items-center">
-                              <svg
-                                class="h-5 w-5 flex-shrink-0 text-gray-400"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                              >
-                                <path
-                                  fill-rule="evenodd"
-                                  d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                                  clip-rule="evenodd"
-                                />
-                              </svg>
-                              <span class="ml-2 w-0 flex-1 truncate">
-                                coverletter_front_end_developer.pdf
-                              </span>
-                            </div>
-                            <div class="ml-4 flex-shrink-0">
-                              <a
-                                href="#"
-                                class="font-medium text-pink-600 hover:text-pink-500"
-                              >
-                                Download
-                              </a>
-                            </div>
-                          </li>
-                        </ul>
-                      </dd>
-                    </div>
                   </dl>
-                </div>
-                <div>
-                  <a
-                    href="#"
-                    class="block bg-gray-50 px-4 py-4 text-center text-sm font-medium text-gray-500 hover:text-gray-700 sm:rounded-b-lg"
-                  >
-                    Read full application
-                  </a>
                 </div>
               </div>
             </section>

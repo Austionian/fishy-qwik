@@ -9,4 +9,5 @@ export default interface Fish {
   pcb: number;
   mercury: number;
   omega_3: number;
+  omega_3_ratio: number;
 }
