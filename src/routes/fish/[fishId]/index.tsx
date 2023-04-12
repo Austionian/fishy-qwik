@@ -3,9 +3,15 @@ import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import { calculateServings } from "~/helpers";
 import getAPIKey from "~/helpers/getAPIKey";
 import type Fish from "~/types/Fish";
+import type Recipe from "~/types/Recipe";
 import type UserDetails from "~/types/UserDetails";
 
-export const useFishData = routeLoader$<Fish>(async ({ env, params }) => {
+interface FishData {
+  fish_data: Fish;
+  recipe_data: Recipe[];
+}
+
+export const useFishData = routeLoader$<FishData>(async ({ env, params }) => {
   const apiKey = getAPIKey(env);
   const res = await fetch(
     `https://fishy-edge-tvp4i.ondigitalocean.app/v1/fish/${params.fishId}`,
@@ -46,28 +52,30 @@ export default component$(() => {
           <div class="flex items-center flex-wrap space-x-5">
             <div class="flex-shrink-0">
               <div class="relative">
-                {fishData.value.woodland_fish_image ? (
+                {fishData.value.fish_data.woodland_fish_image ? (
                   <img
                     class="h-56"
-                    src={`/images/${fishData.value.woodland_fish_image}`}
+                    src={`/images/${fishData.value.fish_data.woodland_fish_image}`}
                   />
                 ) : (
                   <img
                     class="h-56"
-                    src={`/images/${fishData.value.fish_image}`}
+                    src={`/images/${fishData.value.fish_data.fish_image}`}
                   />
                 )}
               </div>
             </div>
             <div>
               <h1 class="text-4xl font-bold">
-                {fishData.value.anishinaabe_name ? (
+                {fishData.value.fish_data.anishinaabe_name ? (
                   <>
-                    {fishData.value.anishinaabe_name}
-                    <span class="text-xs pl-2">[{fishData.value.name}]</span>
+                    {fishData.value.fish_data.anishinaabe_name}
+                    <span class="text-xs pl-2">
+                      [{fishData.value.fish_data.name}]
+                    </span>
                   </>
                 ) : (
-                  fishData.value.name
+                  fishData.value.fish_data.name
                 )}
               </h1>
             </div>
@@ -113,7 +121,7 @@ export default component$(() => {
                           userDetails.value.age,
                           userDetails.value.weight,
                           userDetails.value.portion,
-                          fishData.value
+                          fishData.value.fish_data
                         )
                       : "? servings per week"}
                   </span>
@@ -123,14 +131,14 @@ export default component$(() => {
                     <div class="sm:col-span-1">
                       <dt class="text-sm font-medium text-gray-500">Protien</dt>
                       <dd class="mt-1 text-sm text-gray-900">
-                        {fishData.value.protein}
+                        {fishData.value.fish_data.protein}
                         <span class="text-xs text-gray-700">g per 100g</span>
                       </dd>
                     </div>
                     <div class="sm:col-span-1">
                       <dt class="text-sm font-medium text-gray-500">PCB</dt>
                       <dd class="mt-1 text-sm text-gray-900">
-                        {fishData.value.pcb}{" "}
+                        {fishData.value.fish_data.pcb}{" "}
                         <span class="text-xs text-gray-700">ppm</span>
                       </dd>
                     </div>
@@ -139,13 +147,13 @@ export default component$(() => {
                         Omega 3/6 Ratio
                       </dt>
                       <dd class="mt-1 text-sm text-gray-900">
-                        {fishData.value.omega_3_ratio}
+                        {fishData.value.fish_data.omega_3_ratio}
                       </dd>
                     </div>
                     <div class="sm:col-span-1">
                       <dt class="text-sm font-medium text-gray-500">Mercury</dt>
                       <dd class="mt-1 text-sm text-gray-900">
-                        {fishData.value.mercury}{" "}
+                        {fishData.value.fish_data.mercury}{" "}
                         <span class="text-xs text-gray-700">ppm</span>
                       </dd>
                     </div>
@@ -176,198 +184,40 @@ export default component$(() => {
 
               <div class="mt-6 flow-root">
                 <ul role="list" class="-mb-8">
-                  <li>
-                    <div class="relative pb-8">
-                      <span
-                        class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
-                        aria-hidden="true"
-                      ></span>
-                      <div class="relative flex space-x-3">
-                        <div>
-                          <span class="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-white">
-                            <svg
-                              class="h-5 w-5 text-white"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
-                            </svg>
-                          </span>
-                        </div>
-                        <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
-                          <div>
-                            <p class="text-sm text-gray-500">
-                              Applied to{" "}
-                              <a href="#" class="font-medium text-gray-900">
-                                Front End Developer
-                              </a>
-                            </p>
-                          </div>
-                          <div class="whitespace-nowrap text-right text-sm text-gray-500">
-                            <time dateTime="2020-09-20">Sep 20</time>
+                  {fishData.value.recipe_data.map((recipe, i) => (
+                    <li key={i}>
+                      <a href={`/recipe/${recipe.id}/`}>
+                        <div class="relative pb-8">
+                          <div class="relative flex space-x-3 text-gray-500 hover:bg-gray-200 hover:text-black">
+                            <div>
+                              <span class="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-white">
+                                <svg
+                                  class="h-5 w-5 flex-none text-white text-opacity-80"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke-width="1.5"
+                                  stroke="currentColor"
+                                  aria-hidden="true"
+                                >
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                            <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                              <div>
+                                <p class="text-sm ">{recipe.name}</p>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div class="relative pb-8">
-                      <span
-                        class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
-                        aria-hidden="true"
-                      ></span>
-                      <div class="relative flex space-x-3">
-                        <div>
-                          <span class="h-8 w-8 rounded-full bg-pink-500 flex items-center justify-center ring-8 ring-white">
-                            <svg
-                              class="h-5 w-5 text-white"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path d="M1 8.25a1.25 1.25 0 112.5 0v7.5a1.25 1.25 0 11-2.5 0v-7.5zM11 3V1.7c0-.268.14-.526.395-.607A2 2 0 0114 3c0 .995-.182 1.948-.514 2.826-.204.54.166 1.174.744 1.174h2.52c1.243 0 2.261 1.01 2.146 2.247a23.864 23.864 0 01-1.341 5.974C17.153 16.323 16.072 17 14.9 17h-3.192a3 3 0 01-1.341-.317l-2.734-1.366A3 3 0 006.292 15H5V8h.963c.685 0 1.258-.483 1.612-1.068a4.011 4.011 0 012.166-1.73c.432-.143.853-.386 1.011-.814.16-.432.248-.9.248-1.388z" />
-                            </svg>
-                          </span>
-                        </div>
-                        <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
-                          <div>
-                            <p class="text-sm text-gray-500">
-                              Advanced to phone screening by{" "}
-                              <a href="#" class="font-medium text-gray-900">
-                                Bethany Blake
-                              </a>
-                            </p>
-                          </div>
-                          <div class="whitespace-nowrap text-right text-sm text-gray-500">
-                            <time dateTime="2020-09-22">Sep 22</time>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div class="relative pb-8">
-                      <span
-                        class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
-                        aria-hidden="true"
-                      ></span>
-                      <div class="relative flex space-x-3">
-                        <div>
-                          <span class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
-                            <svg
-                              class="h-5 w-5 text-white"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                clip-rule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </div>
-                        <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
-                          <div>
-                            <p class="text-sm text-gray-500">
-                              Completed phone screening with{" "}
-                              <a href="#" class="font-medium text-gray-900">
-                                Martha Gardner
-                              </a>
-                            </p>
-                          </div>
-                          <div class="whitespace-nowrap text-right text-sm text-gray-500">
-                            <time dateTime="2020-09-28">Sep 28</time>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div class="relative pb-8">
-                      <span
-                        class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
-                        aria-hidden="true"
-                      ></span>
-                      <div class="relative flex space-x-3">
-                        <div>
-                          <span class="h-8 w-8 rounded-full bg-pink-500 flex items-center justify-center ring-8 ring-white">
-                            <svg
-                              class="h-5 w-5 text-white"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path d="M1 8.25a1.25 1.25 0 112.5 0v7.5a1.25 1.25 0 11-2.5 0v-7.5zM11 3V1.7c0-.268.14-.526.395-.607A2 2 0 0114 3c0 .995-.182 1.948-.514 2.826-.204.54.166 1.174.744 1.174h2.52c1.243 0 2.261 1.01 2.146 2.247a23.864 23.864 0 01-1.341 5.974C17.153 16.323 16.072 17 14.9 17h-3.192a3 3 0 01-1.341-.317l-2.734-1.366A3 3 0 006.292 15H5V8h.963c.685 0 1.258-.483 1.612-1.068a4.011 4.011 0 012.166-1.73c.432-.143.853-.386 1.011-.814.16-.432.248-.9.248-1.388z" />
-                            </svg>
-                          </span>
-                        </div>
-                        <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
-                          <div>
-                            <p class="text-sm text-gray-500">
-                              Advanced to interview by{" "}
-                              <a href="#" class="font-medium text-gray-900">
-                                Bethany Blake
-                              </a>
-                            </p>
-                          </div>
-                          <div class="whitespace-nowrap text-right text-sm text-gray-500">
-                            <time dateTime="2020-09-30">Sep 30</time>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div class="relative pb-8">
-                      <div class="relative flex space-x-3">
-                        <div>
-                          <span class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
-                            <svg
-                              class="h-5 w-5 text-white"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                clip-rule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </div>
-                        <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
-                          <div>
-                            <p class="text-sm text-gray-500">
-                              Completed interview with{" "}
-                              <a href="#" class="font-medium text-gray-900">
-                                Katherine Snyder
-                              </a>
-                            </p>
-                          </div>
-                          <div class="whitespace-nowrap text-right text-sm text-gray-500">
-                            <time dateTime="2020-10-04">Oct 4</time>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
+                      </a>
+                    </li>
+                  ))}
                 </ul>
-              </div>
-              <div class="mt-6 flex flex-col justify-stretch">
-                <button
-                  type="button"
-                  class="inline-flex items-center justify-center rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
-                >
-                  Advance to offer
-                </button>
               </div>
             </div>
           </section>
@@ -377,12 +227,19 @@ export default component$(() => {
   );
 });
 
-export const head: DocumentHead = {
-  title: "Fish Details",
-  meta: [
-    {
-      name: "description",
-      content: "Learn the nutritional details of a specific fish",
-    },
-  ],
+export const head: DocumentHead = ({ resolveValue, params }) => {
+  const fish = resolveValue(useFishData);
+  return {
+    title: fish.fish_data.anishinaabe_name,
+    meta: [
+      {
+        name: "description",
+        content: `Learn the nutritional details of a ${fish.fish_data.name}`,
+      },
+      {
+        name: "id",
+        content: params.fishId,
+      },
+    ],
+  };
 };

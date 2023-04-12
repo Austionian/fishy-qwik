@@ -52,8 +52,8 @@ export default component$<Props>(({ showSearch }) => {
         }
       );
       const data = await res.json();
-      const fish = data.FishResult;
-      const recipes = data.RecipeResult;
+      const fish = data.fish_result;
+      const recipes = data.recipe_result;
 
       fishResults.value = fish;
       recipeResults.value = recipes;
