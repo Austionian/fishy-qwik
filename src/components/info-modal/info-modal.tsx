@@ -18,15 +18,19 @@ export const useSignUpFormAction = globalAction$(
     // }
     cookie.set("age", age, {
       path: "/",
+      sameSite: "lax",
     });
     cookie.set("weight", weight, {
       path: "/",
+      sameSite: "lax",
     });
     cookie.set("portion", portion, {
       path: "/",
+      sameSite: "lax",
     });
     cookie.set("user-details", "true", {
       path: "/",
+      sameSite: "lax",
     });
   },
   zod$({

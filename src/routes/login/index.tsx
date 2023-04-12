@@ -29,9 +29,11 @@ export const useSignUpFormAction = routeAction$(
     }
     cookie.set("fish-login", "true", {
       path: "/",
+      sameSite: "lax",
     });
     cookie.set("email", "true", {
       path: "/",
+      sameSite: "lax",
     });
     const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
     throw redirect(303, redirectUrl);
@@ -45,9 +47,11 @@ export const useGuestOption = routeAction$(
   async (_, { url, cookie, redirect }) => {
     cookie.set("fish-login", "true", {
       path: "/",
+      sameSite: "lax",
     });
     cookie.set("guest", "true", {
       path: "/",
+      sameSite: "lax",
     });
     const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
     throw redirect(303, redirectUrl);
