@@ -49,17 +49,17 @@ export default component$(() => {
     <div class="min-h-full">
       <main class="pb-10">
         <div class="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
-          <div class="flex items-center flex-wrap space-x-5">
+          <div class="flex justify-center items-center flex-wrap space-x-5">
             <div class="flex-shrink-0">
               <div class="relative">
                 {fishData.value.fish_data.woodland_fish_image ? (
                   <img
-                    class="h-56"
+                    class="h-32 sm:h-56"
                     src={`/images/${fishData.value.fish_data.woodland_fish_image}`}
                   />
                 ) : (
                   <img
-                    class="h-56"
+                    class="h-32 sm:h-56"
                     src={`/images/${fishData.value.fish_data.fish_image}`}
                   />
                 )}
