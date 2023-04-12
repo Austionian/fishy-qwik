@@ -57,8 +57,16 @@ export default component$<Props>(({ showSearch }) => {
 
       fishResults.value = fish;
       recipeResults.value = recipes;
-      window.localStorage.setItem("fish", JSON.stringify(fish));
-      window.localStorage.setItem("recipes", JSON.stringify(recipes));
+
+      if (
+        fishResults.value &&
+        fishResults.value.length > 0 &&
+        recipeResults.value &&
+        recipeResults.value.length > 0
+      ) {
+        window.localStorage.setItem("fish", JSON.stringify(fish));
+        window.localStorage.setItem("recipes", JSON.stringify(recipes));
+      }
     } else {
       if (window.localStorage.getItem("fish")) {
         fishResults.value = JSON.parse(
