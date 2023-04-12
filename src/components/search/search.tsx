@@ -2,14 +2,14 @@ import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import type Fish from "~/types/Fish";
 import LAKES from "~/constants/lakes";
 
-interface Props {
+type Props = {
   showSearch: { value: boolean };
-}
+};
 
-interface Recipe {
+type Recipe = {
   recipe_id: string;
   recipe_name: string;
-}
+};
 
 export default component$<Props>(({ showSearch }) => {
   const modalRef = useSignal<Element>();
@@ -41,7 +41,9 @@ export default component$<Props>(({ showSearch }) => {
   useVisibleTask$(async () => {
     if (
       !window.localStorage.getItem("fish") ||
-      !window.localStorage.getItem("recipes")
+      !window.localStorage.getItem("recipes") ||
+      typeof window.localStorage.getItem("fish") === undefined ||
+      typeof window.localStorage.getItem("recipes") === undefined
     ) {
       const res = await fetch(
         `https://fishy-edge-tvp4i.ondigitalocean.app/search/`,

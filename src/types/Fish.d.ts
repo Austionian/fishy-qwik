@@ -1,4 +1,4 @@
-export default interface Fish {
+type Fish = {
   fish_id: string;
   name: string;
   anishinaabe_name: string;
@@ -10,4 +10,6 @@ export default interface Fish {
   mercury: number;
   omega_3: number;
   omega_3_ratio: number;
-}
+};
+
+export default Fish;

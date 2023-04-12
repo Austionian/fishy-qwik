@@ -6,10 +6,10 @@ import type Fish from "~/types/Fish";
 import type Recipe from "~/types/Recipe";
 import type UserDetails from "~/types/UserDetails";
 
-interface FishData {
+type FishData = {
   fish_data: Fish;
   recipe_data: Recipe[];
-}
+};
 
 export const useFishData = routeLoader$<FishData>(async ({ env, params }) => {
   const apiKey = getAPIKey(env);

@@ -2,11 +2,11 @@ import { component$ } from "@builder.io/qwik";
 import PORTIONS, { PORTION_VALUES } from "~/constants/portions";
 import { Form, globalAction$, zod$, z } from "@builder.io/qwik-city";
 
-interface infoModalProps {
+type infoModalProps = {
   showUserInputModal: {
     value: boolean;
   };
-}
+};
 
 export const useSignUpFormAction = globalAction$(
   async (infoForm, { cookie }) => {

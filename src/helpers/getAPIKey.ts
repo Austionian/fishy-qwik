@@ -1,6 +1,6 @@
-interface EnvGetter {
+type EnvGetter = {
   get(key: string): string | undefined;
-}
+};
 
 export default (env: EnvGetter): string => {
   if (import.meta.env.PROD) {

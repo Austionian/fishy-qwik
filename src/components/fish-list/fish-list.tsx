@@ -3,10 +3,10 @@ import { classNames, calculateServings } from "~/helpers";
 import type Fish from "~/types/Fish";
 import type UserDetails from "~/types/UserDetails";
 
-interface Props {
+type Props = {
   fishData: Fish[];
   userDetails: UserDetails;
-}
+};
 
 export default component$(({ fishData, userDetails }: Props) => (
   <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
