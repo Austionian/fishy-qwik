@@ -188,9 +188,9 @@ export default component$(() => {
                     <li key={i}>
                       <a href={`/recipe/${recipe.id}/`}>
                         <div class="relative pb-8">
-                          <div class="relative flex space-x-3 text-gray-500 hover:bg-gray-200 hover:text-black">
-                            <div>
-                              <span class="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-white">
+                          <div class="relative flex items-center space-x-3 text-gray-500 rounded-full p-1 hover:bg-gray-100 hover:text-black">
+                            <div class="flex items-center">
+                              <span class="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center">
                                 <svg
                                   class="h-5 w-5 flex-none text-white text-opacity-80"
                                   fill="none"
@@ -207,7 +207,7 @@ export default component$(() => {
                                 </svg>
                               </span>
                             </div>
-                            <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                            <div class="flex min-w-0 flex-1 justify-between space-x-4">
                               <div>
                                 <p class="text-sm ">{recipe.name}</p>
                               </div>

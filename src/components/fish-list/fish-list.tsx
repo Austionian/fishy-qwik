@@ -58,7 +58,7 @@ export default component$(({ fishData, userDetails }: Props) => (
               </div>
             </div>
             <span
-              class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-gray-400"
+              class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-pink-400"
               aria-hidden="true"
             >
               <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">

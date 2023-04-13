@@ -16,12 +16,10 @@ export const onRequest: RequestHandler = async ({
 
 export default component$(() => {
   return (
-    <div class="min-h-full bg-gray-100 ">
-      <div class="bg-gradient-to-r from-cyan-700 to-purple-700">
-        <Header />
-      </div>
+    <div class="min-h-screen bg-gray-100 ">
+      <Header />
 
-      <main class="pt-10">
+      <main class="pt-10 min-h-full">
         <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
           <Slot />
         </div>

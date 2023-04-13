@@ -11,8 +11,8 @@ const LINKS = [
   },
   {
     title: "Recipes",
-    pathname: "/recipes/",
-    href: "/recipes/",
+    pathname: "/recipe/",
+    href: "/recipe/",
   },
 ];
 
