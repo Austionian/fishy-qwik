@@ -117,7 +117,10 @@ export default component$<Props>(({ showSearch }) => {
             />
           </div>
 
-          <ul class="max-h-80 scroll-py-2 divide-y divide-gray-500 divide-opacity-10 overflow-y-auto">
+          <ul
+            tabIndex={-1}
+            class="max-h-80 scroll-py-2 divide-y divide-gray-500 divide-opacity-10 overflow-y-auto"
+          >
             {filteredFish.length > 0 && (
               <li class="p-2">
                 <h2 class="mb-2 mt-4 px-3 text-sm font-semibold text-gray-900">
