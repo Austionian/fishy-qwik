@@ -129,29 +129,85 @@ export default component$(() => {
                 <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
                   <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                     <div class="sm:col-span-1">
-                      <dt class="text-sm font-medium text-gray-500">Protien</dt>
+                      <div class="flex items-center">
+                        <dt class="text-sm font-medium text-gray-500">
+                          Protien
+                        </dt>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="100pt"
+                          height="100pt"
+                          version="1.1"
+                          viewBox="0 0 100 100"
+                          class="h-5 w-5 hover:fill-pink-500"
+                          onClick$={() => alert("heelo")}
+                        >
+                          <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
+                        </svg>
+                      </div>
                       <dd class="mt-1 text-sm text-gray-900">
                         {fishData.value.fish_data.protein}
                         <span class="text-xs text-gray-700">g per 100g</span>
                       </dd>
                     </div>
                     <div class="sm:col-span-1">
-                      <dt class="text-sm font-medium text-gray-500">PCB</dt>
+                      <div class="flex items-center">
+                        <dt class="text-sm font-medium text-gray-500">PCB</dt>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="100pt"
+                          height="100pt"
+                          version="1.1"
+                          viewBox="0 0 100 100"
+                          class="h-5 w-5 hover:fill-pink-500"
+                          onClick$={() => alert("heelo")}
+                        >
+                          <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
+                        </svg>
+                      </div>
                       <dd class="mt-1 text-sm text-gray-900">
                         {fishData.value.fish_data.pcb}{" "}
                         <span class="text-xs text-gray-700">ppm</span>
                       </dd>
                     </div>
                     <div class="sm:col-span-1">
-                      <dt class="text-sm font-medium text-gray-500">
-                        Omega 3/6 Ratio
-                      </dt>
+                      <div class="flex items-center">
+                        <dt class="text-sm font-medium text-gray-500">
+                          Omega 3/6 Ratio
+                        </dt>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="100pt"
+                          height="100pt"
+                          version="1.1"
+                          viewBox="0 0 100 100"
+                          class="h-5 w-5 hover:fill-pink-500"
+                          onClick$={() => alert("heelo")}
+                        >
+                          <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
+                        </svg>
+                      </div>
                       <dd class="mt-1 text-sm text-gray-900">
                         {fishData.value.fish_data.omega_3_ratio}
                       </dd>
                     </div>
                     <div class="sm:col-span-1">
-                      <dt class="text-sm font-medium text-gray-500">Mercury</dt>
+                      <div class="flex items-center">
+                        <dt class="text-sm font-medium text-gray-500">
+                          Mercury
+                        </dt>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="100pt"
+                          height="100pt"
+                          version="1.1"
+                          viewBox="0 0 100 100"
+                          class="h-5 w-5 hover:fill-pink-500"
+                          onClick$={() => alert("heelo")}
+                        >
+                          <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
+                        </svg>
+                      </div>
                       <dd class="mt-1 text-sm text-gray-900">
                         {fishData.value.fish_data.mercury}{" "}
                         <span class="text-xs text-gray-700">ppm</span>
