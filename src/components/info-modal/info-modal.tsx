@@ -1,6 +1,8 @@
 import { component$ } from "@builder.io/qwik";
 import PORTIONS, { PORTION_VALUES } from "~/constants/portions";
 import { Form, globalAction$, zod$, z } from "@builder.io/qwik-city";
+import { isBrowser } from "@builder.io/qwik/build";
+import { getCookie } from "~/helpers";
 
 type infoModalProps = {
   showUserInputModal: {
@@ -125,6 +127,7 @@ export default component$(({ showUserInputModal }: infoModalProps) => {
                     type="text"
                     name="weight"
                     id="weight"
+                    value={isBrowser ? getCookie("weight") : ""}
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
                     placeholder="200"
                     aria-describedby="weight-currency"
@@ -154,6 +157,7 @@ export default component$(({ showUserInputModal }: infoModalProps) => {
                     type="text"
                     name="age"
                     id="age"
+                    value={isBrowser ? getCookie("age") : ""}
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
                     placeholder="44"
                   />

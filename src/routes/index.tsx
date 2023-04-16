@@ -1,4 +1,4 @@
-import { component$, useSignal, useStore, useTask$ } from "@builder.io/qwik";
+import { component$, useSignal } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import { getAPIKey } from "~/helpers";
 import type Fish from "~/types/Fish";

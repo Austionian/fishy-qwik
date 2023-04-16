@@ -1,4 +1,4 @@
-import { component$, Signal, useSignal, useTask$ } from "@builder.io/qwik";
+import { component$, useSignal } from "@builder.io/qwik";
 import { classNames, calculateServings } from "~/helpers";
 import type Fish from "~/types/Fish";
 import type UserDetails from "~/types/UserDetails";
@@ -14,26 +14,6 @@ export default component$(({ fishData, userDetails }: Props) => {
   const showUserDetialsBadge = useSignal(false);
   const showSort = useSignal(false);
   const sortBy = useSignal<"Name" | "Servings">("Name");
-  // useTask$(({ track }) => {
-  //   track(() => sortBy.value);
-  //   function byProtein(a: Fish, b: Fish) {
-  //     if (a.protein < b.protein) {
-  //       return 1;
-  //     }
-  //     if (a.protein > b.protein) {
-  //       return -1;
-  //     }
-  //     return 0;
-  //   }
-  //
-  //   if (sortBy.value === "Name") {
-  //     fish.fishData.value = fishData.value.sort(byName);
-  //   }
-  //   if (sortBy.value === "Servings") {
-  //     fish.fishData.value = fishData.value.sort(byProtein);
-  //   }
-  //   console.log(fishData.value);
-  // });
   const sorter = {
     Name: {
       fn: byName,
@@ -183,7 +163,7 @@ export default component$(({ fishData, userDetails }: Props) => {
               </div>
               <div class="mt-8 flex justify-between">
                 <div
-                  class="cursor-pointer"
+                  class="cursor-pointer flex-grow"
                   onClick$={() =>
                     (window.location.href = `/fish/${fish.fish_id}/`)
                   }
