@@ -1,4 +1,4 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { component$, Signal, useSignal, useTask$ } from "@builder.io/qwik";
 import { classNames, calculateServings } from "~/helpers";
 import type Fish from "~/types/Fish";
 import type UserDetails from "~/types/UserDetails";
@@ -13,19 +13,53 @@ type Props = {
 export default component$(({ fishData, userDetails }: Props) => {
   const showUserDetialsBadge = useSignal(false);
   const showSort = useSignal(false);
-  // const sortedFish = useSignal<Fish[]>([]);
-  //
-  // function sortName(a: Fish, b: Fish) {
-  //   if (a.name < b.name) {
-  //     return -1;
+  const sortBy = useSignal<"Name" | "Servings">("Name");
+  // useTask$(({ track }) => {
+  //   track(() => sortBy.value);
+  //   function byProtein(a: Fish, b: Fish) {
+  //     if (a.protein < b.protein) {
+  //       return 1;
+  //     }
+  //     if (a.protein > b.protein) {
+  //       return -1;
+  //     }
+  //     return 0;
   //   }
-  //   if (a.name > b.name) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // }
   //
-  // sortedFish.value = fishData;
+  //   if (sortBy.value === "Name") {
+  //     fish.fishData.value = fishData.value.sort(byName);
+  //   }
+  //   if (sortBy.value === "Servings") {
+  //     fish.fishData.value = fishData.value.sort(byProtein);
+  //   }
+  //   console.log(fishData.value);
+  // });
+  const sorter = {
+    Name: {
+      fn: byName,
+    },
+    Servings: {
+      fn: byProtein,
+    },
+  };
+  function byName(a: Fish, b: Fish) {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+    return 0;
+  }
+  function byProtein(a: Fish, b: Fish) {
+    if (a.protein < b.protein) {
+      return 1;
+    }
+    if (a.protein > b.protein) {
+      return -1;
+    }
+    return 0;
+  }
   return (
     <>
       {showUserDetialsBadge.value && (
@@ -67,47 +101,61 @@ export default component$(({ fishData, userDetails }: Props) => {
               />
             </svg>
           </button>
-          {showSort.value && (
-            <div
-              class="absolute left-0 z-10 mt-1 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="sort-menu-button"
-              tabIndex={0}
-            >
-              <div class="py-1" role="none">
-                <a
-                  href="#"
-                  class="text-gray-700 hover:bg-gray-100 block px-4 py-2 text-sm"
-                  role="menuitem"
-                  tabIndex={0}
-                  id="sort-menu-item-0"
-                >
-                  Name
-                </a>
-                {!userDetails.needed ? (
-                  <a
-                    href="#"
-                    class="text-gray-700 hover:bg-gray-100 block px-4 py-2 text-sm"
-                    role="menuitem"
-                    tabIndex={0}
-                    id="sort-menu-item-1"
-                  >
-                    Servings
-                  </a>
-                ) : (
-                  <span class="block px-4 py-2 text-sm text-gray-400 bg-gray-50">
-                    Servings
-                  </span>
-                )}
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
+      {showSort.value && (
+        <div
+          class="absolute z-10 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="sort-menu-button"
+          tabIndex={0}
+        >
+          <div class="py-1" role="none">
+            <a
+              class={
+                sortBy.value === "Name"
+                  ? "text-gray-800 hover:bg-gray-100 block px-4 py-2 text-sm bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-100 block px-4 py-2 text-sm cursor-pointer"
+              }
+              role="menuitem"
+              tabIndex={0}
+              id="sort-menu-item-0"
+              onClick$={() => {
+                sortBy.value = "Name";
+                showSort.value = !showSort.value;
+              }}
+            >
+              Name
+            </a>
+            {!userDetails.needed ? (
+              <a
+                class={
+                  sortBy.value === "Servings"
+                    ? "text-gray-800 hover:bg-gray-100 block px-4 py-2 text-sm bg-gray-100"
+                    : "text-gray-700 hover:bg-gray-100 block px-4 py-2 text-sm cursor-pointer"
+                }
+                role="menuitem"
+                tabIndex={0}
+                id="sort-menu-item-1"
+                onClick$={() => {
+                  sortBy.value = "Servings";
+                  showSort.value = !showSort.value;
+                }}
+              >
+                Servings
+              </a>
+            ) : (
+              <span class="block px-4 py-2 text-sm text-gray-400 bg-gray-50">
+                Servings
+              </span>
+            )}
+          </div>
+        </div>
+      )}
       <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
-        {fishData.map((fish, i) => {
+        {fishData.sort(sorter[sortBy.value].fn || undefined).map((fish, i) => {
           return (
             <div
               key={i}
@@ -122,6 +170,7 @@ export default component$(({ fishData, userDetails }: Props) => {
               )}
             >
               <div
+                class="cursor-pointer"
                 onClick$={() =>
                   (window.location.href = `/fish/${fish.fish_id}/`)
                 }
@@ -133,7 +182,12 @@ export default component$(({ fishData, userDetails }: Props) => {
                 />
               </div>
               <div class="mt-8 flex justify-between">
-                <div>
+                <div
+                  class="cursor-pointer"
+                  onClick$={() =>
+                    (window.location.href = `/fish/${fish.fish_id}/`)
+                  }
+                >
                   <p class="font-bold underline">
                     {fish.anishinaabe_name ? fish.anishinaabe_name : fish.name}
                   </p>
@@ -157,7 +211,12 @@ export default component$(({ fishData, userDetails }: Props) => {
                   </span>
                 </div>
               </div>
-              <div class="pt-5">
+              <div
+                class="pt-5 cursor-pointer"
+                onClick$={() =>
+                  (window.location.href = `/fish/${fish.fish_id}/`)
+                }
+              >
                 <dl class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-2">
                   <div class="sm:col-span-1">
                     <dt class="text-sm font-medium text-gray-500">Protien</dt>
