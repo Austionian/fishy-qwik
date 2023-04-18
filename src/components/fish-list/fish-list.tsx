@@ -1,7 +1,9 @@
 import { component$, useSignal } from "@builder.io/qwik";
 import { classNames, calculateServings } from "~/helpers";
+import SORT_VALUES, { sorter } from "~/constants/sortValues";
 import type Fish from "~/types/Fish";
 import type UserDetails from "~/types/UserDetails";
+import type SortValues from "~/types/SortValues";
 
 import InfoModal from "~/components/info-modal/info-modal";
 
@@ -13,33 +15,8 @@ type Props = {
 export default component$(({ fishData, userDetails }: Props) => {
   const showUserDetialsBadge = useSignal(false);
   const showSort = useSignal(false);
-  const sortBy = useSignal<"Name" | "Servings">("Name");
-  const sorter = {
-    Name: {
-      fn: byName,
-    },
-    Servings: {
-      fn: byProtein,
-    },
-  };
-  function byName(a: Fish, b: Fish) {
-    if (a.name < b.name) {
-      return -1;
-    }
-    if (a.name > b.name) {
-      return 1;
-    }
-    return 0;
-  }
-  function byProtein(a: Fish, b: Fish) {
-    if (a.protein < b.protein) {
-      return 1;
-    }
-    if (a.protein > b.protein) {
-      return -1;
-    }
-    return 0;
-  }
+  const sortBy = useSignal<SortValues>("Name");
+
   return (
     <>
       {showUserDetialsBadge.value && (
@@ -93,44 +70,57 @@ export default component$(({ fishData, userDetails }: Props) => {
           tabIndex={0}
         >
           <div class="py-1" role="none">
-            <a
-              class={
-                sortBy.value === "Name"
-                  ? "text-gray-800 hover:bg-gray-100 block px-4 py-2 text-sm bg-gray-100"
-                  : "text-gray-700 hover:bg-gray-100 block px-4 py-2 text-sm cursor-pointer"
+            {SORT_VALUES.map((sort, i) => {
+              if (!userDetails.needed && sort === "Servings") {
+                return (
+                  <a
+                    key={i}
+                    class={
+                      sortBy.value === "Servings"
+                        ? "text-gray-800 hover:bg-gray-100 block px-4 py-2 text-sm bg-gray-100"
+                        : "text-gray-700 hover:bg-gray-100 block px-4 py-2 text-sm cursor-pointer"
+                    }
+                    role="menuitem"
+                    tabIndex={0}
+                    id="sort-menu-item-1"
+                    onClick$={() => {
+                      sortBy.value = "Servings";
+                      showSort.value = !showSort.value;
+                    }}
+                  >
+                    Servings
+                  </a>
+                );
+              } else if (userDetails.needed && sort === "Servings") {
+                return (
+                  <span
+                    key={i}
+                    class="block px-4 py-2 text-sm text-gray-400 bg-gray-50"
+                  >
+                    Servings
+                  </span>
+                );
               }
-              role="menuitem"
-              tabIndex={0}
-              id="sort-menu-item-0"
-              onClick$={() => {
-                sortBy.value = "Name";
-                showSort.value = !showSort.value;
-              }}
-            >
-              Name
-            </a>
-            {!userDetails.needed ? (
-              <a
-                class={
-                  sortBy.value === "Servings"
-                    ? "text-gray-800 hover:bg-gray-100 block px-4 py-2 text-sm bg-gray-100"
-                    : "text-gray-700 hover:bg-gray-100 block px-4 py-2 text-sm cursor-pointer"
-                }
-                role="menuitem"
-                tabIndex={0}
-                id="sort-menu-item-1"
-                onClick$={() => {
-                  sortBy.value = "Servings";
-                  showSort.value = !showSort.value;
-                }}
-              >
-                Servings
-              </a>
-            ) : (
-              <span class="block px-4 py-2 text-sm text-gray-400 bg-gray-50">
-                Servings
-              </span>
-            )}
+              return (
+                <a
+                  class={
+                    sortBy.value === sort
+                      ? "text-gray-800 hover:bg-gray-100 block px-4 py-2 text-sm bg-gray-100"
+                      : "text-gray-700 hover:bg-gray-100 block px-4 py-2 text-sm cursor-pointer"
+                  }
+                  key={i}
+                  role="menuitem"
+                  tabIndex={0}
+                  id="sort-menu-item-0"
+                  onClick$={() => {
+                    sortBy.value = sort;
+                    showSort.value = !showSort.value;
+                  }}
+                >
+                  {sort}
+                </a>
+              );
+            })}
           </div>
         </div>
       )}

@@ -8,11 +8,11 @@ export default component$(() => (
           <nav class="space-y-1">
             <a
               href="#"
-              class="border-teal-500 bg-teal-50 text-teal-700 hover:bg-teal-50 hover:text-teal-700 group flex items-center border-l-4 px-3 py-2 text-sm font-medium"
+              class="border-pink-500 bg-pink-50 text-pink-700 hover:bg-pink-50 hover:text-pink-700 group flex items-center border-l-4 px-3 py-2 text-sm font-medium"
               aria-current="page"
             >
               <svg
-                class="text-teal-500 group-hover:text-teal-500 -ml-1 mr-3 h-6 w-6 flex-shrink-0"
+                class="text-pink-500 group-hover:text-pink-500 -ml-1 mr-3 h-6 w-6 flex-shrink-0"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
