@@ -31,7 +31,7 @@ export const useSignUpFormAction = routeAction$(
       path: "/",
       sameSite: "lax",
     });
-    cookie.set("email", "true", {
+    cookie.set("email", email, {
       path: "/",
       sameSite: "lax",
     });

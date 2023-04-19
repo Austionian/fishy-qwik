@@ -1,13 +1,28 @@
-import { component$, useSignal } from "@builder.io/qwik";
-import { useLocation } from "@builder.io/qwik-city";
+import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+import { globalAction$, useLocation, Form } from "@builder.io/qwik-city";
 import Search from "../search/search";
+import { getCookie } from "~/helpers";
 import LINKS from "~/constants/links";
+
+export const useSignOut = globalAction$(async (_, { cookie, redirect }) => {
+  cookie.delete("fish-login");
+  cookie.delete("email");
+
+  throw redirect(302, "/login");
+});
 
 export default component$(() => {
   const showUserMenu = useSignal(false);
   const mobileMenu = useSignal(false);
   const showSearch = useSignal(false);
   const location = useLocation();
+  const email = useSignal("");
+
+  const signOutAction = useSignOut();
+
+  useVisibleTask$(() => {
+    email.value = getCookie("email");
+  });
 
   return (
     <nav
@@ -173,15 +188,17 @@ export default component$(() => {
                     >
                       Your Profile
                     </a>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
-                      role="menuitem"
-                      tabIndex={0}
-                      id="user-menu-item-2"
-                    >
-                      Sign out
-                    </a>
+                    <Form action={signOutAction}>
+                      <button
+                        type="submit"
+                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                        role="menuitem"
+                        tabIndex={0}
+                        id="user-menu-item-2"
+                      >
+                        Sign out
+                      </button>
+                    </Form>
                   </div>
                 ) : null}
               </div>
@@ -223,9 +240,7 @@ export default component$(() => {
               </div>
               <div class="ml-3">
                 <div class="text-base font-medium text-white">Austin</div>
-                <div class="text-sm font-medium text-gray-400">
-                  austin@example.com
-                </div>
+                <div class="text-sm font-medium text-gray-400">{email}</div>
               </div>
             </div>
             <div class="mt-3 space-y-1 px-2">
@@ -236,12 +251,14 @@ export default component$(() => {
                 Your Profile
               </a>
 
-              <a
-                href="#"
-                class="text-gray-400 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium"
-              >
-                Sign out
-              </a>
+              <Form action={signOutAction}>
+                <button
+                  type="submit"
+                  class="w-full text-left text-gray-400 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium"
+                >
+                  Sign out
+                </button>
+              </Form>
             </div>
           </div>
         </div>
