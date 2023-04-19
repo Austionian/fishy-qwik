@@ -71,27 +71,7 @@ export default component$(({ fishData, userDetails }: Props) => {
         >
           <div class="py-1" role="none">
             {SORT_VALUES.map((sort, i) => {
-              if (!userDetails.needed && sort === "Servings") {
-                return (
-                  <a
-                    key={i}
-                    class={
-                      sortBy.value === "Servings"
-                        ? "text-gray-800 hover:bg-gray-100 block px-4 py-2 text-sm bg-gray-100"
-                        : "text-gray-700 hover:bg-gray-100 block px-4 py-2 text-sm cursor-pointer"
-                    }
-                    role="menuitem"
-                    tabIndex={0}
-                    id="sort-menu-item-1"
-                    onClick$={() => {
-                      sortBy.value = "Servings";
-                      showSort.value = !showSort.value;
-                    }}
-                  >
-                    Servings
-                  </a>
-                );
-              } else if (userDetails.needed && sort === "Servings") {
+              if (userDetails.needed && sort === "Servings") {
                 return (
                   <span
                     key={i}
