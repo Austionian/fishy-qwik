@@ -1,4 +1,7 @@
-export default function getCookie(cookie: string) {
+/**
+ *  Returns the cookie value or an empty string.
+ */
+function getCookie(cookie: string) {
   const value = document.cookie
     .split("; ")
     .find((row) => row.startsWith(`${cookie}=`))
@@ -6,3 +9,5 @@ export default function getCookie(cookie: string) {
 
   return value ? value : "";
 }
+
+export default getCookie;
