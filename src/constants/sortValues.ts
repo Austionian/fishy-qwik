@@ -1,4 +1,5 @@
 import type Fish from "~/types/Fish";
+import { calculateServings, getCookie } from "~/helpers";
 
 const SORT_VALUES = [
   "Name",
@@ -14,7 +15,7 @@ const sorter = {
     fn: byName,
   },
   Servings: {
-    fn: byProtein,
+    fn: byServings,
   },
   Protein: {
     fn: byProtein,
@@ -30,12 +31,53 @@ const sorter = {
   },
 };
 
-function byName(a: Fish, b: Fish) {
-  if (a.name < b.name) {
+function getName(fish: Fish) {
+  if (fish.anishinaabe_name) {
+    return fish.anishinaabe_name;
+  }
+  return fish.name;
+}
+
+export function byName(a: Fish, b: Fish) {
+  const aName = getName(a);
+  const bName = getName(b);
+  if (aName < bName) {
     return -1;
   }
-  if (a.name > b.name) {
+  if (aName > bName) {
     return 1;
+  }
+  return 0;
+}
+
+function getServingVal(v: string) {
+  let result;
+  const matches = v.match("([0-9]+).*|(Unrestricted)|(None).*");
+  if (matches) {
+    result = matches[1] || matches[2] || matches[3];
+  }
+  if (result === "Unrestricted") {
+    result = 99;
+  }
+  if (result === "None") {
+    result = 0;
+  }
+  return result;
+}
+
+function byServings(a: Fish, b: Fish) {
+  const weight = getCookie("weight");
+  const age = getCookie("age");
+  const portion = getCookie("portion");
+
+  const a_val = getServingVal(calculateServings(age, weight, portion, a));
+  const b_val = getServingVal(calculateServings(age, weight, portion, b));
+
+  if (Number(a_val) < Number(b_val)) {
+    return 1;
+  }
+  if (Number(a_val) > Number(b_val)) {
+    return -1;
   }
   return 0;
 }

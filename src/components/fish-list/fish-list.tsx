@@ -1,11 +1,12 @@
 import { component$, useSignal } from "@builder.io/qwik";
 import { classNames, calculateServings } from "~/helpers";
-import SORT_VALUES, { sorter } from "~/constants/sortValues";
+import SORT_VALUES, { sorter, byName } from "~/constants/sortValues";
 import type Fish from "~/types/Fish";
 import type UserDetails from "~/types/UserDetails";
 import type SortValues from "~/types/SortValues";
 
 import InfoModal from "~/components/info-modal/info-modal";
+import FishDetails from "../fish-details/fish-details";
 
 type Props = {
   fishData: Fish[];
@@ -85,8 +86,8 @@ export default component$(({ fishData, userDetails }: Props) => {
                 <a
                   class={
                     sortBy.value === sort
-                      ? "text-gray-800 hover:bg-gray-100 block px-4 py-2 text-sm bg-gray-100"
-                      : "text-gray-700 hover:bg-gray-100 block px-4 py-2 text-sm cursor-pointer"
+                      ? "text-gray-900 hover:bg-gray-100 block px-4 py-2 text-sm bg-gray-100"
+                      : "text-gray-700 hover:bg-pink-100 hover:text-pink-700 block px-4 py-2 text-sm cursor-pointer"
                   }
                   key={i}
                   role="menuitem"
@@ -105,7 +106,7 @@ export default component$(({ fishData, userDetails }: Props) => {
         </div>
       )}
       <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
-        {fishData.sort(sorter[sortBy.value].fn || undefined).map((fish, i) => {
+        {fishData.sort(sorter[sortBy.value].fn || byName).map((fish, i) => {
           return (
             <div
               key={i}
@@ -167,36 +168,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                   (window.location.href = `/fish/${fish.fish_id}/`)
                 }
               >
-                <dl class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-2">
-                  <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Protien</dt>
-                    <dd class="mt-1 text-sm text-gray-900">
-                      {fish.protein}
-                      <span class="text-xs text-gray-700">g per 100g</span>
-                    </dd>
-                  </div>
-                  <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">PCB</dt>
-                    <dd class="mt-1 text-sm text-gray-900">
-                      {fish.pcb} <span class="text-xs text-gray-700">ppm</span>
-                    </dd>
-                  </div>
-                  <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">
-                      Omega 3/6 Ratio
-                    </dt>
-                    <dd class="mt-1 text-sm text-gray-900">
-                      {fish.omega_3_ratio}
-                    </dd>
-                  </div>
-                  <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Mercury</dt>
-                    <dd class="mt-1 text-sm text-gray-900">
-                      {fish.mercury}{" "}
-                      <span class="text-xs text-gray-700">ppm</span>
-                    </dd>
-                  </div>
-                </dl>
+                <FishDetails fish={fish} index />
               </div>
               <span
                 class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-pink-400"
