@@ -26,6 +26,8 @@ export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
       needed: true,
       weight: undefined,
       age: undefined,
+      sex: undefined,
+      plan_to_get_pregnant: undefined,
       portion: undefined,
     };
   }
@@ -33,6 +35,8 @@ export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
     needed: false,
     weight: cookie.get("weight")?.value,
     age: cookie.get("age")?.value,
+    sex: cookie.get("sex")?.value,
+    plan_to_get_pregnant: cookie.get("plan_to_get_pregnant")?.value,
     portion: cookie.get("portion")?.value,
   };
 });

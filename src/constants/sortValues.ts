@@ -69,9 +69,15 @@ function byServings(a: Fish, b: Fish) {
   const weight = getCookie("weight");
   const age = getCookie("age");
   const portion = getCookie("portion");
+  const sex = getCookie("sex");
+  const plan_to_get_pregnant = getCookie("plan_to_get_pregnant");
 
-  const a_val = getServingVal(calculateServings(age, weight, portion, a));
-  const b_val = getServingVal(calculateServings(age, weight, portion, b));
+  const a_val = getServingVal(
+    calculateServings(age, weight, portion, sex, plan_to_get_pregnant, a)
+  );
+  const b_val = getServingVal(
+    calculateServings(age, weight, portion, sex, plan_to_get_pregnant, b)
+  );
 
   if (Number(a_val) < Number(b_val)) {
     return 1;

@@ -43,6 +43,8 @@ export default (
   age: string,
   weight: string,
   portion: string,
+  sex: string,
+  plan_to_get_pregnant: string,
   fishData: Fish
 ) => {
   const age_p = parseInt(age);
@@ -50,8 +52,7 @@ export default (
   const portion_p = parseInt(portion);
 
   let mult: number;
-  if (age_p <= 18) {
-    // include sex female and y plan to get preg || (sex==='F' && preg==="Y")
+  if (age_p <= 18 || (sex === "Female" && plan_to_get_pregnant === "Yes")) {
     mult = 1;
   } else {
     mult = 3;

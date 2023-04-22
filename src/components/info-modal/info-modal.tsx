@@ -14,6 +14,8 @@ export const useSignUpFormAction = globalAction$(
   async (infoForm, { cookie }) => {
     const weight = infoForm.weight;
     const age = infoForm.age;
+    const sex = infoForm.sex;
+    const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "";
     const portion = infoForm.portion;
     // if (cookie.get("email")) {
     //   // save to db
@@ -23,6 +25,14 @@ export const useSignUpFormAction = globalAction$(
       sameSite: "lax",
     });
     cookie.set("weight", weight, {
+      path: "/",
+      sameSite: "lax",
+    });
+    cookie.set("sex", sex, {
+      path: "/",
+      sameSite: "lax",
+    });
+    cookie.set("plan_to_get_pregnant", plan_to_get_pregnant, {
       path: "/",
       sameSite: "lax",
     });
@@ -41,6 +51,8 @@ export const useSignUpFormAction = globalAction$(
       .min(1, { message: "Weight must be at least 1." })
       .max(350, { message: "Weight cannot be more than 350." }),
     age: z.coerce.number().min(1).max(100),
+    sex: z.enum(["Male", "Female"]),
+    plan_to_get_pregnant: z.enum(["Yes", "No"]).optional(),
     portion: z.enum(PORTION_VALUES),
   })
 );
@@ -48,14 +60,21 @@ export const useSignUpFormAction = globalAction$(
 export default component$(({ showUserInputModal }: infoModalProps) => {
   const formAction = useSignUpFormAction();
   const userData = useSignal<UserDetails>();
+  const isMale = useSignal(true);
 
   useVisibleTask$(() => {
     userData.value = {
       needed: Boolean(getCookie("user-details")),
       age: getCookie("age"),
       weight: getCookie("weight"),
+      sex: getCookie("sex"),
+      plan_to_get_pregnant: getCookie("plan_to_get_pregnant"),
       portion: getCookie("portion"),
     };
+
+    if (userData.value.sex === "Female") {
+      isMale.value = false;
+    }
   });
 
   return (
@@ -178,6 +197,46 @@ export default component$(({ showUserInputModal }: infoModalProps) => {
                   )}
                 </div>
               </div>
+              <div class="my-2">
+                <label for="sex" class="text-sm font-semibold text-gray-900">
+                  Sex
+                </label>
+                <div class="mt-2">
+                  <select
+                    id="sex"
+                    name="sex"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    onChange$={(e) =>
+                      (isMale.value = e.target.value === "Male")
+                    }
+                    value={userData.value?.sex}
+                  >
+                    <option>Male</option>
+                    <option>Female</option>
+                  </select>
+                </div>
+              </div>
+              {!isMale.value && (
+                <div class="my-2">
+                  <label
+                    for="plan_to_get_pregnant"
+                    class="text-sm font-semibold text-gray-900"
+                  >
+                    Plan to get pregnant?
+                  </label>
+                  <div class="mt-2">
+                    <select
+                      id="plan_to_get_pregnant"
+                      name="plan_to_get_pregnant"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      value={userData.value?.plan_to_get_pregnant}
+                    >
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                  </div>
+                </div>
+              )}
               <div class="my-2">
                 <label class="text-sm font-semibold text-gray-900">
                   Portion Size
