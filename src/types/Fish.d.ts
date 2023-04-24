@@ -10,6 +10,7 @@ type Fish = {
   mercury: number;
   omega_3: number;
   omega_3_ratio: number;
+  servings: string;
 };
 
 export default Fish;

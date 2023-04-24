@@ -10,11 +10,13 @@ import FishDetails from "../fish-details/fish-details";
 
 type Props = {
   fishData: Fish[];
-  userDetails: UserDetails;
+  userDetails: {
+    data: UserDetails;
+  };
 };
 
 export default component$(({ fishData, userDetails }: Props) => {
-  const showUserDetialsModal = useSignal(userDetails.needed);
+  const showUserDetialsModal = useSignal(userDetails.data.needed);
   const showSortMenu = useSignal(false);
   const sortBy = useSignal<SortValues>("Name");
 
@@ -27,7 +29,10 @@ export default component$(({ fishData, userDetails }: Props) => {
   return (
     <>
       {showUserDetialsModal.value && (
-        <InfoModal showUserInputModal={showUserDetialsModal} />
+        <InfoModal
+          showUserInputModal={showUserDetialsModal}
+          userDetails={userDetails}
+        />
       )}
       <div class="max-w-min mb-2">
         <div class="relative">
@@ -77,7 +82,7 @@ export default component$(({ fishData, userDetails }: Props) => {
         >
           <div class="py-1" role="none">
             {SORT_VALUES.map((sort, i) => {
-              if (userDetails.needed && sort === "Servings") {
+              if (userDetails.data.needed && sort === "Servings") {
                 return (
                   <span
                     key={i}
@@ -150,20 +155,14 @@ export default component$(({ fishData, userDetails }: Props) => {
               </div>
               <div onClick$={() => (showUserDetialsModal.value = true)}>
                 <span class="cursor-pointer ml-4 inline-flex items-center rounded-full bg-pink-100 px-3 py-0.5 text-sm font-medium text-pink-800 hover:bg-pink-200 hover:text-pink-900 hover:ring-pink-300 hover:ring-2">
-                  {!userDetails.needed &&
-                  userDetails.weight !== undefined &&
-                  userDetails.age !== undefined &&
-                  userDetails.sex !== undefined &&
-                  userDetails.portion !== undefined
-                    ? calculateServings(
-                        userDetails.age,
-                        userDetails.weight,
-                        userDetails.portion,
-                        userDetails.sex,
-                        userDetails.plan_to_get_pregnant || "",
-                        fish
-                      )
-                    : "? servings per week"}
+                  {calculateServings(
+                    userDetails.data.age,
+                    userDetails.data.weight,
+                    userDetails.data.portion,
+                    userDetails.data.sex,
+                    userDetails.data.plan_to_get_pregnant || "",
+                    fish
+                  )}
                 </span>
               </div>
             </div>

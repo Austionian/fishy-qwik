@@ -1,4 +1,4 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useStore } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import FishList from "~/components/fish-list/fish-list";
 import { getAPIKey, getUserDetials } from "~/helpers";
@@ -25,8 +25,11 @@ export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
 export default component$(() => {
   const fishData = useFishData();
   const userDetails = useUserDetails();
+  const userDetailsStore = useStore({
+    data: userDetails.value,
+  });
 
-  return <FishList fishData={fishData.value} userDetails={userDetails.value} />;
+  return <FishList fishData={fishData.value} userDetails={userDetailsStore} />;
 });
 
 export const head: DocumentHead = {

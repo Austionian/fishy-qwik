@@ -40,16 +40,16 @@ import type Fish from "~/types/Fish";
 // }
 
 export default (
-  age: string,
-  weight: string,
-  portion: string,
-  sex: string,
-  plan_to_get_pregnant: string,
+  age: string | undefined,
+  weight: string | undefined,
+  portion: string | undefined,
+  sex: string | undefined,
+  plan_to_get_pregnant: string | undefined,
   fishData: Fish
 ) => {
-  const age_p = parseInt(age);
-  const weight_p = parseInt(weight);
-  const portion_p = parseInt(portion);
+  const age_p = parseInt(age || "0");
+  const weight_p = parseInt(weight || "0");
+  const portion_p = parseInt(portion || "0");
 
   let mult: number;
   if (age_p <= 18 || (sex === "Female" && plan_to_get_pregnant === "Yes")) {
@@ -122,6 +122,6 @@ function getString(a: number): string {
   } else if (a > 14) {
     return "Unrestricted";
   } else {
-    return "? per month";
+    return "? servings per month";
   }
 }

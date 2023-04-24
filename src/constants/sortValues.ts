@@ -56,6 +56,9 @@ function getServingVal(v: string) {
   if (matches) {
     result = matches[1] || matches[2] || matches[3];
   }
+  if (v.match(".*(week)")) {
+    result = Number(result) * 4;
+  }
   if (result === "Unrestricted") {
     result = 99;
   }
