@@ -209,7 +209,7 @@ export default component$(({ showUserInputModal }: infoModalProps) => {
                     onChange$={(e) =>
                       (isMale.value = e.target.value === "Male")
                     }
-                    value={userData.value?.sex}
+                    value={userData.value?.sex || "Male"}
                   >
                     <option>Male</option>
                     <option>Female</option>
