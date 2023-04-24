@@ -1,6 +1,6 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { component$, useSignal, useTask$ } from "@builder.io/qwik";
 import { classNames, calculateServings } from "~/helpers";
-import SORT_VALUES, { sorter, byName } from "~/constants/sortValues";
+import SORT_VALUES, { sorter } from "~/constants/sortValues";
 import type Fish from "~/types/Fish";
 import type UserDetails from "~/types/UserDetails";
 import type SortValues from "~/types/SortValues";
@@ -14,14 +14,20 @@ type Props = {
 };
 
 export default component$(({ fishData, userDetails }: Props) => {
-  const showUserDetialsBadge = useSignal(false);
+  const showUserDetialsModal = useSignal(false);
   const showSort = useSignal(false);
   const sortBy = useSignal<SortValues>("Name");
 
+  useTask$(async ({ track }) => {
+    track(() => sortBy.value);
+
+    fishData.sort(sorter[sortBy.value].fn);
+  });
+
   return (
     <>
-      {showUserDetialsBadge.value && (
-        <InfoModal showUserInputModal={showUserDetialsBadge} />
+      {showUserDetialsModal.value && (
+        <InfoModal showUserInputModal={showUserDetialsModal} />
       )}
       <div class="max-w-min mb-2">
         <div class="relative">
@@ -61,7 +67,6 @@ export default component$(({ fishData, userDetails }: Props) => {
           </button>
         </div>
       </div>
-
       {showSort.value && (
         <div
           class="absolute z-10 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -106,7 +111,7 @@ export default component$(({ fishData, userDetails }: Props) => {
         </div>
       )}
       <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
-        {fishData.sort(sorter[sortBy.value].fn || byName).map((fish, i) => {
+        {fishData.map((fish, i) => {
           return (
             <div
               key={i}
@@ -146,7 +151,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                     {fish.anishinaabe_name ? ` ${fish.name}` : null}
                   </span>
                 </div>
-                <div onClick$={() => (showUserDetialsBadge.value = true)}>
+                <div onClick$={() => (showUserDetialsModal.value = true)}>
                   <span class="cursor-pointer ml-4 inline-flex items-center rounded-full bg-pink-100 px-3 py-0.5 text-sm font-medium text-pink-800 hover:bg-pink-200 hover:text-pink-900 hover:ring-pink-300 hover:ring-2">
                     {!userDetails.needed &&
                     userDetails.weight !== undefined &&

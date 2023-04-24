@@ -1,7 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import FishList from "~/components/fish-list/fish-list";
-import { getAPIKey } from "~/helpers";
+import { getAPIKey, getUserDetials } from "~/helpers";
 import type Fish from "~/types/Fish";
 import type UserDetails from "~/types/UserDetails";
 
@@ -19,24 +19,7 @@ export const useFishData = routeLoader$<Fish[]>(async ({ env, params }) => {
 });
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
-  if (!cookie.get("user-details")) {
-    return {
-      needed: true,
-      weight: undefined,
-      age: undefined,
-      sex: undefined,
-      plan_to_get_pregnant: undefined,
-      portion: undefined,
-    };
-  }
-  return {
-    needed: false,
-    weight: cookie.get("weight")?.value,
-    age: cookie.get("age")?.value,
-    sex: cookie.get("sex")?.value,
-    plan_to_get_pregnant: cookie.get("plan_to_get_pregnant")?.value,
-    portion: cookie.get("portion")?.value,
-  };
+  return getUserDetials(cookie);
 });
 
 export default component$(() => {

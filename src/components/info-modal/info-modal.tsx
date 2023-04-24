@@ -1,4 +1,4 @@
-import { component$, useSignal, useTask$ } from "@builder.io/qwik";
+import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import PORTIONS, { PORTION_VALUES } from "~/constants/portions";
 import { Form, globalAction$, zod$, z } from "@builder.io/qwik-city";
 import { getCookie } from "~/helpers";
@@ -62,7 +62,7 @@ export default component$(({ showUserInputModal }: infoModalProps) => {
   const userData = useSignal<UserDetails>();
   const isMale = useSignal(true);
 
-  useTask$(() => {
+  useVisibleTask$(async () => {
     userData.value = {
       needed: Boolean(getCookie("user-details")),
       age: getCookie("age"),
