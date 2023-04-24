@@ -27,11 +27,7 @@ export default component$(() => {
   const userDetails = useUserDetails();
   const fishData = useFishData();
 
-  return (
-    <div>
-      <FishList fishData={fishData.value} userDetails={userDetails.value} />
-    </div>
-  );
+  return <FishList fishData={fishData.value} userDetails={userDetails.value} />;
 });
 
 export const head: DocumentHead = {
