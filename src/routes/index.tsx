@@ -1,11 +1,10 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { component$ } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import { getAPIKey, getUserDetials } from "~/helpers";
 import type Fish from "~/types/Fish";
 import type UserDetails from "~/types/UserDetails";
 
 import FishList from "~/components/fish-list/fish-list";
-import InfoModal from "~/components/info-modal/info-modal";
 
 export const useFishData = routeLoader$<Fish[]>(async ({ env }) => {
   const apiKey = getAPIKey(env);
@@ -27,13 +26,9 @@ export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
 export default component$(() => {
   const userDetails = useUserDetails();
   const fishData = useFishData();
-  const showUserInputModal = useSignal(userDetails.value.needed);
 
   return (
     <div>
-      {showUserInputModal.value && (
-        <InfoModal showUserInputModal={showUserInputModal} />
-      )}
       <FishList fishData={fishData.value} userDetails={userDetails.value} />
     </div>
   );

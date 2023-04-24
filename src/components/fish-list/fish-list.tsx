@@ -14,8 +14,8 @@ type Props = {
 };
 
 export default component$(({ fishData, userDetails }: Props) => {
-  const showUserDetialsModal = useSignal(false);
-  const showSort = useSignal(false);
+  const showUserDetialsModal = useSignal(userDetails.needed);
+  const showSortMenu = useSignal(false);
   const sortBy = useSignal<SortValues>("Name");
 
   useTask$(async ({ track }) => {
@@ -37,7 +37,7 @@ export default component$(({ fishData, userDetails }: Props) => {
             id="sort-menu-button"
             aria-expanded="false"
             aria-haspopup="true"
-            onClick$={() => (showSort.value = !showSort.value)}
+            onClick$={() => (showSortMenu.value = !showSortMenu.value)}
           >
             <svg
               class="-ml-0.5 h-5 w-5 text-gray-400"
@@ -67,7 +67,7 @@ export default component$(({ fishData, userDetails }: Props) => {
           </button>
         </div>
       </div>
-      {showSort.value && (
+      {showSortMenu.value && (
         <div
           class="absolute z-10 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
@@ -100,7 +100,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                   id="sort-menu-item-0"
                   onClick$={() => {
                     sortBy.value = sort;
-                    showSort.value = !showSort.value;
+                    showSortMenu.value = !showSortMenu.value;
                   }}
                 >
                   {sort}

@@ -20,6 +20,7 @@ export const useSignUpFormAction = globalAction$(
     // if (cookie.get("email")) {
     //   // save to db
     // }
+    //
     cookie.set("age", age, {
       path: "/",
       sameSite: "lax",
@@ -44,6 +45,10 @@ export const useSignUpFormAction = globalAction$(
       path: "/",
       sameSite: "lax",
     });
+
+    return {
+      success: false,
+    };
   },
   zod$({
     weight: z.coerce
@@ -139,8 +144,8 @@ export default component$(({ showUserInputModal }: infoModalProps) => {
             <Form
               action={formAction}
               onSubmitCompleted$={() => {
-                if (!formAction.value?.failed) {
-                  window.location.reload();
+                if (formAction.status === 200) {
+                  showUserInputModal.value = false;
                 }
               }}
             >

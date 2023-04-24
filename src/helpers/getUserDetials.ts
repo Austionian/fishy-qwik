@@ -1,5 +1,5 @@
 import { type Cookie } from "@builder.io/qwik-city";
-import UserDetails from "~/types/UserDetails";
+import type UserDetails from "~/types/UserDetails";
 
 export default (cookie: Cookie): UserDetails => {
   if (!cookie.get("user-details")) {
