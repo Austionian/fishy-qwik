@@ -81,37 +81,25 @@ export default component$(({ fishData, userDetails }: Props) => {
           tabIndex={0}
         >
           <div class="py-1" role="none">
-            {SORT_VALUES.map((sort, i) => {
-              if (userDetails.data.needed && sort === "Servings") {
-                return (
-                  <span
-                    key={i}
-                    class="block px-4 py-2 text-sm text-gray-400 bg-gray-50"
-                  >
-                    Servings
-                  </span>
-                );
-              }
-              return (
-                <a
-                  class={
-                    sortBy.value === sort
-                      ? "text-gray-900 hover:bg-gray-100 block px-4 py-2 text-sm bg-gray-100"
-                      : "text-gray-700 hover:bg-pink-100 hover:text-pink-700 block px-4 py-2 text-sm cursor-pointer"
-                  }
-                  key={i}
-                  role="menuitem"
-                  tabIndex={0}
-                  id="sort-menu-item-0"
-                  onClick$={() => {
-                    sortBy.value = sort;
-                    showSortMenu.value = !showSortMenu.value;
-                  }}
-                >
-                  {sort}
-                </a>
-              );
-            })}
+            {SORT_VALUES.map((sort, i) => (
+              <a
+                class={
+                  sortBy.value === sort
+                    ? "text-gray-900 hover:bg-gray-100 block px-4 py-2 text-sm bg-gray-100"
+                    : "text-gray-700 hover:bg-pink-100 hover:text-pink-700 block px-4 py-2 text-sm cursor-pointer"
+                }
+                key={i}
+                role="menuitem"
+                tabIndex={0}
+                id="sort-menu-item-0"
+                onClick$={() => {
+                  sortBy.value = sort;
+                  showSortMenu.value = !showSortMenu.value;
+                }}
+              >
+                {sort}
+              </a>
+            ))}
           </div>
         </div>
       )}
