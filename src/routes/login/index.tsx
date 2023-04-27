@@ -53,7 +53,7 @@ export const useGuestOption = routeAction$(
       path: "/",
       sameSite: "lax",
     });
-    const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
+    const redirectUrl = new URL(url).searchParams.get("redirect") || "/splash/";
     throw redirect(303, redirectUrl);
   }
 );
@@ -71,15 +71,8 @@ export default component$(() => {
         />
 
         <h1 class="my-6 text-center text-5xl text-gray-100 font-bold tracking-tight">
-          Boozhoo!
+          Gigiigoo
         </h1>
-        <div class="text-left text-gray-100 px-2">
-          <p>
-            This app calculates your safe consumption levels of fish that are
-            caught in the 1836 Treaty territories monitored by the
-            Chippewa-Ottawa Resource Authority!
-          </p>
-        </div>
       </div>
 
       <div class="mt-14 sm:mx-auto sm:w-full sm:max-w-md">
