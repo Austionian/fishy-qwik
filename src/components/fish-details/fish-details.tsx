@@ -32,7 +32,7 @@ export default component$(({ fish, index }: Props) => (
         )}
       </div>
       <dd class="mt-1 text-sm text-gray-900">
-        {fish.protein}
+        {fish.protein.toFixed(3)}
         <span class="text-xs text-gray-700">g per 100g</span>
       </dd>
     </div>
@@ -54,7 +54,7 @@ export default component$(({ fish, index }: Props) => (
         )}
       </div>
       <dd class="mt-1 text-sm text-gray-900">
-        {fish.pcb} <span class="text-xs text-gray-700">ppm</span>
+        {fish.pcb.toFixed(3)} <span class="text-xs text-gray-700">ppm</span>
       </dd>
     </div>
     <div class="sm:col-span-1">
@@ -74,7 +74,9 @@ export default component$(({ fish, index }: Props) => (
           </svg>
         )}
       </div>
-      <dd class="mt-1 text-sm text-gray-900">{fish.omega_3_ratio}</dd>
+      <dd class="mt-1 text-sm text-gray-900">
+        {fish.omega_3_ratio.toFixed(3)}
+      </dd>
     </div>
     <div class="sm:col-span-1">
       <div class="flex items-center">
@@ -94,7 +96,7 @@ export default component$(({ fish, index }: Props) => (
         )}
       </div>
       <dd class="mt-1 text-sm text-gray-900">
-        {fish.mercury} <span class="text-xs text-gray-700">ppm</span>
+        {fish.mercury.toFixed(3)} <span class="text-xs text-gray-700">ppm</span>
       </dd>
     </div>
     {!index && (

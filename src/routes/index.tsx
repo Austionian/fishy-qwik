@@ -9,7 +9,7 @@ import FishList from "~/components/fish-list/fish-list";
 export const useFishData = routeLoader$<Fish[]>(async ({ env }) => {
   const apiKey = getAPIKey(env);
   const res = await fetch(
-    "https://fishy-edge-tvp4i.ondigitalocean.app/v1/fishs?lake=Store",
+    "https://fishy-edge-tvp4i.ondigitalocean.app/v1/fish_avgs",
     {
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -37,7 +37,9 @@ export default component$(() => {
     },
   });
 
-  return <FishList fishData={fishData.value} userDetails={userDetailsStore} />;
+  return (
+    <FishList fishData={fishData.value} userDetails={userDetailsStore} index />
+  );
 });
 
 export const head: DocumentHead = {

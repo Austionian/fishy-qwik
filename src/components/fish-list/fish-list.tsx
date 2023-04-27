@@ -13,9 +13,10 @@ type Props = {
   userDetails: {
     data: UserDetails;
   };
+  index: Boolean;
 };
 
-export default component$(({ fishData, userDetails }: Props) => {
+export default component$(({ fishData, userDetails, index }: Props) => {
   const showUserDetialsModal = useSignal(userDetails.data.needed);
   const showSortMenu = useSignal(false);
   const sortBy = useSignal<SortValues>("Name");
@@ -104,72 +105,75 @@ export default component$(({ fishData, userDetails }: Props) => {
         </div>
       )}
       <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
-        {fishData.map((fish, i) => (
-          <div
-            key={i}
-            class={classNames(
-              i === 0 ? "rounded-tl-lg rounded-tr-lg sm:rounded-tr-none" : "",
-              i === 1 ? "sm:rounded-tr-lg" : "",
-              i === fishData.length - 2 ? "sm:rounded-bl-lg" : "",
-              i === fishData.length - 1
-                ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
-                : "",
-              "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500"
-            )}
-          >
+        {fishData.map((fish, i) => {
+          const link = index
+            ? `/fish/type/${fish.fish_id}/`
+            : `/fish/${fish.fish_id}/`;
+          return (
             <div
-              class="cursor-pointer"
-              onClick$={() => (window.location.href = `/fish/${fish.fish_id}/`)}
+              key={i}
+              class={classNames(
+                i === 0 ? "rounded-tl-lg rounded-tr-lg sm:rounded-tr-none" : "",
+                i === 1 ? "sm:rounded-tr-lg" : "",
+                i === fishData.length - 2 ? "sm:rounded-bl-lg" : "",
+                i === fishData.length - 1
+                  ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
+                  : "",
+                "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500"
+              )}
             >
-              <img
-                src={`/images/${fish.fish_image}`}
-                alt={fish.name}
-                class="min-w-48 h-36"
-              />
-            </div>
-            <div class="mt-8 flex justify-between">
               <div
-                class="cursor-pointer flex-grow"
-                onClick$={() =>
-                  (window.location.href = `/fish/${fish.fish_id}/`)
-                }
+                class="cursor-pointer"
+                onClick$={() => (window.location.href = link)}
               >
-                <p class="font-bold underline">
-                  {fish.anishinaabe_name ? fish.anishinaabe_name : fish.name}
-                </p>
-                <span class="text-sm">
-                  {fish.anishinaabe_name ? ` ${fish.name}` : null}
-                </span>
+                <img
+                  src={`/images/${fish.fish_image}`}
+                  alt={fish.name}
+                  class="min-w-48 h-36"
+                />
               </div>
-              <div onClick$={() => (showUserDetialsModal.value = true)}>
-                <span class="cursor-pointer ml-4 inline-flex items-center rounded-full bg-teal-100 px-3 py-0.5 text-sm font-medium text-teal-800 hover:bg-teal-200 hover:text-teal-900 hover:ring-teal-300 hover:ring-2">
-                  {calculateServings(
-                    userDetails.data.age,
-                    userDetails.data.weight,
-                    userDetails.data.portion,
-                    userDetails.data.sex,
-                    userDetails.data.plan_to_get_pregnant || "",
-                    fish
-                  )}
-                </span>
+              <div class="mt-8 flex justify-between">
+                <div
+                  class="cursor-pointer flex-grow"
+                  onClick$={() => (window.location.href = link)}
+                >
+                  <p class="font-bold underline">
+                    {fish.anishinaabe_name ? fish.anishinaabe_name : fish.name}
+                  </p>
+                  <span class="text-sm">
+                    {fish.anishinaabe_name ? ` ${fish.name}` : null}
+                  </span>
+                </div>
+                <div onClick$={() => (showUserDetialsModal.value = true)}>
+                  <span class="cursor-pointer ml-4 inline-flex items-center rounded-full bg-teal-100 px-3 py-0.5 text-sm font-medium text-teal-800 hover:bg-teal-200 hover:text-teal-900 hover:ring-teal-300 hover:ring-2">
+                    {calculateServings(
+                      userDetails.data.age,
+                      userDetails.data.weight,
+                      userDetails.data.portion,
+                      userDetails.data.sex,
+                      userDetails.data.plan_to_get_pregnant || "",
+                      fish
+                    )}
+                  </span>
+                </div>
               </div>
+              <div
+                class="pt-5 cursor-pointer"
+                onClick$={() => (window.location.href = link)}
+              >
+                <FishDetails fish={fish} index />
+              </div>
+              <span
+                class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-teal-400"
+                aria-hidden="true"
+              >
+                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z" />
+                </svg>
+              </span>
             </div>
-            <div
-              class="pt-5 cursor-pointer"
-              onClick$={() => (window.location.href = `/fish/${fish.fish_id}/`)}
-            >
-              <FishDetails fish={fish} index />
-            </div>
-            <span
-              class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-teal-400"
-              aria-hidden="true"
-            >
-              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z" />
-              </svg>
-            </span>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </>
   );
