@@ -29,7 +29,13 @@ export default component$(() => {
     data: userDetails.value,
   });
 
-  return <FishList fishData={fishData.value} userDetails={userDetailsStore} />;
+  return (
+    <FishList
+      fishData={fishData.value}
+      userDetails={userDetailsStore}
+      index={false}
+    />
+  );
 });
 
 export const head: DocumentHead = {
