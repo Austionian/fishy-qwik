@@ -1,5 +1,9 @@
 import { component$, useStore } from "@builder.io/qwik";
-import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
+import {
+  type DocumentHead,
+  routeLoader$,
+  useLocation,
+} from "@builder.io/qwik-city";
 import FishList from "~/components/fish-list/fish-list";
 import { getAPIKey, getUserDetials } from "~/helpers";
 import type Fish from "~/types/Fish";
@@ -28,12 +32,13 @@ export default component$(() => {
   const userDetailsStore = useStore({
     data: userDetails.value,
   });
+  const location = useLocation();
 
   return (
     <FishList
       fishData={fishData.value}
       userDetails={userDetailsStore}
-      index={false}
+      location={location.url.pathname.split("/")[2]}
     />
   );
 });

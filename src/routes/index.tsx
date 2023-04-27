@@ -38,7 +38,11 @@ export default component$(() => {
   });
 
   return (
-    <FishList fishData={fishData.value} userDetails={userDetailsStore} index />
+    <FishList
+      fishData={fishData.value}
+      userDetails={userDetailsStore}
+      location={"/"}
+    />
   );
 });
 

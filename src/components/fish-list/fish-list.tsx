@@ -6,17 +6,18 @@ import type UserDetails from "~/types/UserDetails";
 import type SortValues from "~/types/SortValues";
 
 import InfoModal from "~/components/info-modal/info-modal";
-import FishDetails from "../fish-details/fish-details";
+import FishDetails from "~/components/fish-details/fish-details";
+import LakeFilters from "../lake-filters/lake-filters";
 
 type Props = {
   fishData: Fish[];
   userDetails: {
     data: UserDetails;
   };
-  index: Boolean;
+  location: string;
 };
 
-export default component$(({ fishData, userDetails, index }: Props) => {
+export default component$(({ fishData, userDetails, location }: Props) => {
   const showUserDetialsModal = useSignal(userDetails.data.needed);
   const showSortMenu = useSignal(false);
   const sortBy = useSignal<SortValues>("Name");
@@ -35,80 +36,86 @@ export default component$(({ fishData, userDetails, index }: Props) => {
           userDetails={userDetails}
         />
       )}
-      <div class="max-w-min mb-2">
-        <div class="relative">
-          <button
-            type="button"
-            class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            id="sort-menu-button"
-            aria-expanded="false"
-            aria-haspopup="true"
-            onClick$={() => (showSortMenu.value = !showSortMenu.value)}
-          >
-            <svg
-              class="-ml-0.5 h-5 w-5 text-gray-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
+      <div class="flex justify-between">
+        <LakeFilters location={location} />
+        <div>
+          <div class="max-w-min mb-2">
+            <div class="relative">
+              <button
+                type="button"
+                class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                id="sort-menu-button"
+                aria-expanded="false"
+                aria-haspopup="true"
+                onClick$={() => (showSortMenu.value = !showSortMenu.value)}
+              >
+                <svg
+                  class="-ml-0.5 h-5 w-5 text-gray-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M2 3.75A.75.75 0 012.75 3h11.5a.75.75 0 010 1.5H2.75A.75.75 0 012 3.75zM2 7.5a.75.75 0 01.75-.75h6.365a.75.75 0 010 1.5H2.75A.75.75 0 012 7.5zM14 7a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02l-1.95-2.1v6.59a.75.75 0 01-1.5 0V9.66l-1.95 2.1a.75.75 0 11-1.1-1.02l3.25-3.5A.75.75 0 0114 7zM2 11.25a.75.75 0 01.75-.75H7A.75.75 0 017 12H2.75a.75.75 0 01-.75-.75z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Sort
+                <svg
+                  class="-mr-1 h-5 w-5 text-gray-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          {showSortMenu.value && (
+            <div
+              class="absolute z-10 w-56 origin-right translate-x-[-55%] rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="sort-menu-button"
+              tabIndex={0}
             >
-              <path
-                fill-rule="evenodd"
-                d="M2 3.75A.75.75 0 012.75 3h11.5a.75.75 0 010 1.5H2.75A.75.75 0 012 3.75zM2 7.5a.75.75 0 01.75-.75h6.365a.75.75 0 010 1.5H2.75A.75.75 0 012 7.5zM14 7a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02l-1.95-2.1v6.59a.75.75 0 01-1.5 0V9.66l-1.95 2.1a.75.75 0 11-1.1-1.02l3.25-3.5A.75.75 0 0114 7zM2 11.25a.75.75 0 01.75-.75H7A.75.75 0 017 12H2.75a.75.75 0 01-.75-.75z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            Sort
-            <svg
-              class="-mr-1 h-5 w-5 text-gray-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </button>
+              <div class="py-1" role="none">
+                {SORT_VALUES.map((sort, i) => (
+                  <a
+                    class={
+                      sortBy.value === sort
+                        ? "text-gray-900 block px-4 py-2 text-sm bg-gray-100"
+                        : "text-gray-700 hover:bg-gray-100 hover:text-gray-800 block px-4 py-2 text-sm cursor-pointer"
+                    }
+                    key={i}
+                    role="menuitem"
+                    tabIndex={0}
+                    id="sort-menu-item-0"
+                    onClick$={() => {
+                      sortBy.value = sort;
+                      showSortMenu.value = !showSortMenu.value;
+                    }}
+                  >
+                    {sort}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      {showSortMenu.value && (
-        <div
-          class="absolute z-10 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-          role="menu"
-          aria-orientation="vertical"
-          aria-labelledby="sort-menu-button"
-          tabIndex={0}
-        >
-          <div class="py-1" role="none">
-            {SORT_VALUES.map((sort, i) => (
-              <a
-                class={
-                  sortBy.value === sort
-                    ? "text-gray-900 hover:bg-gray-100 block px-4 py-2 text-sm bg-gray-100"
-                    : "text-gray-700 hover:bg-teal-100 hover:text-teal-700 block px-4 py-2 text-sm cursor-pointer"
-                }
-                key={i}
-                role="menuitem"
-                tabIndex={0}
-                id="sort-menu-item-0"
-                onClick$={() => {
-                  sortBy.value = sort;
-                  showSortMenu.value = !showSortMenu.value;
-                }}
-              >
-                {sort}
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
       <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
         {fishData.map((fish, i) => {
-          const link = index
-            ? `/fish/type/${fish.fish_id}/`
-            : `/fish/${fish.fish_id}/`;
+          const link =
+            location === "/"
+              ? `/fish/type/${fish.fish_id}/`
+              : `/fish/${fish.fish_id}/`;
           return (
             <div
               key={i}

@@ -2,12 +2,12 @@ import type Fish from "~/types/Fish";
 import { calculateServings, getCookie } from "~/helpers";
 
 const SORT_VALUES = [
+  "Servings",
   "Name",
   "Protein",
   "PCB",
   "Omega_3_ratio",
   "Mercury",
-  "Servings",
 ] as const;
 
 const sorter = {
