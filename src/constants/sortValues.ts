@@ -82,6 +82,13 @@ function byServings(a: Fish, b: Fish) {
     calculateServings(age, weight, portion, sex, plan_to_get_pregnant, b)
   );
 
+  if (a.name === "Tilapia") {
+    return 1;
+  }
+  if (b.name === "Tilapia") {
+    return -1;
+  }
+
   if (Number(a_val) < Number(b_val)) {
     return 1;
   }
