@@ -3,7 +3,7 @@ import { zod$, z, Form, routeAction$ } from "@builder.io/qwik-city";
 import getAPIKey from "~/helpers/getAPIKey";
 
 export const useSignUpFormAction = routeAction$(
-  async (signUpForm, { env, url, redirect, cookie }) => {
+  async (signUpForm, { env, redirect, cookie }) => {
     const email = signUpForm.email;
     const apiKey = getAPIKey(env);
     const response = await fetch(
@@ -43,20 +43,18 @@ export const useSignUpFormAction = routeAction$(
   })
 );
 
-export const useGuestOption = routeAction$(
-  async (_, { url, cookie, redirect }) => {
-    cookie.set("fish-login", "true", {
-      path: "/",
-      sameSite: "lax",
-    });
-    cookie.set("guest", "true", {
-      path: "/",
-      sameSite: "lax",
-    });
-    // const redirectUrl = new URL(url).searchParams.get("redirect") || "/splash/";
-    throw redirect(303, "/splash/");
-  }
-);
+export const useGuestOption = routeAction$(async (_, { cookie, redirect }) => {
+  cookie.set("fish-login", "true", {
+    path: "/",
+    sameSite: "lax",
+  });
+  cookie.set("guest", "true", {
+    path: "/",
+    sameSite: "lax",
+  });
+  // const redirectUrl = new URL(url).searchParams.get("redirect") || "/splash/";
+  throw redirect(303, "/splash/");
+});
 
 export default component$(() => {
   const action = useSignUpFormAction();
