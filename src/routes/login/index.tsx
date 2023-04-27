@@ -35,8 +35,8 @@ export const useSignUpFormAction = routeAction$(
       path: "/",
       sameSite: "lax",
     });
-    const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
-    throw redirect(303, redirectUrl);
+    // const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
+    throw redirect(303, "/splash/");
   },
   zod$({
     email: z.string().email().nonempty(),
@@ -53,8 +53,8 @@ export const useGuestOption = routeAction$(
       path: "/",
       sameSite: "lax",
     });
-    const redirectUrl = new URL(url).searchParams.get("redirect") || "/splash/";
-    throw redirect(303, redirectUrl);
+    // const redirectUrl = new URL(url).searchParams.get("redirect") || "/splash/";
+    throw redirect(303, "/splash/");
   }
 );
 
