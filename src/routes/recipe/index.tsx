@@ -32,7 +32,7 @@ export default component$(() => {
                 i === recipeData.value.length - 1
                   ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
                   : "",
-                "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-pink-500"
+                "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500"
               )}
             >
               <a href={"/recipe/" + recipe.id + "/"}>
@@ -42,7 +42,7 @@ export default component$(() => {
                   </div>
                 </div>
                 <span
-                  class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-pink-400"
+                  class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-teal-400"
                   aria-hidden="true"
                 >
                   <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">

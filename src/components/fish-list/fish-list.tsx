@@ -86,7 +86,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                 class={
                   sortBy.value === sort
                     ? "text-gray-900 hover:bg-gray-100 block px-4 py-2 text-sm bg-gray-100"
-                    : "text-gray-700 hover:bg-pink-100 hover:text-pink-700 block px-4 py-2 text-sm cursor-pointer"
+                    : "text-gray-700 hover:bg-teal-100 hover:text-teal-700 block px-4 py-2 text-sm cursor-pointer"
                 }
                 key={i}
                 role="menuitem"
@@ -114,7 +114,7 @@ export default component$(({ fishData, userDetails }: Props) => {
               i === fishData.length - 1
                 ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
                 : "",
-              "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-pink-500"
+              "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500"
             )}
           >
             <div
@@ -142,7 +142,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                 </span>
               </div>
               <div onClick$={() => (showUserDetialsModal.value = true)}>
-                <span class="cursor-pointer ml-4 inline-flex items-center rounded-full bg-pink-100 px-3 py-0.5 text-sm font-medium text-pink-800 hover:bg-pink-200 hover:text-pink-900 hover:ring-pink-300 hover:ring-2">
+                <span class="cursor-pointer ml-4 inline-flex items-center rounded-full bg-teal-100 px-3 py-0.5 text-sm font-medium text-teal-800 hover:bg-teal-200 hover:text-teal-900 hover:ring-teal-300 hover:ring-2">
                   {calculateServings(
                     userDetails.data.age,
                     userDetails.data.weight,
@@ -161,7 +161,7 @@ export default component$(({ fishData, userDetails }: Props) => {
               <FishDetails fish={fish} index />
             </div>
             <span
-              class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-pink-400"
+              class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-teal-400"
               aria-hidden="true"
             >
               <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">

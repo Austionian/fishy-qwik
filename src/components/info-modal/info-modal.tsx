@@ -103,7 +103,7 @@ export default component$(
                     </button>
                   </div>
                 </div>
-                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-pink-100">
+                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-teal-100">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="100pt"
@@ -154,7 +154,7 @@ export default component$(
                       onChange$={(e) =>
                         (userDetails.data.weight = e.target.value)
                       }
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                       placeholder="200"
                       aria-describedby="weight-currency"
                       autoFocus
@@ -185,7 +185,7 @@ export default component$(
                       id="age"
                       value={userDetails.data.age}
                       onChange$={(e) => (userDetails.data.age = e.target.value)}
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                       placeholder="44"
                     />
                     {formAction.value?.failed && (
@@ -203,7 +203,7 @@ export default component$(
                     <select
                       id="sex"
                       name="sex"
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6"
                       value={userDetails.data.sex || "Male"}
                       onChange$={(e) => {
                         isMale.value = e.target.value === "Male";
@@ -227,7 +227,7 @@ export default component$(
                       <select
                         id="plan_to_get_pregnant"
                         name="plan_to_get_pregnant"
-                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         value={userDetails.data.plan_to_get_pregnant || "No"}
                         onChange$={(e) =>
                           (userDetails.data.plan_to_get_pregnant =
@@ -266,7 +266,7 @@ export default component$(
                             onChange$={(e) =>
                               (userDetails.data.portion = e.target.value)
                             }
-                            class="h-4 w-4 border-gray-300 text-pink-600 focus:ring-pink-600"
+                            class="h-4 w-4 border-gray-300 text-teal-600 focus:ring-teal-600"
                           />
                           <label
                             for={portion.label}
@@ -283,7 +283,7 @@ export default component$(
                 <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                   <button
                     type="submit"
-                    class="inline-flex w-full justify-center rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600 sm:col-start-2"
+                    class="inline-flex w-full justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 sm:col-start-2"
                   >
                     SUBMIT
                   </button>

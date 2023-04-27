@@ -24,7 +24,7 @@ export default component$(({ fish, index }: Props) => (
             height="100pt"
             version="1.1"
             viewBox="0 0 100 100"
-            class="h-5 cursor-pointer w-5 hover:fill-pink-500"
+            class="h-5 cursor-pointer w-5 hover:fill-teal-500"
             onClick$={() => alert("heelo")}
           >
             <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
@@ -46,7 +46,7 @@ export default component$(({ fish, index }: Props) => (
             height="100pt"
             version="1.1"
             viewBox="0 0 100 100"
-            class="h-5 cursor-pointer w-5 hover:fill-pink-500"
+            class="h-5 cursor-pointer w-5 hover:fill-teal-500"
             onClick$={() => alert("heelo")}
           >
             <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
@@ -67,7 +67,7 @@ export default component$(({ fish, index }: Props) => (
             height="100pt"
             version="1.1"
             viewBox="0 0 100 100"
-            class="h-5 cursor-pointer w-5 hover:fill-pink-500"
+            class="h-5 cursor-pointer w-5 hover:fill-teal-500"
             onClick$={() => alert("heelo")}
           >
             <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
@@ -86,7 +86,7 @@ export default component$(({ fish, index }: Props) => (
             height="100pt"
             version="1.1"
             viewBox="0 0 100 100"
-            class="h-5 cursor-pointer w-5 hover:fill-pink-500"
+            class="h-5 cursor-pointer w-5 hover:fill-teal-500"
             onClick$={() => alert("heelo")}
           >
             <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />

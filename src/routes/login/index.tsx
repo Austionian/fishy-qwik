@@ -66,7 +66,7 @@ export default component$(() => {
       <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <img
           class="mx-auto h-12 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=pink&shade=600"
+          src="https://tailwindui.com/img/logos/mark.svg?color=teal&shade=600"
           alt="Your Company"
         />
 
@@ -101,7 +101,7 @@ export default component$(() => {
                   required
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 
                     shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
-                    focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm 
+                    focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm 
                     sm:leading-6"
                 />
                 {action.value?.failed && (
@@ -115,7 +115,7 @@ export default component$(() => {
             <div>
               <button
                 type="submit"
-                class="flex w-full justify-center rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+                class="flex w-full justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
               >
                 SIGN UP
               </button>
@@ -125,7 +125,7 @@ export default component$(() => {
             <div>
               <button
                 type="submit"
-                class="text-pink-600 text-sm w-full font-bold rounded hover:bg-gray-100 p-2"
+                class="text-teal-600 text-sm w-full font-bold rounded hover:bg-gray-100 p-2"
               >
                 CONTINUE AS GUEST
               </button>

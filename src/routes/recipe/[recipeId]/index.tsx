@@ -51,7 +51,7 @@ export default component$(() => {
           <div class="mt-10 sm:mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-3 sm:space-y-0 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
             <button
               type="button"
-              class="inline-flex items-center justify-center rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+              class="inline-flex items-center justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@ export default component$(() => {
                             id={ingredient}
                             aria-describedby={ingredient}
                             type="checkbox"
-                            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            class="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-600"
                           />
                         </div>
                         <div class="ml-3 text-sm leading-6">
