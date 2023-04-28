@@ -10,7 +10,7 @@ export default component$(({ location }: Props) => (
     {LAKES.map(
       (lake, i) =>
         lake.name !== "Store" && (
-          <div class="mx-2" key={i}>
+          <div class={i === 0 ? "mr-2" : "mx-2"} key={i}>
             <a href={lake.name === "All" ? "/" : `/lake/${lake.name}/`}>
               <button
                 type="button"
