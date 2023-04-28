@@ -10,7 +10,7 @@ export default component$(({ fish, index }: Props) => (
   <dl
     class={
       index
-        ? "grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-2"
+        ? "grid grid-cols-4 gap-x-4 gap-y-8"
         : "grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2"
     }
   >
@@ -112,28 +112,3 @@ export default component$(({ fish, index }: Props) => (
     )}
   </dl>
 ));
-// <dl class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-2">
-//   <div class="sm:col-span-1">
-//     <dt class="text-sm font-medium text-gray-500">Protien</dt>
-//     <dd class="mt-1 text-sm text-gray-900">
-//       {fish.protein}
-//       <span class="text-xs text-gray-700">g per 100g</span>
-//     </dd>
-//   </div>
-//   <div class="sm:col-span-1">
-//     <dt class="text-sm font-medium text-gray-500">PCB</dt>
-//     <dd class="mt-1 text-sm text-gray-900">
-//       {fish.pcb} <span class="text-xs text-gray-700">ppm</span>
-//     </dd>
-//   </div>
-//   <div class="sm:col-span-1">
-//     <dt class="text-sm font-medium text-gray-500">Omega 3/6 Ratio</dt>
-//     <dd class="mt-1 text-sm text-gray-900">{fish.omega_3_ratio}</dd>
-//   </div>
-//   <div class="sm:col-span-1">
-//     <dt class="text-sm font-medium text-gray-500">Mercury</dt>
-//     <dd class="mt-1 text-sm text-gray-900">
-//       {fish.mercury} <span class="text-xs text-gray-700">ppm</span>
-//     </dd>
-//   </div>
-// </dl>;

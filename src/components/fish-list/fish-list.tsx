@@ -110,7 +110,7 @@ export default component$(({ fishData, userDetails, location }: Props) => {
           )}
         </div>
       </div>
-      <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
+      <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid md:grid-cols-2 sm:gap-px sm:divide-y-0">
         {fishData.map((fish, i) => {
           const link =
             location === "/"
@@ -136,10 +136,10 @@ export default component$(({ fishData, userDetails, location }: Props) => {
                 <img
                   src={`/images/${fish.fish_image}`}
                   alt={fish.name}
-                  class="min-w-48 h-36"
+                  class="h-44"
                 />
               </div>
-              <div class="mt-8 flex justify-between">
+              <div class="mt-4 flex justify-between">
                 <div
                   class="cursor-pointer flex-grow"
                   onClick$={() => (window.location.href = link)}
