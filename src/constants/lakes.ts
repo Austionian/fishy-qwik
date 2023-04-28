@@ -122,4 +122,7 @@ const LAKES = [
   },
 ];
 
-export default LAKES;
+const LAKE_VALUES = ["All", "Michigan", "Huron", "Superior"] as const;
+
+export { LAKES };
+export default LAKE_VALUES;

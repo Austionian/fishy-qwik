@@ -1,4 +1,4 @@
-import { component$, useStore } from "@builder.io/qwik";
+import { component$, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import { getAPIKey, getUserDetials } from "~/helpers";
 import type Fish from "~/types/Fish";
@@ -25,7 +25,6 @@ export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
 
 export default component$(() => {
   const userDetails = useUserDetails();
-  const fishData = useFishData();
   const userDetailsStore = useStore({
     data: userDetails.value || {
       needed: true,
@@ -36,10 +35,18 @@ export default component$(() => {
       portion: undefined,
     },
   });
+  const fishData = useFishData();
+  const fishStore = useStore({
+    data: fishData.value,
+  });
+
+  useVisibleTask$(async () => {
+    window.localStorage.setItem("All", JSON.stringify(fishData.value));
+  });
 
   return (
     <FishList
-      fishData={fishData.value}
+      fishData={fishStore}
       userDetails={userDetailsStore}
       location={"/"}
     />

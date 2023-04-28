@@ -2,8 +2,8 @@ import type Fish from "~/types/Fish";
 import { calculateServings, getCookie } from "~/helpers";
 
 const SORT_VALUES = [
-  "Servings",
   "Name",
+  "Servings",
   "Protein",
   "PCB",
   "Omega_3_ratio",

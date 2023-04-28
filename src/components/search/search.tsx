@@ -1,6 +1,6 @@
 import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import type Fish from "~/types/Fish";
-import LAKES from "~/constants/lakes";
+import { LAKES } from "~/constants/lakes";
 
 type Props = {
   showSearch: { value: boolean };

@@ -1,7 +1,9 @@
 import { component$, useSignal, useTask$ } from "@builder.io/qwik";
+import { isBrowser } from "@builder.io/qwik/build";
 import { classNames, calculateServings } from "~/helpers";
 import SORT_VALUES, { sorter } from "~/constants/sortValues";
 import type Fish from "~/types/Fish";
+import type LakeValues from "~/types/LakeValues";
 import type UserDetails from "~/types/UserDetails";
 import type SortValues from "~/types/SortValues";
 
@@ -10,7 +12,9 @@ import FishDetails from "~/components/fish-details/fish-details";
 import LakeFilters from "../lake-filters/lake-filters";
 
 type Props = {
-  fishData: Fish[];
+  fishData: {
+    data: Fish[];
+  };
   userDetails: {
     data: UserDetails;
   };
@@ -21,11 +25,35 @@ export default component$(({ fishData, userDetails, location }: Props) => {
   const showUserDetialsModal = useSignal(userDetails.data.needed);
   const showSortMenu = useSignal(false);
   const sortBy = useSignal<SortValues>("Name");
+  const filterBy = useSignal<LakeValues>("All");
 
   useTask$(async ({ track }) => {
     track(() => sortBy.value);
 
-    fishData.sort(sorter[sortBy.value].fn);
+    fishData.data.sort(sorter[sortBy.value].fn);
+  });
+
+  useTask$(async ({ track }) => {
+    track(() => filterBy.value);
+
+    if (isBrowser) {
+      if (
+        window.localStorage.getItem(filterBy.value) &&
+        window.localStorage.getItem(filterBy.value) !== undefined
+      ) {
+        fishData.data = JSON.parse(
+          window.localStorage.getItem(filterBy.value) || "[]"
+        );
+        fishData.data.sort(sorter[sortBy.value].fn);
+      } else {
+        const res = await fetch(`/api/lake/?lakeName=${filterBy.value}`);
+        const data = await res.json();
+        const fish: Fish[] = data.data;
+        fishData.data = fish;
+        fishData.data.sort(sorter[sortBy.value].fn);
+        window.localStorage.setItem(filterBy.value, JSON.stringify(fish));
+      }
+    }
   });
 
   return (
@@ -37,7 +65,7 @@ export default component$(({ fishData, userDetails, location }: Props) => {
         />
       )}
       <div class="flex justify-between">
-        <LakeFilters location={location} />
+        <LakeFilters filterBy={filterBy} />
         <div>
           <div class="max-w-min mb-2">
             <div class="relative">
@@ -111,7 +139,7 @@ export default component$(({ fishData, userDetails, location }: Props) => {
         </div>
       </div>
       <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid md:grid-cols-2 sm:gap-px sm:divide-y-0">
-        {fishData.map((fish, i) => {
+        {fishData.data.map((fish, i) => {
           const link =
             location === "/"
               ? `/fish/type/${fish.fish_id}/`
@@ -122,8 +150,8 @@ export default component$(({ fishData, userDetails, location }: Props) => {
               class={classNames(
                 i === 0 ? "rounded-tl-lg rounded-tr-lg sm:rounded-tr-none" : "",
                 i === 1 ? "sm:rounded-tr-lg" : "",
-                i === fishData.length - 2 ? "sm:rounded-bl-lg" : "",
-                i === fishData.length - 1
+                i === fishData.data.length - 2 ? "sm:rounded-bl-lg" : "",
+                i === fishData.data.length - 1
                   ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
                   : "",
                 "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500"
