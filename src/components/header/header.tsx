@@ -26,7 +26,7 @@ export default component$(() => {
 
   return (
     <nav
-      class="bg-gray-800"
+      class="bg-white shadow"
       document:onKeyDown$={(e) => {
         if (e.which === 27) {
           showSearch.value = false;
@@ -38,11 +38,13 @@ export default component$(() => {
       }}
     >
       <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-        <div class="relative flex h-16 items-center justify-between lg:border-b lg:border-teal-400 lg:border-opacity-25">
+        <div class="relative flex h-16 items-center justify-between">
           <div class="flex items-center px-2 lg:px-0">
             <div class="flex-shrink-0" tabIndex={0}>
               <a href="/">
-                <h1 class="font-bold text-white text-3xl">Gigiigoo</h1>
+                <h1 class="font-bold text-gray-800 text-3xl hover:text-teal-600">
+                  Gigiigoo
+                </h1>
               </a>
             </div>
             <div class="hidden lg:ml-10 lg:block">
@@ -53,8 +55,8 @@ export default component$(() => {
                     key={i}
                     class={
                       (location.url.pathname === link.pathname
-                        ? "bg-black text-white"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white") +
+                        ? "bg-gray-200 text-gray-900"
+                        : "text-gray-800 hover:bg-gray-100 hover:text-gray-900") +
                       " rounded-md py-2 px-3 text-sm font-medium"
                     }
                   >
@@ -71,10 +73,11 @@ export default component$(() => {
               </label>
               <button
                 type="button"
-                class="block w-full rounded-md border-0 bg-white py-5 sm:py-3.5
-                    pl-10 pr-3 focus:ring-2 focus:ring-white focus:ring-offset-2 
+                class="block w-full rounded-md border-gray-100 py-5 sm:py-3.5
+                    border-0 bg-white text-gray-900 ring-1 ring-inset ring-gray-300
+                    pl-10 pr-3 focus:ring-2 focus:ring-gray-50 focus:ring-offset-2 
                     focus:ring-offset-teal-600 sm:text-sm sm:leading-3 relative 
-                    text-gray-400 focus-within:text-gray-600 transition ease-in-out
+                    focus-within:text-gray-600 transition ease-in-out
                     delay-50 hover:scale-105 duration-100"
                 onClick$={() => (showSearch.value = !showSearch.value)}
               >
@@ -105,7 +108,7 @@ export default component$(() => {
           <div class="flex lg:hidden">
             <button
               type="button"
-              class="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-200 hover:bg-gray-600 hover:bg-opacity-75 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-600"
+              class="inline-flex items-center justify-center rounded-md bg-gray-200 p-2 text-gray-200 hover:bg-gray-600 hover:bg-opacity-75 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-600"
               aria-controls="mobile-menu"
               aria-expanded="false"
               onClick$={() => (mobileMenu.value = !mobileMenu.value)}
@@ -152,7 +155,7 @@ export default component$(() => {
                 <div>
                   <button
                     type="button"
-                    class="flex h-8 w-8 rounded-full text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-600"
+                    class="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
                     id="user-menu-button"
                     aria-expanded="false"
                     aria-haspopup="true"
@@ -216,9 +219,9 @@ export default component$(() => {
                 key={i}
                 class={
                   (location.url.pathname === link.pathname
-                    ? "bg-gray-900 text-white"
-                    : "text-gray-300 hover:bg-gray-700 hover:text-white") +
-                  " text-white block rounded-md py-2 px-3 text-base font-medium"
+                    ? "bg-gray-900 text-gray-200"
+                    : "text-gray-300 hover:bg-gray-700 hover:text-gray-200") +
+                  " text-gray-200 block rounded-md py-2 px-3 text-base font-medium"
                 }
               >
                 {link.title}
@@ -239,14 +242,14 @@ export default component$(() => {
                 </span>
               </div>
               <div class="ml-3">
-                <div class="text-base font-medium text-white">Austin</div>
+                <div class="text-base font-medium text-gray-200">Austin</div>
                 <div class="text-sm font-medium text-gray-400">{email}</div>
               </div>
             </div>
             <div class="mt-3 space-y-1 px-2">
               <a
                 href="/settings/"
-                class="text-gray-400 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium"
+                class="text-gray-400 hover:bg-gray-700 hover:text-gray-200 block rounded-md py-2 px-3 text-base font-medium"
               >
                 Your Profile
               </a>
@@ -254,7 +257,7 @@ export default component$(() => {
               <Form action={signOutAction}>
                 <button
                   type="submit"
-                  class="w-full text-left text-gray-400 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium"
+                  class="w-full text-left text-gray-400 hover:bg-gray-700 hover:text-gray-200 block rounded-md py-2 px-3 text-base font-medium"
                 >
                   Sign out
                 </button>

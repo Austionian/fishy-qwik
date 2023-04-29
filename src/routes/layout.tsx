@@ -16,7 +16,7 @@ export const onRequest: RequestHandler = async ({
 
 export default component$(() => {
   return (
-    <div class="min-h-screen bg-gray-100 ">
+    <div class="min-h-screen bg-gradient-to-b from-teal-50 to-white">
       <Header />
 
       <main class="pt-10 min-h-full">
