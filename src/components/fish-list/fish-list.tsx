@@ -119,7 +119,7 @@ export default component$(({ fishData, userDetails, location }: Props) => {
                     class={
                       sortBy.value === sort
                         ? "text-gray-900 block px-4 py-2 text-sm bg-gray-100"
-                        : "text-gray-700 hover:bg-gray-100 hover:text-gray-800 block px-4 py-2 text-sm cursor-pointer"
+                        : "text-gray-700 hover:bg-gray-50 hover:text-gray-800 block px-4 py-2 text-sm cursor-pointer"
                     }
                     key={i}
                     role="menuitem"
