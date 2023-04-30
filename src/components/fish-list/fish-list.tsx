@@ -89,7 +89,7 @@ export default component$(({ fishData, userDetails, location }: Props) => {
                     clip-rule="evenodd"
                   />
                 </svg>
-                Sort
+                <span class="hidden sm:block">Sort</span>
                 <svg
                   class="-mr-1 h-5 w-5 text-gray-400"
                   viewBox="0 0 20 20"
