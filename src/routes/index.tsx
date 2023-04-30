@@ -44,13 +44,7 @@ export default component$(() => {
     window.localStorage.setItem("All", JSON.stringify(fishData.value));
   });
 
-  return (
-    <FishList
-      fishData={fishStore}
-      userDetails={userDetailsStore}
-      location={"/"}
-    />
-  );
+  return <FishList fishData={fishStore} userDetails={userDetailsStore} />;
 });
 
 export const head: DocumentHead = {

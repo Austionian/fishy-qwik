@@ -18,10 +18,9 @@ type Props = {
   userDetails: {
     data: UserDetails;
   };
-  location: string;
 };
 
-export default component$(({ fishData, userDetails, location }: Props) => {
+export default component$(({ fishData, userDetails }: Props) => {
   const showUserDetialsModal = useSignal(userDetails.data.needed);
   const showSortMenu = useSignal(false);
   const sortBy = useSignal<SortValues>("Name");
@@ -141,7 +140,7 @@ export default component$(({ fishData, userDetails, location }: Props) => {
       <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid md:grid-cols-2 sm:gap-px sm:divide-y-0">
         {fishData.data.map((fish, i) => {
           const link =
-            location === "/"
+            filterBy.value === "All"
               ? `/fish/type/${fish.fish_id}/`
               : `/fish/${fish.fish_id}/`;
           return (
