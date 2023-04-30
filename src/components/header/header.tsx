@@ -38,26 +38,25 @@ export default component$(() => {
       }}
     >
       <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-        <div class="relative flex h-16 items-center justify-between">
-          <div class="flex items-center px-2 lg:px-0">
-            <div class="flex-shrink-0" tabIndex={0}>
+        <div class="flex h-16 justify-between">
+          <div class="flex px-2 lg:px-0">
+            <div class="flex flex-shrink-0 items-center" tabIndex={0}>
               <a href="/">
                 <h1 class="font-bold text-gray-800 text-3xl hover:text-teal-600">
                   Gigiigoo
                 </h1>
               </a>
             </div>
-            <div class="hidden lg:ml-10 lg:block">
+            <div class="hidden lg:ml-10 lg:flex lg:space-x-8">
               <div class="flex space-x-4">
                 {LINKS.map((link, i) => (
                   <a
                     href={link.href}
                     key={i}
                     class={
-                      (location.url.pathname === link.pathname
-                        ? "bg-gray-200 text-gray-900"
-                        : "text-gray-800 hover:bg-gray-100 hover:text-gray-900") +
-                      " rounded-md py-2 px-3 text-sm font-medium"
+                      location.url.pathname === link.pathname
+                        ? "inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900"
+                        : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                     }
                   >
                     <span tabIndex={0}>{link.title}</span>
@@ -66,7 +65,7 @@ export default component$(() => {
               </div>
             </div>
           </div>
-          <div class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
+          <div class="flex flex-1 justify-center items-center px-2 lg:ml-6 lg:justify-end">
             <div class="w-full max-w-lg lg:max-w-xs">
               <label for="search" class="sr-only">
                 Search
@@ -105,10 +104,10 @@ export default component$(() => {
               </button>
             </div>
           </div>
-          <div class="flex lg:hidden">
+          <div class="flex lg:hidden items-center">
             <button
               type="button"
-              class="inline-flex items-center justify-center rounded-md bg-gray-200 p-2 text-gray-200 hover:bg-gray-600 hover:bg-opacity-75 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-600"
+              class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500"
               aria-controls="mobile-menu"
               aria-expanded="false"
               onClick$={() => (mobileMenu.value = !mobileMenu.value)}
@@ -149,9 +148,9 @@ export default component$(() => {
               )}
             </button>
           </div>
-          <div class="hidden lg:ml-4 lg:block">
+          <div class="hidden lg:ml-4 lg:flex lg:items-center">
             <div class="flex items-center">
-              <div class="relative ml-3 flex-shrink-0">
+              <div class="relative ml-4 flex-shrink-0">
                 <div>
                   <button
                     type="button"
@@ -218,10 +217,9 @@ export default component$(() => {
                 href={link.href}
                 key={i}
                 class={
-                  (location.url.pathname === link.pathname
-                    ? "bg-gray-900 text-gray-200"
-                    : "text-gray-300 hover:bg-gray-700 hover:text-gray-200") +
-                  " text-gray-200 block rounded-md py-2 px-3 text-base font-medium"
+                  location.url.pathname === link.pathname
+                    ? "block border-l-4 border-teal-500 bg-teal-50 py-2 pl-3 pr-4 text-base font-medium text-teal-700 cursor-default"
+                    : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
                 }
               >
                 {link.title}
@@ -242,14 +240,14 @@ export default component$(() => {
                 </span>
               </div>
               <div class="ml-3">
-                <div class="text-base font-medium text-gray-200">Austin</div>
+                <div class="text-base font-medium text-gray-800">Austin</div>
                 <div class="text-sm font-medium text-gray-400">{email}</div>
               </div>
             </div>
             <div class="mt-3 space-y-1 px-2">
               <a
                 href="/settings/"
-                class="text-gray-400 hover:bg-gray-700 hover:text-gray-200 block rounded-md py-2 px-3 text-base font-medium"
+                class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
               >
                 Your Profile
               </a>
@@ -257,7 +255,7 @@ export default component$(() => {
               <Form action={signOutAction}>
                 <button
                   type="submit"
-                  class="w-full text-left text-gray-400 hover:bg-gray-700 hover:text-gray-200 block rounded-md py-2 px-3 text-base font-medium"
+                  class="w-full text-left block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
                 >
                   Sign out
                 </button>
