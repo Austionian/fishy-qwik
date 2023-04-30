@@ -29,7 +29,7 @@ export default component$(({ filterBy }: Props) => (
               aria-haspopup="true"
               onClick$={() => (filterBy.value = lake.name)}
             >
-              <span class="fill-gray-900" dangerouslySetInnerHTML={lake.svg} />
+              <span class="fill-gray-800" dangerouslySetInnerHTML={lake.svg} />
               <span class="hidden sm:block">{lake.name}</span>
             </button>
           </div>
