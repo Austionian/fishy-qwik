@@ -167,7 +167,7 @@ export default component$<Props>(({ showSearch }) => {
                 <ul class="text-sm text-gray-700">
                   {fishResults.value?.length > 0 &&
                     filteredFish.map((fish, i) => (
-                      <a href={"/fish/" + fish.fish_id + "/"} key={i}>
+                      <a href={"/fish/type/" + fish.fish_id + "/"} key={i}>
                         <li
                           class="group flex cursor-default select-none items-center rounded-md px-3 py-2 hover:bg-gray-900 hover:bg-opacity-5 hover:text-gray-900 focus:bg-gray-900 focus:bg-opacity-5 focus:text-gray-900"
                           tabIndex={0}
