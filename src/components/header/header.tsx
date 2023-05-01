@@ -254,7 +254,7 @@ export default component$(() => {
               </a>
             ))}
           </div>
-          <div class="border-t border-gray-700 pb-3 pt-4">
+          <div class="border-t border-gray-200 pb-3 pt-4">
             <div class="flex items-center px-5">
               <div class="flex-shrink-0">
                 <span class="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100">
