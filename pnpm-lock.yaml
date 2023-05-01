@@ -10,11 +10,11 @@ dependencies:
 
 devDependencies:
   '@builder.io/qwik':
-    specifier: 0.103.0
-    version: 0.103.0(undici@5.21.0)
+    specifier: 0.106.0
+    version: 0.106.0(undici@5.21.0)
   '@builder.io/qwik-city':
-    specifier: 0.101.0
-    version: 0.101.0(@builder.io/qwik@0.103.0)
+    specifier: 0.106.0
+    version: 0.106.0
   '@types/eslint':
     specifier: 8.21.2
     version: 8.21.2
@@ -69,15 +69,12 @@ devDependencies:
 
 packages:
 
-  /@builder.io/qwik-city@0.101.0(@builder.io/qwik@0.103.0):
-    resolution: {integrity: sha512-26hoEbBQ5yEn13zjt5YCL/eULAptSoTPwylFSKrHPQd/3iafjGFr+DjiwpHUEodW3io1MsqZ0Uu9PIDKnGJbOg==}
+  /@builder.io/qwik-city@0.106.0:
+    resolution: {integrity: sha512-jrK/gG1QnOgl43T+L+CsmmoDxQAn24jy+xBmMMj8YfwGooKKXMVPZcTFf+cXVUj0GzcW+P87ZR5yqvCwVYZArQ==}
     engines: {node: '>=16.8.0 <18.0.0 || >=18.11'}
-    peerDependencies:
-      '@builder.io/qwik': '>=0.22.0'
     dependencies:
-      '@builder.io/qwik': 0.103.0(undici@5.21.0)
       '@mdx-js/mdx': 2.3.0
-      '@types/mdx': 2.0.4
+      '@types/mdx': 2.0.5
       source-map: 0.7.4
       vfile: 5.3.7
       zod: 3.21.4
@@ -85,8 +82,8 @@ packages:
       - supports-color
     dev: true
 
-  /@builder.io/qwik@0.103.0(undici@5.21.0):
-    resolution: {integrity: sha512-pBNbOJZpODp9yMCyGnVxWwcNgolH4bx8/AeLcWN7jGhjcrCcQpH8WEV6tjXCGUH/JfSGYjywI4FdYsMRam8wdg==}
+  /@builder.io/qwik@0.106.0(undici@5.21.0):
+    resolution: {integrity: sha512-uBQIgEJQqiH0XBvVu8n+rxHjsx25PuVMBhQmTBW9b0fRg1Aq+isN/aDRIFm2qUNlW3aQaaf1R8cNjTOn13osMw==}
     engines: {node: '>=16.8.0 <18.0.0 || >=18.11'}
     hasBin: true
     peerDependencies:
@@ -584,7 +581,7 @@ packages:
     resolution: {integrity: sha512-jLuwRlz8DQfQNiUCJR50Y09CGPq3fLtmtUQfVrj79E0JWu3dvsVcxVIcfhR5h0iXu+/z++zDrYeiJqifRynJkA==}
     dependencies:
       '@types/estree-jsx': 1.0.0
-      '@types/mdx': 2.0.4
+      '@types/mdx': 2.0.5
       estree-util-build-jsx: 2.2.2
       estree-util-is-identifier-name: 2.1.0
       estree-util-to-js: 1.2.0
@@ -914,8 +911,8 @@ packages:
       '@types/unist': 2.0.6
     dev: true
 
-  /@types/mdx@2.0.4:
-    resolution: {integrity: sha512-qCYrNdpKwN6YO6FVnx+ulfqifKlE3lQGsNhvDaW9Oxzyob/cRLBJWow8GHBBD4NxQ7BVvtsATgLsX0vZAWmtrg==}
+  /@types/mdx@2.0.5:
+    resolution: {integrity: sha512-76CqzuD6Q7LC+AtbPqrvD9AqsN0k8bsYo2bM2J8pmNldP1aIPAbzUQ7QbobyXL4eLr1wK5x8FZFe8eF/ubRuBg==}
     dev: true
 
   /@types/ms@0.7.31:
