@@ -86,7 +86,7 @@ export default component$<Props>(({ showSearch }) => {
           backdropRef.value,
           { opacity: [0, 100] },
           {
-            duration: 0.3,
+            duration: 0.1,
             easing: "ease-out",
           }
         );
@@ -94,7 +94,7 @@ export default component$<Props>(({ showSearch }) => {
           modalRef.value,
           { opacity: [0, 100], scale: [0.95, 1] },
           {
-            duration: 0.3,
+            duration: 0.1,
             easing: "ease-out",
           }
         );
@@ -130,10 +130,10 @@ export default component$<Props>(({ showSearch }) => {
         class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20"
         ref={modalRef}
       >
-        <div class="mx-auto max-w-2xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-xl bg-white bg-opacity-80 shadow-2xl ring-1 ring-black ring-opacity-5 backdrop-blur backdrop-filter transition-all">
+        <div class="mx-auto max-w-2xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-lg bg-white bg-opacity-80 shadow-2xl ring-1 ring-black ring-opacity-5 backdrop-blur backdrop-filter transition-all">
           <div class="relative">
             <svg
-              class="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-900 text-opacity-40"
+              class="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-900"
               viewBox="0 0 20 20"
               fill="currentColor"
               aria-hidden="true"
@@ -157,7 +157,7 @@ export default component$<Props>(({ showSearch }) => {
 
           <ul
             tabIndex={-1}
-            class="max-h-80 scroll-py-2 divide-y divide-gray-500 divide-opacity-10 overflow-y-auto"
+            class="max-h-96 scroll-py-2 divide-y divide-gray-500 divide-opacity-10 overflow-y-auto"
           >
             {filteredFish.length > 0 && (
               <li class="p-2">
@@ -169,7 +169,7 @@ export default component$<Props>(({ showSearch }) => {
                     filteredFish.map((fish, i) => (
                       <a href={"/fish/" + fish.fish_id + "/"} key={i}>
                         <li
-                          class="group flex cursor-default select-none items-center rounded-md px-3 py-2 hover:bg-gray-900 hover:bg-opacity-5 hover:text-gray-900 focus:bg-gray-900 focus:bg-opacity-5 focus:text-gray-900"
+                          class="group flex cursor-default select-none items-center rounded-md p-3 hover:bg-gray-900 hover:bg-opacity-5 hover:text-gray-900 focus:bg-gray-900 focus:bg-opacity-5 focus:text-gray-900"
                           tabIndex={0}
                         >
                           <img
@@ -199,7 +199,7 @@ export default component$<Props>(({ showSearch }) => {
                   {filteredRecipes.map((recipe, i) => (
                     <a href={"/recipe/" + recipe.recipe_id + "/"} key={i}>
                       <li
-                        class="group flex cursor-default select-none items-center rounded-md px-3 py-2 hover:bg-gray-900 hover:bg-opacity-5 hover:text-gray-900 focus:bg-gray-900 focus:bg-opacity-5 focus:text-gray-900"
+                        class="group flex cursor-default select-none items-center rounded-md p-3 hover:bg-gray-900 hover:bg-opacity-5 hover:text-gray-900 focus:bg-gray-900 focus:bg-opacity-5 focus:text-gray-900"
                         tabIndex={0}
                       >
                         <svg
@@ -234,7 +234,7 @@ export default component$<Props>(({ showSearch }) => {
                   {filteredLakes.map((lake, i) => (
                     <a href={`/lake/${lake.name}/`} key={i}>
                       <li
-                        class="group flex cursor-default select-none items-center rounded-md px-3 py-2 hover:bg-gray-900 hover:bg-opacity-5 hover:text-gray-900 focus:bg-gray-900 focus:bg-opacity-5 focus:text-gray-900"
+                        class="group flex cursor-default select-none items-center rounded-md p-3 hover:bg-gray-900 hover:bg-opacity-5 hover:text-gray-900 focus:bg-gray-900 focus:bg-opacity-5 focus:text-gray-900"
                         tabIndex={0}
                       >
                         <span dangerouslySetInnerHTML={lake.svg} />
