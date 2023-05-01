@@ -104,7 +104,7 @@ export default component$(() => {
                     pl-10 pr-3 focus:ring-2 focus:ring-gray-50 focus:ring-offset-2 
                     focus:ring-offset-teal-500 sm:text-sm sm:leading-3 relative 
                     focus-within:text-gray-600 hover:ring-gray-400 hover:bg-gray-50
-                    hover:text-gray-600"
+                    hover:text-gray-600 focus:outline-none"
                 onClick$={() => (showSearch.value = !showSearch.value)}
               >
                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">

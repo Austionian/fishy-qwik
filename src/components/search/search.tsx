@@ -169,7 +169,11 @@ export default component$<Props>(({ showSearch }) => {
                     filteredFish.map((fish, i) => (
                       <a href={"/fish/type/" + fish.fish_id + "/"} key={i}>
                         <li
-                          class="group flex cursor-default select-none items-center rounded-md px-3 py-2 hover:bg-gray-900 hover:bg-opacity-5 hover:text-gray-900 focus:bg-gray-900 focus:bg-opacity-5 focus:text-gray-900"
+                          class="group flex cursor-default select-none items-center
+                                 rounded-md px-3 py-2 hover:bg-gray-900 hover:bg-opacity-5
+                                 hover:text-gray-900 focus:ring-1 focus:bg-gray-900 focus:bg-opacity-5 
+                                 focus:text-gray-900 focus:ring-offset-teal-500 focus:ring-gray-50
+                                 focus:ring-offset-2 focus:outline-none"
                           tabIndex={0}
                         >
                           <img

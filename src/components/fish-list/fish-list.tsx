@@ -120,7 +120,8 @@ export default component$(({ fishData, userDetails }: Props) => {
                   class="inline-flex w-full justify-center gap-x-1.5 rounded-md
                          bg-white px-3 py-2 text-sm font-semibold text-gray-900
                          shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50
-                         focus:ring-offset-teal-500 focus:ring-gray-50 focus:ring-offset-2"
+                         focus:ring-offset-teal-500 focus:ring-gray-50 focus:ring-offset-2
+                         focus:outline-none"
                   id="sort-menu-button"
                   aria-expanded="false"
                   aria-haspopup="true"
