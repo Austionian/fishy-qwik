@@ -275,7 +275,11 @@ export default component$(() => {
             <div class="mt-3 space-y-1 px-2">
               <a
                 href="/settings/"
-                class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+                class={
+                  location.url.pathname === "/settings/"
+                    ? "block border-l-4 border-teal-500 bg-teal-50 py-2 pl-3 pr-4 text-base font-medium text-teal-700 cursor-default"
+                    : "w-full text-left block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+                }
               >
                 Your Profile
               </a>

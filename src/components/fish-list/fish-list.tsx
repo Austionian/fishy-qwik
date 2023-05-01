@@ -87,6 +87,20 @@ export default component$(({ fishData, userDetails }: Props) => {
     }
   });
 
+  // useVisibleTask$(({ track }) => {
+  //   track(() => fishData.data);
+  //   track(() => sortBy.value);
+  //
+  //   const li = document.querySelectorAll(".fishCard");
+  //   if (!li[0]) return;
+  //
+  //   animate(
+  //     li,
+  //     { opacity: [0, 1], scale: [0, 1] },
+  //     { delay: stagger(0.1), easing: "ease-in-out" }
+  //   );
+  // });
+
   return (
     <>
       {showUserDetialsModal.value && (
@@ -188,7 +202,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                 i === fishData.data.length - 1
                   ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
                   : "",
-                "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500"
+                "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500 fishCard"
               )}
             >
               <div
