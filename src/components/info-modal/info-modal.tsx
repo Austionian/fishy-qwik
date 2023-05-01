@@ -1,5 +1,4 @@
-import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
-import { animate } from "motion";
+import { component$, useSignal } from "@builder.io/qwik";
 import PORTIONS, { PORTION_VALUES } from "~/constants/portions";
 import { Form, globalAction$, zod$, z } from "@builder.io/qwik-city";
 import type UserDetails from "~/types/UserDetails";
@@ -71,41 +70,6 @@ export default component$(
     const isMale = useSignal(
       userDetails.data.sex === "Male" || userDetails.data.sex === undefined
     );
-    const backdropRef = useSignal<Element>();
-    const modalRef = useSignal<Element>();
-
-    useVisibleTask$(({ track }) => {
-      track(() => showUserInputModal.value);
-      if (backdropRef.value && modalRef.value) {
-        if (showUserInputModal.value) {
-          animate(
-            backdropRef.value,
-            { opacity: [0, 100] },
-            {
-              duration: 0.1,
-              easing: "ease-out",
-            }
-          );
-          animate(
-            modalRef.value,
-            { opacity: [0, 100], scale: [0.95, 1] },
-            {
-              duration: 0.1,
-              easing: "ease-out",
-            }
-          );
-        } else {
-          animate(
-            backdropRef.value,
-            { opacity: [100, 0] },
-            {
-              duration: 0.2,
-              easing: "ease-in",
-            }
-          );
-        }
-      }
-    });
 
     return (
       <div
@@ -114,12 +78,9 @@ export default component$(
         role="dialog"
         aria-modal="true"
       >
-        <div
-          ref={backdropRef}
-          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        ></div>
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
-        <div ref={modalRef} class="fixed inset-0 z-10 overflow-y-auto">
+        <div class="fixed inset-0 z-10 overflow-y-auto">
           <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
               <div>
