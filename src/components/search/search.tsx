@@ -124,7 +124,7 @@ export default component$<Props>(({ showSearch }) => {
     >
       <div
         ref={backdropRef}
-        class="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity z-1"
+        class="fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity z-1"
       ></div>
       <div
         class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20"
