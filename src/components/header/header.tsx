@@ -100,11 +100,11 @@ export default component$(() => {
               <button
                 type="button"
                 class="block w-full rounded-md border-gray-100 py-5 sm:py-3.5
-                    border-0 bg-white text-gray-900 ring-1 ring-inset ring-gray-300
+                    border-0 bg-white text-gray-500 ring-1 ring-inset ring-gray-300
                     pl-10 pr-3 focus:ring-2 focus:ring-gray-50 focus:ring-offset-2 
-                    focus:ring-offset-teal-600 sm:text-sm sm:leading-3 relative 
-                    focus-within:text-gray-600 transition ease-in-out
-                    delay-50 hover:scale-105 duration-100"
+                    focus:ring-offset-teal-500 sm:text-sm sm:leading-3 relative 
+                    focus-within:text-gray-600 hover:ring-gray-400 hover:bg-gray-50
+                    hover:text-gray-600"
                 onClick$={() => (showSearch.value = !showSearch.value)}
               >
                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
