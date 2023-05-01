@@ -1,4 +1,5 @@
 import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+import { animate } from "motion";
 import type Fish from "~/types/Fish";
 import { LAKES } from "~/constants/lakes";
 
@@ -14,6 +15,7 @@ type Recipe = {
 export default component$<Props>(({ showSearch }) => {
   const modalRef = useSignal<Element>();
   const inputRef = useSignal<Element>();
+  const backdropRef = useSignal<Element>();
   const search = useSignal("");
   const fishResults = useSignal<Fish[]>([]);
   const recipeResults = useSignal<Recipe[]>([]);
@@ -76,6 +78,39 @@ export default component$<Props>(({ showSearch }) => {
     }
   });
 
+  useVisibleTask$(({ track }) => {
+    track(() => showSearch.value);
+    if (backdropRef.value && modalRef.value) {
+      if (showSearch.value) {
+        animate(
+          backdropRef.value,
+          { opacity: [0, 100] },
+          {
+            duration: 0.3,
+            easing: "ease-out",
+          }
+        );
+        animate(
+          modalRef.value,
+          { opacity: [0, 100], scale: [0.95, 1] },
+          {
+            duration: 0.3,
+            easing: "ease-out",
+          }
+        );
+      } else {
+        animate(
+          backdropRef.value,
+          { opacity: [100, 0] },
+          {
+            duration: 0.2,
+            easing: "ease-in",
+          }
+        );
+      }
+    }
+  });
+
   return (
     <div
       class="relative z-10"
@@ -87,7 +122,10 @@ export default component$<Props>(({ showSearch }) => {
         }
       }}
     >
-      <div class="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity z-1"></div>
+      <div
+        ref={backdropRef}
+        class="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity z-1"
+      ></div>
       <div
         class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20"
         ref={modalRef}

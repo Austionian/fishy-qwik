@@ -1,5 +1,11 @@
-import { component$, useSignal, useTask$ } from "@builder.io/qwik";
+import {
+  component$,
+  useSignal,
+  useTask$,
+  useVisibleTask$,
+} from "@builder.io/qwik";
 import { isBrowser } from "@builder.io/qwik/build";
+import { animate } from "motion";
 import { classNames, calculateServings } from "~/helpers";
 import SORT_VALUES, { sorter } from "~/constants/sortValues";
 import type Fish from "~/types/Fish";
@@ -25,6 +31,7 @@ export default component$(({ fishData, userDetails }: Props) => {
   const showSortMenu = useSignal(false);
   const sortBy = useSignal<SortValues>("Name");
   const filterBy = useSignal<LakeValues>("All");
+  const ref = useSignal<Element>();
 
   useTask$(async ({ track }) => {
     track(() => sortBy.value);
@@ -55,6 +62,31 @@ export default component$(({ fishData, userDetails }: Props) => {
     }
   });
 
+  useVisibleTask$(({ track }) => {
+    track(() => showSortMenu.value);
+    if (ref.value) {
+      if (showSortMenu.value) {
+        animate(
+          ref.value,
+          { opacity: [0, 100], scale: [0.95, 1] },
+          {
+            duration: 0.1,
+            easing: "ease-out",
+          }
+        );
+      } else {
+        animate(
+          ref.value,
+          { opacity: [100, 0], scale: [0.95, 0] },
+          {
+            duration: 0.075,
+            easing: "ease-in",
+          }
+        );
+      }
+    }
+  });
+
   return (
     <>
       {showUserDetialsModal.value && (
@@ -68,73 +100,76 @@ export default component$(({ fishData, userDetails }: Props) => {
         <div>
           <div class="max-w-min mb-2">
             <div class="relative">
-              <button
-                type="button"
-                class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                id="sort-menu-button"
-                aria-expanded="false"
-                aria-haspopup="true"
-                onClick$={() => (showSortMenu.value = !showSortMenu.value)}
-              >
-                <svg
-                  class="-ml-0.5 h-5 w-5 text-gray-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
+              <div>
+                <button
+                  type="button"
+                  class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                  id="sort-menu-button"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  onClick$={() => (showSortMenu.value = !showSortMenu.value)}
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M2 3.75A.75.75 0 012.75 3h11.5a.75.75 0 010 1.5H2.75A.75.75 0 012 3.75zM2 7.5a.75.75 0 01.75-.75h6.365a.75.75 0 010 1.5H2.75A.75.75 0 012 7.5zM14 7a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02l-1.95-2.1v6.59a.75.75 0 01-1.5 0V9.66l-1.95 2.1a.75.75 0 11-1.1-1.02l3.25-3.5A.75.75 0 0114 7zM2 11.25a.75.75 0 01.75-.75H7A.75.75 0 017 12H2.75a.75.75 0 01-.75-.75z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span class="hidden sm:block">Sort</span>
-                <svg
-                  class="-mr-1 h-5 w-5 text-gray-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
+                  <svg
+                    class="-ml-0.5 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M2 3.75A.75.75 0 012.75 3h11.5a.75.75 0 010 1.5H2.75A.75.75 0 012 3.75zM2 7.5a.75.75 0 01.75-.75h6.365a.75.75 0 010 1.5H2.75A.75.75 0 012 7.5zM14 7a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02l-1.95-2.1v6.59a.75.75 0 01-1.5 0V9.66l-1.95 2.1a.75.75 0 11-1.1-1.02l3.25-3.5A.75.75 0 0114 7zM2 11.25a.75.75 0 01.75-.75H7A.75.75 0 017 12H2.75a.75.75 0 01-.75-.75z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <span class="hidden sm:block">Sort</span>
+                  <svg
+                    class="-mr-1 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+              {showSortMenu.value && (
+                <div
+                  ref={ref}
+                  class="absolute z-10 w-56 origin-top-right right-0 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="sort-menu-button"
+                  tabIndex={0}
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </button>
+                  <div class="py-1" role="none">
+                    {SORT_VALUES.map((sort, i) => (
+                      <a
+                        class={
+                          sortBy.value === sort
+                            ? "text-gray-900 block px-4 py-2 text-sm bg-gray-100"
+                            : "text-gray-700 hover:bg-gray-50 hover:text-gray-800 block px-4 py-2 text-sm cursor-pointer"
+                        }
+                        key={i}
+                        role="menuitem"
+                        tabIndex={0}
+                        id="sort-menu-item-0"
+                        onClick$={() => {
+                          sortBy.value = sort;
+                          showSortMenu.value = !showSortMenu.value;
+                        }}
+                      >
+                        {sort}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-          {showSortMenu.value && (
-            <div
-              class="absolute z-10 w-56 origin-right translate-x-[-55%] rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="sort-menu-button"
-              tabIndex={0}
-            >
-              <div class="py-1" role="none">
-                {SORT_VALUES.map((sort, i) => (
-                  <a
-                    class={
-                      sortBy.value === sort
-                        ? "text-gray-900 block px-4 py-2 text-sm bg-gray-100"
-                        : "text-gray-700 hover:bg-gray-50 hover:text-gray-800 block px-4 py-2 text-sm cursor-pointer"
-                    }
-                    key={i}
-                    role="menuitem"
-                    tabIndex={0}
-                    id="sort-menu-item-0"
-                    onClick$={() => {
-                      sortBy.value = sort;
-                      showSortMenu.value = !showSortMenu.value;
-                    }}
-                  >
-                    {sort}
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
       <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid md:grid-cols-2 sm:gap-px sm:divide-y-0">

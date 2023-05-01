@@ -1,5 +1,6 @@
 import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { globalAction$, useLocation, Form } from "@builder.io/qwik-city";
+import { animate } from "motion";
 import Search from "../search/search";
 import { getCookie } from "~/helpers";
 import LINKS from "~/constants/links";
@@ -17,11 +18,37 @@ export default component$(() => {
   const showSearch = useSignal(false);
   const location = useLocation();
   const email = useSignal("");
+  const ref = useSignal<Element>();
 
   const signOutAction = useSignOut();
 
   useVisibleTask$(() => {
     email.value = getCookie("email");
+  });
+
+  useVisibleTask$(({ track }) => {
+    track(() => showUserMenu.value);
+    if (ref.value) {
+      if (showUserMenu.value) {
+        animate(
+          ref.value,
+          { opacity: [0, 100], scale: [0.95, 1] },
+          {
+            duration: 0.1,
+            easing: "ease-out",
+          }
+        );
+      } else {
+        animate(
+          ref.value,
+          { opacity: [100, 0], scale: [0.95, 0] },
+          {
+            duration: 0.075,
+            easing: "ease-in",
+          }
+        );
+      }
+    }
   });
 
   return (
@@ -173,8 +200,9 @@ export default component$(() => {
                   </button>
                 </div>
 
-                {showUserMenu.value ? (
+                {showUserMenu.value && (
                   <div
+                    ref={ref}
                     class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
@@ -202,7 +230,7 @@ export default component$(() => {
                       </button>
                     </Form>
                   </div>
-                ) : null}
+                )}
               </div>
             </div>
           </div>
