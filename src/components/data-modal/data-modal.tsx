@@ -1,7 +1,5 @@
 import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
-import { Form, globalAction$, zod$, z } from "@builder.io/qwik-city";
 import { animate } from "motion";
-import PORTIONS, { PORTION_VALUES } from "~/constants/portions";
 import type Fish from "~/types/Fish";
 
 type infoModalProps = {
@@ -57,7 +55,7 @@ export default component$(({ showDataModal, fishData }: infoModalProps) => {
     >
       <div
         ref={backdropRef}
-        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+        class="fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity"
       ></div>
 
       <div ref={modalRef} class="fixed inset-0 z-10 overflow-y-auto">
@@ -69,7 +67,7 @@ export default component$(({ showDataModal, fishData }: infoModalProps) => {
                   <button
                     type="button"
                     class="inline-flex rounded-md p-1.5 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-gray-50"
-                    onClick$={() => (showUserInputModal.value = false)}
+                    onClick$={() => (showDataModal.value = false)}
                   >
                     <span class="sr-only">Dismiss</span>
                     <svg
@@ -99,7 +97,7 @@ export default component$(({ showDataModal, fishData }: infoModalProps) => {
                   class="text-base font-semibold leading-6 text-gray-900"
                   id="modal-title"
                 >
-                  Your Information
+                  {fishData.name}
                 </h3>
                 <div class="mt-2">
                   <p class="text-sm text-gray-500">
@@ -109,172 +107,6 @@ export default component$(({ showDataModal, fishData }: infoModalProps) => {
                 </div>
               </div>
             </div>
-
-            <Form
-              action={formAction}
-              onSubmitCompleted$={() => {
-                if (formAction.status === 200) {
-                  showUserInputModal.value = false;
-                }
-              }}
-            >
-              <div class="my-2">
-                <label
-                  for="weight"
-                  class="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Weight
-                </label>
-                <div class="relative mt-2 rounded-md shadow-sm">
-                  <input
-                    type="text"
-                    name="weight"
-                    id="weight"
-                    value={userDetails.data.weight}
-                    onChange$={(e) =>
-                      (userDetails.data.weight = e.target.value)
-                    }
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
-                    placeholder="200"
-                    aria-describedby="weight-currency"
-                    autoFocus
-                  />
-                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                    <span class="text-gray-500 sm:text-sm" id="weight-format">
-                      lbs
-                    </span>
-                  </div>
-                </div>
-                {formAction.value?.failed && (
-                  <div class="text-left text-red-600 text-sm">
-                    {formAction.value?.fieldErrors?.weight}
-                  </div>
-                )}
-              </div>
-              <div class="my-2">
-                <label
-                  for="age"
-                  class="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Age
-                </label>
-                <div class="mt-2">
-                  <input
-                    type="text"
-                    name="age"
-                    id="age"
-                    value={userDetails.data.age}
-                    onChange$={(e) => (userDetails.data.age = e.target.value)}
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
-                    placeholder="44"
-                  />
-                  {formAction.value?.failed && (
-                    <div class="text-left text-red-600 text-sm">
-                      {formAction.value?.fieldErrors?.age}
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div class="my-2">
-                <label for="sex" class="text-sm font-semibold text-gray-900">
-                  Sex
-                </label>
-                <div class="mt-2">
-                  <select
-                    id="sex"
-                    name="sex"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                    value={userDetails.data.sex || "Male"}
-                    onChange$={(e) => {
-                      isMale.value = e.target.value === "Male";
-                      userDetails.data.sex = e.target.value;
-                    }}
-                  >
-                    <option>Male</option>
-                    <option>Female</option>
-                  </select>
-                </div>
-              </div>
-              {!isMale.value && (
-                <div class="my-2">
-                  <label
-                    for="plan_to_get_pregnant"
-                    class="text-sm font-semibold text-gray-900"
-                  >
-                    Plan to get pregnant?
-                  </label>
-                  <div class="mt-2">
-                    <select
-                      id="plan_to_get_pregnant"
-                      name="plan_to_get_pregnant"
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                      value={userDetails.data.plan_to_get_pregnant || "No"}
-                      onChange$={(e) =>
-                        (userDetails.data.plan_to_get_pregnant = e.target.value)
-                      }
-                    >
-                      <option>Yes</option>
-                      <option>No</option>
-                    </select>
-                  </div>
-                </div>
-              )}
-              <div class="my-2">
-                <label class="text-sm font-semibold text-gray-900">
-                  Portion Size
-                </label>
-                <p class="text-sm text-gray-500">
-                  What is your perfered portion size?
-                </p>
-                {formAction.value?.failed && (
-                  <div class="text-left text-red-600 text-sm">
-                    {formAction.value?.fieldErrors?.portion}
-                  </div>
-                )}
-                <fieldset class="mt-4">
-                  <legend class="sr-only">Portion Size</legend>
-                  <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                    {PORTIONS.map((portion, i) => (
-                      <div key={i} class="flex items-center">
-                        <input
-                          id={portion.label}
-                          value={portion.value}
-                          name="portion"
-                          type="radio"
-                          checked={portion.value === userDetails.data.portion}
-                          onChange$={(e) =>
-                            (userDetails.data.portion = e.target.value)
-                          }
-                          class="h-4 w-4 border-gray-300 text-teal-600 focus:ring-teal-600"
-                        />
-                        <label
-                          for={portion.label}
-                          class="ml-3 block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          {portion.label}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </fieldset>
-              </div>
-
-              <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                <button
-                  type="submit"
-                  class="inline-flex w-full justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 sm:col-start-2"
-                >
-                  SUBMIT
-                </button>
-                <button
-                  type="button"
-                  class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-                  onClick$={() => (showUserInputModal.value = false)}
-                >
-                  Cancel
-                </button>
-              </div>
-            </Form>
           </div>
         </div>
       </div>

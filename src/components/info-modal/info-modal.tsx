@@ -1,9 +1,4 @@
-import {
-  component$,
-  useSignal,
-  useTask$,
-  useVisibleTask$,
-} from "@builder.io/qwik";
+import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { Form, globalAction$, zod$, z } from "@builder.io/qwik-city";
 import { animate } from "motion";
 import PORTIONS, { PORTION_VALUES } from "~/constants/portions";
