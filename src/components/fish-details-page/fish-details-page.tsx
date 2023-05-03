@@ -41,12 +41,12 @@ export default component$(({ fishData, userDetails }: Props) => {
             <div class="rounded mb-4 w-screen flex justify-center">
               {fishData.fish_data.woodland_fish_image ? (
                 <img
-                  class="h-40 sm:w-[50%] sm:h-[100%] text-center"
+                  class="h-40 sm:w-auto sm:h-[300px] text-center"
                   src={`/images/${fishData.fish_data.woodland_fish_image}`}
                 />
               ) : (
                 <img
-                  class="h-40 sm:w-[50%] sm:h-[100%] text-center"
+                  class="h-40 sm:w-auto sm:h-[300px] text-center"
                   src={`/images/${fishData.fish_data.fish_image}`}
                 />
               )}
