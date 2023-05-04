@@ -101,11 +101,16 @@ export default component$(({ showDataModal, dataPoint }: infoModalProps) => {
                 >
                   {dataPoint.title}
                 </h3>
-                <div class="text-left">
-                  <p class="text-base leading-6 text-gray-800" id="modal-about">
-                    {dataPoint.about}
-                  </p>
-                </div>
+                {dataPoint.about.map((p, i) => (
+                  <div class="text-left mt-2" key={i}>
+                    <p
+                      class="text-base leading-6 text-gray-800"
+                      id="modal-about"
+                    >
+                      {p}
+                    </p>
+                  </div>
+                ))}
                 {dataPoint.moreInfo && (
                   <div class="mt-5 text-left">
                     <h4
