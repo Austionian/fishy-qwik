@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.3",
+    "chart.js": "^4.3.0",
     "motion": "^10.15.5"
   }
 }

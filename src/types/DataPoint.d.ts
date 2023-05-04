@@ -6,6 +6,15 @@ type DataPoint = {
   moreInfo?: string;
   postfix: string;
   link: string;
+  chart: {
+    high: ChartData;
+    low: ChartData;
+  };
+};
+
+type ChartData = {
+  fish: string;
+  value: string;
 };
 
 type Points = keyof typeof dataPoints;

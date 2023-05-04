@@ -8,6 +8,16 @@ Lean protein sources, like fish, are especially healthy choices.`,
     ],
     postfix: "g per 100g",
     link: "https://www.cdc.gov/nchs/fastats/diet.htm",
+    chart: {
+      high: {
+        fish: "Whitefish",
+        value: 39.325,
+      },
+      low: {
+        fish: "Sucker",
+        value: 15.471,
+      },
+    },
   },
   pcb: {
     title: "PCB",
@@ -19,6 +29,16 @@ Lean protein sources, like fish, are especially healthy choices.`,
       "Avoid PCBs by trimming away fat, eating smaller fish of the same species, and cooking in a way that allows fat to drip off. Trimming fat under the skin can remove a lot of PCB from the fish. It's also best if you don't eat the skin.",
     postfix: " ppm",
     link: "https://www.atsdr.cdc.gov/csem/polychlorinated-biphenyls/what_are.html",
+    chart: {
+      high: {
+        fish: "Whitefish",
+        value: 39.325,
+      },
+      low: {
+        fish: "Sucker",
+        value: 15.471,
+      },
+    },
   },
   omega_3_ratio: {
     title: "Omega 3/6 Ratio",
@@ -30,6 +50,16 @@ Lean protein sources, like fish, are especially healthy choices.`,
     ],
     postfix: "",
     link: "https://www.cdc.gov/nutritionreport/pdf/second-nutrition-report-fatty-acids-factsheet.pdf",
+    chart: {
+      high: {
+        fish: "Whitefish",
+        value: 39.325,
+      },
+      low: {
+        fish: "Sucker",
+        value: 15.471,
+      },
+    },
   },
   mercury: {
     title: "Mercury",
@@ -41,6 +71,16 @@ Lean protein sources, like fish, are especially healthy choices.`,
       "Avoid mercury by eating smaller fish of the same species. Bigger fish are higher in mercury.",
     postfix: " ppm",
     link: "https://www.cdc.gov/biomonitoring/Mercury_FactSheet.html",
+    chart: {
+      high: {
+        fish: "Whitefish",
+        value: 39.325,
+      },
+      low: {
+        fish: "Sucker",
+        value: 15.471,
+      },
+    },
   },
 };
 
