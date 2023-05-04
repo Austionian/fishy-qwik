@@ -5,6 +5,7 @@ const dataPoints = {
 Dietary protein is necessary for building and repairing your body’s tissues including muscle and blood.
 Lean protein sources, like fish, are especially healthy choices.`,
     postfix: "g per 100g",
+    link: "https://www.cdc.gov/nchs/fastats/diet.htm",
   },
   pcb: {
     title: "PCB",
@@ -12,6 +13,7 @@ Lean protein sources, like fish, are especially healthy choices.`,
     moreInfo:
       "Avoid PCBs by trimming away fat, eating smaller fish of the same species, and cooking in a way that allows fat to drip off. Trimming fat under the skin can remove a lot of PCB from the fish. It's also best if you don't eat the skin.",
     postfix: " ppm",
+    link: "https://www.atsdr.cdc.gov/csem/polychlorinated-biphenyls/what_are.html",
   },
   omega_3_ratio: {
     title: "Omega 3/6 Ratio",
@@ -22,6 +24,7 @@ Lean protein sources, like fish, are especially healthy choices.`,
           A high ratio may be beneficial in reducing the risk of inflammation and associated disease such as cardiovascular disease and cancer.
           Fish generally have positive ratios while many other meat sources or fried foods have poor ratios`,
     postfix: "",
+    link: "https://www.cdc.gov/nutritionreport/pdf/second-nutrition-report-fatty-acids-factsheet.pdf",
   },
   mercury: {
     title: "Mercury",
@@ -30,6 +33,7 @@ Mercury is a heavymetal toxicthat harms the brain and nervous system development
     moreInfo:
       "Avoid mercury by eating smaller fish of the same species. Bigger fish are higher in mercury.",
     postfix: " ppm",
+    link: "https://www.cdc.gov/biomonitoring/Mercury_FactSheet.html",
   },
 };
 

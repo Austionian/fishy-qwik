@@ -1,9 +1,10 @@
 import { component$, useSignal } from "@builder.io/qwik";
 import { calculateServings } from "~/helpers";
+import { LAKES } from "~/constants/lakes";
+import { dataPoints } from "~/constants/dataPoints";
 import type Fish from "~/types/Fish";
 import type UserDetails from "~/types/UserDetails";
 import type Recipe from "~/types/Recipe";
-import { LAKES } from "~/constants/lakes";
 
 import DataModal from "../data-modal/data-modal";
 
@@ -17,7 +18,10 @@ type Props = {
 };
 
 export default component$(({ fishData, userDetails }: Props) => {
-  const showDataModal = useSignal(false);
+  const showProtein = useSignal(false);
+  const showMercury = useSignal(false);
+  const showPcb = useSignal(false);
+  const showOmega3 = useSignal(false);
 
   function getSvg(lake: string) {
     for (let i = 0; i < LAKES.length; i++) {
@@ -29,10 +33,32 @@ export default component$(({ fishData, userDetails }: Props) => {
   const lake_svg = getSvg(fishData.fish_data.lake || "All");
   return (
     <div class="min-h-full">
-      {showDataModal.value && (
+      {showPcb.value && (
         <DataModal
-          showDataModal={showDataModal}
+          showDataModal={showPcb}
           fishData={fishData.fish_data}
+          dataPoint={dataPoints.pcb}
+        />
+      )}
+      {showOmega3.value && (
+        <DataModal
+          showDataModal={showOmega3}
+          fishData={fishData.fish_data}
+          dataPoint={dataPoints.omega_3_ratio}
+        />
+      )}
+      {showMercury.value && (
+        <DataModal
+          showDataModal={showMercury}
+          fishData={fishData.fish_data}
+          dataPoint={dataPoints.mercury}
+        />
+      )}
+      {showProtein.value && (
+        <DataModal
+          showDataModal={showProtein}
+          fishData={fishData.fish_data}
+          dataPoint={dataPoints.protein}
         />
       )}
       <main class="pb-10">
@@ -106,7 +132,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                           version="1.1"
                           viewBox="0 0 100 100"
                           class="h-5 cursor-pointer w-5 hover:fill-teal-500"
-                          onClick$={() => (showDataModal.value = true)}
+                          onClick$={() => (showProtein.value = true)}
                         >
                           <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
                         </svg>
@@ -128,7 +154,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                           version="1.1"
                           viewBox="0 0 100 100"
                           class="h-5 cursor-pointer w-5 hover:fill-teal-500"
-                          onClick$={() => alert("heelo")}
+                          onClick$={() => (showOmega3.value = true)}
                         >
                           <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
                         </svg>
@@ -186,7 +212,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                           version="1.1"
                           viewBox="0 0 100 100"
                           class="h-5 cursor-pointer w-5 hover:fill-teal-500"
-                          onClick$={() => alert("heelo")}
+                          onClick$={() => (showMercury.value = true)}
                         >
                           <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
                         </svg>
@@ -206,7 +232,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                           version="1.1"
                           viewBox="0 0 100 100"
                           class="h-5 cursor-pointer w-5 hover:fill-teal-500"
-                          onClick$={() => alert("heelo")}
+                          onClick$={() => (showPcb.value = true)}
                         >
                           <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
                         </svg>

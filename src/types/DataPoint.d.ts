@@ -5,6 +5,7 @@ type DataPoint = {
   about: string;
   moreInfo?: string;
   postfix: string;
+  link: string;
 };
 
 type Points = keyof typeof dataPoints;
