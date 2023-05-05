@@ -14,7 +14,7 @@ type DataPoint = {
 
 type ChartData = {
   fish: string;
-  value: string;
+  value: number;
 };
 
 type Points = keyof typeof dataPoints;
