@@ -180,7 +180,7 @@ export default component$(
                   </div>
                 </div>
 
-                <div class="h-[239px]">
+                <div class="h-[200px] sm:h-[239px] flex justify-center">
                   <canvas id="chart" ref={chart} class="mt-2" />
                 </div>
               </div>
