@@ -1,8 +1,10 @@
 import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { animate } from "motion";
 import { Chart, registerables } from "chart.js/auto";
-import type { DataPoint } from "~/types/DataPoint";
+import type { ChartData, DataPoint } from "~/types/DataPoint";
 import type Fish from "~/types/Fish";
+
+type ChartKeys = keyof Fish;
 
 type infoModalProps = {
   showDataModal: {
@@ -51,24 +53,26 @@ export default component$(
       }
     });
 
-    useVisibleTask$(() => {
+    useVisibleTask$(async () => {
       if (chart.value) {
+        const res = await fetch(
+          `/api/minMax?attr=${dataPoint.query}&lake=${fishData.lake}`
+        );
+        const data = await res.json();
+        const lowFish: ChartData = data[0];
+        const highFish: ChartData = data[1];
         Chart.register(...registerables);
         new Chart(chart.value, {
           type: "bar",
           data: {
-            labels: [
-              dataPoint.chart.low.fish,
-              fishData.anishinaabe_name,
-              dataPoint.chart.high.fish,
-            ],
+            labels: [lowFish.name, fishData.anishinaabe_name, highFish.name],
             datasets: [
               {
                 label: dataPoint.postfix,
                 data: [
-                  Number(dataPoint.chart.low.value),
-                  Number(fishData.protein),
-                  Number(dataPoint.chart.high.value),
+                  Number(lowFish.value),
+                  Number(fishData[dataPoint.query as ChartKeys]),
+                  Number(highFish.value),
                 ],
                 borderWidth: 1,
                 backgroundColor: ["#ccfbf1", "#14b8a6", "#ccfbf1"],
@@ -172,7 +176,7 @@ export default component$(
                   </div>
                 </div>
 
-                <div>
+                <div class="h-[239px]">
                   <canvas id="chart" ref={chart} class="mt-2" />
                 </div>
               </div>
