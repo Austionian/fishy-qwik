@@ -53,8 +53,7 @@ export default component$(({ fishData, userDetails }: Props) => {
         fishData.data.sort(sorter[sortBy.value].fn);
       } else {
         const res = await fetch(`/api/lake/?lakeName=${filterBy.value}`);
-        const data = await res.json();
-        const fish: Fish[] = data.data;
+        const fish: Fish[] = await res.json();
         fishData.data = fish;
         fishData.data.sort(sorter[sortBy.value].fn);
         window.localStorage.setItem(filterBy.value, JSON.stringify(fish));

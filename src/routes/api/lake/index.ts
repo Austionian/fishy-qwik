@@ -15,7 +15,5 @@ export const onGet: RequestHandler<Fish[]> = async ({ env, query, json }) => {
     }
   );
   const data = await res.json();
-  json(200, {
-    data,
-  });
+  json(200, data);
 };

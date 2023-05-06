@@ -60,12 +60,16 @@ export default component$(
         );
         const data = await res.json();
         const lowFish: ChartData = data[0];
-        const highFish: ChartData = data[1];
+        const highFish: ChartData = data[data.length - 1];
         Chart.register(...registerables);
         new Chart(chart.value, {
           type: "bar",
           data: {
-            labels: [lowFish.name, fishData.anishinaabe_name, highFish.name],
+            labels: [
+              lowFish.anishinaabe_name || lowFish.name,
+              fishData.anishinaabe_name || fishData.name,
+              highFish.anishinaabe_name || highFish.name,
+            ],
             datasets: [
               {
                 label: dataPoint.postfix,
