@@ -9,10 +9,12 @@ type Fish = {
 
 export const onGet: RequestHandler<Fish[]> = async ({ env, json, query }) => {
   const apiKey = getAPIKey(env);
+  const attr = query.get("attr");
+  const lake = query.get("lake");
   const res = await fetch(
-    `https://fishy-edge-tvp4i.ondigitalocean.app/v1/min_and_max?attr=${query.get(
-      "attr"
-    )}&lake=${query.get("lake")}&avg=false`,
+    `https://fishy-edge-tvp4i.ondigitalocean.app/v1/min_and_max?attr=${attr}${
+      lake ? `&lake=${lake}` : ""
+    }`,
     {
       headers: {
         Authorization: `Bearer ${apiKey}`,

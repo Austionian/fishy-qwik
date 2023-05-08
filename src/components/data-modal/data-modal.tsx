@@ -56,11 +56,13 @@ export default component$(
     useVisibleTask$(async () => {
       if (chart.value) {
         const res = await fetch(
-          `/api/minMax?attr=${dataPoint.query}&lake=${fishData.lake}`
+          `/api/minMax?attr=${dataPoint.query}${
+            fishData.lake ? `&lake=${fishData.lake}` : ""
+          }`
         );
         const data = await res.json();
-        const lowFish: ChartData = data[0];
-        const highFish: ChartData = data[data.length - 1];
+        const lowFish: ChartData = data.min;
+        const highFish: ChartData = data.max;
         Chart.register(...registerables);
         new Chart(chart.value, {
           type: "bar",
