@@ -189,7 +189,7 @@ export default component$(({ fishData, userDetails }: Props) => {
           </div>
         </div>
       </div>
-      <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid md:grid-cols-2 sm:gap-px sm:divide-y-0">
+      <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow grid sm:gap-px sm:divide-y-0">
         {fishData.data.map((fish, i) => {
           const link =
             filterBy.value === "All"
@@ -199,17 +199,15 @@ export default component$(({ fishData, userDetails }: Props) => {
             <div
               key={i}
               class={classNames(
-                i === 0 ? "rounded-tl-lg rounded-tr-lg sm:rounded-tr-none" : "",
-                i === 1 ? "sm:rounded-tr-lg" : "",
-                i === fishData.data.length - 2 ? "sm:rounded-bl-lg" : "",
+                i === 0 ? "rounded-tl-lg rounded-tr-lg" : "",
                 i === fishData.data.length - 1
-                  ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
+                  ? "rounded-bl-lg rounded-br-lg"
                   : "",
-                "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500 fishCard"
+                "block lg:flex lg:justify-between group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500 fishCard"
               )}
             >
               <div
-                class="cursor-pointer"
+                class="cursor-pointer min-w-[312px]"
                 onClick$={() => (window.location.href = link)}
               >
                 <img
@@ -218,45 +216,57 @@ export default component$(({ fishData, userDetails }: Props) => {
                   class="h-44"
                 />
               </div>
-              <div class="mt-4 flex justify-between">
+              <div class="mr-8">
+                <div class="mt-4 flex justify-between">
+                  <div
+                    class="cursor-pointer flex-grow"
+                    onClick$={() => (window.location.href = link)}
+                  >
+                    <p class="font-extralight text-xl hover:text-teal-500">
+                      {fish.anishinaabe_name
+                        ? fish.anishinaabe_name
+                        : fish.name}
+                    </p>
+                    <span class="text-sm">
+                      {fish.anishinaabe_name ? ` ${fish.name}` : null}
+                    </span>
+                  </div>
+                  <div onClick$={() => (showUserDetialsModal.value = true)}>
+                    <span class="cursor-pointer ml-4 inline-flex items-center rounded-full bg-teal-100 text-sm font-medium px-3 py-0.5 text-teal-800 hover:bg-teal-200 hover:text-teal-900 hover:ring-teal-300 hover:ring-2">
+                      {calculateServings(
+                        userDetails.data.age,
+                        userDetails.data.weight,
+                        userDetails.data.portion,
+                        userDetails.data.sex,
+                        userDetails.data.plan_to_get_pregnant || "",
+                        fish
+                      )}
+                    </span>
+                  </div>
+                </div>
                 <div
-                  class="cursor-pointer flex-grow"
+                  class="pt-5 cursor-pointer"
                   onClick$={() => (window.location.href = link)}
                 >
-                  <p class="font-extralight text-xl">
-                    {fish.anishinaabe_name ? fish.anishinaabe_name : fish.name}
-                  </p>
-                  <span class="text-sm">
-                    {fish.anishinaabe_name ? ` ${fish.name}` : null}
-                  </span>
+                  <FishDetails fish={fish} index />
                 </div>
-                <div onClick$={() => (showUserDetialsModal.value = true)}>
-                  <span class="cursor-pointer ml-4 inline-flex items-center rounded-full bg-teal-100 text-sm font-medium px-3 py-0.5 text-teal-800 hover:bg-teal-200 hover:text-teal-900 hover:ring-teal-300 hover:ring-2">
-                    {calculateServings(
-                      userDetails.data.age,
-                      userDetails.data.weight,
-                      userDetails.data.portion,
-                      userDetails.data.sex,
-                      userDetails.data.plan_to_get_pregnant || "",
-                      fish
-                    )}
-                  </span>
+                <div class="hidden max-w-full sm:block lg:max-w-3xl text-sm font-light text-gray-700 mt-4 lg:mt-2">
+                  Largemouth, smallmouth, and spotted bass are the most popular
+                  game fish in North America. It is also very popular in South
+                  Africa. In the country, largemouth bass is often found in
+                  lakes, rivers, creeks, and dams. When fishing, lures (Bass
+                  worms) or live bait will work. Lures that mimic baitfish,
+                  worms, crayfish, frogs, and mice are all effective.
                 </div>
+                <span
+                  class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-teal-400"
+                  aria-hidden="true"
+                >
+                  <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z" />
+                  </svg>
+                </span>
               </div>
-              <div
-                class="pt-5 cursor-pointer"
-                onClick$={() => (window.location.href = link)}
-              >
-                <FishDetails fish={fish} index />
-              </div>
-              <span
-                class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-teal-400"
-                aria-hidden="true"
-              >
-                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z" />
-                </svg>
-              </span>
             </div>
           );
         })}
