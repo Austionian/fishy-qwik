@@ -189,7 +189,7 @@ export default component$(({ fishData, userDetails }: Props) => {
           </div>
         </div>
       </div>
-      <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow grid sm:gap-px sm:divide-y-0">
+      <div class="divide-y divide-gray-200 rounded-lg bg-gray-200 shadow grid sm:gap-px sm:divide-y-0">
         {fishData.data.map((fish, i) => {
           const link =
             filterBy.value === "All"
@@ -222,7 +222,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                     class="cursor-pointer flex-grow"
                     onClick$={() => (window.location.href = link)}
                   >
-                    <p class="font-extralight text-xl hover:text-teal-500">
+                    <p class="font-extralight text-xl group-hover:text-teal-500">
                       {fish.anishinaabe_name
                         ? fish.anishinaabe_name
                         : fish.name}
@@ -250,7 +250,10 @@ export default component$(({ fishData, userDetails }: Props) => {
                 >
                   <FishDetails fish={fish} index />
                 </div>
-                <div class="hidden max-w-full sm:block lg:max-w-3xl text-sm font-light text-gray-700 mt-4 lg:mt-2">
+                <div
+                  onClick$={() => (window.location.href = link)}
+                  class="hidden max-w-full sm:block lg:max-w-3xl text-sm font-light text-gray-700 mt-4 lg:mt-2 cursor-pointer"
+                >
                   Largemouth, smallmouth, and spotted bass are the most popular
                   game fish in North America. It is also very popular in South
                   Africa. In the country, largemouth bass is often found in
