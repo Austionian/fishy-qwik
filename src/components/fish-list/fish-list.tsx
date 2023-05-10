@@ -254,12 +254,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                   onClick$={() => (window.location.href = link)}
                   class="hidden max-w-full sm:block lg:max-w-3xl text-sm font-light text-gray-700 mt-4 lg:mt-2 cursor-pointer"
                 >
-                  Largemouth, smallmouth, and spotted bass are the most popular
-                  game fish in North America. It is also very popular in South
-                  Africa. In the country, largemouth bass is often found in
-                  lakes, rivers, creeks, and dams. When fishing, lures (Bass
-                  worms) or live bait will work. Lures that mimic baitfish,
-                  worms, crayfish, frogs, and mice are all effective.
+                    {fish.about}
                 </div>
                 <span
                   class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-teal-400"
