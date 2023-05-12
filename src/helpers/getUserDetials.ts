@@ -10,6 +10,7 @@ export default (cookie: Cookie): UserDetails => {
       sex: undefined,
       plan_to_get_pregnant: undefined,
       portion: undefined,
+      image: undefined,
     };
   }
   return {
@@ -19,5 +20,6 @@ export default (cookie: Cookie): UserDetails => {
     sex: cookie.get("sex")?.value,
     plan_to_get_pregnant: cookie.get("plan_to_get_pregnant")?.value,
     portion: cookie.get("portion")?.value,
+    image: cookie.get("image")?.value,
   };
 };

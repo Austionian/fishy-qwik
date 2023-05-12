@@ -5,6 +5,7 @@ type UserDetails = {
   sex: string | undefined;
   plan_to_get_pregnant: string | undefined;
   portion: string | undefined;
+  image: string | undefined;
 };
 
 export default UserDetails;

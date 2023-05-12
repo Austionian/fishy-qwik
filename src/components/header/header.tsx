@@ -18,12 +18,14 @@ export default component$(() => {
   const showSearch = useSignal(false);
   const location = useLocation();
   const email = useSignal("");
+  const image = useSignal("");
   const ref = useSignal<Element>();
 
   const signOutAction = useSignOut();
 
   useVisibleTask$(() => {
     email.value = getCookie("email");
+    image.value = getCookie("image");
   });
 
   useVisibleTask$(({ track }) => {
@@ -189,6 +191,13 @@ export default component$(() => {
                   >
                     <span class="sr-only">Open user menu</span>
                     <span class="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100">
+                      {image.value !== "" ? (
+                        <img
+                          class="h-full w-full rounded-full"
+                          src={image.value}
+                          alt=""
+                        />
+                      ) : null}
                       <svg
                         class="h-full w-full text-gray-300"
                         fill="currentColor"
@@ -258,6 +267,13 @@ export default component$(() => {
             <div class="flex items-center px-5">
               <div class="flex-shrink-0">
                 <span class="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100">
+                  {image.value !== "" ? (
+                    <img
+                      class="h-full w-full rounded-full"
+                      src={image.value}
+                      alt=""
+                    />
+                  ) : null}
                   <svg
                     class="h-full w-full text-gray-300"
                     fill="currentColor"

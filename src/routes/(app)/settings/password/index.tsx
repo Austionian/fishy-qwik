@@ -1,62 +1,6 @@
-import {
-  component$,
-  type QwikChangeEvent,
-  useSignal,
-  $,
-} from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
-import { v4 as uuidv4 } from "uuid";
-import { getUserDetials } from "~/helpers";
-import type UserDetails from "~/types/UserDetails";
-
-export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
-  return getUserDetials(cookie);
-});
+import { component$ } from "@builder.io/qwik";
 
 export default component$(() => {
-  const userDetails = useUserDetails();
-  const image = useSignal(userDetails.value.image || "");
-
-  const handleUpload = $((e: QwikChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
-      const fileName = `${uuidv4()}-${file.name}`;
-      const data = {
-        fileName,
-        fileType: file.type,
-      };
-      const requestObj = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      };
-
-      fetch("/api/presigned_s3", requestObj)
-        .then((res) => res.json())
-        .then((res) => {
-          if (file) {
-            fetch(res.url, {
-              method: "PUT",
-              headers: {
-                "Content-Type": file.type,
-              },
-              body: file,
-            })
-              .then((res) => {
-                if (res.status === 200) {
-                  e.target.blur;
-                  image.value = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
-                  document.cookie = `image=${image.value}; path=/`;
-                }
-              })
-              .catch((err) => console.log("err: ", err));
-          }
-        });
-    }
-  });
-
   return (
     <div class="mx-auto max-w-screen-xl px-4 pb-6 sm:px-6 lg:px-8 lg:pb-16">
       <div class="overflow-hidden rounded-lg bg-white shadow">
@@ -65,7 +9,7 @@ export default component$(() => {
             <nav class="space-y-1">
               <a
                 href="#"
-                class="border-teal-500 bg-teal-50 text-teal-700 hover:bg-teal-50 hover:text-teal-700 group flex items-center border-l-4 px-3 py-2 text-sm font-medium"
+                class="border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900 group flex items-center border-l-4 px-3 py-2 text-sm font-medium"
                 aria-current="page"
               >
                 <svg
@@ -107,8 +51,8 @@ export default component$(() => {
               </a>
 
               <a
-                href="/settings/password"
-                class="border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900 group flex items-center border-l-4 px-3 py-2 text-sm font-medium"
+                href="#"
+                class="border-teal-500 bg-teal-50 text-teal-700 hover:bg-teal-50 hover:text-teal-700 group flex items-center border-l-4 px-3 py-2 text-sm font-medium"
               >
                 <svg
                   class="text-gray-400 group-hover:text-gray-500 -ml-1 mr-3 h-6 w-6 flex-shrink-0"
@@ -266,13 +210,6 @@ export default component$(() => {
                         class="inline-block h-12 w-12 flex-shrink-0 overflow-hidden rounded-full"
                         aria-hidden="true"
                       >
-                        {image.value !== "" ? (
-                          <img
-                            class="h-full w-full rounded-full"
-                            src={image.value}
-                            alt=""
-                          />
-                        ) : null}
                         <svg
                           class="h-full w-full text-gray-300"
                           fill="currentColor"
@@ -287,9 +224,6 @@ export default component$(() => {
                           name="user-photo"
                           type="file"
                           class="peer absolute h-full w-full rounded-md opacity-0"
-                          onChange$={(e) => {
-                            handleUpload(e);
-                          }}
                         />
                         <label
                           for="mobile-user-photo"
@@ -304,13 +238,6 @@ export default component$(() => {
 
                   <div class="relative hidden overflow-hidden rounded-full lg:block">
                     <span class="inline-block h-40 w-40 overflow-hidden rounded-full bg-gray-100">
-                      {image.value !== "" ? (
-                        <img
-                          class="h-full w-full rounded-full"
-                          src={image.value}
-                          alt=""
-                        />
-                      ) : null}
                       <svg
                         class="h-full w-full text-gray-300"
                         fill="currentColor"
@@ -330,9 +257,6 @@ export default component$(() => {
                         id="desktop-user-photo"
                         name="user-photo"
                         class="absolute inset-0 h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0"
-                        onChange$={(e) => {
-                          handleUpload(e);
-                        }}
                       />
                     </label>
                   </div>
