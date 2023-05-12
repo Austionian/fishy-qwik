@@ -38,7 +38,9 @@ export default component$(() => {
               <a href={"/recipe/" + recipe.id + "/"}>
                 <div class="mt-8 flex justify-between">
                   <div>
-                    <p class="font-bold underline">{recipe.name}</p>
+                    <p class="font-extralight text-xl group-hover:text-teal-500">
+                      {recipe.name}
+                    </p>
                   </div>
                 </div>
                 <span

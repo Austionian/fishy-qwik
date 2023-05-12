@@ -227,7 +227,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                         ? fish.anishinaabe_name
                         : fish.name}
                     </p>
-                    <span class="text-sm">
+                    <span class="text-sm group-hover:text-teal-500">
                       {fish.anishinaabe_name ? ` ${fish.name}` : null}
                     </span>
                   </div>
@@ -254,7 +254,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                   onClick$={() => (window.location.href = link)}
                   class="hidden max-w-full sm:block lg:max-w-3xl text-sm font-light text-gray-700 mt-4 lg:mt-2 cursor-pointer"
                 >
-                    {fish.about}
+                  {fish.about}
                 </div>
                 <span
                   class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-teal-400"

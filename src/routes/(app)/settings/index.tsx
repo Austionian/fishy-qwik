@@ -1,8 +1,53 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import {
+  component$,
+  type QwikChangeEvent,
+  useSignal,
+  $,
+} from "@builder.io/qwik";
 import { v4 as uuidv4 } from "uuid";
 
 export default component$(() => {
   const image = useSignal("");
+
+  const handleUpload = $((e: QwikChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const fileName = `${uuidv4()}-${file.name}`;
+      const data = {
+        fileName,
+        fileType: file.type,
+      };
+      const requestObj = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+
+      fetch("/api/presigned_s3", requestObj)
+        .then((res) => res.json())
+        .then((res) => {
+          if (file) {
+            fetch(res.url, {
+              method: "PUT",
+              headers: {
+                "Content-Type": file.type,
+              },
+              body: file,
+            })
+              .then((res) => {
+                if (res.status === 200) {
+                  e.target.blur;
+                  image.value = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
+                }
+              })
+              .catch((err) => console.log("err: ", err));
+          }
+        });
+    }
+  });
+
   return (
     <div class="mx-auto max-w-screen-xl px-4 pb-6 sm:px-6 lg:px-8 lg:pb-16">
       <div class="overflow-hidden rounded-lg bg-white shadow">
@@ -212,11 +257,20 @@ export default component$(() => {
                         class="inline-block h-12 w-12 flex-shrink-0 overflow-hidden rounded-full"
                         aria-hidden="true"
                       >
-                        <img
-                          class="h-full w-full rounded-full"
-                          src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=320&h=320&q=80"
-                          alt=""
-                        />
+                        {image.value !== "" ? (
+                          <img
+                            class="h-full w-full rounded-full"
+                            src={image.value}
+                            alt=""
+                          />
+                        ) : null}
+                        <svg
+                          class="h-full w-full text-gray-300"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
                       </div>
                       <div class="relative ml-5">
                         <input
@@ -224,6 +278,9 @@ export default component$(() => {
                           name="user-photo"
                           type="file"
                           class="peer absolute h-full w-full rounded-md opacity-0"
+                          onChange$={(e) => {
+                            handleUpload(e);
+                          }}
                         />
                         <label
                           for="mobile-user-photo"
@@ -265,42 +322,7 @@ export default component$(() => {
                         name="user-photo"
                         class="absolute inset-0 h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0"
                         onChange$={(e) => {
-                          if (e.target.files) {
-                            const file = e.target.files[0];
-                            const fileName = `${uuidv4()}-${file.name}`;
-                            const data = {
-                              fileName,
-                              fileType: file.type,
-                            };
-                            const requestObj = {
-                              method: "POST",
-                              headers: {
-                                "Content-Type": "application/json",
-                              },
-                              body: JSON.stringify(data),
-                            };
-
-                            fetch("/api/presigned_s3", requestObj)
-                              .then((res) => res.json())
-                              .then((res) => {
-                                if (file) {
-                                  fetch(res.url, {
-                                    method: "PUT",
-                                    headers: {
-                                      "Content-Type": file.type,
-                                    },
-                                    body: file,
-                                  })
-                                    .then((res) => {
-                                      if (res.status === 200) {
-                                        e.target.blur;
-                                        image.value = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
-                                      }
-                                    })
-                                    .catch((err) => console.log("err: ", err));
-                                }
-                              });
-                          }
+                          handleUpload(e);
                         }}
                       />
                     </label>
