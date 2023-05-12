@@ -3,5 +3,13 @@ import classNames from "./classNames";
 import calculateServings from "./calculate-servings";
 import getCookie from "./getCookie";
 import getUserDetials from "./getUserDetials";
+import getEnvKey from "./getEnvKey";
 
-export { getAPIKey, classNames, calculateServings, getCookie, getUserDetials };
+export {
+  getAPIKey,
+  getEnvKey,
+  classNames,
+  calculateServings,
+  getCookie,
+  getUserDetials,
+};
