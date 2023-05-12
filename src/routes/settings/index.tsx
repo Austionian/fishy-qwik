@@ -284,7 +284,7 @@ export default component$(() => {
                               .then((res) => res.json())
                               .then((res) => {
                                 if (file) {
-                                  fetch(res.presignedUrl, {
+                                  fetch(res.url, {
                                     method: "PUT",
                                     headers: {
                                       "Content-Type": file.type,
@@ -295,7 +295,6 @@ export default component$(() => {
                                       if (res.status === 200) {
                                         e.target.blur;
                                         image.value = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
-                                        // Save to the database!
                                       }
                                     })
                                     .catch((err) => console.log("err: ", err));

@@ -1,26 +1,30 @@
 import type { RequestHandler } from "@builder.io/qwik-city";
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import type Fish from "~/types/Fish";
-import { getEnvKey } from "~/helpers";
+import { getAPIKey } from "~/helpers";
 
 export const onPost: RequestHandler<Fish[]> = async ({
   env,
   json,
   request,
 }) => {
-  const region = getEnvKey(env, "S3_REGION");
-  const bucket = getEnvKey(env, "BUCKET");
-  const credentials = {
-    accessKeyId: getEnvKey(env, "ACCESS_KEY_ID"),
-    secretAccessKey: getEnvKey(env, "SECRET_ACCESS_KEY"),
-  };
-
+  const apiKey = getAPIKey(env);
   const requestBody = await request.json();
-  const key = requestBody.fileName;
+  const name = requestBody.fileName;
+  console.log(name);
 
-  const client = new S3Client({ region, credentials });
-  const command = new PutObjectCommand({ Bucket: bucket, Key: key });
-  const presignedUrl = await getSignedUrl(client, command, { expiresIn: 3600 });
-  json(200, { presignedUrl });
+  const res = await fetch(
+    `https://fishy-edge-tvp4i.ondigitalocean.app/v1/presign_s3`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+      }),
+    }
+  );
+  const data = await res.json();
+  json(200, data);
 };
