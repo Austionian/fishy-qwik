@@ -1,9 +1,6 @@
 import type { RequestHandler } from "@builder.io/qwik-city";
-import { S3RequestPresigner } from "@aws-sdk/s3-request-presigner";
-import { parseUrl } from "@aws-sdk/url-parser";
-import { HttpRequest } from "@aws-sdk/protocol-http";
-import { Hash } from "@aws-sdk/hash-node";
-import { formatUrl } from "@aws-sdk/util-format-url";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import type Fish from "~/types/Fish";
 import { getEnvKey } from "~/helpers";
 
@@ -22,17 +19,8 @@ export const onPost: RequestHandler<Fish[]> = async ({
   const requestBody = await request.json();
   const key = requestBody.fileName;
 
-  const url = parseUrl(`https://${bucket}.s3.${region}.amazonaws.com/${key}`);
-  const presigner = new S3RequestPresigner({
-    credentials,
-    region,
-    sha256: Hash.bind(null, "sha256"),
-  });
-
-  const signedUrlObject = await presigner.presign(
-    new HttpRequest({ ...url, method: "PUT" })
-  );
-
-  const presignedUrl = formatUrl(signedUrlObject);
+  const client = new S3Client({ region, credentials });
+  const command = new PutObjectCommand({ Bucket: bucket, Key: key });
+  const presignedUrl = await getSignedUrl(client, command, { expiresIn: 3600 });
   json(200, { presignedUrl });
 };
