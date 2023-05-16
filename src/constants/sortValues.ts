@@ -100,10 +100,10 @@ function byServings(a: Fish, b: Fish) {
 
 function byPCB(a: Fish, b: Fish) {
   if (a.pcb < b.pcb) {
-    return 1;
+    return -1;
   }
   if (a.pcb > b.pcb) {
-    return -1;
+    return 1;
   }
   return 0;
 }
@@ -130,10 +130,10 @@ function byProtein(a: Fish, b: Fish) {
 
 function byMercury(a: Fish, b: Fish) {
   if (a.mercury < b.mercury) {
-    return 1;
+    return -1;
   }
   if (a.mercury > b.mercury) {
-    return -1;
+    return 1;
   }
   return 0;
 }

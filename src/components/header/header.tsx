@@ -2,34 +2,29 @@ import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { globalAction$, useLocation, Form } from "@builder.io/qwik-city";
 import { animate } from "motion";
 import Search from "../search/search";
-import { getCookie } from "~/helpers";
 import LINKS from "~/constants/links";
+import type MetaUserDetails from "~/types/MetaUserDetails";
 
 export const useSignOut = globalAction$(async (_, { cookie, redirect }) => {
   cookie.delete("fish-login");
   cookie.delete("email");
+  cookie.delete("admin");
 
   throw redirect(302, "/login");
 });
 
 type Props = {
-  image: string | undefined;
-  admin: string | undefined;
+  user: MetaUserDetails;
 };
 
-export default component$((props: Props) => {
+export default component$(({ user }: Props) => {
   const showUserMenu = useSignal(false);
   const mobileMenu = useSignal(false);
   const showSearch = useSignal(false);
   const location = useLocation();
-  const email = useSignal("");
   const ref = useSignal<Element>();
 
   const signOutAction = useSignOut();
-
-  useVisibleTask$(() => {
-    email.value = getCookie("email");
-  });
 
   useVisibleTask$(({ track }) => {
     track(() => showUserMenu.value);
@@ -82,7 +77,7 @@ export default component$((props: Props) => {
             <div class="hidden lg:ml-10 lg:flex lg:space-x-8">
               <div class="flex space-x-4">
                 {LINKS.map((link, i) => {
-                  if (link.title === "Admin" && Boolean(props.admin)) {
+                  if (link.title === "Admin" && user.admin) {
                     return (
                       <a
                         href={link.href}
@@ -212,10 +207,10 @@ export default component$((props: Props) => {
                   >
                     <span class="sr-only">Open user menu</span>
                     <span class="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100">
-                      {props.image !== "" ? (
+                      {user.image !== "" ? (
                         <img
                           class="h-full w-full rounded-full"
-                          src={props.image}
+                          src={user.image}
                           alt=""
                         />
                       ) : null}
@@ -271,7 +266,7 @@ export default component$((props: Props) => {
         <div class="lg:hidden" id="mobile-menu">
           <div class="space-y-1 px-2 pb-3 pt-2">
             {LINKS.map((link, i) => {
-              if (link.title === "Admin" && Boolean(props.admin)) {
+              if (link.title === "Admin" && user.admin) {
                 return (
                   <a
                     href={link.href}
@@ -306,10 +301,10 @@ export default component$((props: Props) => {
             <div class="flex items-center px-5">
               <div class="flex-shrink-0">
                 <span class="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100">
-                  {props.image !== "" ? (
+                  {user.image !== "" ? (
                     <img
                       class="h-full w-full rounded-full"
-                      src={props.image}
+                      src={user.image}
                       alt=""
                     />
                   ) : null}
@@ -324,7 +319,9 @@ export default component$((props: Props) => {
               </div>
               <div class="ml-3">
                 <div class="text-base font-medium text-gray-800">Austin</div>
-                <div class="text-sm font-medium text-gray-400">{email}</div>
+                <div class="text-sm font-medium text-gray-400">
+                  {user.email}
+                </div>
               </div>
             </div>
             <div class="mt-3 space-y-1 px-2">
