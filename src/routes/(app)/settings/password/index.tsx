@@ -16,12 +16,9 @@ export default component$(() => {
             <div class="px-4 py-6 sm:p-6 lg:pb-8">
               <div>
                 <h2 class="text-lg font-medium leading-6 text-gray-900">
-                  Profile
+                  Password
                 </h2>
-                <p class="mt-1 text-sm text-gray-500">
-                  This information will be displayed publicly so be careful what
-                  you share.
-                </p>
+                <p class="mt-1 text-sm text-gray-500">Change your password.</p>
               </div>
 
               <div class="mt-6 flex flex-col lg:flex-row">

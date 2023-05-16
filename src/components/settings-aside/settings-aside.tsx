@@ -21,7 +21,7 @@ export default component$(() => {
                 aria-current="page"
                 key={i}
               >
-                <span dangerouslySetInnerHTML={setting.svgIcon} />
+                <span dangerouslySetInnerHTML={setting.activeIcon} />
                 <span class="truncate">{setting.title}</span>
               </a>
             );
@@ -33,7 +33,7 @@ export default component$(() => {
               aria-current="page"
               key={i}
             >
-              <span dangerouslySetInnerHTML={setting.svgIcon} />
+              <span dangerouslySetInnerHTML={setting.icon} />
               <span class="truncate">{setting.title}</span>
             </a>
           );
