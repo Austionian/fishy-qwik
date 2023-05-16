@@ -12,20 +12,23 @@ export const useSignOut = globalAction$(async (_, { cookie, redirect }) => {
   throw redirect(302, "/login");
 });
 
-export default component$(() => {
+type Props = {
+  image: string | undefined;
+  admin: string | undefined;
+};
+
+export default component$((props: Props) => {
   const showUserMenu = useSignal(false);
   const mobileMenu = useSignal(false);
   const showSearch = useSignal(false);
   const location = useLocation();
   const email = useSignal("");
-  const image = useSignal("");
   const ref = useSignal<Element>();
 
   const signOutAction = useSignOut();
 
   useVisibleTask$(() => {
     email.value = getCookie("email");
-    image.value = getCookie("image");
   });
 
   useVisibleTask$(({ track }) => {
@@ -78,19 +81,37 @@ export default component$(() => {
             </div>
             <div class="hidden lg:ml-10 lg:flex lg:space-x-8">
               <div class="flex space-x-4">
-                {LINKS.map((link, i) => (
-                  <a
-                    href={link.href}
-                    key={i}
-                    class={
-                      location.url.pathname === link.pathname
-                        ? "inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900"
-                        : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                    }
-                  >
-                    <span tabIndex={0}>{link.title}</span>
-                  </a>
-                ))}
+                {LINKS.map((link, i) => {
+                  if (link.title === "Admin" && Boolean(props.admin)) {
+                    return (
+                      <a
+                        href={link.href}
+                        key={i}
+                        class={
+                          location.url.pathname === link.pathname
+                            ? "inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900"
+                            : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                        }
+                      >
+                        {link.title}
+                      </a>
+                    );
+                  } else if (link.title !== "Admin") {
+                    return (
+                      <a
+                        href={link.href}
+                        key={i}
+                        class={
+                          location.url.pathname === link.pathname
+                            ? "inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900"
+                            : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                        }
+                      >
+                        {link.title}
+                      </a>
+                    );
+                  }
+                })}
               </div>
             </div>
           </div>
@@ -191,10 +212,10 @@ export default component$(() => {
                   >
                     <span class="sr-only">Open user menu</span>
                     <span class="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100">
-                      {image.value !== "" ? (
+                      {props.image !== "" ? (
                         <img
                           class="h-full w-full rounded-full"
-                          src={image.value}
+                          src={props.image}
                           alt=""
                         />
                       ) : null}
@@ -249,28 +270,46 @@ export default component$(() => {
       {mobileMenu.value ? (
         <div class="lg:hidden" id="mobile-menu">
           <div class="space-y-1 px-2 pb-3 pt-2">
-            {LINKS.map((link, i) => (
-              <a
-                href={link.href}
-                key={i}
-                class={
-                  location.url.pathname === link.pathname
-                    ? "block border-l-4 border-teal-500 bg-teal-50 py-2 pl-3 pr-4 text-base font-medium text-teal-700 cursor-default"
-                    : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
-                }
-              >
-                {link.title}
-              </a>
-            ))}
+            {LINKS.map((link, i) => {
+              if (link.title === "Admin" && Boolean(props.admin)) {
+                return (
+                  <a
+                    href={link.href}
+                    key={i}
+                    class={
+                      location.url.pathname === link.pathname
+                        ? "block border-l-4 border-teal-500 bg-teal-50 py-2 pl-3 pr-4 text-base font-medium text-teal-700 cursor-default"
+                        : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+                    }
+                  >
+                    {link.title}
+                  </a>
+                );
+              } else {
+                return (
+                  <a
+                    href={link.href}
+                    key={i}
+                    class={
+                      location.url.pathname === link.pathname
+                        ? "block border-l-4 border-teal-500 bg-teal-50 py-2 pl-3 pr-4 text-base font-medium text-teal-700 cursor-default"
+                        : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+                    }
+                  >
+                    {link.title}
+                  </a>
+                );
+              }
+            })}
           </div>
           <div class="border-t border-gray-200 pb-3 pt-4">
             <div class="flex items-center px-5">
               <div class="flex-shrink-0">
                 <span class="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100">
-                  {image.value !== "" ? (
+                  {props.image !== "" ? (
                     <img
                       class="h-full w-full rounded-full"
-                      src={image.value}
+                      src={props.image}
                       alt=""
                     />
                   ) : null}

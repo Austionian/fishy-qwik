@@ -1,5 +1,5 @@
 /**
- *  Returns the cookie value or an empty string.
+ *  Returns the cookie value or an empty string for the client.
  */
 function getCookie(cookie: string) {
   const value = document.cookie

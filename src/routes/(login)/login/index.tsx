@@ -35,6 +35,10 @@ export const useSignUpFormAction = routeAction$(
       path: "/",
       sameSite: "lax",
     });
+    cookie.set("admin", "true", {
+      path: "/",
+      sameSite: "lax",
+    });
     // const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
     throw redirect(303, "/splash/");
   },

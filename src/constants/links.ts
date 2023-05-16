@@ -9,6 +9,11 @@ const LINKS = [
     pathname: "/recipe/",
     href: "/recipe/",
   },
+  {
+    title: "Admin",
+    pathname: "/admin/",
+    href: "/admin/",
+  },
 ];
 
 export default LINKS;
