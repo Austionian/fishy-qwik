@@ -1,8 +1,64 @@
-import { component$ } from "@builder.io/qwik";
+import {
+  component$,
+  type QwikChangeEvent,
+  useSignal,
+  $,
+} from "@builder.io/qwik";
+import { routeLoader$ } from "@builder.io/qwik-city";
+import { v4 as uuidv4 } from "uuid";
+import { getUserDetials } from "~/helpers";
+import type UserDetails from "~/types/UserDetails";
 
 import SettingsAside from "~/components/settings-aside/settings-aside";
 
+export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
+  return getUserDetials(cookie);
+});
+
 export default component$(() => {
+  const userDetails = useUserDetails();
+  const image = useSignal(userDetails.value.image || "");
+
+  const handleUpload = $((e: QwikChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const fileName = `${uuidv4()}-${file.name}`;
+      const data = {
+        fileName,
+        fileType: file.type,
+      };
+      const requestObj = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+
+      fetch("/api/presigned_s3", requestObj)
+        .then((res) => res.json())
+        .then((res) => {
+          if (file) {
+            fetch(res.url, {
+              method: "PUT",
+              headers: {
+                "Content-Type": file.type,
+              },
+              body: file,
+            })
+              .then((res) => {
+                if (res.status === 200) {
+                  e.target.blur;
+                  image.value = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
+                  document.cookie = `image=${image.value}; path=/`;
+                }
+              })
+              .catch((err) => console.error("err: ", err));
+          }
+        });
+    }
+  });
+
   return (
     <div class="mx-auto max-w-screen-xl px-4 pb-6 sm:px-6 lg:px-8 lg:pb-16">
       <div class="overflow-hidden rounded-lg bg-white shadow">
@@ -81,6 +137,13 @@ export default component$(() => {
                         class="inline-block h-12 w-12 flex-shrink-0 overflow-hidden rounded-full"
                         aria-hidden="true"
                       >
+                        {image.value !== "" ? (
+                          <img
+                            class="h-full w-full rounded-full"
+                            src={image.value}
+                            alt=""
+                          />
+                        ) : null}
                         <svg
                           class="h-full w-full text-gray-300"
                           fill="currentColor"
@@ -95,6 +158,9 @@ export default component$(() => {
                           name="user-photo"
                           type="file"
                           class="peer absolute h-full w-full rounded-md opacity-0"
+                          onChange$={(e) => {
+                            handleUpload(e);
+                          }}
                         />
                         <label
                           for="mobile-user-photo"
@@ -109,6 +175,13 @@ export default component$(() => {
 
                   <div class="relative hidden overflow-hidden rounded-full lg:block">
                     <span class="inline-block h-40 w-40 overflow-hidden rounded-full bg-gray-100">
+                      {image.value !== "" ? (
+                        <img
+                          class="h-full w-full rounded-full"
+                          src={image.value}
+                          alt=""
+                        />
+                      ) : null}
                       <svg
                         class="h-full w-full text-gray-300"
                         fill="currentColor"
@@ -128,6 +201,9 @@ export default component$(() => {
                         id="desktop-user-photo"
                         name="user-photo"
                         class="absolute inset-0 h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0"
+                        onChange$={(e) => {
+                          handleUpload(e);
+                        }}
                       />
                     </label>
                   </div>
@@ -201,137 +277,6 @@ export default component$(() => {
             </div>
 
             <div class="divide-y divide-gray-200 pt-6">
-              <div class="px-4 sm:px-6">
-                <div>
-                  <h2 class="text-lg font-medium leading-6 text-gray-900">
-                    Privacy
-                  </h2>
-                  <p class="mt-1 text-sm text-gray-500">
-                    Ornare eu a volutpat eget vulputate. Fringilla commodo amet.
-                  </p>
-                </div>
-                <ul role="list" class="mt-2 divide-y divide-gray-200">
-                  <li class="flex items-center justify-between py-4">
-                    <div class="flex flex-col">
-                      <p
-                        class="text-sm font-medium leading-6 text-gray-900"
-                        id="privacy-option-1-label"
-                      >
-                        Available to hire
-                      </p>
-                      <p
-                        class="text-sm text-gray-500"
-                        id="privacy-option-1-description"
-                      >
-                        Nulla amet tempus sit accumsan. Aliquet turpis sed sit
-                        lacinia.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      class="bg-gray-200 relative ml-4 inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
-                      role="switch"
-                      aria-checked="true"
-                      aria-labelledby="privacy-option-1-label"
-                      aria-describedby="privacy-option-1-description"
-                    >
-                      <span
-                        aria-hidden="true"
-                        class="translate-x-0 inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                      ></span>
-                    </button>
-                  </li>
-                  <li class="flex items-center justify-between py-4">
-                    <div class="flex flex-col">
-                      <p
-                        class="text-sm font-medium leading-6 text-gray-900"
-                        id="privacy-option-2-label"
-                      >
-                        Make account private
-                      </p>
-                      <p
-                        class="text-sm text-gray-500"
-                        id="privacy-option-2-description"
-                      >
-                        Pharetra morbi dui mi mattis tellus sollicitudin cursus
-                        pharetra.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      class="bg-gray-200 relative ml-4 inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
-                      role="switch"
-                      aria-checked="false"
-                      aria-labelledby="privacy-option-2-label"
-                      aria-describedby="privacy-option-2-description"
-                    >
-                      <span
-                        aria-hidden="true"
-                        class="translate-x-0 inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                      ></span>
-                    </button>
-                  </li>
-                  <li class="flex items-center justify-between py-4">
-                    <div class="flex flex-col">
-                      <p
-                        class="text-sm font-medium leading-6 text-gray-900"
-                        id="privacy-option-3-label"
-                      >
-                        Allow commenting
-                      </p>
-                      <p
-                        class="text-sm text-gray-500"
-                        id="privacy-option-3-description"
-                      >
-                        Integer amet, nunc hendrerit adipiscing nam. Elementum
-                        ame
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      class="bg-gray-200 relative ml-4 inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
-                      role="switch"
-                      aria-checked="true"
-                      aria-labelledby="privacy-option-3-label"
-                      aria-describedby="privacy-option-3-description"
-                    >
-                      <span
-                        aria-hidden="true"
-                        class="translate-x-0 inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                      ></span>
-                    </button>
-                  </li>
-                  <li class="flex items-center justify-between py-4">
-                    <div class="flex flex-col">
-                      <p
-                        class="text-sm font-medium leading-6 text-gray-900"
-                        id="privacy-option-4-label"
-                      >
-                        Allow mentions
-                      </p>
-                      <p
-                        class="text-sm text-gray-500"
-                        id="privacy-option-4-description"
-                      >
-                        Adipiscing est venenatis enim molestie commodo eu gravid
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      class="bg-gray-200 relative ml-4 inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
-                      role="switch"
-                      aria-checked="true"
-                      aria-labelledby="privacy-option-4-label"
-                      aria-describedby="privacy-option-4-description"
-                    >
-                      <span
-                        aria-hidden="true"
-                        class="translate-x-0 inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                      ></span>
-                    </button>
-                  </li>
-                </ul>
-              </div>
               <div class="mt-4 flex justify-end gap-x-3 px-4 py-4 sm:px-6">
                 <button
                   type="button"
@@ -341,7 +286,7 @@ export default component$(() => {
                 </button>
                 <button
                   type="submit"
-                  class="inline-flex justify-center rounded-md bg-sky-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700"
+                  class="inline-flex justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
                 >
                   Save
                 </button>

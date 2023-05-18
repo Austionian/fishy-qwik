@@ -1,8 +1,10 @@
 import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
-import { Form, globalAction$, zod$, z } from "@builder.io/qwik-city";
+import { Form, globalAction$, zod$ } from "@builder.io/qwik-city";
 import { animate } from "motion";
-import PORTIONS, { PORTION_VALUES } from "~/constants/portions";
+import PORTIONS from "~/constants/portions";
 import type UserDetails from "~/types/UserDetails";
+import saveUserDetails from "~/services/saveUserDetails";
+import { userDetailsObject } from "~/constants/zod/userDetailsObject";
 
 type infoModalProps = {
   showUserInputModal: {
@@ -20,49 +22,17 @@ export const useSignUpFormAction = globalAction$(
     const sex = infoForm.sex;
     const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "";
     const portion = infoForm.portion;
-    // if (cookie.get("email")) {
-    //   // save to db
-    // }
-    //
-    cookie.set("age", age, {
-      path: "/",
-      sameSite: "lax",
-    });
-    cookie.set("weight", weight, {
-      path: "/",
-      sameSite: "lax",
-    });
-    cookie.set("sex", sex, {
-      path: "/",
-      sameSite: "lax",
-    });
-    cookie.set("plan_to_get_pregnant", plan_to_get_pregnant, {
-      path: "/",
-      sameSite: "lax",
-    });
-    cookie.set("portion", portion, {
-      path: "/",
-      sameSite: "lax",
-    });
-    cookie.set("user-details", "true", {
-      path: "/",
-      sameSite: "lax",
-    });
 
-    return {
-      success: false,
-    };
+    return saveUserDetails(
+      cookie,
+      weight,
+      age,
+      sex,
+      plan_to_get_pregnant,
+      portion
+    );
   },
-  zod$({
-    weight: z.coerce
-      .number()
-      .min(1, { message: "Weight must be at least 1." })
-      .max(350, { message: "Weight cannot be more than 350." }),
-    age: z.coerce.number().min(1).max(100),
-    sex: z.enum(["Male", "Female"]),
-    plan_to_get_pregnant: z.enum(["Yes", "No"]).optional(),
-    portion: z.enum(PORTION_VALUES),
-  })
+  zod$(userDetailsObject)
 );
 
 export default component$(

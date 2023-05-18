@@ -10,7 +10,6 @@ export const onPost: RequestHandler<Fish[]> = async ({
   const apiKey = getAPIKey(env);
   const requestBody = await request.json();
   const name = requestBody.fileName;
-  console.log(name);
 
   const res = await fetch(
     `https://fishy-edge-tvp4i.ondigitalocean.app/v1/presign_s3`,

@@ -1,414 +1,221 @@
-import {
-  component$,
-  type QwikChangeEvent,
-  useSignal,
-  $,
-} from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
-import { v4 as uuidv4 } from "uuid";
+import { component$, useSignal } from "@builder.io/qwik";
+import { routeLoader$, Form, zod$, routeAction$ } from "@builder.io/qwik-city";
 import { getUserDetials } from "~/helpers";
 import type UserDetails from "~/types/UserDetails";
-
+import PORTIONS from "~/constants/portions";
 import SettingsAside from "~/components/settings-aside/settings-aside";
+import saveUserDetails from "~/services/saveUserDetails";
+import { userDetailsObject } from "~/constants/zod/userDetailsObject";
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
   return getUserDetials(cookie);
 });
 
+export const useUpdateUserInfoAction = routeAction$(
+  async (infoForm, { cookie }) => {
+    const weight = infoForm.weight;
+    const age = infoForm.age;
+    const sex = infoForm.sex;
+    const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "";
+    const portion = infoForm.portion;
+
+    return saveUserDetails(
+      cookie,
+      weight,
+      age,
+      sex,
+      plan_to_get_pregnant,
+      portion
+    );
+  },
+  zod$(userDetailsObject)
+);
+
 export default component$(() => {
   const userDetails = useUserDetails();
-  const image = useSignal(userDetails.value.image || "");
-
-  const handleUpload = $((e: QwikChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
-      const fileName = `${uuidv4()}-${file.name}`;
-      const data = {
-        fileName,
-        fileType: file.type,
-      };
-      const requestObj = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      };
-
-      fetch("/api/presigned_s3", requestObj)
-        .then((res) => res.json())
-        .then((res) => {
-          if (file) {
-            fetch(res.url, {
-              method: "PUT",
-              headers: {
-                "Content-Type": file.type,
-              },
-              body: file,
-            })
-              .then((res) => {
-                if (res.status === 200) {
-                  e.target.blur;
-                  image.value = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
-                  document.cookie = `image=${image.value}; path=/`;
-                }
-              })
-              .catch((err) => console.log("err: ", err));
-          }
-        });
-    }
-  });
+  const formAction = useUpdateUserInfoAction();
+  const isMale = useSignal(
+    userDetails.value.sex === "Male" || userDetails.value.sex === undefined
+  );
+  const saveValue = useSignal("Save");
 
   return (
     <div class="mx-auto max-w-screen-xl px-4 pb-6 sm:px-6 lg:px-8 lg:pb-16">
       <div class="overflow-hidden rounded-lg bg-white shadow">
         <div class="divide-y divide-gray-200 lg:grid lg:grid-cols-12 lg:divide-x lg:divide-y-0">
           <SettingsAside />
-          <form
+          <Form
             class="divide-y divide-gray-200 lg:col-span-9"
-            action="#"
-            method="POST"
+            action={formAction}
+            onSubmitCompleted$={() => {
+              if (formAction.status === 200) {
+                saveValue.value = "Saved \u2713";
+              }
+            }}
           >
-            <div class="px-4 py-6 sm:p-6 lg:pb-8">
+            <div class="px-4 py-6 sm:p-6 lg:pb-8 flex flex-col">
               <div>
                 <h2 class="text-lg font-medium leading-6 text-gray-900">
                   Profile
                 </h2>
                 <p class="mt-1 text-sm text-gray-500">
-                  Update your information to calculate your recommended
-                  servings.
+                  Enter your information to see a personalized serving
+                  recommendation for the fish in our app.
                 </p>
               </div>
 
-              <div class="mt-6 flex flex-col lg:flex-row">
-                <div class="flex-grow space-y-6">
-                  <div>
-                    <label
-                      for="username"
-                      class="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Username
-                    </label>
-                    <div class="mt-2 flex rounded-md shadow-sm">
-                      <span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm">
-                        workcation.com/
+              <div class="mt-6 grid-cols-12 gap-6 flex flex-col">
+                <div class="my-2">
+                  <label
+                    for="weight"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Weight
+                  </label>
+                  <div class="relative mt-2 rounded-md shadow-sm">
+                    <input
+                      type="text"
+                      name="weight"
+                      id="weight"
+                      value={userDetails.value.weight}
+                      onChange$={(e) =>
+                        (userDetails.value.weight = e.target.value)
+                      }
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                      placeholder="200"
+                      aria-describedby="weight-currency"
+                      autoFocus
+                    />
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                      <span class="text-gray-500 sm:text-sm" id="weight-format">
+                        lbs
                       </span>
-                      <input
-                        type="text"
-                        name="username"
-                        id="username"
-                        autoComplete="username"
-                        class="block w-full min-w-0 flex-grow rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
-                        value="deblewis"
-                      />
                     </div>
                   </div>
-
-                  <div>
-                    <label
-                      for="about"
-                      class="block text-sm font-medium leading-6 text-gray-900"
+                  {formAction.value?.failed && (
+                    <div class="text-left text-red-600 text-sm">
+                      {formAction.value?.fieldErrors?.weight}
+                    </div>
+                  )}
+                </div>
+                <div class="my-2">
+                  <label
+                    for="age"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Age
+                  </label>
+                  <div class="mt-2">
+                    <input
+                      type="text"
+                      name="age"
+                      id="age"
+                      value={userDetails.value.age}
+                      onChange$={(e) =>
+                        (userDetails.value.age = e.target.value)
+                      }
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                      placeholder="44"
+                    />
+                    {formAction.value?.failed && (
+                      <div class="text-left text-red-600 text-sm">
+                        {formAction.value?.fieldErrors?.age}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div class="my-2">
+                  <label for="sex" class="text-sm font-semibold text-gray-900">
+                    Sex
+                  </label>
+                  <div class="mt-2">
+                    <select
+                      id="sex"
+                      name="sex"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      onChange$={(e) => {
+                        isMale.value = e.target.value === "Male";
+                        userDetails.value.sex = e.target.value;
+                      }}
                     >
-                      About
+                      <option selected={userDetails.value.sex === "Male"}>
+                        Male
+                      </option>
+                      <option selected={userDetails.value.sex === "Female"}>
+                        Female
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                {!isMale.value && (
+                  <div class="my-2">
+                    <label
+                      for="plan_to_get_pregnant"
+                      class="text-sm font-semibold text-gray-900"
+                    >
+                      Plan to get pregnant?
                     </label>
                     <div class="mt-2">
-                      <textarea
-                        id="about"
-                        name="about"
-                        rows={3}
-                        class="mt-1 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:py-1.5 sm:text-sm sm:leading-6"
-                      ></textarea>
+                      <select
+                        id="plan_to_get_pregnant"
+                        name="plan_to_get_pregnant"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        value={userDetails.value.plan_to_get_pregnant || "No"}
+                        onChange$={(e) =>
+                          (userDetails.value.plan_to_get_pregnant =
+                            e.target.value)
+                        }
+                      >
+                        <option>Yes</option>
+                        <option>No</option>
+                      </select>
                     </div>
-                    <p class="mt-2 text-sm text-gray-500">
-                      Brief description for your profile. URLs are hyperlinked.
-                    </p>
                   </div>
-                </div>
-
-                <div class="mt-6 flex-grow lg:ml-6 lg:mt-0 lg:flex-shrink-0 lg:flex-grow-0">
-                  <p
-                    class="text-sm font-medium leading-6 text-gray-900"
-                    aria-hidden="true"
-                  >
-                    Photo
+                )}
+                <div class="my-2">
+                  <label class="text-sm font-semibold text-gray-900">
+                    Portion Size
+                  </label>
+                  <p class="text-sm text-gray-500">
+                    What is your perfered portion size?
                   </p>
-                  <div class="mt-2 lg:hidden">
-                    <div class="flex items-center">
-                      <div
-                        class="inline-block h-12 w-12 flex-shrink-0 overflow-hidden rounded-full"
-                        aria-hidden="true"
-                      >
-                        {image.value !== "" ? (
-                          <img
-                            class="h-full w-full rounded-full"
-                            src={image.value}
-                            alt=""
-                          />
-                        ) : null}
-                        <svg
-                          class="h-full w-full text-gray-300"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                      </div>
-                      <div class="relative ml-5">
-                        <input
-                          id="mobile-user-photo"
-                          name="user-photo"
-                          type="file"
-                          class="peer absolute h-full w-full rounded-md opacity-0"
-                          onChange$={(e) => {
-                            handleUpload(e);
-                          }}
-                        />
-                        <label
-                          for="mobile-user-photo"
-                          class="pointer-events-none block rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 peer-hover:ring-gray-400 peer-focus:ring-2 peer-focus:ring-sky-500"
-                        >
-                          <span>Change</span>
-                          <span class="sr-only"> user photo</span>
-                        </label>
-                      </div>
+                  {formAction.value?.failed && (
+                    <div class="text-left text-red-600 text-sm">
+                      {formAction.value?.fieldErrors?.portion}
                     </div>
-                  </div>
-
-                  <div class="relative hidden overflow-hidden rounded-full lg:block">
-                    <span class="inline-block h-40 w-40 overflow-hidden rounded-full bg-gray-100">
-                      {image.value !== "" ? (
-                        <img
-                          class="h-full w-full rounded-full"
-                          src={image.value}
-                          alt=""
-                        />
-                      ) : null}
-                      <svg
-                        class="h-full w-full text-gray-300"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                      </svg>
-                    </span>
-                    <label
-                      for="desktop-user-photo"
-                      class="absolute inset-0 flex h-full w-full items-center justify-center bg-black bg-opacity-75 text-sm font-medium text-white opacity-0 focus-within:opacity-100 hover:opacity-100"
-                    >
-                      <span>Change</span>
-                      <span class="sr-only"> user photo</span>
-                      <input
-                        type="file"
-                        id="desktop-user-photo"
-                        name="user-photo"
-                        class="absolute inset-0 h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0"
-                        onChange$={(e) => {
-                          handleUpload(e);
-                        }}
-                      />
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mt-6 grid grid-cols-12 gap-6">
-                <div class="col-span-12 sm:col-span-6">
-                  <label
-                    for="first-name"
-                    class="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    First name
-                  </label>
-                  <input
-                    type="text"
-                    name="first-name"
-                    id="first-name"
-                    autoComplete="given-name"
-                    class="mt-2 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:border-0 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
-                  />
-                </div>
-
-                <div class="col-span-12 sm:col-span-6">
-                  <label
-                    for="last-name"
-                    class="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Last name
-                  </label>
-                  <input
-                    type="text"
-                    name="last-name"
-                    id="last-name"
-                    autoComplete="family-name"
-                    class="mt-2 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:border-0 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
-                  />
-                </div>
-
-                <div class="col-span-12">
-                  <label
-                    for="url"
-                    class="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    URL
-                  </label>
-                  <input
-                    type="text"
-                    name="url"
-                    id="url"
-                    class="mt-2 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:border-0 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
-                  />
-                </div>
-
-                <div class="col-span-12 sm:col-span-6">
-                  <label
-                    for="company"
-                    class="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Company
-                  </label>
-                  <input
-                    type="text"
-                    name="company"
-                    id="company"
-                    autoComplete="organization"
-                    class="mt-2 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:border-0 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
-                  />
+                  )}
+                  <fieldset class="mt-4">
+                    <legend class="sr-only">Portion Size</legend>
+                    <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
+                      {PORTIONS.map((portion, i) => (
+                        <div key={i} class="flex items-center">
+                          <input
+                            id={portion.label}
+                            value={portion.value}
+                            name="portion"
+                            type="radio"
+                            checked={
+                              portion.value === userDetails.value.portion
+                            }
+                            onChange$={(e) =>
+                              (userDetails.value.portion = e.target.value)
+                            }
+                            class="h-4 w-4 border-gray-300 text-teal-600 focus:ring-teal-600"
+                          />
+                          <label
+                            for={portion.label}
+                            class="ml-3 block text-sm font-medium leading-6 text-gray-900"
+                          >
+                            {portion.label}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </fieldset>
                 </div>
               </div>
             </div>
-
             <div class="divide-y divide-gray-200 pt-6">
-              <div class="px-4 sm:px-6">
-                <div>
-                  <h2 class="text-lg font-medium leading-6 text-gray-900">
-                    Privacy
-                  </h2>
-                  <p class="mt-1 text-sm text-gray-500">
-                    Ornare eu a volutpat eget vulputate. Fringilla commodo amet.
-                  </p>
-                </div>
-                <ul role="list" class="mt-2 divide-y divide-gray-200">
-                  <li class="flex items-center justify-between py-4">
-                    <div class="flex flex-col">
-                      <p
-                        class="text-sm font-medium leading-6 text-gray-900"
-                        id="privacy-option-1-label"
-                      >
-                        Available to hire
-                      </p>
-                      <p
-                        class="text-sm text-gray-500"
-                        id="privacy-option-1-description"
-                      >
-                        Nulla amet tempus sit accumsan. Aliquet turpis sed sit
-                        lacinia.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      class="bg-gray-200 relative ml-4 inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
-                      role="switch"
-                      aria-checked="true"
-                      aria-labelledby="privacy-option-1-label"
-                      aria-describedby="privacy-option-1-description"
-                    >
-                      <span
-                        aria-hidden="true"
-                        class="translate-x-0 inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                      ></span>
-                    </button>
-                  </li>
-                  <li class="flex items-center justify-between py-4">
-                    <div class="flex flex-col">
-                      <p
-                        class="text-sm font-medium leading-6 text-gray-900"
-                        id="privacy-option-2-label"
-                      >
-                        Make account private
-                      </p>
-                      <p
-                        class="text-sm text-gray-500"
-                        id="privacy-option-2-description"
-                      >
-                        Pharetra morbi dui mi mattis tellus sollicitudin cursus
-                        pharetra.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      class="bg-gray-200 relative ml-4 inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
-                      role="switch"
-                      aria-checked="false"
-                      aria-labelledby="privacy-option-2-label"
-                      aria-describedby="privacy-option-2-description"
-                    >
-                      <span
-                        aria-hidden="true"
-                        class="translate-x-0 inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                      ></span>
-                    </button>
-                  </li>
-                  <li class="flex items-center justify-between py-4">
-                    <div class="flex flex-col">
-                      <p
-                        class="text-sm font-medium leading-6 text-gray-900"
-                        id="privacy-option-3-label"
-                      >
-                        Allow commenting
-                      </p>
-                      <p
-                        class="text-sm text-gray-500"
-                        id="privacy-option-3-description"
-                      >
-                        Integer amet, nunc hendrerit adipiscing nam. Elementum
-                        ame
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      class="bg-gray-200 relative ml-4 inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
-                      role="switch"
-                      aria-checked="true"
-                      aria-labelledby="privacy-option-3-label"
-                      aria-describedby="privacy-option-3-description"
-                    >
-                      <span
-                        aria-hidden="true"
-                        class="translate-x-0 inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                      ></span>
-                    </button>
-                  </li>
-                  <li class="flex items-center justify-between py-4">
-                    <div class="flex flex-col">
-                      <p
-                        class="text-sm font-medium leading-6 text-gray-900"
-                        id="privacy-option-4-label"
-                      >
-                        Allow mentions
-                      </p>
-                      <p
-                        class="text-sm text-gray-500"
-                        id="privacy-option-4-description"
-                      >
-                        Adipiscing est venenatis enim molestie commodo eu gravid
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      class="bg-gray-200 relative ml-4 inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
-                      role="switch"
-                      aria-checked="true"
-                      aria-labelledby="privacy-option-4-label"
-                      aria-describedby="privacy-option-4-description"
-                    >
-                      <span
-                        aria-hidden="true"
-                        class="translate-x-0 inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                      ></span>
-                    </button>
-                  </li>
-                </ul>
-              </div>
               <div class="mt-4 flex justify-end gap-x-3 px-4 py-4 sm:px-6">
                 <button
                   type="button"
@@ -418,13 +225,13 @@ export default component$(() => {
                 </button>
                 <button
                   type="submit"
-                  class="inline-flex justify-center rounded-md bg-sky-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700"
+                  class="inline-flex justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
                 >
-                  Save
+                  {saveValue.value}
                 </button>
               </div>
             </div>
-          </form>
+          </Form>
         </div>
       </div>
     </div>
