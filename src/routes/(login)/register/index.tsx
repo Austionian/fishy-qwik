@@ -1,14 +1,15 @@
 import { component$ } from "@builder.io/qwik";
-import { zod$, z, Form, routeAction$ } from "@builder.io/qwik-city";
+import { zod$, Form, routeAction$ } from "@builder.io/qwik-city";
+import { newRegistrationObject } from "~/constants/zod/newRegistrationObject";
 import getAPIKey from "~/helpers/getAPIKey";
 
-export const useLoginFormAction = routeAction$(
-  async (loginForm, { env, redirect, cookie }) => {
-    const email = loginForm.email;
-    const password = loginForm.password;
+export const useRegisterFormAction = routeAction$(
+  async (registerForm, { env, redirect, cookie }) => {
+    const email = registerForm.email;
+    const password = registerForm.password;
     const apiKey = getAPIKey(env);
     const response = await fetch(
-      "https://fishy-edge-tvp4i.ondigitalocean.app/v1/login",
+      "https://fishy-edge-tvp4i.ondigitalocean.app/v1/register",
       {
         method: "POST",
         headers: {
@@ -26,6 +27,8 @@ export const useLoginFormAction = routeAction$(
         success: false,
         fieldErrors: {
           email: `Error: ${response.status} - ${response.statusText}`,
+          password: `Error: ${response.status} - ${response.statusText}`,
+          confirmPassword: `Error: ${response.status} - ${response.statusText}`,
         },
       };
     }
@@ -44,10 +47,7 @@ export const useLoginFormAction = routeAction$(
     // const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
     throw redirect(303, "/splash/");
   },
-  zod$({
-    email: z.string().email().nonempty(),
-    password: z.string().nonempty(),
-  })
+  zod$(newRegistrationObject)
 );
 
 export const useGuestOption = routeAction$(async (_, { cookie, redirect }) => {
@@ -64,8 +64,8 @@ export const useGuestOption = routeAction$(async (_, { cookie, redirect }) => {
 });
 
 export default component$(() => {
-  const action = useLoginFormAction();
-  const guestAction = useGuestOption();
+  const action = useRegisterFormAction();
+
   return (
     <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-md">
@@ -82,7 +82,13 @@ export default component$(() => {
 
       <div class="mt-14 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
-          <Form action={action} class="space-y-6">
+          <h1 class="text-left text-xl text-gray-800 font-bold tracking-tight">
+            Create an account
+          </h1>
+          {action.value?.failed && (
+            <div class="text-left text-red-400">{action.value?.formErrors}</div>
+          )}
+          <Form action={action} class="space-y-6 mt-6">
             <div>
               <label
                 for="email"
@@ -138,34 +144,41 @@ export default component$(() => {
             </div>
 
             <div>
+              <label
+                for="confirmPassword"
+                class="text-left block text-sm font-medium leading-6 text-gray-900"
+              >
+                Confirm Password
+              </label>
+              <div class="mt-2">
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  autoComplete="password"
+                  required
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 
+                    shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+                    focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm 
+                    sm:leading-6"
+                />
+                {action.value?.failed && (
+                  <div class="text-left text-red-400">
+                    {action.value?.fieldErrors?.confirmPassword}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div>
               <button
                 type="submit"
                 class="flex w-full justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
               >
-                SIGN IN
+                SIGN UP
               </button>
             </div>
           </Form>
-          <Form action={guestAction} class="mt-5">
-            <div>
-              <button
-                type="submit"
-                class="text-teal-600 text-sm w-full font-bold rounded hover:bg-gray-100 p-2"
-              >
-                CONTINUE AS GUEST
-              </button>
-            </div>
-          </Form>
-
-          <p class="mt-10 text-center text-sm text-gray-500">
-            Need an account?
-            <a
-              href="/register"
-              class="ml-2 font-semibold leading-6 text-teal-600 hover:text-teal-500"
-            >
-              Create one here.
-            </a>
-          </p>
         </div>
       </div>
     </div>
