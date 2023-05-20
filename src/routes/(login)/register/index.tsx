@@ -166,6 +166,16 @@ export default component$(() => {
               >
                 SIGN UP
               </button>
+              <div class="mt-5">
+                <a href="/login">
+                  <button
+                    type="button"
+                    class="text-teal-600 text-sm w-full font-bold rounded hover:bg-gray-100 p-2"
+                  >
+                    CANCEL
+                  </button>
+                </a>
+              </div>
             </div>
           </Form>
         </div>
