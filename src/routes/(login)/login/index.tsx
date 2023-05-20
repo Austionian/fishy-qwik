@@ -9,7 +9,7 @@ import {
 import { getFetchDetails } from "~/helpers";
 
 export const useLoginFormAction = routeAction$(
-  async (loginForm, { env, redirect, cookie, url, platform }) => {
+  async (loginForm, { env, redirect, cookie, url }) => {
     const email = loginForm.email;
     const password = loginForm.password;
     const { apiKey, domain } = getFetchDetails(env);
@@ -37,8 +37,7 @@ export const useLoginFormAction = routeAction$(
       };
     }
     const res = await response.json();
-    /* @ts-ignore */
-    platform.fishy_kv.put(res[0], "true");
+    // platform.fishy_kv.put(res[0], "true");
     cookie.set("fish-login", "true", {
       path: "/",
       sameSite: "lax",
