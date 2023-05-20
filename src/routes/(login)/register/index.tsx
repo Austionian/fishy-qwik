@@ -1,5 +1,10 @@
 import { component$ } from "@builder.io/qwik";
-import { zod$, Form, routeAction$ } from "@builder.io/qwik-city";
+import {
+  type DocumentHead,
+  zod$,
+  Form,
+  routeAction$,
+} from "@builder.io/qwik-city";
 import { newRegistrationObject } from "~/constants/zod/newRegistrationObject";
 import { getFetchDetails } from "~/helpers";
 
@@ -183,3 +188,14 @@ export default component$(() => {
     </div>
   );
 });
+
+export const head: DocumentHead = {
+  title: "Sign Up",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Register to learn healthy, personalized fish portions and nutritional contents",
+    },
+  ],
+};

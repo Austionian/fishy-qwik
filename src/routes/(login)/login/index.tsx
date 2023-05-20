@@ -1,5 +1,11 @@
 import { component$ } from "@builder.io/qwik";
-import { zod$, z, Form, routeAction$ } from "@builder.io/qwik-city";
+import {
+  type DocumentHead,
+  zod$,
+  z,
+  Form,
+  routeAction$,
+} from "@builder.io/qwik-city";
 import { getFetchDetails } from "~/helpers";
 
 export const useLoginFormAction = routeAction$(
@@ -179,3 +185,14 @@ export default component$(() => {
     </div>
   );
 });
+
+export const head: DocumentHead = {
+  title: "Sign In",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Login and learn healthy, personalized fish portions and nutritional contents",
+    },
+  ],
+};
