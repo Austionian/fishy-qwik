@@ -1,18 +1,15 @@
 import { component$ } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
-import { classNames, getAPIKey } from "~/helpers";
+import { classNames, getFetchDetails } from "~/helpers";
 import type Recipe from "~/types/Recipe";
 
 export const useRecipeData = routeLoader$<Recipe[]>(async ({ env }) => {
-  const apiKey = getAPIKey(env);
-  const res = await fetch(
-    "https://fishy-edge-tvp4i.ondigitalocean.app/v1/recipe/",
-    {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-    }
-  );
+  const { apiKey, domain } = getFetchDetails(env);
+  const res = await fetch(`${domain}/v1/recipe/`, {
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
+  });
   return await res.json();
 });
 

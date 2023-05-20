@@ -1,34 +1,36 @@
 import { component$ } from "@builder.io/qwik";
 import { zod$, z, Form, routeAction$ } from "@builder.io/qwik-city";
-import getAPIKey from "~/helpers/getAPIKey";
+import { getFetchDetails } from "~/helpers";
 
 export const useLoginFormAction = routeAction$(
-  async (loginForm, { env, redirect, cookie }) => {
+  async (loginForm, { env, redirect, cookie, url }) => {
     const email = loginForm.email;
     const password = loginForm.password;
-    const apiKey = getAPIKey(env);
-    const response = await fetch(
-      "https://fishy-edge-tvp4i.ondigitalocean.app/v1/login",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          email,
-          password,
-        }),
-      }
-    );
+    const { apiKey, domain } = getFetchDetails(env);
+    const response = await fetch(`${domain}/v1/login`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        email,
+        password,
+      }),
+    });
     if (!response.ok) {
+      if (response.statusText === "Unauthorized") {
+        return {
+          failed: true,
+          formErrors: "Invalid email address and/ or password.",
+        };
+      }
       return {
-        success: false,
-        fieldErrors: {
-          email: `Error: ${response.status} - ${response.statusText}`,
-        },
+        failed: true,
+        formErrors: `Error: ${response.statusText}`,
       };
     }
+    const res = await response.json();
     cookie.set("fish-login", "true", {
       path: "/",
       sameSite: "lax",
@@ -37,12 +39,14 @@ export const useLoginFormAction = routeAction$(
       path: "/",
       sameSite: "lax",
     });
-    cookie.set("admin", "true", {
-      path: "/",
-      sameSite: "lax",
-    });
-    // const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
-    throw redirect(303, "/splash/");
+    if (res[1]) {
+      cookie.set("admin", "true", {
+        path: "/",
+        sameSite: "lax",
+      });
+    }
+    const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
+    throw redirect(303, redirectUrl);
   },
   zod$({
     email: z.string().email().nonempty(),
@@ -59,7 +63,6 @@ export const useGuestOption = routeAction$(async (_, { cookie, redirect }) => {
     path: "/",
     sameSite: "lax",
   });
-  // const redirectUrl = new URL(url).searchParams.get("redirect") || "/splash/";
   throw redirect(303, "/splash/");
 });
 
@@ -83,6 +86,11 @@ export default component$(() => {
       <div class="mt-14 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
           <Form action={action} class="space-y-6">
+            {action.value?.failed && (
+              <div class="text-left text-red-400">
+                {action.value?.formErrors}
+              </div>
+            )}
             <div>
               <label
                 for="email"

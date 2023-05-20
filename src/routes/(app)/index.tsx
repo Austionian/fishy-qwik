@@ -1,26 +1,23 @@
 import { component$, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
-import { getAPIKey, getUserDetials } from "~/helpers";
+import { getUserDetails, getFetchDetails } from "~/helpers";
 import type Fish from "~/types/Fish";
 import type UserDetails from "~/types/UserDetails";
 
 import FishList from "~/components/fish-list/fish-list";
 
 export const useFishData = routeLoader$<Fish[]>(async ({ env }) => {
-  const apiKey = getAPIKey(env);
-  const res = await fetch(
-    "https://fishy-edge-tvp4i.ondigitalocean.app/v1/fish_avgs",
-    {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-    }
-  );
+  const { apiKey, domain } = getFetchDetails(env);
+  const res = await fetch(`${domain}/v1/fish_avgs`, {
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
+  });
   return await res.json();
 });
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
-  return getUserDetials(cookie);
+  return getUserDetails(cookie);
 });
 
 export default component$(() => {

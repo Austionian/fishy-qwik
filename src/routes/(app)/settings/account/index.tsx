@@ -6,11 +6,11 @@ import {
 } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import { v4 as uuidv4 } from "uuid";
-import { getUserDetials } from "~/helpers";
+import { getUserDetails } from "~/helpers";
 import type UserDetails from "~/types/UserDetails";
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
-  return getUserDetials(cookie);
+  return getUserDetails(cookie);
 });
 
 export default component$(() => {

@@ -1,35 +1,28 @@
 import { component$ } from "@builder.io/qwik";
 import { zod$, Form, routeAction$ } from "@builder.io/qwik-city";
 import { newRegistrationObject } from "~/constants/zod/newRegistrationObject";
-import getAPIKey from "~/helpers/getAPIKey";
+import { getFetchDetails } from "~/helpers";
 
 export const useRegisterFormAction = routeAction$(
   async (registerForm, { env, redirect, cookie }) => {
     const email = registerForm.email;
     const password = registerForm.password;
-    const apiKey = getAPIKey(env);
-    const response = await fetch(
-      "https://fishy-edge-tvp4i.ondigitalocean.app/v1/register",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          email,
-          password,
-        }),
-      }
-    );
+    const { apiKey, domain } = getFetchDetails(env);
+    const response = await fetch(`${domain}/v1/register`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        email,
+        password,
+      }),
+    });
     if (!response.ok) {
       return {
-        success: false,
-        fieldErrors: {
-          email: `Error: ${response.status} - ${response.statusText}`,
-          password: `Error: ${response.status} - ${response.statusText}`,
-          confirmPassword: `Error: ${response.status} - ${response.statusText}`,
-        },
+        failed: true,
+        formErrors: `Error: ${response.statusText}`,
       };
     }
     cookie.set("fish-login", "true", {
@@ -37,10 +30,6 @@ export const useRegisterFormAction = routeAction$(
       sameSite: "lax",
     });
     cookie.set("email", email, {
-      path: "/",
-      sameSite: "lax",
-    });
-    cookie.set("admin", "true", {
       path: "/",
       sameSite: "lax",
     });

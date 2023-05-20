@@ -1,14 +1,14 @@
 import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { routeLoader$, Form, zod$, routeAction$ } from "@builder.io/qwik-city";
 import { animate } from "motion";
-import { getUserDetials } from "~/helpers";
+import { getUserDetails } from "~/helpers";
 import type UserDetails from "~/types/UserDetails";
 import PORTIONS from "~/constants/portions";
 import saveUserDetails from "~/services/saveUserDetails";
 import { userDetailsObject } from "~/constants/zod/userDetailsObject";
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
-  return getUserDetials(cookie);
+  return getUserDetails(cookie);
 });
 
 export const useUpdateUserInfoAction = routeAction$(

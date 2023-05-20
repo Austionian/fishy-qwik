@@ -1,15 +1,15 @@
-import getAPIKey from "./getAPIKey";
+import getFetchDetails from "./getFetchDetails";
 import classNames from "./classNames";
 import calculateServings from "./calculate-servings";
 import getCookie from "./getCookie";
-import getUserDetials from "./getUserDetials";
+import getUserDetails from "./getUserDetails";
 import getEnvKey from "./getEnvKey";
 
 export {
-  getAPIKey,
+  getFetchDetails,
   getEnvKey,
   classNames,
   calculateServings,
   getCookie,
-  getUserDetials,
+  getUserDetails,
 };
