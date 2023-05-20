@@ -37,6 +37,7 @@ export const useLoginFormAction = routeAction$(
       };
     }
     const res = await response.json();
+    /* @ts-ignore */
     platform.fishy_kv.put(res[0], "true");
     cookie.set("fish-login", "true", {
       path: "/",
