@@ -8,6 +8,12 @@ import {
 } from "@builder.io/qwik-city";
 import { getFetchDetails } from "~/helpers";
 import { v4 as uuidv4 } from "uuid";
+import {
+  TWO_WEEKS_SEC,
+  TWO_WEEKS_FROM_TODAY_DATE,
+  ONE_DAY_FROM_TODAY_DATE,
+  GUEST,
+} from "~/constants/constants";
 
 export const useLoginFormAction = routeAction$(
   async (loginForm, { env, redirect, cookie, url, platform }) => {
@@ -39,9 +45,6 @@ export const useLoginFormAction = routeAction$(
     }
     const res = await response.json();
     const token = uuidv4();
-    const TWO_WEEKS_SEC = 1209600;
-    const TWO_WEEKS_MS = 12096e5;
-    const TWO_WEEKS_FROM_TODAY_DATE = new Date(Date.now() + TWO_WEEKS_MS);
     if (import.meta.env.PROD) {
       // add session to kv
       await platform.env.FISHY_KV.put(res[0], token, {
@@ -82,10 +85,10 @@ export const useLoginFormAction = routeAction$(
 );
 
 export const useGuestOption = routeAction$(async (_, { cookie, redirect }) => {
-  cookie.set("user_id", "guest", {
+  cookie.set("user_id", GUEST, {
     path: "/",
     sameSite: "strict",
-    expires: new Date(Date.now() + 8.64e7),
+    expires: ONE_DAY_FROM_TODAY_DATE,
   });
   throw redirect(303, "/splash/");
 });

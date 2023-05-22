@@ -44,19 +44,6 @@ export const useRegisterFormAction = routeAction$(
   zod$(newRegistrationObject)
 );
 
-export const useGuestOption = routeAction$(async (_, { cookie, redirect }) => {
-  cookie.set("fish-login", "true", {
-    path: "/",
-    sameSite: "lax",
-  });
-  cookie.set("guest", "true", {
-    path: "/",
-    sameSite: "lax",
-  });
-  // const redirectUrl = new URL(url).searchParams.get("redirect") || "/splash/";
-  throw redirect(303, "/splash/");
-});
-
 export default component$(() => {
   const action = useRegisterFormAction();
 

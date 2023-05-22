@@ -1,6 +1,7 @@
 import { component$, Slot } from "@builder.io/qwik";
 import { routeLoader$, type RequestHandler } from "@builder.io/qwik-city";
 import type MetaUserDetails from "~/types/MetaUserDetails";
+import { GUEST } from "~/constants/constants";
 
 import Header from "~/components/header/header";
 import Footer from "~/components/footer/footer";
@@ -17,7 +18,7 @@ export const onRequest: RequestHandler = async ({
     }
   } else {
     const user_id = cookie.get("user_id")?.value || "";
-    if (user_id !== "guest") {
+    if (user_id !== GUEST) {
       const token: string | null = await platform.env.FISHY_KV.get(user_id);
       if (!token || cookie.get("token")?.value !== token) {
         throw redirect(302, `/login/?redirect=${request.url}`);

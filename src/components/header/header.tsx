@@ -5,13 +5,19 @@ import Search from "../search/search";
 import LINKS from "~/constants/links";
 import type MetaUserDetails from "~/types/MetaUserDetails";
 
-export const useSignOut = globalAction$(async (_, { cookie, redirect }) => {
-  cookie.delete("fish-login");
-  cookie.delete("email");
-  cookie.delete("admin");
+export const useSignOut = globalAction$(
+  async (_, { cookie, redirect, platform }) => {
+    if (import.meta.env.PROD) {
+      await platform.env.FISHY_KV.delete(cookie.get("user_id")?.value);
+    }
+    cookie.delete("token");
+    cookie.delete("user_id");
+    cookie.delete("admin");
+    cookie.delete("email");
 
-  throw redirect(302, "/login");
-});
+    throw redirect(302, "/login");
+  }
+);
 
 type Props = {
   user: MetaUserDetails;
@@ -280,7 +286,7 @@ export default component$(({ user }: Props) => {
                     {link.title}
                   </a>
                 );
-              } else {
+              } else if (link.title !== "Admin") {
                 return (
                   <a
                     href={link.href}
