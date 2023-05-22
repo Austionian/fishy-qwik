@@ -37,7 +37,10 @@ export const useLoginFormAction = routeAction$(
       };
     }
     const res = await response.json();
-    platform.env.fishy_kv.put(res[0], "true");
+    if (import.meta.env.PROD) {
+      // add session to kv
+      platform.env.FISHY_KV.put(res[0], "true");
+    }
     cookie.set("fish-login", "true", {
       path: "/",
       sameSite: "lax",
