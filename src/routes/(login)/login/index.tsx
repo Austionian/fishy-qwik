@@ -47,7 +47,7 @@ export const useLoginFormAction = routeAction$(
     const token = uuidv4();
     if (import.meta.env.PROD) {
       // add session to kv
-      await platform.env.FISHY_KV.put(res[0], token, {
+      platform.env.FISHY_KV.put(res[0], token, {
         expirationTtl: TWO_WEEKS_SEC,
       });
     }
@@ -75,7 +75,8 @@ export const useLoginFormAction = routeAction$(
         expires: TWO_WEEKS_FROM_TODAY_DATE,
       });
     }
-    const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
+    let redirectUrl = new URL(url).searchParams.get("redirect") || "/";
+    redirectUrl = new URL(redirectUrl).pathname;
     throw redirect(303, redirectUrl);
   },
   zod$({
