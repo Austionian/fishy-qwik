@@ -8,15 +8,12 @@ import {
 } from "@builder.io/qwik-city";
 import { getFetchDetails } from "~/helpers";
 import { v4 as uuidv4 } from "uuid";
-import {
-  TWO_WEEKS_SEC,
-  TWO_WEEKS_FROM_TODAY_DATE,
-  ONE_DAY_FROM_TODAY_DATE,
-  GUEST,
-} from "~/constants/constants";
 
 export const useLoginFormAction = routeAction$(
   async (loginForm, { env, redirect, cookie, url, platform }) => {
+    const TWO_WEEKS_MS = 12096e5;
+    const TWO_WEEKS_SEC = 1209600;
+    const TWO_WEEKS_FROM_TODAY_DATE = new Date(Date.now() + TWO_WEEKS_MS);
     const email = loginForm.email;
     const password = loginForm.password;
     const { apiKey, domain } = getFetchDetails(env);
@@ -85,6 +82,9 @@ export const useLoginFormAction = routeAction$(
 );
 
 export const useGuestOption = routeAction$(async (_, { cookie, redirect }) => {
+  const ONE_DAY_MS = 8.64e7;
+  const ONE_DAY_FROM_TODAY_DATE = new Date(Date.now() + ONE_DAY_MS);
+  const GUEST = "GUEST";
   cookie.set("user_id", GUEST, {
     path: "/",
     sameSite: "strict",
