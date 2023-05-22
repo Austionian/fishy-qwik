@@ -7,8 +7,9 @@ import type MetaUserDetails from "~/types/MetaUserDetails";
 
 export const useSignOut = globalAction$(
   async (_, { cookie, redirect, platform }) => {
-    if (import.meta.env.PROD) {
-      await platform.env.FISHY_KV.delete(cookie.get("user_id")?.value);
+    const user_id = cookie.get("user_id")?.value;
+    if (import.meta.env.PROD && user_id !== "GUEST") {
+      await platform.env.FISHY_KV.delete(user_id);
     }
     cookie.delete("token");
     cookie.delete("user_id");
