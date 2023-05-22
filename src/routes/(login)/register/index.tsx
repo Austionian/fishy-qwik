@@ -7,9 +7,13 @@ import {
 } from "@builder.io/qwik-city";
 import { newRegistrationObject } from "~/constants/zod/newRegistrationObject";
 import { getFetchDetails } from "~/helpers";
+import { v4 as uuidv4 } from "uuid";
 
 export const useRegisterFormAction = routeAction$(
-  async (registerForm, { env, redirect, cookie }) => {
+  async (registerForm, { env, redirect, cookie, platform }) => {
+    const TWO_WEEKS_MS = 12096e5;
+    const TWO_WEEKS_SEC = 1209600;
+    const TWO_WEEKS_FROM_TODAY_DATE = new Date(Date.now() + TWO_WEEKS_MS);
     const email = registerForm.email;
     const password = registerForm.password;
     const { apiKey, domain } = getFetchDetails(env);
@@ -30,15 +34,33 @@ export const useRegisterFormAction = routeAction$(
         formErrors: `Error: ${response.statusText}`,
       };
     }
-    cookie.set("fish-login", "true", {
+    const res = await response.json();
+    const token = uuidv4();
+    if (import.meta.env.PROD) {
+      // add session to kv
+      await platform.env.FISHY_KV.put(res, token, {
+        expirationTtl: TWO_WEEKS_SEC,
+      });
+    }
+    cookie.set("user_id", res, {
       path: "/",
-      sameSite: "lax",
+      sameSite: "strict",
+      expires: TWO_WEEKS_FROM_TODAY_DATE,
+      secure: true,
+      httpOnly: true,
+    });
+    cookie.set("token", token, {
+      path: "/",
+      sameSite: "strict",
+      expires: TWO_WEEKS_FROM_TODAY_DATE,
+      secure: true,
+      httpOnly: true,
     });
     cookie.set("email", email, {
       path: "/",
-      sameSite: "lax",
+      sameSite: "strict",
+      expires: TWO_WEEKS_FROM_TODAY_DATE,
     });
-    // const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
     throw redirect(303, "/splash/");
   },
   zod$(newRegistrationObject)
