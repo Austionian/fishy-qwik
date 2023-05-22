@@ -9,9 +9,20 @@ export const onRequest: RequestHandler = async ({
   cookie,
   request,
   redirect,
+  platform,
 }) => {
-  if (!cookie.get("fish-login")) {
-    throw redirect(302, `/login/?redirect=${request.url}`);
+  if (import.meta.env.DEV) {
+    if (!cookie.get("user_id") && !cookie.get("token")) {
+      throw redirect(302, `/login/?redirect=${request.url}`);
+    }
+  } else {
+    const user_id = cookie.get("user_id")?.value || "";
+    if (user_id !== "guest") {
+      const token: string | null = await platform.env.FISHY_KV.get(user_id);
+      if (!token || cookie.get("token")?.value !== token) {
+        throw redirect(302, `/login/?redirect=${request.url}`);
+      }
+    }
   }
 };
 

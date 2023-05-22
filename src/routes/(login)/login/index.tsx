@@ -7,6 +7,7 @@ import {
   routeAction$,
 } from "@builder.io/qwik-city";
 import { getFetchDetails } from "~/helpers";
+import { v4 as uuidv4 } from "uuid";
 
 export const useLoginFormAction = routeAction$(
   async (loginForm, { env, redirect, cookie, url, platform }) => {
@@ -37,22 +38,38 @@ export const useLoginFormAction = routeAction$(
       };
     }
     const res = await response.json();
+    const token = uuidv4();
+    const TWO_WEEKS_SEC = 1209600;
+    const TWO_WEEKS_MS = 12096e5;
+    const TWO_WEEKS_FROM_TODAY_DATE = new Date(Date.now() + TWO_WEEKS_MS);
     if (import.meta.env.PROD) {
       // add session to kv
-      platform.env.FISHY_KV.put(res[0], "true");
+      await platform.env.FISHY_KV.put(res[0], token, {
+        expirationTtl: TWO_WEEKS_SEC,
+      });
     }
-    cookie.set("fish-login", "true", {
+    cookie.set("user_id", res[0], {
       path: "/",
-      sameSite: "lax",
+      sameSite: "strict",
+      expires: TWO_WEEKS_FROM_TODAY_DATE,
+    });
+    cookie.set("token", token, {
+      path: "/",
+      sameSite: "strict",
+      expires: TWO_WEEKS_FROM_TODAY_DATE,
+      secure: true,
+      httpOnly: true,
     });
     cookie.set("email", email, {
       path: "/",
-      sameSite: "lax",
+      sameSite: "strict",
+      expires: TWO_WEEKS_FROM_TODAY_DATE,
     });
     if (res[1]) {
       cookie.set("admin", "true", {
         path: "/",
-        sameSite: "lax",
+        sameSite: "strict",
+        expires: TWO_WEEKS_FROM_TODAY_DATE,
       });
     }
     const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
@@ -65,13 +82,10 @@ export const useLoginFormAction = routeAction$(
 );
 
 export const useGuestOption = routeAction$(async (_, { cookie, redirect }) => {
-  cookie.set("fish-login", "true", {
+  cookie.set("user_id", "guest", {
     path: "/",
-    sameSite: "lax",
-  });
-  cookie.set("guest", "true", {
-    path: "/",
-    sameSite: "lax",
+    sameSite: "strict",
+    expires: new Date(Date.now() + 8.64e7),
   });
   throw redirect(303, "/splash/");
 });

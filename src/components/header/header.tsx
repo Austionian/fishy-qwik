@@ -207,7 +207,7 @@ export default component$(({ user }: Props) => {
                   >
                     <span class="sr-only">Open user menu</span>
                     <span class="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100">
-                      {user.image !== "" ? (
+                      {user.image && user.image !== "" ? (
                         <img
                           class="h-full w-full rounded-full"
                           src={user.image}
@@ -301,7 +301,7 @@ export default component$(({ user }: Props) => {
             <div class="flex items-center px-5">
               <div class="flex-shrink-0">
                 <span class="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100">
-                  {user.image !== "" ? (
+                  {user.image && user.image !== "" ? (
                     <img
                       class="h-full w-full rounded-full"
                       src={user.image}
