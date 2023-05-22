@@ -1,9 +1,4 @@
 import { type Cookie } from "@builder.io/qwik-city";
-import {
-  TWO_WEEKS_FROM_TODAY_DATE,
-  ONE_DAY_FROM_TODAY_DATE,
-  GUEST,
-} from "~/constants/constants";
 
 /**
  * Saves the users details to the database and updates the cookies locally.
@@ -17,6 +12,12 @@ const saveUserDetails = (
   plan_to_get_pregnant: string,
   portion: string
 ) => {
+  const TWO_WEEKS_MS = 12096e5;
+  const ONE_DAY_MS = 8.64e7;
+  const TWO_WEEKS_FROM_TODAY_DATE = new Date(Date.now() + TWO_WEEKS_MS);
+  const ONE_DAY_FROM_TODAY_DATE = new Date(Date.now() + ONE_DAY_MS);
+  const GUEST = "GUEST";
+
   const user_id = cookie.get("user_id")?.value || "";
   // if (user_id !== "" && user_id !== GUEST) {
   //   // save to db

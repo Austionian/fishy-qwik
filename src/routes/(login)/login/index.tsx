@@ -72,7 +72,8 @@ export const useLoginFormAction = routeAction$(
         expires: TWO_WEEKS_FROM_TODAY_DATE,
       });
     }
-    const redirectUrl = new URL(url).searchParams.get("redirect") || "/";
+    let redirectUrl = new URL(url).searchParams.get("redirect") || "/";
+    redirectUrl = redirectUrl === "/" ? "/" : new URL(redirectUrl).pathname;
     throw redirect(303, redirectUrl);
   },
   zod$({
