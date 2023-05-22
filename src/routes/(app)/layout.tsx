@@ -18,6 +18,9 @@ export const onRequest: RequestHandler = async ({
     }
   } else {
     const user_id = cookie.get("user_id")?.value || "";
+    if (user_id == "") {
+      throw redirect(302, `/login/?redirect=${request.url}`);
+    }
     if (user_id !== GUEST) {
       const token: string | null = await platform.env.FISHY_KV.get(user_id);
       if (!token || cookie.get("token")?.value !== token) {
