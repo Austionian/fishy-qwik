@@ -246,7 +246,7 @@ export default component$<Props>(({ showSearch }) => {
                 </h2>
                 <ul class="text-sm text-gray-700">
                   {filteredLakes.map((lake, i) => (
-                    <a href={`/lake/${lake.name}/`} key={i}>
+                    <a href={`/?lake=${lake.name}`} key={i}>
                       <li
                         class="group flex cursor-default select-none items-center rounded-md px-3 py-2 
                                 hover:bg-gray-900 hover:bg-opacity-5 hover:text-gray-900 

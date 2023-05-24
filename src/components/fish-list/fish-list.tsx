@@ -24,13 +24,14 @@ type Props = {
   userDetails: {
     data: UserDetails;
   };
+  fishFilter: LakeValues;
 };
 
-export default component$(({ fishData, userDetails }: Props) => {
+export default component$(({ fishData, userDetails, fishFilter }: Props) => {
   const showUserDetialsModal = useSignal(userDetails.data.needed);
   const showSortMenu = useSignal(false);
   const sortBy = useSignal<SortValues>("Name");
-  const filterBy = useSignal<LakeValues>("All");
+  const filterBy = useSignal<LakeValues>(fishFilter);
   const ref = useSignal<Element>();
 
   useTask$(async ({ track }) => {

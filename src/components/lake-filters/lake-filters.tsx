@@ -28,7 +28,12 @@ export default component$(({ filterBy }: Props) => (
               id="sort-menu-button"
               aria-expanded="false"
               aria-haspopup="true"
-              onClick$={() => (filterBy.value = lake.name)}
+              onClick$={() => {
+                filterBy.value = lake.name;
+                const url = new URL(window.location.href);
+                url.searchParams.set("lake", lake.name);
+                window.history.pushState(null, "", url.toString());
+              }}
             >
               <span class="fill-gray-400" dangerouslySetInnerHTML={lake.svg} />
               <span class="hidden sm:block">{lake.name}</span>
