@@ -325,10 +325,10 @@ export default component$(({ user }: Props) => {
                 </span>
               </div>
               <div class="ml-3">
-                <div class="text-base font-medium text-gray-800">Austin</div>
-                <div class="text-sm font-medium text-gray-400">
+                <div class="text-base font-medium text-gray-800">
                   {user.email}
                 </div>
+                <div class="text-sm font-medium text-gray-400">🐟🐟🐟</div>
               </div>
             </div>
             <div class="mt-3 space-y-1 px-2">
