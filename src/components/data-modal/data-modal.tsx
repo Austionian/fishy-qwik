@@ -20,6 +20,13 @@ export default component$(
     const modalRef = useSignal<Element>();
     const chart = useSignal<HTMLCanvasElement>();
 
+    useVisibleTask$(({ cleanup }) => {
+      window.document.body.style.overflow = "hidden";
+      cleanup(() => {
+        window.document.body.style.overflow = "";
+      });
+    });
+
     useVisibleTask$(({ track }) => {
       track(() => showDataModal.value);
       if (backdropRef.value && modalRef.value) {
