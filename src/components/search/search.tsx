@@ -40,6 +40,13 @@ export default component$<Props>(({ showSearch }) => {
   // @ts-ignore
   useVisibleTask$(() => inputRef.value?.focus());
 
+  useVisibleTask$(({ cleanup }) => {
+    window.document.body.style.overflow = "hidden";
+    cleanup(() => {
+      window.document.body.style.overflow = "";
+    });
+  });
+
   useVisibleTask$(async () => {
     if (
       !window.localStorage.getItem("fish") ||
