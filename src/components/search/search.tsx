@@ -166,6 +166,20 @@ export default component$<Props>(({ showSearch }) => {
             tabIndex={-1}
             class="max-h-96 scroll-py-2 divide-y divide-gray-500 divide-opacity-10 overflow-y-auto"
           >
+            {fishResults.value.length === 0 && (
+              <li class="p-2">
+                <h2 class="mb-2 mt-4 px-3 text-sm font-semibold text-gray-900">
+                  Fish
+                </h2>
+                <ul>
+                  {Array.from(Array(10).keys()).map((_, i) => (
+                    <li class="p-2" key={`${i}-skele`}>
+                      <div class="h-6 bg-gray-50" />
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            )}
             {filteredFish.length > 0 && (
               <li class="p-2">
                 <h2 class="mb-2 mt-4 px-3 text-sm font-semibold text-gray-900">
