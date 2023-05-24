@@ -3,10 +3,10 @@ import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import { getUserDetails, getFetchDetails } from "~/helpers";
 import type Fish from "~/types/Fish";
 import type UserDetails from "~/types/UserDetails";
+import type LakeValues from "~/types/LakeValues";
+import LAKE_VALUES from "~/constants/lakes";
 
 import FishList from "~/components/fish-list/fish-list";
-import LakeValues from "~/types/LakeValues";
-import LAKE_VALUES from "~/constants/lakes";
 
 export const useFishData = routeLoader$<Fish[]>(async ({ env, query }) => {
   const { apiKey, domain } = getFetchDetails(env);
