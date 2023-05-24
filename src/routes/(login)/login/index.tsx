@@ -103,9 +103,9 @@ export default component$(() => {
     <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <img
-          class="mx-auto h-12 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=teal&shade=600"
-          alt="Your Company"
+          class="mx-auto h-12 w-auto bg-sky-200 rounded-xl p-1"
+          src="/images/woodlandbass.webp"
+          alt="Gigiigoo Fish"
         />
 
         <h1 class="my-6 text-center text-5xl text-gray-100 font-bold tracking-tight">
