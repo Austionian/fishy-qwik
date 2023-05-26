@@ -42,31 +42,26 @@ export const useLoginFormAction = routeAction$(
       };
     }
     const res = await response.json();
+
     const token = uuidv4();
     if (import.meta.env.PROD) {
       // add session to kv
-      await platform.env.FISHY_KV.put(res[0], token, {
+      await platform.env.FISHY_KV.put(res.user_id, token, {
         expirationTtl: TWO_WEEKS_SEC,
       });
     }
-    const userDetailsResponse = await fetch(`${domain}/v1/user/${res[0]}`, {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-    });
-    const userDetails = await userDetailsResponse.json();
 
     saveUserDetailsToCookies(
       cookie,
       TWO_WEEKS_FROM_TODAY_DATE,
-      userDetails.age,
-      userDetails.weight,
-      userDetails.sex,
-      userDetails.plan_to_get_pregnant,
-      userDetails.portion_size
+      res.data.age,
+      res.data.weight,
+      res.data.sex,
+      res.data.plan_to_get_pregnant,
+      res.data.portion_size
     );
 
-    cookie.set("user_id", res[0], {
+    cookie.set("user_id", res.user_id, {
       path: "/",
       sameSite: "strict",
       expires: TWO_WEEKS_FROM_TODAY_DATE,
@@ -85,7 +80,7 @@ export const useLoginFormAction = routeAction$(
       sameSite: "strict",
       expires: TWO_WEEKS_FROM_TODAY_DATE,
     });
-    if (res[1]) {
+    if (res.is_admin) {
       cookie.set("admin", "true", {
         path: "/",
         sameSite: "strict",
