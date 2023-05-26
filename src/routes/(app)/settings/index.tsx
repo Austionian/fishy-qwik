@@ -1,11 +1,5 @@
-import { component$, useSignal, useVisibleTask$, $ } from "@builder.io/qwik";
-import {
-  routeLoader$,
-  Form,
-  zod$,
-  routeAction$,
-  type Cookie,
-} from "@builder.io/qwik-city";
+import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+import { routeLoader$, Form, zod$, routeAction$ } from "@builder.io/qwik-city";
 import { animate } from "motion";
 import { getUserDetails } from "~/helpers";
 import type UserDetails from "~/types/UserDetails";
@@ -17,15 +11,14 @@ export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
   return getUserDetails(cookie);
 });
 
-export const saveUserWrapper = $(
-  async (
-    cookie: Cookie,
-    weight: number,
-    age: number,
-    sex: string,
-    plan_to_get_pregnant: string,
-    portion: string
-  ) => {
+export const useUpdateUserInfoAction = routeAction$(
+  async (infoForm, { cookie }) => {
+    const weight = infoForm.weight;
+    const age = infoForm.age;
+    const sex = infoForm.sex;
+    const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "";
+    const portion = infoForm.portion;
+
     const res = await saveUserDetails(
       cookie,
       weight,
@@ -38,25 +31,6 @@ export const saveUserWrapper = $(
     if (!res.success) {
       console.error(res.error);
     }
-  }
-);
-
-export const useUpdateUserInfoAction = routeAction$(
-  async (infoForm, { cookie }) => {
-    const weight = infoForm.weight;
-    const age = infoForm.age;
-    const sex = infoForm.sex;
-    const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "";
-    const portion = infoForm.portion;
-
-    await saveUserWrapper(
-      cookie,
-      weight,
-      age,
-      sex,
-      plan_to_get_pregnant,
-      portion
-    );
   },
   zod$(userDetailsObject)
 );
@@ -210,13 +184,22 @@ export default component$(() => {
                       ? "block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                       : "block w-full rounded-md border-0 py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 ring-1 ring-inset ring-teal-500"
                   }
-                  value={userDetails.value.plan_to_get_pregnant || "No"}
                   onChange$={(e) =>
                     (userDetails.value.plan_to_get_pregnant = e.target.value)
                   }
                 >
-                  <option>Yes</option>
-                  <option>No</option>
+                  <option
+                    selected={userDetails.value.plan_to_get_pregnant === "true"}
+                  >
+                    Yes
+                  </option>
+                  <option
+                    selected={
+                      userDetails.value.plan_to_get_pregnant === "false"
+                    }
+                  >
+                    No
+                  </option>
                 </select>
               </div>
             </div>
