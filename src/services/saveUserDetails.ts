@@ -14,7 +14,7 @@ const serverSaveUserDetails = server$(async function (
   const ageStr = age.toString();
   const plan_to_get_pregnantStr =
     plan_to_get_pregnant && plan_to_get_pregnant === "Yes" ? "true" : "false";
-  const response = await fetch(`${domain}/v1/save`, {
+  const response = await fetch(`${domain}/v1/user`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
