@@ -13,8 +13,6 @@ const serverSaveUserDetails = server$(async function (
   const { domain, apiKey } = getFetchDetails(this?.env);
   const weightStr = weight.toString();
   const ageStr = age.toString();
-  const plan_to_get_pregnantStr =
-    plan_to_get_pregnant === "Yes" ? "true" : "false";
   const response = await fetch(`${domain}/v1/user`, {
     method: "POST",
     headers: {
@@ -26,7 +24,7 @@ const serverSaveUserDetails = server$(async function (
       weight: weightStr,
       age: ageStr,
       sex,
-      plan_to_get_pregnant: plan_to_get_pregnantStr,
+      plan_to_get_pregnant,
       portion_size: portion,
     }),
   });
@@ -58,6 +56,9 @@ export const saveUserDetails = $(
     const ONE_DAY_FROM_TODAY_DATE = new Date(Date.now() + ONE_DAY_MS);
     const GUEST = "GUEST";
 
+    const plan_to_get_pregnant_value =
+      plan_to_get_pregnant === "Yes" ? "true" : "false";
+
     const user_id = cookie.get("user_id")?.value || "";
     if (user_id !== "" && user_id !== GUEST) {
       const res = await serverSaveUserDetails(
@@ -65,7 +66,7 @@ export const saveUserDetails = $(
         weight,
         age,
         sex,
-        plan_to_get_pregnant,
+        plan_to_get_pregnant_value,
         portion
       );
 
@@ -81,7 +82,7 @@ export const saveUserDetails = $(
       age,
       weight,
       sex,
-      plan_to_get_pregnant,
+      plan_to_get_pregnant_value,
       portion
     );
 
