@@ -1,5 +1,5 @@
-import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
-import { Form, globalAction$, zod$ } from "@builder.io/qwik-city";
+import { component$, useSignal, $, useVisibleTask$ } from "@builder.io/qwik";
+import { type Cookie, Form, globalAction$, zod$ } from "@builder.io/qwik-city";
 import { animate } from "motion";
 import PORTIONS from "~/constants/portions";
 import type UserDetails from "~/types/UserDetails";
@@ -15,6 +15,26 @@ type infoModalProps = {
   };
 };
 
+export const saveUserWrapper = $(
+  async (
+    cookie: Cookie,
+    weight: number,
+    age: number,
+    sex: string,
+    plan_to_get_pregnant: string,
+    portion: string
+  ) => {
+    await saveUserDetails(
+      cookie,
+      weight,
+      age,
+      sex,
+      plan_to_get_pregnant,
+      portion
+    );
+  }
+);
+
 export const useSignUpFormAction = globalAction$(
   async (infoForm, { cookie }) => {
     const weight = infoForm.weight;
@@ -22,7 +42,6 @@ export const useSignUpFormAction = globalAction$(
     const sex = infoForm.sex;
     const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "";
     const portion = infoForm.portion;
-
     await saveUserDetails(
       cookie,
       weight,

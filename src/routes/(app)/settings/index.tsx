@@ -1,5 +1,11 @@
-import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
-import { routeLoader$, Form, zod$, routeAction$ } from "@builder.io/qwik-city";
+import { component$, useSignal, useVisibleTask$, $ } from "@builder.io/qwik";
+import {
+  routeLoader$,
+  Form,
+  zod$,
+  routeAction$,
+  type Cookie,
+} from "@builder.io/qwik-city";
 import { animate } from "motion";
 import { getUserDetails } from "~/helpers";
 import type UserDetails from "~/types/UserDetails";
@@ -11,6 +17,26 @@ export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
   return getUserDetails(cookie);
 });
 
+export const saveUserWrapper = $(
+  async (
+    cookie: Cookie,
+    weight: number,
+    age: number,
+    sex: string,
+    plan_to_get_pregnant: string,
+    portion: string
+  ) => {
+    await saveUserDetails(
+      cookie,
+      weight,
+      age,
+      sex,
+      plan_to_get_pregnant,
+      portion
+    );
+  }
+);
+
 export const useUpdateUserInfoAction = routeAction$(
   async (infoForm, { cookie }) => {
     const weight = infoForm.weight;
@@ -19,7 +45,7 @@ export const useUpdateUserInfoAction = routeAction$(
     const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "";
     const portion = infoForm.portion;
 
-    await saveUserDetails(
+    await saveUserWrapper(
       cookie,
       weight,
       age,
