@@ -1,9 +1,9 @@
-import { component$, useSignal, $, useVisibleTask$ } from "@builder.io/qwik";
-import { type Cookie, Form, globalAction$, zod$ } from "@builder.io/qwik-city";
+import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+import { Form, globalAction$, zod$ } from "@builder.io/qwik-city";
 import { animate } from "motion";
 import PORTIONS from "~/constants/portions";
 import type UserDetails from "~/types/UserDetails";
-import saveUserDetails from "~/services/saveUserDetails";
+import { saveUserDetails } from "~/services/saveUserDetails";
 import { userDetailsObject } from "~/constants/zod/userDetailsObject";
 
 type infoModalProps = {
@@ -15,26 +15,6 @@ type infoModalProps = {
   };
 };
 
-export const saveUserWrapper = $(
-  async (
-    cookie: Cookie,
-    weight: number,
-    age: number,
-    sex: string,
-    plan_to_get_pregnant: string,
-    portion: string
-  ) => {
-    await saveUserDetails(
-      cookie,
-      weight,
-      age,
-      sex,
-      plan_to_get_pregnant,
-      portion
-    );
-  }
-);
-
 export const useSignUpFormAction = globalAction$(
   async (infoForm, { cookie }) => {
     const weight = infoForm.weight;
@@ -42,7 +22,8 @@ export const useSignUpFormAction = globalAction$(
     const sex = infoForm.sex;
     const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "";
     const portion = infoForm.portion;
-    await saveUserDetails(
+
+    const res = await saveUserDetails(
       cookie,
       weight,
       age,
@@ -50,6 +31,10 @@ export const useSignUpFormAction = globalAction$(
       plan_to_get_pregnant,
       portion
     );
+
+    if (!res.success) {
+      console.error(res.error);
+    }
   },
   zod$(userDetailsObject)
 );

@@ -1,3 +1,4 @@
+import { $ } from "@builder.io/qwik";
 import { server$, type Cookie } from "@builder.io/qwik-city";
 import { getFetchDetails } from "~/helpers";
 
@@ -33,7 +34,7 @@ const serverSaveUserDetails = server$(async function (
     console.error(response.statusText);
     return {
       failed: true,
-      formErrors: `Error: ${response.statusText}`,
+      error: `Error: ${response.statusText}`,
     };
   }
 });
@@ -42,49 +43,53 @@ const serverSaveUserDetails = server$(async function (
  * Saves the users details to the database and updates the cookies locally.
  * Only pass validated data to this function.
  */
-const saveUserDetails = async (
-  cookie: Cookie,
-  weight: number,
-  age: number,
-  sex: string,
-  plan_to_get_pregnant: string,
-  portion: string
-) => {
-  const TWO_WEEKS_MS = 12096e5;
-  const ONE_DAY_MS = 8.64e7;
-  const TWO_WEEKS_FROM_TODAY_DATE = new Date(Date.now() + TWO_WEEKS_MS);
-  const ONE_DAY_FROM_TODAY_DATE = new Date(Date.now() + ONE_DAY_MS);
-  const GUEST = "GUEST";
+export const saveUserDetails = $(
+  async (
+    cookie: Cookie,
+    weight: number,
+    age: number,
+    sex: string,
+    plan_to_get_pregnant: string,
+    portion: string
+  ) => {
+    const TWO_WEEKS_MS = 12096e5;
+    const ONE_DAY_MS = 8.64e7;
+    const TWO_WEEKS_FROM_TODAY_DATE = new Date(Date.now() + TWO_WEEKS_MS);
+    const ONE_DAY_FROM_TODAY_DATE = new Date(Date.now() + ONE_DAY_MS);
+    const GUEST = "GUEST";
 
-  const user_id = cookie.get("user_id")?.value || "";
-  if (user_id !== "" && user_id !== GUEST) {
-    await serverSaveUserDetails(
-      user_id,
-      weight,
+    const user_id = cookie.get("user_id")?.value || "";
+    if (user_id !== "" && user_id !== GUEST) {
+      const res = await serverSaveUserDetails(
+        user_id,
+        weight,
+        age,
+        sex,
+        plan_to_get_pregnant,
+        portion
+      );
+
+      if (res?.failed) return { success: false, error: res.error };
+    }
+
+    const expire_date =
+      user_id === GUEST ? ONE_DAY_FROM_TODAY_DATE : TWO_WEEKS_FROM_TODAY_DATE;
+
+    saveUserDetailsToCookies(
+      cookie,
+      expire_date,
       age,
+      weight,
       sex,
       plan_to_get_pregnant,
       portion
     );
+
+    return {
+      success: true,
+    };
   }
-
-  const expire_date =
-    user_id === GUEST ? ONE_DAY_FROM_TODAY_DATE : TWO_WEEKS_FROM_TODAY_DATE;
-
-  saveUserDetailsToCookies(
-    cookie,
-    expire_date,
-    age,
-    weight,
-    sex,
-    plan_to_get_pregnant,
-    portion
-  );
-
-  return {
-    success: false,
-  };
-};
+);
 
 export const saveUserDetailsToCookies = (
   cookie: Cookie,
@@ -126,5 +131,3 @@ export const saveUserDetailsToCookies = (
     expires: expire_date,
   });
 };
-
-export default saveUserDetails;

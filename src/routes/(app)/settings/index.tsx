@@ -10,7 +10,7 @@ import { animate } from "motion";
 import { getUserDetails } from "~/helpers";
 import type UserDetails from "~/types/UserDetails";
 import PORTIONS from "~/constants/portions";
-import saveUserDetails from "~/services/saveUserDetails";
+import { saveUserDetails } from "~/services/saveUserDetails";
 import { userDetailsObject } from "~/constants/zod/userDetailsObject";
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
@@ -26,7 +26,7 @@ export const saveUserWrapper = $(
     plan_to_get_pregnant: string,
     portion: string
   ) => {
-    await saveUserDetails(
+    const res = await saveUserDetails(
       cookie,
       weight,
       age,
@@ -34,6 +34,10 @@ export const saveUserWrapper = $(
       plan_to_get_pregnant,
       portion
     );
+
+    if (!res.success) {
+      console.error(res.error);
+    }
   }
 );
 
