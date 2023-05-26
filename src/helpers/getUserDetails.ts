@@ -13,13 +13,19 @@ export default (cookie: Cookie): UserDetails => {
       image: undefined,
     };
   }
+  const weight = cookie.get("weight")?.value;
+  const age = cookie.get("age")?.value;
+  const sex = cookie.get("sex")?.value;
+  const plan_to_get_pregnant = cookie.get("plan_to_get_pregnant")?.value;
+  const portion = cookie.get("portion")?.value;
+  const image = cookie.get("image")?.value;
   return {
-    needed: false,
-    weight: cookie.get("weight")?.value,
-    age: cookie.get("age")?.value,
-    sex: cookie.get("sex")?.value,
-    plan_to_get_pregnant: cookie.get("plan_to_get_pregnant")?.value,
-    portion: cookie.get("portion")?.value,
-    image: cookie.get("image")?.value,
+    needed: !weight && !age && !sex && !portion,
+    weight,
+    age,
+    sex,
+    plan_to_get_pregnant,
+    portion,
+    image,
   };
 };

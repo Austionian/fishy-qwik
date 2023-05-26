@@ -15,6 +15,12 @@ export const useSignOut = globalAction$(
     cookie.delete("user_id");
     cookie.delete("admin");
     cookie.delete("email");
+    cookie.delete("age");
+    cookie.delete("plan_to_get_pregnant");
+    cookie.delete("portion");
+    cookie.delete("sex");
+    cookie.delete("user-details");
+    cookie.delete("weight");
 
     throw redirect(302, "/login");
   }

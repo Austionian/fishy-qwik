@@ -47,14 +47,7 @@ export default component$(() => {
   const userDetails = useUserDetails();
   const fishFilter = useFishFilter().value as LakeValues;
   const userDetailsStore = useStore({
-    data: userDetails.value || {
-      needed: true,
-      age: undefined,
-      weight: undefined,
-      sex: undefined,
-      plan_to_get_pregnant: undefined,
-      portion: undefined,
-    },
+    data: userDetails.value,
   });
   const fishData = useFishData();
   const fishStore = useStore({
