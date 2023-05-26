@@ -70,6 +70,31 @@ const saveUserDetails = (
 
   const expire_date =
     user_id === GUEST ? ONE_DAY_FROM_TODAY_DATE : TWO_WEEKS_FROM_TODAY_DATE;
+
+  saveUserDetailsToCookies(
+    cookie,
+    expire_date,
+    age,
+    weight,
+    sex,
+    plan_to_get_pregnant,
+    portion
+  );
+
+  return {
+    success: false,
+  };
+};
+
+export const saveUserDetailsToCookies = (
+  cookie: Cookie,
+  expire_date: Date,
+  age: number,
+  weight: number,
+  sex: string,
+  plan_to_get_pregnant: string,
+  portion: string
+) => {
   cookie.set("age", age, {
     path: "/",
     sameSite: "strict",
@@ -100,10 +125,6 @@ const saveUserDetails = (
     sameSite: "strict",
     expires: expire_date,
   });
-
-  return {
-    success: false,
-  };
 };
 
 export default saveUserDetails;

@@ -8,6 +8,7 @@ import {
 } from "@builder.io/qwik-city";
 import { getFetchDetails } from "~/helpers";
 import { v4 as uuidv4 } from "uuid";
+import { saveUserDetailsToCookies } from "~/services/saveUserDetails";
 
 export const useLoginFormAction = routeAction$(
   async (loginForm, { env, redirect, cookie, url, platform }) => {
@@ -48,6 +49,23 @@ export const useLoginFormAction = routeAction$(
         expirationTtl: TWO_WEEKS_SEC,
       });
     }
+    const userDetailsResponse = await fetch(`${domain}/v1/user/${res[0]}`, {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+      },
+    });
+    const userDetails = await userDetailsResponse.json();
+
+    saveUserDetailsToCookies(
+      cookie,
+      TWO_WEEKS_FROM_TODAY_DATE,
+      userDetails.age,
+      userDetails.weight,
+      userDetails.sex,
+      userDetails.plan_to_get_pregnant,
+      userDetails.portion_size
+    );
+
     cookie.set("user_id", res[0], {
       path: "/",
       sameSite: "strict",
