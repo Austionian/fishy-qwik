@@ -19,7 +19,7 @@ export const useUpdateUserInfoAction = routeAction$(
     const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "";
     const portion = infoForm.portion;
 
-    return saveUserDetails(
+    await saveUserDetails(
       cookie,
       weight,
       age,

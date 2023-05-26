@@ -42,7 +42,7 @@ const serverSaveUserDetails = server$(async function (
  * Saves the users details to the database and updates the cookies locally.
  * Only pass validated data to this function.
  */
-const saveUserDetails = (
+const saveUserDetails = async (
   cookie: Cookie,
   weight: number,
   age: number,
@@ -58,7 +58,7 @@ const saveUserDetails = (
 
   const user_id = cookie.get("user_id")?.value || "";
   if (user_id !== "" && user_id !== GUEST) {
-    serverSaveUserDetails(
+    await serverSaveUserDetails(
       user_id,
       weight,
       age,
