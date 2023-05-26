@@ -1,6 +1,5 @@
 import { $ } from "@builder.io/qwik";
 import { server$, type Cookie } from "@builder.io/qwik-city";
-import { getFetchDetails } from "~/helpers";
 
 const serverSaveUserDetails = server$(async function (
   user_id: string,
@@ -10,7 +9,15 @@ const serverSaveUserDetails = server$(async function (
   plan_to_get_pregnant: string,
   portion: string
 ) {
-  const { domain, apiKey } = getFetchDetails(this?.env);
+  let domain;
+  let apiKey;
+  if (import.meta.env.PROD) {
+    apiKey = this?.env.get("API_KEY") || "";
+    domain = this?.env.get("API_DOMAIN") || "";
+  } else {
+    apiKey = import.meta.env.VITE_API_KEY;
+    domain = import.meta.env.VITE_API_DOMAIN;
+  }
   const weightStr = weight.toString();
   const ageStr = age.toString();
   const plan_to_get_pregnantStr =
