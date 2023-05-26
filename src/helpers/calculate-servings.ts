@@ -1,43 +1,4 @@
 import type Fish from "~/types/Fish";
-// import jquery from "jquery";
-// import _ from "lodash";
-// import {
-//   getMaxMercury,
-//   getMinMercury,
-//   getMaxPCB,
-//   getMinPCB,
-//   getMaxProtein,
-//   getMinProtein,
-//   getMaxFat,
-//   getMinFat,
-// } from "../utils/fish";
-
-// export function getFishesForAllCategory(coeficiente, mult, fishes) {
-//   const fishesGroupedByName = _.groupBy(fishes, "fish_data.name");
-//   const allFish: Fish[] = new Array();
-//   _.forEach(fishesGroupedByName, function (value, key) {
-//     let fishMercury = 0;
-//     let fishProtein = 0;
-//     let fishOmega3 = 0;
-//     let fishOmega3Ratio = 0;
-//     let fishPcb = 0;
-//     value.forEach((fish) => {
-//       fishMercury += fish.mercury;
-//       fishProtein += fish.protein;
-//       fishOmega3 += fish.omega_3;
-//       fishOmega3Ratio += fish.omega_3_ratio;
-//       fishPcb += fish.pcb;
-//     });
-//     fishData.mercury = fishMercury / value.length;
-//     fishData.protein = fishProtein / value.length;
-//     fishData.omega_3 = fishOmega3 / value.length;
-//     fishData.omega_3_ratio = fishOmega3Ratio / value.length;
-//     fishData.pcb = fishPcb / value.length;
-//     getCalculation(coeficiente, mult, fishData);
-//     allFish.push(fishData);
-//   });
-//   return _.reverse(_.sortBy(allFish, ["calculation"]));
-// }
 
 export default (
   age: string | undefined,
@@ -47,9 +8,12 @@ export default (
   plan_to_get_pregnant: string | undefined,
   fishData: Fish
 ) => {
-  const age_p = parseInt(age || "0");
-  const weight_p = parseInt(weight || "0");
-  const portion_p = parseInt(portion || "0");
+  const uncalculated = "? servings per month";
+  const age_p = parseInt(age || "");
+  const weight_p = parseInt(weight || "");
+  const portion_p = parseInt(portion || "");
+
+  if (isNaN(portion_p) || isNaN(age_p) || isNaN(weight_p)) return uncalculated;
 
   let mult: number;
   if (age_p <= 18 || (sex === "Female" && plan_to_get_pregnant === "Yes")) {
@@ -63,39 +27,6 @@ export default (
   const coeficient = onza / (weight_p * 0.454);
 
   return getCalculation(coeficient, mult, fishData);
-  // const em = document.getElementById("emb").value;
-  // const sex = document.getElementById("genero").value;
-  // const peso1 = document.getElementById("peso").value * 0.454; // pasamos el peso de lbs a kg
-  // const edad = document.getElementById("edad").value;
-  // validamos si los valores peso y edad se encuentran dentro del rango 0 - 100
-  //   if (edad <= 18 || (sex == "M" && em == "Y")) {
-  //     var mult = 1;
-  //   } else {
-  //     var mult = 3;
-  //   }
-  //
-  //   for (let i = 0, length = portion.length; i < length; i++) {
-  //     if (portion[i].checked) {
-  //       var onza = portion[i].value * 28.35; // hacemos la conversion de onzas a gramos
-  //       break;
-  //     }
-  //   }
-  //   const coeficiente = onza / peso1; // sacamos el calculo de meal ratio
-  //
-  //   if (!fishes) {
-  //     fishes = await getFishList();
-  //   }
-  //
-  //   if (recipes.length === 0) {
-  //     collectRecipes(fishes);
-  //   }
-  //
-  //   fishes.forEach((fish) => {
-  //     getCalculation(coeficiente, mult, fish);
-  //   });
-  //
-  //   return [fishes, coeficiente, mult];
-  // }
 };
 
 function getCalculation(coeficiente: number, mult: number, fish: Fish) {

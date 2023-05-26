@@ -13,14 +13,28 @@ export default (cookie: Cookie): UserDetails => {
       image: undefined,
     };
   }
-  const weight = cookie.get("weight")?.value;
-  const age = cookie.get("age")?.value;
-  const sex = cookie.get("sex")?.value;
-  const plan_to_get_pregnant = cookie.get("plan_to_get_pregnant")?.value;
-  const portion = cookie.get("portion")?.value;
+
+  // These can come back null from the server.
+  const weight =
+    cookie.get("weight")?.value === "null"
+      ? undefined
+      : cookie.get("weight")?.value;
+  const age =
+    cookie.get("age")?.value === "null" ? undefined : cookie.get("age")?.value;
+  const sex =
+    cookie.get("sex")?.value === "null" ? undefined : cookie.get("sex")?.value;
+  const plan_to_get_pregnant =
+    cookie.get("plan_to_get_pregnant")?.value === "null"
+      ? undefined
+      : cookie.get("plan_to_get_pregnant")?.value;
+  const portion =
+    cookie.get("portion")?.value === "null"
+      ? undefined
+      : cookie.get("portion")?.value;
   const image = cookie.get("image")?.value;
+
   return {
-    needed: !weight && !age && !sex && !portion,
+    needed: !weight || !age || !sex || !portion,
     weight,
     age,
     sex,
