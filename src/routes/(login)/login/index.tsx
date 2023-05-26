@@ -66,7 +66,6 @@ export const useLoginFormAction = routeAction$(
       sameSite: "strict",
       expires: TWO_WEEKS_FROM_TODAY_DATE,
       secure: true,
-      httpOnly: true,
     });
     cookie.set("token", token, {
       path: "/",
