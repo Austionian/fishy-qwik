@@ -43,15 +43,22 @@ export default component$(() => {
   );
   const saveValue = useSignal("Save");
   const saveRef = useSignal<HTMLElement>();
+  const hideAlert = useSignal(false);
+  const alertRef = useSignal<HTMLElement>();
 
   useVisibleTask$(({ track }) => {
     track(() => saveValue.value);
-    if (saveRef.value) {
+    if (saveRef.value && alertRef.value) {
       if (saveValue.value !== "Save") {
         animate(
           saveRef.value,
           { scale: [0.5, 2, 1], opacity: [0, 1] },
           { duration: 0.5, easing: "ease-in" }
+        );
+        animate(
+          alertRef.value,
+          { scale: [0.95, 1], opacity: [0, 1] },
+          { duration: 0.2, easing: "ease-out" }
         );
       }
     }
@@ -63,10 +70,57 @@ export default component$(() => {
       action={formAction}
       onSubmitCompleted$={() => {
         if (formAction.status === 200) {
-          saveValue.value = "Saved";
+          saveValue.value = "";
         }
       }}
     >
+      {saveValue.value !== "Save" && !hideAlert.value ? (
+        <div
+          ref={alertRef}
+          class="rounded-md bg-teal-50 p-4 fixed top-[70px] left-[5%] w-[90%] max-w-7xl mx-auto border-teal-500 border-2"
+        >
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg
+                class="h-5 w-5 text-teal-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-teal-800">
+                Successfully updated!
+              </p>
+            </div>
+            <div class="ml-auto pl-3">
+              <div class="-mx-1.5 -my-1.5">
+                <button
+                  type="button"
+                  class="inline-flex rounded-md bg-teal-50 p-1.5 text-teal-500 hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2 focus:ring-offset-teal-50"
+                  onClick$={() => (hideAlert.value = true)}
+                >
+                  <span class="sr-only">Dismiss</span>
+                  <svg
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
       <div class="px-4 py-6 sm:p-6 lg:pb-8 flex flex-col">
         <div>
           <h2 class="text-lg font-medium leading-6 text-gray-900">Profile</h2>
@@ -91,11 +145,7 @@ export default component$(() => {
                 id="weight"
                 value={userDetails.value.weight}
                 onChange$={(e) => (userDetails.value.weight = e.target.value)}
-                class={
-                  saveValue.value === "Save"
-                    ? "block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
-                    : "block w-full rounded-md border-0 py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 ring-1 ring-inset ring-teal-500"
-                }
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                 placeholder="200"
                 aria-describedby="weight-currency"
                 autoFocus
@@ -126,11 +176,7 @@ export default component$(() => {
                 id="age"
                 value={userDetails.value.age}
                 onChange$={(e) => (userDetails.value.age = e.target.value)}
-                class={
-                  saveValue.value === "Save"
-                    ? "block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
-                    : "block w-full rounded-md border-0 py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 ring-1 ring-inset ring-teal-500"
-                }
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                 placeholder="44"
               />
               {formAction.value?.failed && (
@@ -148,11 +194,7 @@ export default component$(() => {
               <select
                 id="sex"
                 name="sex"
-                class={
-                  saveValue.value === "Save"
-                    ? "block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
-                    : "block w-full rounded-md border-0 py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 ring-1 ring-inset ring-teal-500"
-                }
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                 onChange$={(e) => {
                   isMale.value = e.target.value === "Male";
                   userDetails.value.sex = e.target.value;
@@ -179,11 +221,7 @@ export default component$(() => {
                 <select
                   id="plan_to_get_pregnant"
                   name="plan_to_get_pregnant"
-                  class={
-                    saveValue.value === "Save"
-                      ? "block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
-                      : "block w-full rounded-md border-0 py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 ring-1 ring-inset ring-teal-500"
-                  }
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                   onChange$={(e) =>
                     (userDetails.value.plan_to_get_pregnant = e.target.value)
                   }
