@@ -4,13 +4,45 @@ import {
   useSignal,
   $,
 } from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
+import { routeLoader$, server$ } from "@builder.io/qwik-city";
 import { v4 as uuidv4 } from "uuid";
-import { getUserDetails } from "~/helpers";
+import { getCookie, getFetchDetails, getUserDetails } from "~/helpers";
 import type UserDetails from "~/types/UserDetails";
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
   return getUserDetails(cookie);
+});
+
+export const serverSaveImageToDB = server$(async function (image_url: string) {
+  const { domain, apiKey } = getFetchDetails(this?.env);
+  let user_id;
+  if (this.cookie) {
+    user_id = this?.cookie.get("user_id")?.value;
+  } else {
+    user_id = getCookie("user_id");
+  }
+
+  if (!user_id) return;
+
+  const response = await fetch(`${domain}/v1/user/image`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      user_id,
+      image_url,
+    }),
+  });
+
+  if (!response.ok) {
+    console.error(response.statusText);
+    return {
+      failed: true,
+      error: `Error: ${response.statusText}`,
+    };
+  }
 });
 
 export default component$(() => {
@@ -49,6 +81,7 @@ export default component$(() => {
                   e.target.blur;
                   image.value = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
                   document.cookie = `image=${image.value}; path=/`;
+                  serverSaveImageToDB(image.value);
                 }
               })
               .catch((err) => console.error("err: ", err));
