@@ -77,7 +77,7 @@ export default component$(() => {
       {saveValue.value !== "Save" && !hideAlert.value ? (
         <div
           ref={alertRef}
-          class="rounded-md bg-teal-50 p-4 fixed top-[70px] left-[5%] w-[90%] max-w-7xl mx-auto border-teal-500 border-2"
+          class="rounded-md bg-teal-50 p-4 fixed top-[10px] sm:top-[70px] left-[5%] w-[90%] max-w-7xl mx-auto border-teal-500 border-2 z-50"
         >
           <div class="flex">
             <div class="flex-shrink-0">
