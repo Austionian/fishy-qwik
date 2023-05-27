@@ -10,6 +10,19 @@ import { getFetchDetails } from "~/helpers";
 import { v4 as uuidv4 } from "uuid";
 import { saveUserDetailsToCookies } from "~/services/saveUserDetails";
 
+export type UserLoginResponse = {
+  user_id: string;
+  is_admin: boolean;
+  data: {
+    weight?: number;
+    age?: number;
+    sex?: string;
+    plan_to_get_pregnant?: string;
+    portion_size?: string;
+    image_url?: string;
+  };
+};
+
 export const useLoginFormAction = routeAction$(
   async (loginForm, { env, redirect, cookie, url, platform }) => {
     const TWO_WEEKS_MS = 12096e5;
@@ -41,7 +54,7 @@ export const useLoginFormAction = routeAction$(
         formErrors: `Error: ${response.statusText}`,
       };
     }
-    const res = await response.json();
+    const res: UserLoginResponse = await response.json();
 
     const token = uuidv4();
     if (import.meta.env.PROD) {
@@ -60,6 +73,14 @@ export const useLoginFormAction = routeAction$(
       res.data.plan_to_get_pregnant,
       res.data.portion_size
     );
+
+    if (res.data.image_url) {
+      cookie.set("image", res.data.image_url, {
+        path: "/",
+        sameSite: "strict",
+        expires: TWO_WEEKS_FROM_TODAY_DATE,
+      });
+    }
 
     cookie.set("user_id", res.user_id, {
       path: "/",

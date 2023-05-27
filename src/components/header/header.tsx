@@ -19,8 +19,8 @@ export const useSignOut = globalAction$(
     cookie.delete("plan_to_get_pregnant");
     cookie.delete("portion");
     cookie.delete("sex");
-    cookie.delete("user-details");
     cookie.delete("weight");
+    cookie.delete("image");
 
     throw redirect(302, "/login");
   }

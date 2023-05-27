@@ -95,40 +95,45 @@ export const saveUserDetails = $(
 export const saveUserDetailsToCookies = (
   cookie: Cookie,
   expire_date: Date,
-  age: number,
-  weight: number,
-  sex: string,
-  plan_to_get_pregnant: string,
-  portion: string
+  age: number | undefined,
+  weight: number | undefined,
+  sex: string | undefined,
+  plan_to_get_pregnant: string | undefined,
+  portion: string | undefined
 ) => {
-  cookie.set("age", age, {
-    path: "/",
-    sameSite: "strict",
-    expires: expire_date,
-  });
-  cookie.set("weight", weight, {
-    path: "/",
-    sameSite: "strict",
-    expires: expire_date,
-  });
-  cookie.set("sex", sex, {
-    path: "/",
-    sameSite: "strict",
-    expires: expire_date,
-  });
-  cookie.set("plan_to_get_pregnant", plan_to_get_pregnant, {
-    path: "/",
-    sameSite: "strict",
-    expires: expire_date,
-  });
-  cookie.set("portion", portion, {
-    path: "/",
-    sameSite: "strict",
-    expires: expire_date,
-  });
-  cookie.set("user-details", "true", {
-    path: "/",
-    sameSite: "strict",
-    expires: expire_date,
-  });
+  if (age) {
+    cookie.set("age", age, {
+      path: "/",
+      sameSite: "strict",
+      expires: expire_date,
+    });
+  }
+  if (weight) {
+    cookie.set("weight", weight, {
+      path: "/",
+      sameSite: "strict",
+      expires: expire_date,
+    });
+  }
+  if (sex) {
+    cookie.set("sex", sex, {
+      path: "/",
+      sameSite: "strict",
+      expires: expire_date,
+    });
+  }
+  if (plan_to_get_pregnant) {
+    cookie.set("plan_to_get_pregnant", plan_to_get_pregnant, {
+      path: "/",
+      sameSite: "strict",
+      expires: expire_date,
+    });
+  }
+  if (portion) {
+    cookie.set("portion", portion, {
+      path: "/",
+      sameSite: "strict",
+      expires: expire_date,
+    });
+  }
 };
