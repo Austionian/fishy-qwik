@@ -11,16 +11,16 @@ export const useSignOut = globalAction$(
     if (import.meta.env.PROD && user_id !== "GUEST") {
       await platform.env.FISHY_KV.delete(user_id);
     }
-    cookie.delete("token");
-    cookie.delete("user_id");
-    cookie.delete("admin");
-    cookie.delete("email");
-    cookie.delete("age");
-    cookie.delete("plan_to_get_pregnant");
-    cookie.delete("portion");
-    cookie.delete("sex");
-    cookie.delete("weight");
-    cookie.delete("image");
+    cookie.delete("token", { path: "/" });
+    cookie.delete("user_id", { path: "/" });
+    cookie.delete("admin", { path: "/" });
+    cookie.delete("email", { path: "/" });
+    cookie.delete("age", { path: "/" });
+    cookie.delete("plan_to_get_pregnant", { path: "/" });
+    cookie.delete("portion", { path: "/" });
+    cookie.delete("sex", { path: "/" });
+    cookie.delete("weight", { path: "/" });
+    cookie.delete("image", { path: "/" });
 
     throw redirect(302, "/login");
   }
