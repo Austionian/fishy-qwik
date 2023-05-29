@@ -1,4 +1,4 @@
-import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+import { component$, useSignal } from "@builder.io/qwik";
 import {
   type DocumentHead,
   zod$,
@@ -6,7 +6,6 @@ import {
   Form,
   routeAction$,
 } from "@builder.io/qwik-city";
-import { animate, stagger } from "motion";
 import { getFetchDetails } from "~/helpers";
 import { v4 as uuidv4 } from "uuid";
 import { saveUserDetailsToCookies } from "~/services/saveUserDetails";
@@ -135,25 +134,6 @@ export default component$(() => {
   const guestAction = useGuestOption();
   const validating = useSignal(false);
 
-  useVisibleTask$(({ track }) => {
-    track(() => validating.value);
-
-    const offset = 0.2;
-    const fish = document.querySelectorAll(".fishy-loader");
-    if (!fish[0]) return;
-
-    animate(
-      fish,
-      { opacity: [0, 1, 0] },
-      {
-        offset: [0, 0.1, 1],
-        duration: fish.length * offset,
-        delay: stagger(offset),
-        repeat: Infinity,
-      }
-    );
-  });
-
   return (
     <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-md">
@@ -245,20 +225,30 @@ export default component$(() => {
                 onClick$={() => (validating.value = true)}
               >
                 {validating.value ? (
-                  <>
-                    {Array(5)
-                      .fill(true)
-                      .map((_, i) => (
-                        <div key={i} class="h-5 w-5 fishy-loader fill-white">
-                          <svg
-                            viewBox="0 0 50 50"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <circle cx="25" cy="25" r="25" />
-                          </svg>
-                        </div>
-                      ))}
-                  </>
+                  <svg
+                    width="38"
+                    height="38"
+                    viewBox="0 0 38 38"
+                    xmlns="http://www.w3.org/2000/svg"
+                    stroke="#fff"
+                    class="h-5 w-5"
+                  >
+                    <g fill="none" fill-rule="evenodd">
+                      <g transform="translate(1 1)" stroke-width="2">
+                        <circle stroke-opacity=".5" cx="18" cy="18" r="18" />
+                        <path d="M36 18c0-9.94-8.06-18-18-18">
+                          <animateTransform
+                            attributeName="transform"
+                            type="rotate"
+                            from="0 18 18"
+                            to="360 18 18"
+                            dur="0.7s"
+                            repeatCount="indefinite"
+                          />
+                        </path>
+                      </g>
+                    </g>
+                  </svg>
                 ) : (
                   "SIGN IN"
                 )}
