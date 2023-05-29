@@ -1,4 +1,4 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import {
   type DocumentHead,
   zod$,
@@ -6,6 +6,7 @@ import {
   Form,
   routeAction$,
 } from "@builder.io/qwik-city";
+import { animate, stagger } from "motion";
 import { getFetchDetails } from "~/helpers";
 import { v4 as uuidv4 } from "uuid";
 import { saveUserDetailsToCookies } from "~/services/saveUserDetails";
@@ -132,6 +133,27 @@ export const useGuestOption = routeAction$(async (_, { cookie, redirect }) => {
 export default component$(() => {
   const action = useLoginFormAction();
   const guestAction = useGuestOption();
+  const validating = useSignal(false);
+
+  useVisibleTask$(({ track }) => {
+    track(() => validating.value);
+
+    const offset = 0.09;
+    const fish = document.querySelectorAll(".fishy-loader");
+    if (!fish[0]) return;
+
+    animate(
+      fish,
+      { opacity: [0, 1, 0] },
+      {
+        offset: [0, 0.1, 1],
+        duration: fish.length * offset,
+        delay: stagger(offset),
+        repeat: Infinity,
+      }
+    );
+  });
+
   return (
     <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-md">
@@ -148,7 +170,15 @@ export default component$(() => {
 
       <div class="mt-14 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
-          <Form action={action} class="space-y-6">
+          <Form
+            action={action}
+            class="space-y-6"
+            onSubmitCompleted$={() => {
+              if (action.value?.failed) {
+                validating.value = false;
+              }
+            }}
+          >
             {action.value?.failed && (
               <div class="text-left text-red-400">
                 {action.value?.formErrors}
@@ -212,8 +242,23 @@ export default component$(() => {
               <button
                 type="submit"
                 class="flex w-full justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                onClick$={() => (validating.value = true)}
               >
-                SIGN IN
+                {validating.value ? (
+                  <>
+                    <span class="fishy-loader ">🐟</span>
+                    <span class="fishy-loader ">🐟</span>
+                    <span class="fishy-loader ">🐟</span>
+                    <span class="fishy-loader ">🐟</span>
+                    <span class="fishy-loader ">🐟</span>
+                    <span class="fishy-loader ">🐟</span>
+                    <span class="fishy-loader ">🐟</span>
+                    <span class="fishy-loader ">🐟</span>
+                    <span class="fishy-loader ">🐟</span>
+                  </>
+                ) : (
+                  "SIGN IN"
+                )}
               </button>
             </div>
           </Form>
