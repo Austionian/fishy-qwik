@@ -69,28 +69,26 @@ export default component$(() => {
       const file = e.target.files[0];
       const fileName = `${uuidv4()}-${file.name}`;
 
-      serverHandleUpload(fileName)
-        .then((res) => res.json())
-        .then((res) => {
-          if (file) {
-            fetch(res.url, {
-              method: "PUT",
-              headers: {
-                "Content-Type": file.type,
-              },
-              body: file,
+      serverHandleUpload(fileName).then((res) => {
+        if (file) {
+          fetch(res.url, {
+            method: "PUT",
+            headers: {
+              "Content-Type": file.type,
+            },
+            body: file,
+          })
+            .then((res) => {
+              if (res.status === 200) {
+                e.target.blur;
+                image.value = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
+                document.cookie = `image=${image.value}; path=/`;
+                serverSaveImageToDB(image.value);
+              }
             })
-              .then((res) => {
-                if (res.status === 200) {
-                  e.target.blur;
-                  image.value = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
-                  document.cookie = `image=${image.value}; path=/`;
-                  serverSaveImageToDB(image.value);
-                }
-              })
-              .catch((err) => console.error("err: ", err));
-          }
-        });
+            .catch((err) => console.error("err: ", err));
+        }
+      });
     }
   });
 
