@@ -3,6 +3,8 @@ import { animate } from "motion";
 import { Chart, registerables } from "chart.js/auto";
 import type { ChartData, DataPoint } from "~/types/DataPoint";
 import type Fish from "~/types/Fish";
+import { server$ } from "@builder.io/qwik-city";
+import { getFetchDetails } from "~/helpers";
 
 type ChartKeys = keyof Fish;
 
@@ -13,6 +15,21 @@ type infoModalProps = {
   fishData: Fish;
   dataPoint: DataPoint;
 };
+
+export const serverGetData = server$(async function (dataPoint, fishData) {
+  const { apiKey, domain } = getFetchDetails(this.env);
+  const res = await fetch(
+    `${domain}/v1/min_and_max?attr=${dataPoint.query}${
+      fishData.lake ? `&lake=${fishData.lake}` : ""
+    }`,
+    {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+      },
+    }
+  );
+  return await res.json();
+});
 
 export default component$(
   ({ showDataModal, fishData, dataPoint }: infoModalProps) => {
@@ -61,13 +78,8 @@ export default component$(
     });
 
     useVisibleTask$(async () => {
+      const data = await serverGetData(dataPoint, fishData);
       if (chart.value) {
-        const res = await fetch(
-          `/api/minMax?attr=${dataPoint.query}${
-            fishData.lake ? `&lake=${fishData.lake}` : ""
-          }`
-        );
-        const data = await res.json();
         const lowFish: ChartData = data.min;
         const highFish: ChartData = data.max;
         Chart.register(...registerables);
