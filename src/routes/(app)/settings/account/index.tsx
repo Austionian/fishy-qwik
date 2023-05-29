@@ -45,27 +45,31 @@ export const serverSaveImageToDB = server$(async function (image_url: string) {
   }
 });
 
+export const serverHandleUpload = server$(async function (name: string) {
+  const { apiKey, domain } = getFetchDetails(this.env);
+  const res = await fetch(`${domain}/v1/presign_s3`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name,
+    }),
+  });
+  return await res.json();
+});
+
 export default component$(() => {
   const userDetails = useUserDetails();
   const image = useSignal(userDetails.value.image || "");
 
-  const handleUpload = $((e: QwikChangeEvent<HTMLInputElement>) => {
+  const handleUpload = $(async (e: QwikChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
       const fileName = `${uuidv4()}-${file.name}`;
-      const data = {
-        fileName,
-        fileType: file.type,
-      };
-      const requestObj = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      };
 
-      fetch("/api/presigned_s3", requestObj)
+      serverHandleUpload(fileName)
         .then((res) => res.json())
         .then((res) => {
           if (file) {
