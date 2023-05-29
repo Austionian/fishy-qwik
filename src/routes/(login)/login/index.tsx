@@ -138,7 +138,7 @@ export default component$(() => {
   useVisibleTask$(({ track }) => {
     track(() => validating.value);
 
-    const offset = 0.09;
+    const offset = 0.2;
     const fish = document.querySelectorAll(".fishy-loader");
     if (!fish[0]) return;
 
@@ -246,15 +246,18 @@ export default component$(() => {
               >
                 {validating.value ? (
                   <>
-                    <span class="fishy-loader ">🐟</span>
-                    <span class="fishy-loader ">🐟</span>
-                    <span class="fishy-loader ">🐟</span>
-                    <span class="fishy-loader ">🐟</span>
-                    <span class="fishy-loader ">🐟</span>
-                    <span class="fishy-loader ">🐟</span>
-                    <span class="fishy-loader ">🐟</span>
-                    <span class="fishy-loader ">🐟</span>
-                    <span class="fishy-loader ">🐟</span>
+                    {Array(5)
+                      .fill(true)
+                      .map((_, i) => (
+                        <div key={i} class="h-5 w-5 fishy-loader fill-white">
+                          <svg
+                            viewBox="0 0 50 50"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <circle cx="25" cy="25" r="25" />
+                          </svg>
+                        </div>
+                      ))}
                   </>
                 ) : (
                   "SIGN IN"
