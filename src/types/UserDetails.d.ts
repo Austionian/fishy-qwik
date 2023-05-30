@@ -6,6 +6,7 @@ type UserDetails = {
   plan_to_get_pregnant: string | undefined;
   portion: string | undefined;
   image: string | undefined;
+  email: string | undefined;
 };
 
 export default UserDetails;

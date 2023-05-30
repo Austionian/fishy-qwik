@@ -8,6 +8,7 @@ export default (cookie: Cookie): UserDetails => {
   const plan_to_get_pregnant = cookie.get("plan_to_get_pregnant")?.value;
   const portion = cookie.get("portion")?.value;
   const image = cookie.get("image")?.value;
+  const email = cookie.get("email")?.value;
 
   return {
     needed: !weight || !age || !sex || !portion,
@@ -17,5 +18,6 @@ export default (cookie: Cookie): UserDetails => {
     plan_to_get_pregnant,
     portion,
     image,
+    email,
   };
 };
