@@ -85,7 +85,7 @@ export default component$(({ showDeleteModal }: DeleteModalProps) => {
 
   return (
     <div
-      class="relative z-10"
+      class="fixed z-10"
       aria-labelledby="modal-title"
       role="dialog"
       aria-modal="true"
