@@ -1,23 +1,25 @@
 import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { Form, globalAction$, server$ } from "@builder.io/qwik-city";
 import { animate } from "motion";
-import { getFetchDetails } from "~/helpers";
+import { deleteAllCookies, getFetchDetails } from "~/helpers";
 
 export const serverDeleteAccount = server$(async function () {
   const { domain, apiKey } = getFetchDetails(this.env);
-  const user_id = this.cookie.get("user_id");
+  const user_id = this.cookie.get("user_id")?.value;
   if (!user_id) {
     return {
       failed: true,
       error: "No user id found.",
     };
   }
+
   const response = await fetch(`${domain}/v1/user/delete/${user_id}`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
     },
   });
+
   if (!response.ok) {
     console.error(response.statusText);
     return {
@@ -30,16 +32,21 @@ export const serverDeleteAccount = server$(async function () {
   };
 });
 
-export const useDeleteAction = globalAction$(async (_, { redirect }) => {
-  const res = await serverDeleteAccount();
-  if (res.failed) {
-    return {
-      failed: true,
-      error: "Error deleting account.",
-    };
+export const useDeleteAction = globalAction$(
+  async (_, { cookie, redirect }) => {
+    const res = await serverDeleteAccount();
+
+    if (res.failed) {
+      return {
+        failed: true,
+        error: "Error deleting account.",
+      };
+    }
+
+    deleteAllCookies(cookie);
+    throw redirect(302, "/login");
   }
-  throw redirect(302, "/login");
-});
+);
 
 type DeleteModalProps = {
   showDeleteModal: {

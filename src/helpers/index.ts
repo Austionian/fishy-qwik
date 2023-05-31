@@ -3,11 +3,11 @@ import classNames from "./classNames";
 import calculateServings from "./calculate-servings";
 import getCookie from "./getCookie";
 import getUserDetails from "./getUserDetails";
-import getEnvKey from "./getEnvKey";
+import deleteAllCookies from "./delete-all-cookies";
 
 export {
+  deleteAllCookies,
   getFetchDetails,
-  getEnvKey,
   classNames,
   calculateServings,
   getCookie,

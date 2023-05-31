@@ -4,6 +4,7 @@ import { animate } from "motion";
 import Search from "../search/search";
 import LINKS from "~/constants/links";
 import type MetaUserDetails from "~/types/MetaUserDetails";
+import { deleteAllCookies } from "~/helpers";
 
 export const useSignOut = globalAction$(
   async (_, { cookie, redirect, platform }) => {
@@ -11,16 +12,8 @@ export const useSignOut = globalAction$(
     if (import.meta.env.PROD && user_id !== "GUEST") {
       await platform.env.FISHY_KV.delete(user_id);
     }
-    cookie.delete("token", { path: "/" });
-    cookie.delete("user_id", { path: "/" });
-    cookie.delete("admin", { path: "/" });
-    cookie.delete("email", { path: "/" });
-    cookie.delete("age", { path: "/" });
-    cookie.delete("plan_to_get_pregnant", { path: "/" });
-    cookie.delete("portion", { path: "/" });
-    cookie.delete("sex", { path: "/" });
-    cookie.delete("weight", { path: "/" });
-    cookie.delete("image", { path: "/" });
+
+    deleteAllCookies(cookie);
 
     throw redirect(302, "/login");
   }

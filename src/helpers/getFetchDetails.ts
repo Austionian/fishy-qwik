@@ -2,6 +2,10 @@ type EnvGetter = {
   get(key: string): string | undefined;
 };
 
+/**
+ * Depending on the current env, returns the api service's domain origin
+ * and its api key.
+ */
 export default (env: EnvGetter): { apiKey: string; domain: string } => {
   if (import.meta.env.PROD) {
     return {
