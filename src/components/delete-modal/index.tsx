@@ -12,7 +12,7 @@ export const serverDeleteAccount = server$(async function () {
       error: "No user id found.",
     };
   }
-  const response = await fetch(`${domain}/v1/delete/${user_id}`, {
+  const response = await fetch(`${domain}/v1/user/delete/${user_id}`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
