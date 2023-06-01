@@ -26,8 +26,7 @@ export default component$(({ filterBy }: Props) => (
                  focus:ring-gray-50 focus:ring-offset-2 focus:outline-none`
               }
               id={`filter-by-${lake.name}`}
-              aria-expanded="false"
-              aria-haspopup="true"
+              aria-label={lake.name}
               onClick$={() => {
                 filterBy.value = lake.name;
                 const url = new URL(window.location.href);

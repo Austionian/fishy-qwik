@@ -133,6 +133,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                          focus:ring-offset-teal-500 focus:ring-gray-50 focus:ring-offset-2
                          focus:outline-none"
                   id="sort-menu-button"
+                  aria-label="sort"
                   aria-expanded="false"
                   aria-haspopup="true"
                   onClick$={() => (showSortMenu.value = !showSortMenu.value)}

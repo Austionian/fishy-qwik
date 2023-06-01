@@ -123,6 +123,7 @@ export default component$(({ user }: Props) => {
               </label>
               <button
                 type="button"
+                aria-label="search"
                 class="block w-full rounded-md border-gray-100 py-5 sm:py-3.5
                     border-0 bg-white text-gray-500 ring-1 ring-inset ring-gray-300
                     pl-10 pr-3 focus:ring-2 focus:ring-gray-50 focus:ring-offset-2 
