@@ -2,6 +2,8 @@ import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { animate } from "motion";
 import type Fish from "~/types/Fish";
 import { LAKES } from "~/constants/lakes";
+import { server$ } from "@builder.io/qwik-city";
+import { getFetchDetails } from "~/helpers";
 
 type Props = {
   showSearch: { value: boolean };
@@ -11,6 +13,16 @@ type Recipe = {
   recipe_id: string;
   recipe_name: string;
 };
+
+export const fetchSearchData = server$(async function () {
+  const { apiKey, domain } = getFetchDetails(this.env);
+  const res = await fetch(`${domain}/v1/search`, {
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
+  });
+  return await res.json();
+});
 
 export default component$<Props>(({ showSearch }) => {
   const modalRef = useSignal<Element>();
@@ -54,8 +66,7 @@ export default component$<Props>(({ showSearch }) => {
       typeof window.localStorage.getItem("fish") === undefined ||
       typeof window.localStorage.getItem("recipes") === undefined
     ) {
-      const res = await fetch("/api/search/");
-      const data = await res.json();
+      const data = await fetchSearchData();
       const fish = data.fish_result;
       const recipes = data.recipe_result;
 
