@@ -25,7 +25,7 @@ export default component$(({ filterBy }: Props) => (
                  ring-inset ring-gray-300 hover:bg-gray-50 items-center focus:ring-offset-teal-500
                  focus:ring-gray-50 focus:ring-offset-2 focus:outline-none`
               }
-              id="sort-menu-button"
+              id={`filter-by-${lake.name}`}
               aria-expanded="false"
               aria-haspopup="true"
               onClick$={() => {

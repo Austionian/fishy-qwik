@@ -9,21 +9,21 @@ type Props = {
 };
 
 export default component$(({ fish }: Props) => (
-  <dl class="grid grid-cols-4 gap-x-4 gap-y-8">
+  <div class="grid grid-cols-4 gap-x-4 gap-y-8">
     {Object.keys(dataPoints).map((point, i) => {
       const key = point as Points;
       const data: DataPoint = dataPoints[key];
       return (
         <div class="sm:col-span-1" key={i}>
-          <div class="flex items-center">
+          <dl>
             <dt class="text-sm font-medium text-gray-500">{data.title}</dt>
-          </div>
-          <dd class="mt-1 text-sm text-gray-900">
-            {fish[key].toFixed(3)}
-            <span class="text-xs text-gray-700">{data.postfix}</span>
-          </dd>
+            <dd class="mt-1 text-sm text-gray-900">
+              {fish[key].toFixed(3)}
+              <span class="text-xs text-gray-700">{data.postfix}</span>
+            </dd>
+          </dl>
         </div>
       );
     })}
-  </dl>
+  </div>
 ));
