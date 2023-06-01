@@ -6,7 +6,7 @@ import {
 } from "@builder.io/qwik";
 import { isBrowser } from "@builder.io/qwik/build";
 import { animate } from "motion";
-import { classNames, calculateServings } from "~/helpers";
+import { classNames, calculateServings, getFetchDetails } from "~/helpers";
 import SORT_VALUES, { sorter } from "~/constants/sortValues";
 import type Fish from "~/types/Fish";
 import type LakeValues from "~/types/LakeValues";
@@ -16,6 +16,7 @@ import type SortValues from "~/types/SortValues";
 import InfoModal from "~/components/info-modal/info-modal";
 import FishDetails from "~/components/fish-details/fish-details";
 import LakeFilters from "../lake-filters/lake-filters";
+import { server$ } from "@builder.io/qwik-city";
 
 type Props = {
   fishData: {
@@ -26,6 +27,16 @@ type Props = {
   };
   fishFilter: LakeValues;
 };
+
+export const fetchFish = server$(async function (lakeName: string) {
+  const { apiKey, domain } = getFetchDetails(this.env);
+  const res = await fetch(`${domain}/v1/fishs?lake=${lakeName}`, {
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
+  });
+  return await res.json();
+});
 
 export default component$(({ fishData, userDetails, fishFilter }: Props) => {
   const showUserDetialsModal = useSignal(userDetails.data.needed);
@@ -53,8 +64,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
         );
         fishData.data.sort(sorter[sortBy.value].fn);
       } else {
-        const res = await fetch(`/api/lake/?lakeName=${filterBy.value}`);
-        const fish: Fish[] = await res.json();
+        const fish: Fish[] = await fetchFish(filterBy.value);
         fishData.data = fish;
         fishData.data.sort(sorter[sortBy.value].fn);
         window.localStorage.setItem(filterBy.value, JSON.stringify(fish));
