@@ -244,7 +244,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                     </span>
                   </div>
                   <div onClick$={() => (showUserDetialsModal.value = true)}>
-                    <span class="cursor-pointer ml-4 inline-flex items-center rounded-full bg-teal-100 text-sm font-medium px-3 py-0.5 text-teal-800 hover:bg-teal-200 hover:text-teal-900 hover:ring-teal-300 hover:ring-2">
+                    <span class="cursor-pointer ml-4 inline-flex items-center rounded-full bg-teal-100 dark:bg-teal-400 text-sm font-medium px-3 py-0.5 text-teal-800 dark:text-gray-800 hover:bg-teal-200 hover:text-teal-900 hover:ring-teal-300 hover:ring-2">
                       {calculateServings(
                         userDetails.data.age,
                         userDetails.data.weight,
