@@ -59,7 +59,7 @@ export default component$(({ user }: Props) => {
 
   return (
     <nav
-      class="bg-white dark:bg-gray-900/90 shadow dark:border-b dark:border-gray-800"
+      class="bg-white dark:bg-gray-900/80 shadow dark:border-b dark:border-gray-800"
       document:onKeyDown$={(e) => {
         if (e.which === 27) {
           showSearch.value = false;
@@ -91,7 +91,7 @@ export default component$(({ user }: Props) => {
                         class={
                           location.url.pathname === link.pathname
                             ? "inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900 dark:text-teal-500"
-                            : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-200 hover:border-gray-300 hover:text-gray-700"
+                            : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100"
                         }
                       >
                         {link.title}
@@ -125,11 +125,11 @@ export default component$(({ user }: Props) => {
                 type="button"
                 aria-label="search"
                 class="block w-full rounded-md border-gray-100 py-5 sm:py-3.5
-                    border-0 bg-white dark:bg-gray-700 dark:text-gray-100 text-gray-500 ring-1 ring-inset ring-gray-300
+                    border-0 bg-white dark:bg-gray-900 dark:text-gray-100 text-gray-500 ring-1 ring-inset ring-gray-300
                     pl-10 pr-3 focus:ring-2 focus:ring-gray-50 focus:ring-offset-2 
                     focus:ring-offset-teal-500 sm:text-sm sm:leading-3 relative 
                     focus-within:text-gray-600 hover:ring-gray-400 hover:bg-gray-50
-                    hover:text-gray-600 focus:outline-none dark:ring-gray-800 dark:hover:bg-gray-600 dark:hover:ring-gray-900
+                    hover:text-gray-600 focus:outline-none dark:ring-gray-800 dark:hover:bg-gray-700 dark:hover:ring-gray-900
                     dark:hover:text-gray-50"
                 onClick$={() => (showSearch.value = !showSearch.value)}
               >
@@ -214,7 +214,7 @@ export default component$(({ user }: Props) => {
                     onClick$={() => (showUserMenu.value = !showUserMenu.value)}
                   >
                     <span class="sr-only">Open user menu</span>
-                    <span class="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100">
+                    <span class="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-900/80">
                       {user.image && user.image !== "" ? (
                         <img
                           class="h-full w-full rounded-full"
@@ -236,7 +236,7 @@ export default component$(({ user }: Props) => {
                 {showUserMenu.value && (
                   <div
                     ref={ref}
-                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-800 py-1 shadow-lg ring-1 ring-black dark:ring-gray-800 ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
@@ -244,7 +244,7 @@ export default component$(({ user }: Props) => {
                   >
                     <a
                       href="/settings/"
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
                       role="menuitem"
                       tabIndex={0}
                       id="user-menu-item-0"
@@ -254,7 +254,7 @@ export default component$(({ user }: Props) => {
                     <Form action={signOutAction}>
                       <button
                         type="submit"
-                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
                         role="menuitem"
                         tabIndex={0}
                         id="user-menu-item-2"

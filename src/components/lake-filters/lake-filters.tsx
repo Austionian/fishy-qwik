@@ -19,13 +19,13 @@ export default component$(({ filterBy }: Props) => (
                 filterBy.value === lake.name
                   ? `inline-flex w-full justify-center gap-x-1.5 rounded-md bg-gray-200
                  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1
-                 ring-inset ring-gray-300 dark:ring-gray-500 items-center cursor-default
-                 dark:bg-gray-600/80 dark:text-white`
+                 ring-inset ring-gray-300 dark:ring-gray-700 items-center cursor-default
+                 dark:bg-gray-700 dark:text-white`
                   : `inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white
                  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1
-                 ring-inset ring-gray-300 dark:ring-gray-500 hover:bg-gray-50 items-center focus:ring-offset-teal-500
+                 ring-inset ring-gray-300 hover:bg-gray-50 items-center focus:ring-offset-teal-500
                  focus:ring-gray-50 focus:ring-offset-2 focus:outline-none
-                 dark:bg-gray-900/80 dark:text-white dark:hover:bg-gray-700`
+                 dark:bg-gray-900 dark:text-gray-100 dark:hover:bg-gray-800 dark:ring-gray-800`
               }
               id={`filter-by-${lake.name}`}
               aria-label={lake.name}

@@ -128,8 +128,8 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                 <button
                   type="button"
                   class="inline-flex w-full justify-center gap-x-1.5 rounded-md
-                         bg-white dark:bg-gray-900/80 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-white
-                         shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/80
+                         bg-white dark:bg-gray-900 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-white
+                         shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700
                          focus:ring-offset-teal-500 focus:ring-gray-50 focus:ring-offset-2
                          focus:outline-none"
                   id="sort-menu-button"
@@ -201,7 +201,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
           </div>
         </div>
       </div>
-      <div class="divide-y divide-gray-200 rounded-lg bg-gray-200 dark:bg-gray-800 shadow grid sm:gap-px sm:divide-y-0">
+      <div class="divide-y divide-gray-200 rounded-lg dark:ring-1 dark:ring-gray-800 bg-gray-200 dark:bg-gray-900 shadow grid sm:gap-px sm:divide-y-0">
         {fishData.data.map((fish, i) => {
           const link =
             filterBy.value === "All"
@@ -215,7 +215,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                 i === fishData.data.length - 1
                   ? "rounded-bl-lg rounded-br-lg"
                   : "",
-                "block lg:flex lg:justify-between group relative bg-white dark:bg-gray-900/80 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500 fishCard"
+                "block lg:flex lg:justify-between group relative bg-white dark:bg-gray-900/80 dark:ring-1 dark:ring-gray-800 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500 fishCard"
               )}
             >
               <div
