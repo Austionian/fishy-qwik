@@ -62,7 +62,12 @@ export default component$(({ fishData, userDetails }: Props) => {
         />
       )}
       <main class="pb-10">
-        <div class="mx-auto max-w-3xl md:block md:items-center md:justify-between md:space-x-5 lg:max-w-7xl">
+        <div class="mx-auto max-w-3xl md:block md:items-center md:justify-between md:space-x-5 lg:max-w-7xl mb-6">
+          <a href="/" class="hover:text-teal-500 hover:cursor-pointer">
+            ‹ Back to fish
+          </a>
+        </div>
+        <div class="mx-auto max-w-3xl md:block md:items-center md:justify-between md:space-x-5 lg:max-w-7xl mb-10">
           <div class="flex justify-center items-center flex-wrap space-x-5">
             <div class="bg-teal-500/20 p-2 shadow-sm rounded mb-4 w-screen flex justify-center">
               {fishData.fish_data.woodland_fish_image ? (

@@ -21,7 +21,12 @@ export default component$(() => {
   return (
     <div class="min-h-full">
       <main class="pb-10">
-        <div class="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
+        <div class="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8 mb-6">
+          <a href="/recipe" class="hover:text-teal-500 hover:cursor-pointer">
+            ‹ Back to recipes
+          </a>
+        </div>
+        <div class="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8 mb-10">
           <div class="flex justify-center items-center flex-wrap space-x-5">
             <div class="flex-shrink-0">
               <div class="relative my-2">
@@ -39,7 +44,7 @@ export default component$(() => {
           <div>
             <h1 class="text-4xl font-bold">{recipeData.value.name}</h1>
           </div>
-          <div class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse">
+          <div class="mt-6 sm:mt-0 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse">
             <button
               type="button"
               class="inline-flex items-center justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
