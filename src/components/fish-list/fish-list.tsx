@@ -168,7 +168,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
               {showSortMenu.value && (
                 <div
                   ref={ref}
-                  class="absolute z-10 w-56 origin-top-right right-0 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  class="absolute z-10 w-56 origin-top-right right-0 rounded-md bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="sort-menu-button"
@@ -179,8 +179,8 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                       <a
                         class={
                           sortBy.value === sort
-                            ? "text-gray-900 block px-4 py-2 text-sm bg-gray-100"
-                            : "text-gray-700 hover:bg-gray-50 hover:text-gray-800 block px-4 py-2 text-sm cursor-pointer"
+                            ? "text-gray-900 block px-4 py-2 text-sm bg-gray-100 dark:text-gray-100 dark:bg-white/10"
+                            : "text-gray-700 hover:bg-gray-50 hover:text-gray-800 block px-4 py-2 text-sm cursor-pointer dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-gray-200"
                         }
                         key={i}
                         role="menuitem"
