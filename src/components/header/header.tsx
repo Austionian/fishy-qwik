@@ -59,7 +59,7 @@ export default component$(({ user }: Props) => {
 
   return (
     <nav
-      class="bg-white dark:bg-gray-900/80 shadow dark:border-b dark:border-gray-800"
+      class="bg-white dark:bg-gray-900/80 shadow dark:border-b dark:border-white/10"
       document:onKeyDown$={(e) => {
         if (e.which === 27) {
           showSearch.value = false;
@@ -129,7 +129,7 @@ export default component$(({ user }: Props) => {
                     pl-10 pr-3 focus:ring-2 focus:ring-gray-50 focus:ring-offset-2 
                     focus:ring-offset-teal-500 sm:text-sm sm:leading-3 relative 
                     focus-within:text-gray-600 hover:ring-gray-400 hover:bg-gray-50
-                    hover:text-gray-600 focus:outline-none dark:ring-gray-800 dark:hover:bg-gray-700 dark:hover:ring-gray-900
+                    hover:text-gray-600 focus:outline-none dark:ring-white/10 dark:hover:bg-gray-700 dark:hover:ring-gray-900
                     dark:hover:text-gray-50"
                 onClick$={() => (showSearch.value = !showSearch.value)}
               >
@@ -207,7 +207,7 @@ export default component$(({ user }: Props) => {
                 <div>
                   <button
                     type="button"
-                    class="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                    class="flex rounded-full bg-white dark:bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
                     id="user-menu-button"
                     aria-expanded="false"
                     aria-haspopup="true"
@@ -223,7 +223,7 @@ export default component$(({ user }: Props) => {
                         />
                       ) : null}
                       <svg
-                        class="h-full w-full text-gray-300"
+                        class="h-full w-full text-gray-300 dark:text-gray-500"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -236,7 +236,7 @@ export default component$(({ user }: Props) => {
                 {showUserMenu.value && (
                   <div
                     ref={ref}
-                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-800 py-1 shadow-lg ring-1 ring-black dark:ring-gray-800 ring-opacity-5 focus:outline-none"
+                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-800 py-1 shadow-lg ring-1 ring-black dark:ring-white/10 ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
@@ -281,8 +281,8 @@ export default component$(({ user }: Props) => {
                     key={i}
                     class={
                       location.url.pathname === link.pathname
-                        ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-gray-700 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-white cursor-default"
-                        : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+                        ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-white/10 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-teal-500 cursor-default"
+                        : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
                     }
                   >
                     {link.title}
@@ -295,8 +295,8 @@ export default component$(({ user }: Props) => {
                     key={i}
                     class={
                       location.url.pathname === link.pathname
-                        ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-gray-700 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-white cursor-default"
-                        : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+                        ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-white/10 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-teal-500 cursor-default"
+                        : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
                     }
                   >
                     {link.title}
@@ -305,10 +305,10 @@ export default component$(({ user }: Props) => {
               }
             })}
           </div>
-          <div class="border-t border-gray-200 pb-3 pt-4">
+          <div class="border-t border-gray-200 dark:border-white/10 pb-3 pt-4">
             <div class="flex items-center px-5">
               <div class="flex-shrink-0">
-                <span class="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100">
+                <span class="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
                   {user.image && user.image !== "" ? (
                     <img
                       class="h-full w-full rounded-full"
@@ -317,7 +317,7 @@ export default component$(({ user }: Props) => {
                     />
                   ) : null}
                   <svg
-                    class="h-full w-full text-gray-300"
+                    class="h-full w-full text-gray-300 dark:text-gray-500"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -326,19 +326,21 @@ export default component$(({ user }: Props) => {
                 </span>
               </div>
               <div class="ml-3">
-                <div class="text-base font-medium text-gray-800">
+                <div class="text-base font-medium text-gray-800 dark:text-gray-200">
                   {user.email}
                 </div>
-                <div class="text-sm font-medium text-gray-400">🐟🐟🐟</div>
+                <div class="text-sm font-medium">🐟🐟🐟</div>
               </div>
             </div>
             <div class="mt-3 space-y-1 px-2">
               <a
                 href="/settings/"
                 class={
-                  location.url.pathname === "/settings/"
-                    ? "block border-l-4 border-teal-500 bg-teal-50 py-2 pl-3 pr-4 text-base font-medium text-teal-700 cursor-default"
-                    : "w-full text-left block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+                  location.url.pathname === "/settings/" ||
+                  location.url.pathname === "/settings/password/" ||
+                  location.url.pathname === "/settings/account/"
+                    ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-white/10 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-teal-500 cursor-default"
+                    : "w-full text-left block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
                 }
               >
                 Your Profile
@@ -347,7 +349,7 @@ export default component$(({ user }: Props) => {
               <Form action={signOutAction}>
                 <button
                   type="submit"
-                  class="w-full text-left block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+                  class="w-full text-left block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
                 >
                   Sign out
                 </button>

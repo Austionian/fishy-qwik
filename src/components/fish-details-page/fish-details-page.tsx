@@ -69,7 +69,7 @@ export default component$(({ fishData, userDetails }: Props) => {
         </div>
         <div class="mx-auto max-w-3xl md:block md:items-center md:justify-between md:space-x-5 lg:max-w-7xl mb-10">
           <div class="flex justify-center items-center flex-wrap space-x-5">
-            <div class="bg-teal-500/20 dark:bg-white/5 dark:ring-1 dark:ring-gray-800 p-2 shadow-sm rounded mb-4 w-screen flex justify-center">
+            <div class="bg-teal-500/20 dark:bg-white/5 dark:ring-1 dark:ring-white/10 p-2 shadow-sm rounded mb-4 w-screen flex justify-center">
               {fishData.fish_data.woodland_fish_image ? (
                 <img
                   class="h-40 sm:w-auto sm:h-[300px] text-center"
@@ -122,7 +122,7 @@ export default component$(({ fishData, userDetails }: Props) => {
         <div class="mx-auto mt-4 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <div class="space-y-6 lg:col-span-2 lg:col-start-1">
             <section aria-labelledby="fish information">
-              <div class="bg-white dark:bg-gray-900/80 shadow sm:rounded-lg dark:ring-gray-800 dark:ring-1">
+              <div class="bg-white dark:bg-gray-900/80 shadow sm:rounded-lg dark:ring-white/10 dark:ring-1">
                 <div class="px-4 py-5 sm:px-6">
                   <dl class="grid grid-cols-3 gap-x-4 gap-y-8">
                     <div class="sm:col-span-1">
@@ -195,7 +195,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                     </div>
                   </dl>
                 </div>
-                <div class="border-t border-gray-200 px-4 py-8 sm:px-6">
+                <div class="border-t border-gray-200 dark:border-white/10 px-4 py-8 sm:px-6">
                   <div class="sm:col-span-2">
                     <dt class="text-sm font-medium text-gray-500 dark:text-gray-300">
                       About
@@ -264,7 +264,7 @@ export default component$(({ fishData, userDetails }: Props) => {
             aria-labelledby="timeline-title"
             class="lg:col-span-1 lg:col-start-3"
           >
-            <div class="bg-white dark:bg-gray-900/80 dark:ring-gray-800 dark:ring-1 px-4 py-5 shadow sm:rounded-lg sm:px-6">
+            <div class="bg-white dark:bg-gray-900/80 dark:ring-white/10 dark:ring-1 px-4 py-5 shadow sm:rounded-lg sm:px-6">
               <h2
                 id="recipes-title"
                 class="text-lg font-medium text-gray-900 dark:text-gray-100"

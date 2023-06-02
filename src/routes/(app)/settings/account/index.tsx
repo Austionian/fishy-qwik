@@ -100,14 +100,16 @@ export default component$(() => {
         <DeleteModal showDeleteModal={showDeleteModal} />
       )}
       <form
-        class="divide-y divide-gray-200 lg:col-span-9"
+        class="divide-y divide-gray-200 dark:divide-white/10 lg:col-span-9"
         action="#"
         method="POST"
       >
         <div class="px-4 py-6 sm:p-6 lg:pb-8">
           <div>
-            <h2 class="text-lg font-medium leading-6 text-gray-900">Account</h2>
-            <p class="mt-1 text-sm text-gray-500">
+            <h2 class="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
+              Account
+            </h2>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">
               Update your account information.
             </p>
           </div>
@@ -117,7 +119,7 @@ export default component$(() => {
               <div>
                 <label
                   for="email"
-                  class="block text-sm font-medium leading-6 text-gray-900"
+                  class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
                 >
                   Email
                 </label>
@@ -127,7 +129,7 @@ export default component$(() => {
                     name="email"
                     id="email"
                     autoComplete="email"
-                    class="block w-full min-w-0 flex-grow rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                     value={userDetails.value.email}
                   />
                 </div>
@@ -136,7 +138,7 @@ export default component$(() => {
               <div class="col-span-12 sm:col-span-6">
                 <label
                   for="first-name"
-                  class="block text-sm font-medium leading-6 text-gray-900"
+                  class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
                 >
                   First name
                 </label>
@@ -145,14 +147,14 @@ export default component$(() => {
                   name="first-name"
                   id="first-name"
                   autoComplete="given-name"
-                  class="mt-2 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:border-0 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
+                  class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                 />
               </div>
 
               <div class="col-span-12 sm:col-span-6">
                 <label
                   for="last-name"
-                  class="block text-sm font-medium leading-6 text-gray-900"
+                  class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
                 >
                   Last name
                 </label>
@@ -161,14 +163,14 @@ export default component$(() => {
                   name="last-name"
                   id="last-name"
                   autoComplete="family-name"
-                  class="mt-2 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:border-0 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
+                  class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                 />
               </div>
             </div>
 
             <div class="mt-6 flex-grow lg:ml-6 lg:mt-0 lg:flex-shrink-0 lg:flex-grow-0">
               <p
-                class="text-sm font-medium leading-6 text-gray-900"
+                class="text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
                 aria-hidden="true"
               >
                 Photo
@@ -187,7 +189,7 @@ export default component$(() => {
                       />
                     ) : null}
                     <svg
-                      class="h-full w-full text-gray-300"
+                      class="h-full w-full text-gray-300 dark:text-gray-500"
                       fill="currentColor"
                       viewBox="0 0 24 24"
                     >
@@ -199,14 +201,14 @@ export default component$(() => {
                       id="mobile-user-photo"
                       name="user-photo"
                       type="file"
-                      class="peer absolute h-full w-full rounded-md opacity-0"
+                      class="peer absolute h-full w-full rounded-md opacity-0 cursor-pointer"
                       onChange$={(e) => {
                         handleUpload(e);
                       }}
                     />
                     <label
                       for="mobile-user-photo"
-                      class="pointer-events-none block rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 peer-hover:ring-gray-400 peer-focus:ring-2 peer-focus:ring-sky-500"
+                      class="pointer-events-none block rounded-md px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 peer-hover:ring-gray-400 peer-focus:ring-2 peer-focus:ring-teal-500"
                     >
                       <span>Change</span>
                       <span class="sr-only"> user photo</span>
@@ -216,7 +218,7 @@ export default component$(() => {
               </div>
 
               <div class="relative hidden overflow-hidden rounded-full lg:block">
-                <span class="inline-block h-40 w-40 overflow-hidden rounded-full bg-gray-100">
+                <span class="inline-block h-40 w-40 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
                   {image.value !== "" ? (
                     <img
                       class="h-full w-full rounded-full"
@@ -225,7 +227,7 @@ export default component$(() => {
                     />
                   ) : null}
                   <svg
-                    class="h-full w-full text-gray-300"
+                    class="h-full w-full text-gray-300 dark:text-gray-500"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -242,7 +244,7 @@ export default component$(() => {
                     type="file"
                     id="desktop-user-photo"
                     name="user-photo"
-                    class="absolute inset-0 h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0"
+                    class="absolute inset-0 h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0 dark:boder-white/10 dark:text-gray-300"
                     onChange$={(e) => {
                       handleUpload(e);
                     }}
@@ -270,7 +272,7 @@ export default component$(() => {
             <div class="mt-4 flex justify-end gap-x-3 px-4 py-4 sm:px-6">
               <button
                 type="button"
-                class="inline-flex justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                class="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0 dark:bg-white/5 dark:text-gray-100 dark:hover:bg-white/10 dark:hover:text-white dark:ring-white/10"
               >
                 Cancel
               </button>

@@ -17,7 +17,7 @@ export default component$(() => {
   const recipeData = useRecipeData();
   return (
     <div>
-      <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-900/80 dark:ring-1 dark:ring-gray-800 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
+      <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-900/80 dark:ring-1 dark:ring-white/10 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
         {recipeData.value.map((recipe, i) => {
           return (
             <div
@@ -29,7 +29,7 @@ export default component$(() => {
                 i === recipeData.value.length - 1
                   ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
                   : "",
-                "group relative bg-white dark:bg-gray-900/80 dark:ring-1 dark:ring-gray-800 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500"
+                "group relative bg-white dark:bg-gray-900/80 dark:ring-1 dark:ring-white/10 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500"
               )}
             >
               <a href={"/recipe/" + recipe.id + "/"}>

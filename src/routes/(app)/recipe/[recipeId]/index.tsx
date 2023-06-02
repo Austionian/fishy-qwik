@@ -68,7 +68,7 @@ export default component$(() => {
         </div>
         <div class="mx-auto mt-8 grid max-w-3xl grid-cols-1 sm:grid-cols-3 gap-6 sm:px-6 lg:max-w-full">
           <div class="space-y-6 w-full sm:col-span-1">
-            <div class="bg-white dark:bg-gray-900/80 shadow sm:rounded-lg dark:ring-1 dark:ring-gray-800">
+            <div class="bg-white dark:bg-gray-900/80 shadow sm:rounded-lg dark:ring-1 dark:ring-white/10">
               <div class="px-4 py-5 sm:px-6">
                 <h2
                   id="ingredients-list"
@@ -93,7 +93,7 @@ export default component$(() => {
             </div>
           </div>
           <div class="space-y-6 w-full sm:col-span-2">
-            <div class="bg-white dark:bg-gray-900/80 shadow sm:rounded-lg dark:ring-1 dark:ring-gray-800">
+            <div class="bg-white dark:bg-gray-900/80 shadow sm:rounded-lg dark:ring-1 dark:ring-white/10">
               <div class="px-4 py-5 sm:px-6">
                 <h2
                   id="ingredients-list"

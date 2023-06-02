@@ -66,7 +66,7 @@ export default component$(() => {
 
   return (
     <Form
-      class="divide-y divide-gray-200 lg:col-span-9"
+      class="divide-y divide-gray-200 dark:divide-white/10 lg:col-span-9"
       action={formAction}
       onSubmitCompleted$={() => {
         if (formAction.status === 200) {
@@ -77,7 +77,7 @@ export default component$(() => {
       {saveValue.value !== "Save" && !hideAlert.value ? (
         <div
           ref={alertRef}
-          class="rounded-md bg-teal-50 p-4 fixed top-[10px] sm:top-[70px] left-[5%] w-[90%] max-w-7xl mx-auto border-teal-500 border-2 z-50"
+          class="rounded-md bg-teal-50 p-4 fixed top-[10px] sm:top-[70px] left-[5%] w-[90%] max-w-7xl mx-auto ring-teal-500 ring-1 z-50"
         >
           <div class="flex">
             <div class="flex-shrink-0">
@@ -123,8 +123,10 @@ export default component$(() => {
       ) : null}
       <div class="px-4 py-6 sm:p-6 lg:pb-8 flex flex-col">
         <div>
-          <h2 class="text-lg font-medium leading-6 text-gray-900">Profile</h2>
-          <p class="mt-1 text-sm text-gray-500">
+          <h2 class="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
+            Profile
+          </h2>
+          <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">
             Enter your information to see a personalized serving recommendation
             for the fish in our app.
           </p>
@@ -134,7 +136,7 @@ export default component$(() => {
           <div class="my-2">
             <label
               for="weight"
-              class="block text-sm font-medium leading-6 text-gray-900"
+              class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
             >
               Weight
             </label>
@@ -145,7 +147,7 @@ export default component$(() => {
                 id="weight"
                 value={userDetails.value.weight}
                 onChange$={(e) => (userDetails.value.weight = e.target.value)}
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                 placeholder="200"
                 aria-describedby="weight-currency"
                 autoFocus
@@ -165,7 +167,7 @@ export default component$(() => {
           <div class="my-2">
             <label
               for="age"
-              class="block text-sm font-medium leading-6 text-gray-900"
+              class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
             >
               Age
             </label>
@@ -176,7 +178,7 @@ export default component$(() => {
                 id="age"
                 value={userDetails.value.age}
                 onChange$={(e) => (userDetails.value.age = e.target.value)}
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                 placeholder="44"
               />
               {formAction.value?.failed && (
@@ -187,14 +189,17 @@ export default component$(() => {
             </div>
           </div>
           <div class="my-2">
-            <label for="sex" class="text-sm font-semibold text-gray-900">
+            <label
+              for="sex"
+              class="text-sm font-semibold text-gray-900 dark:text-gray-100"
+            >
               Sex
             </label>
             <div class="mt-2">
               <select
                 id="sex"
                 name="sex"
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                 onChange$={(e) => {
                   isMale.value = e.target.value === "Male";
                   userDetails.value.sex = e.target.value;
@@ -213,7 +218,7 @@ export default component$(() => {
             <div class="my-2">
               <label
                 for="plan_to_get_pregnant"
-                class="text-sm font-semibold text-gray-900"
+                class="text-sm font-semibold text-gray-900 dark:text-gray-100"
               >
                 Plan to get pregnant?
               </label>
@@ -221,7 +226,7 @@ export default component$(() => {
                 <select
                   id="plan_to_get_pregnant"
                   name="plan_to_get_pregnant"
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                   onChange$={(e) =>
                     (userDetails.value.plan_to_get_pregnant = e.target.value)
                   }
@@ -243,10 +248,10 @@ export default component$(() => {
             </div>
           )}
           <div class="my-2">
-            <label class="text-sm font-semibold text-gray-900">
+            <label class="text-sm font-semibold text-gray-900 dark:text-gray-100">
               Portion Size
             </label>
-            <p class="text-sm text-gray-500">
+            <p class="text-sm text-gray-500 dark:text-gray-300">
               What is your perfered portion size?
             </p>
             {formAction.value?.failed && (
@@ -272,7 +277,7 @@ export default component$(() => {
                     />
                     <label
                       for={portion.label}
-                      class="ml-3 block text-sm font-medium leading-6 text-gray-900"
+                      class="ml-3 block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
                     >
                       {portion.label}
                     </label>
@@ -283,7 +288,7 @@ export default component$(() => {
           </div>
         </div>
       </div>
-      <div class="divide-y divide-gray-200 pt-6">
+      <div class="divide-y divide-gray-200 dark:divide-white/10 pt-6">
         <div class="mt-4 flex justify-end gap-x-3 px-4 py-4 sm:px-6">
           <a href="/">
             <button

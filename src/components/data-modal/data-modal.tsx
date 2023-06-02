@@ -129,18 +129,18 @@ export default component$(
 
         <div ref={modalRef} class="fixed inset-0 z-10 overflow-y-auto">
           <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+            <div class="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-900 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 dark:ring-1 dark:ring-gray-800">
               <div>
                 <div class="ml-auto pl-3 text-right">
                   <div class="-mx-1.5 -my-1.5">
                     <button
                       type="button"
-                      class="inline-flex rounded-md p-1.5 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-gray-50"
+                      class="inline-flex rounded-md p-1.5 text-gray-500 dark:text-gray-700 group group-hover:bg-gray-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-gray-50"
                       onClick$={() => (showDataModal.value = false)}
                     >
                       <span class="sr-only">Dismiss</span>
                       <svg
-                        class="h-5 w-5"
+                        class="h-5 w-5 dark:group-hover:fill-gray-100"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                         aria-hidden="true"
@@ -150,7 +150,7 @@ export default component$(
                     </button>
                   </div>
                 </div>
-                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-teal-100">
+                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-teal-100 dark:bg-teal-300">
                   <svg
                     width="100pt"
                     height="100pt"
@@ -163,7 +163,7 @@ export default component$(
                 </div>
                 <div class="mt-5 text-center sm:mt-5">
                   <h3
-                    class="text-xl font-semibold leading-6 text-gray-900 mb-3"
+                    class="text-xl font-semibold leading-6 text-gray-900 mb-3 dark:text-gray-100"
                     id="modal-title"
                   >
                     {dataPoint.title}
@@ -171,7 +171,7 @@ export default component$(
                   {dataPoint.about.map((p, i) => (
                     <div class="text-left mt-2" key={i}>
                       <p
-                        class="text-base leading-6 text-gray-800"
+                        class="text-base leading-6 text-gray-800 dark:text-gray-300"
                         id="modal-about"
                       >
                         {p}
@@ -181,7 +181,7 @@ export default component$(
                   {dataPoint.moreInfo && (
                     <div class="mt-5 text-left">
                       <h4
-                        class="text-lg font-semibold leading-6 text-gray-900"
+                        class="text-lg font-semibold leading-6 text-gray-900 dark:text-gray-300"
                         id="modal-about"
                       >
                         Avoidance
@@ -194,7 +194,7 @@ export default component$(
                   <div class="mt-5">
                     <a
                       href={dataPoint.link}
-                      class="text-teal-500 hover:text-teal-400 font-bold"
+                      class="text-teal-500 hover:text-teal-400 dark:text-teal-400 dark:hover:text-teal-300 font-bold"
                     >
                       Visit CDC.gov to learn more.
                     </a>
@@ -202,7 +202,7 @@ export default component$(
                 </div>
 
                 <div class="h-[200px] sm:h-[239px] flex justify-center">
-                  <canvas id="chart" ref={chart} class="mt-2" />
+                  <canvas id="chart" ref={chart} class="mt-2 text-gray-100" />
                 </div>
               </div>
             </div>

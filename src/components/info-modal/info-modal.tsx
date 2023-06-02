@@ -92,12 +92,12 @@ export default component$(
                   <div class="-mx-1.5 -my-1.5">
                     <button
                       type="button"
-                      class="inline-flex rounded-md p-1.5 text-gray-500 dark:text-gray-700 hover:bg-gray-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-gray-50"
+                      class="inline-flex rounded-md p-1.5 text-gray-500 dark:text-gray-700 group group-hover:bg-gray-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-gray-50"
                       onClick$={() => (showUserInputModal.value = false)}
                     >
                       <span class="sr-only">Dismiss</span>
                       <svg
-                        class="h-5 w-5"
+                        class="h-5 w-5 dark:group-hover:fill-gray-100"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                         aria-hidden="true"
@@ -107,7 +107,7 @@ export default component$(
                     </button>
                   </div>
                 </div>
-                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-teal-100">
+                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-teal-100 dark:bg-teal-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="100pt"
@@ -158,7 +158,7 @@ export default component$(
                       onChange$={(e) =>
                         (userDetails.data.weight = e.target.value)
                       }
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-gray-800"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                       placeholder="200"
                       aria-describedby="weight-currency"
                       autoFocus
@@ -189,7 +189,7 @@ export default component$(
                       id="age"
                       value={userDetails.data.age}
                       onChange$={(e) => (userDetails.data.age = e.target.value)}
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-gray-800"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                       placeholder="44"
                     />
                     {formAction.value?.failed && (
@@ -210,7 +210,7 @@ export default component$(
                     <select
                       id="sex"
                       name="sex"
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-gray-800"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                       value={userDetails.data.sex || "Male"}
                       onChange$={(e) => {
                         isMale.value = e.target.value === "Male";
@@ -234,7 +234,7 @@ export default component$(
                       <select
                         id="plan_to_get_pregnant"
                         name="plan_to_get_pregnant"
-                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-gray-800"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                         onChange$={(e) =>
                           (userDetails.data.plan_to_get_pregnant =
                             e.target.value)
@@ -307,7 +307,7 @@ export default component$(
                   </button>
                   <button
                     type="button"
-                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0 dark:bg-white/5 dark:text-gray-100 dark:hover:bg-white/10 dark:hover:text-white dark:ring-gray-800"
+                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0 dark:bg-white/5 dark:text-gray-100 dark:hover:bg-white/10 dark:hover:text-white dark:ring-white/10"
                     onClick$={() => (showUserInputModal.value = false)}
                   >
                     Cancel

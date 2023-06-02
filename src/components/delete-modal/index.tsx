@@ -97,13 +97,13 @@ export default component$(({ showDeleteModal }: DeleteModalProps) => {
 
       <div ref={modalRef} class="fixed inset-0 z-10 overflow-y-auto">
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-          <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+          <div class="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-900 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 dark:ring-1 dark:ring-gray-800">
             <div>
               <div class="ml-auto pl-3 text-right">
                 <div class="-mx-1.5 -my-1.5">
                   <button
                     type="button"
-                    class="inline-flex rounded-md p-1.5 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-gray-50"
+                    class="inline-flex rounded-md p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-gray-50"
                     onClick$={() => (showDeleteModal.value = false)}
                   >
                     <span class="sr-only">Dismiss</span>
@@ -120,13 +120,13 @@ export default component$(({ showDeleteModal }: DeleteModalProps) => {
               </div>
               <div class="mt-3 text-center sm:mt-5">
                 <h3
-                  class="text-base font-semibold leading-6 text-gray-900"
+                  class="text-base font-semibold leading-6 text-gray-900 dark:text-gray-100"
                   id="modal-title"
                 >
                   Are you sure you want to delete your account?
                 </h3>
                 <div class="mt-2">
-                  <p class="text-sm text-gray-500">
+                  <p class="text-sm text-gray-500 dark:text-gray-300">
                     Your information will not be recoverable.
                   </p>
                 </div>
@@ -137,7 +137,7 @@ export default component$(({ showDeleteModal }: DeleteModalProps) => {
               <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                 <button
                   type="button"
-                  class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                  class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0 dark:bg-white/5 dark:text-gray-100 dark:hover:bg-white/10 dark:hover:text-white dark:ring-white/10"
                   onClick$={() => (showDeleteModal.value = false)}
                 >
                   Cancel

@@ -148,7 +148,7 @@ export default component$<Props>(({ showSearch }) => {
         class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20"
         ref={modalRef}
       >
-        <div class="mx-auto max-w-2xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-lg bg-white dark:bg-gray-900 shadow-2xl ring-1 ring-black ring-opacity-5 dark:ring-gray-800 backdrop-blur backdrop-filter transition-all">
+        <div class="mx-auto max-w-2xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-lg bg-white dark:bg-gray-900 shadow-2xl ring-1 ring-black ring-opacity-5 dark:ring-white/10 backdrop-blur backdrop-filter transition-all">
           <div class="relative">
             <svg
               class="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-900 dark:text-gray-100"
@@ -201,11 +201,11 @@ export default component$<Props>(({ showSearch }) => {
                     filteredFish.map((fish, i) => (
                       <a href={"/fish/type/" + fish.fish_id + "/"} key={i}>
                         <li
-                          class="group flex cursor-default select-none items-center
+                          class="group flex cursor-pointer select-none items-center
                                  rounded-md px-3 py-2 hover:bg-gray-900 hover:bg-opacity-5
                                  hover:text-gray-900 focus:ring-1 focus:bg-gray-900 focus:bg-opacity-5 
                                  focus:text-gray-900 focus:ring-offset-teal-500 focus:ring-gray-50
-                                 focus:ring-offset-2 focus:outline-none dark:hover:bg-gray-900 dark:hover:text-gray-100"
+                                 focus:ring-offset-2 focus:outline-none dark:hover:bg-white/10 dark:hover:text-gray-100"
                           tabIndex={0}
                         >
                           <img
@@ -235,11 +235,11 @@ export default component$<Props>(({ showSearch }) => {
                   {filteredRecipes.map((recipe, i) => (
                     <a href={"/recipe/" + recipe.recipe_id + "/"} key={i}>
                       <li
-                        class="group flex cursor-default select-none items-center rounded-md px-3 py-2 
+                        class="group flex cursor-pointer select-none items-center rounded-md px-3 py-2 
                                 hover:bg-gray-900 hover:bg-opacity-5 hover:text-gray-900 
                                 focus:ring-1 focus:bg-gray-900 focus:bg-opacity-5 
                                 focus:text-gray-900 focus:ring-offset-teal-500 focus:ring-gray-50
-                                focus:ring-offset-2 focus:outline-none dark:hover:bg-gray-900 dark:hover:text-gray-100"
+                                focus:ring-offset-2 focus:outline-none dark:hover:bg-white/10 dark:hover:text-gray-100"
                         tabIndex={0}
                       >
                         <svg
@@ -273,11 +273,11 @@ export default component$<Props>(({ showSearch }) => {
                   {filteredLakes.map((lake, i) => (
                     <a href={`/?lake=${lake.name}`} key={i}>
                       <li
-                        class="group flex cursor-default select-none items-center rounded-md px-3 py-2 
+                        class="group flex cursor-pointer select-none items-center rounded-md px-3 py-2 
                                 hover:bg-gray-900 hover:bg-opacity-5 hover:text-gray-900 
                                 focus:ring-1 focus:bg-gray-900 focus:bg-opacity-5 
                                 focus:text-gray-900 focus:ring-offset-teal-500 focus:ring-gray-50
-                                focus:ring-offset-2 focus:outline-none dark:hover:bg-gray-900 dark:hover:text-gray-100"
+                                focus:ring-offset-2 focus:outline-none dark:hover:bg-white/10 dark:hover:text-gray-100"
                         tabIndex={0}
                       >
                         <span dangerouslySetInnerHTML={lake.svg} />
@@ -307,7 +307,7 @@ export default component$<Props>(({ showSearch }) => {
                     <path d="m52.375 50.289-9.3711-9.4297 9.3633-9.3359-2.0391-2.043-9.3633 9.332-9.3789-9.4258-2.0469 2.0352 9.375 9.4297-9.3672 9.3359 2.0352 2.043 9.3711-9.332 9.375 9.4258z" />
                   </g>
                 </svg>
-                <p class="mt-4 text-sm text-gray-900 dark:text-gray-100">
+                <p class="mt-4 text-sm text-gray-900 dark:text-gray-300">
                   We couldn't find anything with that term. Please try again.
                 </p>
               </div>

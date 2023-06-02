@@ -17,7 +17,7 @@ export default component$(() => {
             return (
               <a
                 href={setting.link}
-                class="border-teal-500 bg-teal-50 text-teal-700 hover:bg-teal-50 hover:text-teal-700 group flex items-center border-l-4 px-3 py-2 text-sm font-medium"
+                class="border-teal-500 bg-teal-50 text-teal-700 dark:bg-white/10 dark:text-teal-500 flex items-center border-l-4 px-3 py-2 text-sm font-medium cursor-default"
                 aria-current="page"
                 key={i}
               >
@@ -29,7 +29,7 @@ export default component$(() => {
           return (
             <a
               href={setting.link}
-              class="border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900 group flex items-center border-l-4 px-3 py-2 text-sm font-medium"
+              class="border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-gray-100 group flex items-center border-l-4 px-3 py-2 text-sm font-medium"
               aria-current="page"
               key={i}
             >
