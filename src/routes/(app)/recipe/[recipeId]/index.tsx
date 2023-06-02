@@ -21,7 +21,7 @@ export default component$(() => {
   return (
     <div class="min-h-full">
       <main class="pb-10">
-        <div class="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8 mb-6">
+        <div class="hidden sm:flex mx-auto max-w-3xl px-4 sm:px-6 md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8 mb-6">
           <a href="/recipe" class="hover:text-teal-500 hover:cursor-pointer">
             ‹ Back to recipes
           </a>
@@ -33,7 +33,7 @@ export default component$(() => {
                 <img
                   src={`/images/dish${randomNumber}.webp`}
                   alt={"Stock fish dish image"}
-                  class="h-20 sm:h-56 w-[90vw] object-cover rounded-md"
+                  class="h-[300px] sm:h-56 w-[90vw] object-cover rounded-md"
                 />
               </div>
             </div>
@@ -42,7 +42,9 @@ export default component$(() => {
 
         <div class="mx-auto max-w-3xl px-4 sm:px-6 sm:flex sm:items-center sm:justify-between sm:space-x-5 lg:max-w-7xl lg:px-8">
           <div>
-            <h1 class="text-4xl font-bold">{recipeData.value.name}</h1>
+            <h1 class="text-4xl font-bold dark:text-gray-100">
+              {recipeData.value.name}
+            </h1>
           </div>
           <div class="mt-6 sm:mt-0 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse">
             <button
@@ -66,11 +68,11 @@ export default component$(() => {
         </div>
         <div class="mx-auto mt-8 grid max-w-3xl grid-cols-1 sm:grid-cols-3 gap-6 sm:px-6 lg:max-w-full">
           <div class="space-y-6 w-full sm:col-span-1">
-            <div class="bg-white shadow sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-900/80 shadow sm:rounded-lg dark:ring-1 dark:ring-white/10">
               <div class="px-4 py-5 sm:px-6">
                 <h2
                   id="ingredients-list"
-                  class="text-lg font-medium leading-6 text-gray-900"
+                  class="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100"
                 >
                   Ingredients
                 </h2>
@@ -80,7 +82,9 @@ export default component$(() => {
                   <div class="space-y-5" key={i}>
                     <div class="relative flex items-start">
                       <div class="ml-1 text-sm leading-6">
-                        <p class="font-light text-gray-900">{ingredient}</p>
+                        <p class="font-light text-gray-900 dark:text-gray-300">
+                          {ingredient}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -89,11 +93,11 @@ export default component$(() => {
             </div>
           </div>
           <div class="space-y-6 w-full sm:col-span-2">
-            <div class="bg-white shadow sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-900/80 shadow sm:rounded-lg dark:ring-1 dark:ring-white/10">
               <div class="px-4 py-5 sm:px-6">
                 <h2
                   id="ingredients-list"
-                  class="text-lg font-medium leading-6 text-gray-900"
+                  class="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100"
                 >
                   Preparation
                 </h2>
@@ -109,7 +113,9 @@ export default component$(() => {
                   {recipeData.value.steps.map((step, i) => (
                     <div class="space-y-5 mb-5" key={i}>
                       <div class="font-light leading-6">
-                        <p class="text-sm text-gray-900">{step}</p>
+                        <p class="text-sm text-gray-900 dark:text-gray-300">
+                          {step}
+                        </p>
                       </div>
                     </div>
                   ))}

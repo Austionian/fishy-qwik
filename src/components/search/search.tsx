@@ -148,10 +148,10 @@ export default component$<Props>(({ showSearch }) => {
         class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20"
         ref={modalRef}
       >
-        <div class="mx-auto max-w-2xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-lg bg-white shadow-2xl ring-1 ring-black ring-opacity-5 backdrop-blur backdrop-filter transition-all">
+        <div class="mx-auto max-w-2xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-lg bg-white dark:bg-gray-900 shadow-2xl ring-1 ring-black ring-opacity-5 dark:ring-white/10 backdrop-blur backdrop-filter transition-all">
           <div class="relative">
             <svg
-              class="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-900"
+              class="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-900 dark:text-gray-100"
               viewBox="0 0 20 20"
               fill="currentColor"
               aria-hidden="true"
@@ -166,7 +166,7 @@ export default component$<Props>(({ showSearch }) => {
               ref={inputRef}
               tabIndex={0}
               type="text"
-              class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-900 focus:ring-0 sm:text-sm"
+              class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-900 dark:text-gray-100 focus:ring-0 sm:text-sm"
               placeholder="Search..."
               autoFocus
               bind:value={search}
@@ -179,13 +179,13 @@ export default component$<Props>(({ showSearch }) => {
           >
             {fishResults.value.length === 0 && (
               <li class="p-2">
-                <h2 class="mb-2 mt-4 px-3 text-sm font-semibold text-gray-900">
+                <h2 class="mb-2 mt-4 px-3 text-sm font-semibold text-gray-900 dark:text-gray-100">
                   Fish
                 </h2>
                 <ul>
                   {Array.from(Array(10).keys()).map((_, i) => (
                     <li class="p-2" key={`${i}-skele`}>
-                      <div class="h-6 bg-gray-50" />
+                      <div class="h-6 bg-gray-50 dark:bg-gray-900/50" />
                     </li>
                   ))}
                 </ul>
@@ -193,19 +193,19 @@ export default component$<Props>(({ showSearch }) => {
             )}
             {filteredFish.length > 0 && (
               <li class="p-2">
-                <h2 class="mb-2 mt-4 px-3 text-sm font-semibold text-gray-900">
+                <h2 class="mb-2 mt-4 px-3 text-sm font-semibold text-gray-900 dark:text-gray-100">
                   Fish
                 </h2>
-                <ul class="text-sm text-gray-700">
+                <ul class="text-sm text-gray-700 dark:text-gray-300">
                   {fishResults.value?.length > 0 &&
                     filteredFish.map((fish, i) => (
                       <a href={"/fish/type/" + fish.fish_id + "/"} key={i}>
                         <li
-                          class="group flex cursor-default select-none items-center
+                          class="group flex cursor-pointer select-none items-center
                                  rounded-md px-3 py-2 hover:bg-gray-900 hover:bg-opacity-5
                                  hover:text-gray-900 focus:ring-1 focus:bg-gray-900 focus:bg-opacity-5 
                                  focus:text-gray-900 focus:ring-offset-teal-500 focus:ring-gray-50
-                                 focus:ring-offset-2 focus:outline-none"
+                                 focus:ring-offset-2 focus:outline-none dark:hover:bg-white/10 dark:hover:text-gray-100"
                           tabIndex={0}
                         >
                           <img
@@ -228,18 +228,18 @@ export default component$<Props>(({ showSearch }) => {
             )}
             {filteredRecipes.length > 0 && (
               <li class="p-2">
-                <h2 class="mb-2 mt-4 px-3 text-sm font-semibold text-gray-900">
+                <h2 class="mb-2 mt-4 px-3 text-sm font-semibold text-gray-900 dark:text-gray-100">
                   Recipes
                 </h2>
-                <ul class="text-sm text-gray-700">
+                <ul class="text-sm text-gray-700 dark:text-gray-300">
                   {filteredRecipes.map((recipe, i) => (
                     <a href={"/recipe/" + recipe.recipe_id + "/"} key={i}>
                       <li
-                        class="group flex cursor-default select-none items-center rounded-md px-3 py-2 
+                        class="group flex cursor-pointer select-none items-center rounded-md px-3 py-2 
                                 hover:bg-gray-900 hover:bg-opacity-5 hover:text-gray-900 
                                 focus:ring-1 focus:bg-gray-900 focus:bg-opacity-5 
                                 focus:text-gray-900 focus:ring-offset-teal-500 focus:ring-gray-50
-                                focus:ring-offset-2 focus:outline-none"
+                                focus:ring-offset-2 focus:outline-none dark:hover:bg-white/10 dark:hover:text-gray-100"
                         tabIndex={0}
                       >
                         <svg
@@ -248,7 +248,7 @@ export default component$<Props>(({ showSearch }) => {
                           version="1.1"
                           viewBox="0 0 100 100"
                           xmlns="http://www.w3.org/2000/svg"
-                          class="h-6 w-6 flex-none text-gray-900 text-opacity-40"
+                          class="h-6 w-6 flex-none text-gray-900 text-opacity-40 dark:fill-gray-100"
                         >
                           <g>
                             <path d="m38.301 90.5c-1.6992 0-3-1.3008-3-3v-47.602c-4.3984-1.8984-7.3984-8-7.3984-14.801 0-8.6016 4.6992-15.5 10.398-15.5s10.398 7 10.398 15.5c0 6.8984-3 12.898-7.3984 14.801v47.602c0 1.6016-1.4023 3-3 3zm0-80c-5.1992 0-9.3984 6.5-9.3984 14.5 0 6.6016 2.8984 12.398 7.1016 14l0.30078 0.10156v48.199c0 1.1016 0.89844 2 2 2 1.1016 0 2-0.89844 2-2l-0.003907-48.102 0.30078-0.10156c4.1992-1.6016 7.1016-7.3984 7.1016-14-0.003906-8.0977-4.2031-14.598-9.4023-14.598z" />
@@ -266,18 +266,18 @@ export default component$<Props>(({ showSearch }) => {
             )}
             {filteredLakes.length > 0 && (
               <li class="p-2">
-                <h2 class="mb-2 mt-4 px-3 text-sm font-semibold text-gray-900">
+                <h2 class="mb-2 mt-4 px-3 text-sm font-semibold text-gray-900 dark:text-gray-100">
                   Lakes
                 </h2>
-                <ul class="text-sm text-gray-700">
+                <ul class="text-sm text-gray-700 dark:text-gray-300">
                   {filteredLakes.map((lake, i) => (
                     <a href={`/?lake=${lake.name}`} key={i}>
                       <li
-                        class="group flex cursor-default select-none items-center rounded-md px-3 py-2 
+                        class="group flex cursor-pointer select-none items-center rounded-md px-3 py-2 
                                 hover:bg-gray-900 hover:bg-opacity-5 hover:text-gray-900 
                                 focus:ring-1 focus:bg-gray-900 focus:bg-opacity-5 
                                 focus:text-gray-900 focus:ring-offset-teal-500 focus:ring-gray-50
-                                focus:ring-offset-2 focus:outline-none"
+                                focus:ring-offset-2 focus:outline-none dark:hover:bg-white/10 dark:hover:text-gray-100"
                         tabIndex={0}
                       >
                         <span dangerouslySetInnerHTML={lake.svg} />
@@ -300,23 +300,23 @@ export default component$<Props>(({ showSearch }) => {
                   version="1.1"
                   viewBox="0 0 100 100"
                   xmlns="http://www.w3.org/2000/svg"
-                  class="mx-auto h-6 w-6 fill-gray-500"
+                  class="mx-auto h-6 w-6 fill-gray-500 dark:text-gray-100"
                 >
                   <g>
                     <path d="m68.961 63.422c5.1289-6.3594 7.918-14.219 7.918-22.48 0-19.82-16.121-35.941-35.938-35.941-19.82 0-35.941 16.121-35.941 35.941 0 19.809 16.121 35.93 35.941 35.93 8.3906 0 16.336-2.8594 22.746-8.1211l25.711 25.949 5.3242-5.2695zm-28.02 9.7031c-17.754 0-32.191-14.438-32.191-32.188 0-17.754 14.438-32.191 32.191-32.191 17.746 0 32.191 14.438 32.191 32.191 0 17.75-14.445 32.188-32.191 32.188z" />
                     <path d="m52.375 50.289-9.3711-9.4297 9.3633-9.3359-2.0391-2.043-9.3633 9.332-9.3789-9.4258-2.0469 2.0352 9.375 9.4297-9.3672 9.3359 2.0352 2.043 9.3711-9.332 9.375 9.4258z" />
                   </g>
                 </svg>
-                <p class="mt-4 text-sm text-gray-900">
+                <p class="mt-4 text-sm text-gray-900 dark:text-gray-300">
                   We couldn't find anything with that term. Please try again.
                 </p>
               </div>
             )}
 
-          <ul class="max-h-96 overflow-y-auto p-2 text-sm text-gray-700">
+          <ul class="max-h-96 overflow-y-auto p-2 text-sm text-gray-700 dark:text-gray-300">
             <li class="group flex cursor-default select-none items-center rounded-md px-3 py-2">
               <svg
-                class="h-6 w-6 flex-none text-gray-900 text-opacity-40"
+                class="h-6 w-6 flex-none text-gray-900 text-opacity-40 dark:text-gray-100"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

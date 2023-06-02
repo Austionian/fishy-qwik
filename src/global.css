@@ -6,6 +6,11 @@
  *
  */
 @tailwind base;
+@layer base {
+ :root {
+  @apply dark:bg-black dark:text-white;
+ }
+}
 @tailwind components;
 @tailwind utilities;
 

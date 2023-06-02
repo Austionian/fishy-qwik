@@ -86,18 +86,18 @@ export default component$(
 
         <div ref={modalRef} class="fixed inset-0 z-10 overflow-y-auto">
           <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+            <div class="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-900 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 dark:ring-1 dark:ring-gray-800">
               <div>
                 <div class="ml-auto pl-3 text-right">
                   <div class="-mx-1.5 -my-1.5">
                     <button
                       type="button"
-                      class="inline-flex rounded-md p-1.5 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-gray-50"
+                      class="inline-flex rounded-md p-1.5 text-gray-500 dark:text-gray-700 group group-hover:bg-gray-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-gray-50"
                       onClick$={() => (showUserInputModal.value = false)}
                     >
                       <span class="sr-only">Dismiss</span>
                       <svg
-                        class="h-5 w-5"
+                        class="h-5 w-5 dark:group-hover:fill-gray-100"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                         aria-hidden="true"
@@ -107,7 +107,7 @@ export default component$(
                     </button>
                   </div>
                 </div>
-                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-teal-100">
+                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-teal-100 dark:bg-teal-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="100pt"
@@ -120,13 +120,13 @@ export default component$(
                 </div>
                 <div class="mt-3 text-center sm:mt-5">
                   <h3
-                    class="text-base font-semibold leading-6 text-gray-900"
+                    class="text-base font-semibold leading-6 text-gray-900 dark:text-gray-100"
                     id="modal-title"
                   >
                     Your Information
                   </h3>
                   <div class="mt-2">
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
                       Enter your information to see a personalized serving
                       recommendation for the fish in our app.
                     </p>
@@ -145,7 +145,7 @@ export default component$(
                 <div class="my-2">
                   <label
                     for="weight"
-                    class="block text-sm font-medium leading-6 text-gray-900"
+                    class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
                   >
                     Weight
                   </label>
@@ -158,7 +158,7 @@ export default component$(
                       onChange$={(e) =>
                         (userDetails.data.weight = e.target.value)
                       }
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                       placeholder="200"
                       aria-describedby="weight-currency"
                       autoFocus
@@ -178,7 +178,7 @@ export default component$(
                 <div class="my-2">
                   <label
                     for="age"
-                    class="block text-sm font-medium leading-6 text-gray-900"
+                    class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
                   >
                     Age
                   </label>
@@ -189,7 +189,7 @@ export default component$(
                       id="age"
                       value={userDetails.data.age}
                       onChange$={(e) => (userDetails.data.age = e.target.value)}
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                       placeholder="44"
                     />
                     {formAction.value?.failed && (
@@ -200,14 +200,17 @@ export default component$(
                   </div>
                 </div>
                 <div class="my-2">
-                  <label for="sex" class="text-sm font-semibold text-gray-900">
+                  <label
+                    for="sex"
+                    class="text-sm font-semibold text-gray-900 dark:text-gray-100"
+                  >
                     Sex
                   </label>
                   <div class="mt-2">
                     <select
                       id="sex"
                       name="sex"
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                       value={userDetails.data.sex || "Male"}
                       onChange$={(e) => {
                         isMale.value = e.target.value === "Male";
@@ -223,7 +226,7 @@ export default component$(
                   <div class="my-2">
                     <label
                       for="plan_to_get_pregnant"
-                      class="text-sm font-semibold text-gray-900"
+                      class="text-sm font-semibold text-gray-900 dark:text-gray-100"
                     >
                       Plan to get pregnant?
                     </label>
@@ -231,7 +234,7 @@ export default component$(
                       <select
                         id="plan_to_get_pregnant"
                         name="plan_to_get_pregnant"
-                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                         onChange$={(e) =>
                           (userDetails.data.plan_to_get_pregnant =
                             e.target.value)
@@ -256,10 +259,10 @@ export default component$(
                   </div>
                 )}
                 <div class="my-2">
-                  <label class="text-sm font-semibold text-gray-900">
+                  <label class="text-sm font-semibold text-gray-900 dark:text-gray-100">
                     Portion Size
                   </label>
-                  <p class="text-sm text-gray-500">
+                  <p class="text-sm text-gray-500 dark:text-gray-400">
                     What is your perfered portion size?
                   </p>
                   {formAction.value?.failed && (
@@ -285,7 +288,7 @@ export default component$(
                           />
                           <label
                             for={portion.label}
-                            class="ml-3 block text-sm font-medium leading-6 text-gray-900"
+                            class="ml-3 block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
                           >
                             {portion.label}
                           </label>
@@ -304,7 +307,7 @@ export default component$(
                   </button>
                   <button
                     type="button"
-                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0 dark:bg-white/5 dark:text-gray-100 dark:hover:bg-white/10 dark:hover:text-white dark:ring-white/10"
                     onClick$={() => (showUserInputModal.value = false)}
                   >
                     Cancel
