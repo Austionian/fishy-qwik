@@ -191,7 +191,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                           showSortMenu.value = !showSortMenu.value;
                         }}
                       >
-                        {sort.replace(/\_/gi, " ")}
+                        {sort.replace(/_/gi, " ")}
                       </a>
                     ))}
                   </div>
