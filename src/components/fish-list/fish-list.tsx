@@ -128,7 +128,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                 <button
                   type="button"
                   class="inline-flex w-full justify-center gap-x-1.5 rounded-md
-                         bg-white dark:bg-gray-900 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-white
+                         bg-white dark:bg-gray-900 px-3 py-2 text-sm font-semibold text-gray-900
                          shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 hover:bg-gray-50 dark:hover:bg-gray-700
                          focus:ring-offset-teal-500 focus:ring-gray-50 focus:ring-offset-2
                          focus:outline-none"
@@ -180,7 +180,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                         class={
                           sortBy.value === sort
                             ? "text-gray-900 block px-4 py-2 text-sm bg-gray-100 dark:text-gray-100 dark:bg-white/10"
-                            : "text-gray-700 hover:bg-gray-50 hover:text-white/10 block px-4 py-2 text-sm cursor-pointer dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-gray-200"
+                            : "text-gray-700 hover:bg-gray-50 hover:text-gray-800 block px-4 py-2 text-sm cursor-pointer dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-gray-200"
                         }
                         key={i}
                         role="menuitem"

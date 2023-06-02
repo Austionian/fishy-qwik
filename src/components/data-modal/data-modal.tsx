@@ -202,7 +202,7 @@ export default component$(
                 </div>
 
                 <div class="h-[200px] sm:h-[239px] flex justify-center">
-                  <canvas id="chart" ref={chart} class="mt-2 text-gray-100" />
+                  <canvas id="chart" ref={chart} class="mt-2" />
                 </div>
               </div>
             </div>

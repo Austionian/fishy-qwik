@@ -175,7 +175,7 @@ export default component$<Props>(({ showSearch }) => {
 
           <ul
             tabIndex={-1}
-            class="max-h-96 scroll-py-2 divide-y divide-gray-500  divide-opacity-10 overflow-y-auto"
+            class="max-h-96 scroll-py-2 divide-y divide-gray-500 divide-opacity-10 overflow-y-auto"
           >
             {fishResults.value.length === 0 && (
               <li class="p-2">

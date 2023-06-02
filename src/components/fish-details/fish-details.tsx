@@ -19,9 +19,9 @@ export default component$(({ fish }: Props) => (
             <dt class="text-sm font-medium text-gray-500 dark:text-gray-100">
               {data.title}
             </dt>
-            <dd class="mt-1 text-sm text-gray-900 dark:text-white">
+            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">
               {fish[key].toFixed(3)}
-              <span class="text-xs text-gray-700 dark:text-gray-200">
+              <span class="text-xs text-gray-700 dark:text-gray-300">
                 {data.postfix}
               </span>
             </dd>
