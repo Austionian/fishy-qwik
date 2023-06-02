@@ -282,7 +282,7 @@ export default component$(({ user }: Props) => {
                     class={
                       location.url.pathname === link.pathname
                         ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-white/10 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-teal-500 cursor-default"
-                        : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                        : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
                     }
                   >
                     {link.title}
@@ -296,7 +296,7 @@ export default component$(({ user }: Props) => {
                     class={
                       location.url.pathname === link.pathname
                         ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-white/10 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-teal-500 cursor-default"
-                        : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                        : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
                     }
                   >
                     {link.title}
@@ -340,7 +340,7 @@ export default component$(({ user }: Props) => {
                   location.url.pathname === "/settings/password/" ||
                   location.url.pathname === "/settings/account/"
                     ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-white/10 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-teal-500 cursor-default"
-                    : "w-full text-left block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                    : "w-full text-left block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
                 }
               >
                 Your Profile
@@ -349,7 +349,7 @@ export default component$(({ user }: Props) => {
               <Form action={signOutAction}>
                 <button
                   type="submit"
-                  class="w-full text-left block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                  class="w-full text-left block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
                 >
                   Sign out
                 </button>
