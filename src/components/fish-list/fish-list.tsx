@@ -201,7 +201,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
           </div>
         </div>
       </div>
-      <div class="divide-y divide-gray-200 rounded-lg bg-gray-200 dark:bg-gray-900 shadow grid sm:gap-px sm:divide-y-0">
+      <div class="divide-y divide-gray-200 rounded-lg bg-gray-200 dark:bg-gray-800 shadow grid sm:gap-px sm:divide-y-0">
         {fishData.data.map((fish, i) => {
           const link =
             filterBy.value === "All"
@@ -234,12 +234,12 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                     class="cursor-pointer flex-grow"
                     onClick$={() => (window.location.href = link)}
                   >
-                    <p class="font-extralight text-xl group-hover:text-teal-500 dark:text-white">
+                    <p class="font-extralight text-xl group-hover:text-teal-500 dark:text-gray-200">
                       {fish.anishinaabe_name
                         ? fish.anishinaabe_name
                         : fish.name}
                     </p>
-                    <span class="text-sm group-hover:text-teal-500 dark:text-white">
+                    <span class="text-sm group-hover:text-teal-500 dark:text-gray-200">
                       {fish.anishinaabe_name ? ` ${fish.name}` : null}
                     </span>
                   </div>
@@ -264,7 +264,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                 </div>
                 <div
                   onClick$={() => (window.location.href = link)}
-                  class="hidden max-w-full sm:block lg:max-w-3xl text-sm font-light text-gray-700 dark:text-gray-100 mt-4 lg:mt-2 cursor-pointer"
+                  class="hidden max-w-full sm:block lg:max-w-3xl text-sm font-light text-gray-700 dark:text-gray-300 mt-4 lg:mt-2 cursor-pointer"
                 >
                   {fish.about}
                 </div>

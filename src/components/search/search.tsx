@@ -148,10 +148,10 @@ export default component$<Props>(({ showSearch }) => {
         class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20"
         ref={modalRef}
       >
-        <div class="mx-auto max-w-2xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-lg bg-white dark:bg-black/95 shadow-2xl ring-1 ring-black ring-opacity-5 backdrop-blur backdrop-filter transition-all">
+        <div class="mx-auto max-w-2xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-lg bg-white dark:bg-black/80 shadow-2xl ring-1 ring-black ring-opacity-5 backdrop-blur backdrop-filter transition-all">
           <div class="relative">
             <svg
-              class="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-900"
+              class="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-900 dark:text-gray-100"
               viewBox="0 0 20 20"
               fill="currentColor"
               aria-hidden="true"
@@ -166,7 +166,7 @@ export default component$<Props>(({ showSearch }) => {
               ref={inputRef}
               tabIndex={0}
               type="text"
-              class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-900 focus:ring-0 sm:text-sm"
+              class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-900 focus:ring-0 sm:text-sm dark:text-white"
               placeholder="Search..."
               autoFocus
               bind:value={search}
@@ -193,7 +193,7 @@ export default component$<Props>(({ showSearch }) => {
             )}
             {filteredFish.length > 0 && (
               <li class="p-2">
-                <h2 class="mb-2 mt-4 px-3 text-sm font-semibold text-gray-900">
+                <h2 class="mb-2 mt-4 px-3 text-sm font-semibold text-gray-900 dark:text-gray-100">
                   Fish
                 </h2>
                 <ul class="text-sm text-gray-700">

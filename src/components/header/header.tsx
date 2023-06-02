@@ -59,7 +59,7 @@ export default component$(({ user }: Props) => {
 
   return (
     <nav
-      class="bg-white dark:bg-gray-900/80 shadow dark:border-b dark:border-gray-800"
+      class="bg-white dark:bg-gray-900/90 shadow dark:border-b dark:border-gray-800"
       document:onKeyDown$={(e) => {
         if (e.which === 27) {
           showSearch.value = false;
