@@ -59,7 +59,7 @@ export default component$(({ user }: Props) => {
 
   return (
     <nav
-      class="bg-white shadow"
+      class="bg-white dark:bg-gray-900/80 shadow dark:border-b dark:border-gray-800"
       document:onKeyDown$={(e) => {
         if (e.which === 27) {
           showSearch.value = false;
@@ -75,7 +75,7 @@ export default component$(({ user }: Props) => {
           <div class="flex px-2 lg:px-0">
             <div class="flex flex-shrink-0 items-center" tabIndex={0}>
               <a href="/">
-                <h1 class="font-bold text-gray-800 text-3xl hover:text-teal-600">
+                <h1 class="font-bold text-gray-800 dark:text-white text-3xl hover:text-teal-600">
                   Gigiigoo
                 </h1>
               </a>
@@ -90,8 +90,8 @@ export default component$(({ user }: Props) => {
                         key={i}
                         class={
                           location.url.pathname === link.pathname
-                            ? "inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900"
-                            : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                            ? "inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900 dark:text-teal-500"
+                            : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-200 hover:border-gray-300 hover:text-gray-700"
                         }
                       >
                         {link.title}
@@ -104,8 +104,8 @@ export default component$(({ user }: Props) => {
                         key={i}
                         class={
                           location.url.pathname === link.pathname
-                            ? "inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900"
-                            : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                            ? "inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900 dark:text-teal-500"
+                            : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100"
                         }
                       >
                         {link.title}
@@ -125,11 +125,12 @@ export default component$(({ user }: Props) => {
                 type="button"
                 aria-label="search"
                 class="block w-full rounded-md border-gray-100 py-5 sm:py-3.5
-                    border-0 bg-white text-gray-500 ring-1 ring-inset ring-gray-300
+                    border-0 bg-white dark:bg-gray-700 dark:text-gray-100 text-gray-500 ring-1 ring-inset ring-gray-300
                     pl-10 pr-3 focus:ring-2 focus:ring-gray-50 focus:ring-offset-2 
                     focus:ring-offset-teal-500 sm:text-sm sm:leading-3 relative 
                     focus-within:text-gray-600 hover:ring-gray-400 hover:bg-gray-50
-                    hover:text-gray-600 focus:outline-none"
+                    hover:text-gray-600 focus:outline-none dark:ring-gray-800 dark:hover:bg-gray-600 dark:hover:ring-gray-900
+                    dark:hover:text-gray-50"
                 onClick$={() => (showSearch.value = !showSearch.value)}
               >
                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -159,7 +160,7 @@ export default component$(({ user }: Props) => {
           <div class="flex lg:hidden items-center">
             <button
               type="button"
-              class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500"
+              class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500"
               aria-controls="mobile-menu"
               aria-expanded="false"
               onClick$={() => (mobileMenu.value = !mobileMenu.value)}
@@ -280,7 +281,7 @@ export default component$(({ user }: Props) => {
                     key={i}
                     class={
                       location.url.pathname === link.pathname
-                        ? "block border-l-4 border-teal-500 bg-teal-50 py-2 pl-3 pr-4 text-base font-medium text-teal-700 cursor-default"
+                        ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-gray-700 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-white cursor-default"
                         : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
                     }
                   >
@@ -294,7 +295,7 @@ export default component$(({ user }: Props) => {
                     key={i}
                     class={
                       location.url.pathname === link.pathname
-                        ? "block border-l-4 border-teal-500 bg-teal-50 py-2 pl-3 pr-4 text-base font-medium text-teal-700 cursor-default"
+                        ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-gray-700 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-white cursor-default"
                         : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
                     }
                   >

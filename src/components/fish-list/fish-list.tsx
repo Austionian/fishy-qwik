@@ -128,8 +128,8 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                 <button
                   type="button"
                   class="inline-flex w-full justify-center gap-x-1.5 rounded-md
-                         bg-white px-3 py-2 text-sm font-semibold text-gray-900
-                         shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50
+                         bg-white dark:bg-gray-900/80 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-white
+                         shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/80
                          focus:ring-offset-teal-500 focus:ring-gray-50 focus:ring-offset-2
                          focus:outline-none"
                   id="sort-menu-button"
@@ -139,7 +139,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                   onClick$={() => (showSortMenu.value = !showSortMenu.value)}
                 >
                   <svg
-                    class="-ml-0.5 h-5 w-5 text-gray-400"
+                    class="-ml-0.5 h-5 w-5 text-gray-400 dark:text-gray-200"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -150,7 +150,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                       clip-rule="evenodd"
                     />
                   </svg>
-                  <span class="hidden sm:block">Sort</span>
+                  <span class="hidden sm:block dark:text-gray-200">Sort</span>
                   <svg
                     class="-mr-1 h-5 w-5 text-gray-400"
                     viewBox="0 0 20 20"
@@ -201,7 +201,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
           </div>
         </div>
       </div>
-      <div class="divide-y divide-gray-200 rounded-lg bg-gray-200 shadow grid sm:gap-px sm:divide-y-0">
+      <div class="divide-y divide-gray-200 rounded-lg bg-gray-200 dark:bg-gray-900 shadow grid sm:gap-px sm:divide-y-0">
         {fishData.data.map((fish, i) => {
           const link =
             filterBy.value === "All"
@@ -215,7 +215,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                 i === fishData.data.length - 1
                   ? "rounded-bl-lg rounded-br-lg"
                   : "",
-                "block lg:flex lg:justify-between group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500 fishCard"
+                "block lg:flex lg:justify-between group relative bg-white dark:bg-gray-900/80 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500 fishCard"
               )}
             >
               <div
@@ -234,12 +234,12 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                     class="cursor-pointer flex-grow"
                     onClick$={() => (window.location.href = link)}
                   >
-                    <p class="font-extralight text-xl group-hover:text-teal-500">
+                    <p class="font-extralight text-xl group-hover:text-teal-500 dark:text-white">
                       {fish.anishinaabe_name
                         ? fish.anishinaabe_name
                         : fish.name}
                     </p>
-                    <span class="text-sm group-hover:text-teal-500">
+                    <span class="text-sm group-hover:text-teal-500 dark:text-white">
                       {fish.anishinaabe_name ? ` ${fish.name}` : null}
                     </span>
                   </div>
@@ -264,7 +264,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                 </div>
                 <div
                   onClick$={() => (window.location.href = link)}
-                  class="hidden max-w-full sm:block lg:max-w-3xl text-sm font-light text-gray-700 mt-4 lg:mt-2 cursor-pointer"
+                  class="hidden max-w-full sm:block lg:max-w-3xl text-sm font-light text-gray-700 dark:text-gray-100 mt-4 lg:mt-2 cursor-pointer"
                 >
                   {fish.about}
                 </div>

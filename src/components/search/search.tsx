@@ -148,7 +148,7 @@ export default component$<Props>(({ showSearch }) => {
         class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20"
         ref={modalRef}
       >
-        <div class="mx-auto max-w-2xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-lg bg-white shadow-2xl ring-1 ring-black ring-opacity-5 backdrop-blur backdrop-filter transition-all">
+        <div class="mx-auto max-w-2xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-lg bg-white dark:bg-black/95 shadow-2xl ring-1 ring-black ring-opacity-5 backdrop-blur backdrop-filter transition-all">
           <div class="relative">
             <svg
               class="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-900"

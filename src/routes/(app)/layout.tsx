@@ -41,7 +41,7 @@ export const useUserObject = routeLoader$<MetaUserDetails>(({ cookie }) => {
 export default component$(() => {
   const user = useUserObject();
   return (
-    <div class="min-h-screen bg-gradient-to-b from-teal-50 to-white">
+    <div class="min-h-screen bg-gradient-to-b from-teal-50 to-white dark:bg-black dark:from-gray-900/80 dark:to-gray-900/80">
       <Header user={user.value} />
 
       <main class="pt-10 min-h-full">

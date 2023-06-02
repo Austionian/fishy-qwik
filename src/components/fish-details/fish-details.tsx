@@ -16,10 +16,14 @@ export default component$(({ fish }: Props) => (
       return (
         <div class="sm:col-span-1" key={i}>
           <dl>
-            <dt class="text-sm font-medium text-gray-500">{data.title}</dt>
-            <dd class="mt-1 text-sm text-gray-900">
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-100">
+              {data.title}
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 dark:text-white">
               {fish[key].toFixed(3)}
-              <span class="text-xs text-gray-700">{data.postfix}</span>
+              <span class="text-xs text-gray-700 dark:text-gray-200">
+                {data.postfix}
+              </span>
             </dd>
           </dl>
         </div>
