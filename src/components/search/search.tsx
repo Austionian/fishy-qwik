@@ -185,7 +185,7 @@ export default component$<Props>(({ showSearch }) => {
                 <ul>
                   {Array.from(Array(10).keys()).map((_, i) => (
                     <li class="p-2" key={`${i}-skele`}>
-                      <div class="h-6 bg-gray-50 dark:bg-gray-900/50" />
+                      <div class="h-6 bg-gray-50 dark:bg-white/10" />
                     </li>
                   ))}
                 </ul>
