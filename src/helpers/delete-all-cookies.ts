@@ -14,6 +14,8 @@ const deleteAllCookies = (cookie: Cookie) => {
   cookie.delete("sex", { path: "/" });
   cookie.delete("weight", { path: "/" });
   cookie.delete("image", { path: "/" });
+  cookie.delete("firstName", { path: "/" });
+  cookie.delete("lastName", { path: "/" });
 };
 
 export default deleteAllCookies;

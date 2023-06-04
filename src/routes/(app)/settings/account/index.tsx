@@ -4,7 +4,14 @@ import {
   useSignal,
   $,
 } from "@builder.io/qwik";
-import { routeLoader$, server$ } from "@builder.io/qwik-city";
+import {
+  routeLoader$,
+  routeAction$,
+  server$,
+  zod$,
+  z,
+  Form,
+} from "@builder.io/qwik-city";
 import { v4 as uuidv4 } from "uuid";
 import { getCookie, getFetchDetails, getUserDetails } from "~/helpers";
 import DeleteModal from "~/components/delete-modal";
@@ -15,6 +22,67 @@ import SaveButton from "~/components/save-button/save-button";
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
   return getUserDetails(cookie);
 });
+
+export const useUpdateAccount = routeAction$(
+  async (accountForm, { cookie, env }) => {
+    const TWO_WEEKS_MS = 12096e5;
+    const TWO_WEEKS_FROM_TODAY_DATE = new Date(Date.now() + TWO_WEEKS_MS);
+    const user_id = cookie.get("user_id")?.value;
+
+    if (!user_id) {
+      return {
+        error: "No user_id found.",
+      };
+    }
+
+    const email = accountForm.email;
+    const first_name = accountForm.firstName;
+    const last_name = accountForm.lastName;
+
+    const { domain, apiKey } = getFetchDetails(env);
+
+    const response = await fetch(`${domain}/v1/user/account`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        user_id,
+        email,
+        first_name,
+        last_name,
+      }),
+    });
+
+    if (!response.ok) {
+      return {
+        error: `Error: ${response.statusText}`,
+      };
+    }
+
+    cookie.set("email", email, {
+      path: "/",
+      sameSite: "strict",
+      expires: TWO_WEEKS_FROM_TODAY_DATE,
+    });
+    cookie.set("firstName", first_name, {
+      path: "/",
+      sameSite: "strict",
+      expires: TWO_WEEKS_FROM_TODAY_DATE,
+    });
+    cookie.set("lastName", last_name, {
+      path: "/",
+      sameSite: "strict",
+      expires: TWO_WEEKS_FROM_TODAY_DATE,
+    });
+  },
+  zod$({
+    email: z.string().email().nonempty(),
+    firstName: z.string(),
+    lastName: z.string(),
+  })
+);
 
 export const serverSaveImageToDB = server$(async function (image_url: string) {
   const { domain, apiKey } = getFetchDetails(this?.env);
@@ -64,6 +132,7 @@ export const serverHandleUpload = server$(async function (name: string) {
 });
 
 export default component$(() => {
+  const formAction = useUpdateAccount();
   const userDetails = useUserDetails();
   const image = useSignal(userDetails.value.image || "");
   const showDeleteModal = useSignal(false);
@@ -104,10 +173,15 @@ export default component$(() => {
       {showDeleteModal.value && (
         <DeleteModal showDeleteModal={showDeleteModal} />
       )}
-      <form
+      <Form
         class="divide-y divide-gray-200 dark:divide-white/10 lg:col-span-9"
-        action="#"
-        method="POST"
+        action={formAction}
+        onSubmitCompleted$={() => {
+          validating.value = false;
+          if (formAction.status === 200) {
+            saveValue.value = `\u2713`;
+          }
+        }}
       >
         {saveValue.value !== "Save" && !hideAlert.value ? (
           <SuccessModal text={"Successfully updated!"} hideAlert={hideAlert} />
@@ -145,33 +219,35 @@ export default component$(() => {
 
               <div class="col-span-12 sm:col-span-6">
                 <label
-                  for="first-name"
+                  for="firstName"
                   class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
                 >
                   First name
                 </label>
                 <input
                   type="text"
-                  name="first-name"
-                  id="first-name"
+                  name="firstName"
+                  id="firstName"
                   autoComplete="given-name"
                   class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
+                  value={userDetails.value.firstName}
                 />
               </div>
 
               <div class="col-span-12 sm:col-span-6">
                 <label
-                  for="last-name"
+                  for="lastName"
                   class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
                 >
                   Last name
                 </label>
                 <input
                   type="text"
-                  name="last-name"
-                  id="last-name"
+                  name="lastName"
+                  id="lastName"
                   autoComplete="family-name"
                   class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
+                  value={userDetails.value.lastName}
                 />
               </div>
             </div>
@@ -288,7 +364,7 @@ export default component$(() => {
             </div>
           </div>
         </div>
-      </form>
+      </Form>
     </>
   );
 });

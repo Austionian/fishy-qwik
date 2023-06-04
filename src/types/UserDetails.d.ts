@@ -7,6 +7,8 @@ type UserDetails = {
   portion: string | undefined;
   image: string | undefined;
   email: string | undefined;
+  firstName: string | undefined;
+  lastName: string | undefined;
 };
 
 export default UserDetails;

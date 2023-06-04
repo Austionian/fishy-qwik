@@ -19,7 +19,7 @@ export const useUpdatePassword = routeAction$(
     const new_password = passwordForm.new_password;
     const confirm_password = passwordForm.confirm_password;
 
-    const res = await fetch(`${domain}/v1/user/change_password`, {
+    const response = await fetch(`${domain}/v1/user/change_password`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -33,9 +33,9 @@ export const useUpdatePassword = routeAction$(
       }),
     });
 
-    if (!res.ok) {
+    if (!response.ok) {
       return {
-        error: res.statusText,
+        error: response.statusText,
       };
     }
   },

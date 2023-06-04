@@ -20,6 +20,8 @@ export type UserLoginResponse = {
     plan_to_get_pregnant?: string;
     portion_size?: string;
     image_url?: string;
+    first_name?: string;
+    last_name?: string;
   };
 };
 
@@ -71,7 +73,9 @@ export const useLoginFormAction = routeAction$(
       res.data.weight,
       res.data.sex,
       res.data.plan_to_get_pregnant,
-      res.data.portion_size
+      res.data.portion_size,
+      res.data.first_name,
+      res.data.last_name
     );
 
     if (res.data.image_url) {

@@ -9,6 +9,8 @@ export default (cookie: Cookie): UserDetails => {
   const portion = cookie.get("portion")?.value;
   const image = cookie.get("image")?.value;
   const email = cookie.get("email")?.value;
+  const firstName = cookie.get("firstName")?.value;
+  const lastName = cookie.get("lastName")?.value;
 
   return {
     needed: !weight || !age || !sex || !portion,
@@ -19,5 +21,7 @@ export default (cookie: Cookie): UserDetails => {
     portion,
     image,
     email,
+    firstName,
+    lastName,
   };
 };

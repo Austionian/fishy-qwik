@@ -13,7 +13,7 @@ const serverSaveUserDetails = server$(async function (
   const { domain, apiKey } = getFetchDetails(this?.env);
   const weightStr = weight.toString();
   const ageStr = age.toString();
-  const response = await fetch(`${domain}/v1/user`, {
+  const response = await fetch(`${domain}/v1/user/profile`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -99,7 +99,9 @@ export const saveUserDetailsToCookies = (
   weight: number | undefined,
   sex: string | undefined,
   plan_to_get_pregnant: string | undefined,
-  portion: string | undefined
+  portion: string | undefined,
+  first_name?: string | undefined,
+  last_name?: string | undefined
 ) => {
   if (age) {
     cookie.set("age", age, {
@@ -131,6 +133,20 @@ export const saveUserDetailsToCookies = (
   }
   if (portion) {
     cookie.set("portion", portion, {
+      path: "/",
+      sameSite: "strict",
+      expires: expire_date,
+    });
+  }
+  if (first_name) {
+    cookie.set("firstName", first_name, {
+      path: "/",
+      sameSite: "strict",
+      expires: expire_date,
+    });
+  }
+  if (last_name) {
+    cookie.set("lastName", last_name, {
       path: "/",
       sameSite: "strict",
       expires: expire_date,
