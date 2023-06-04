@@ -327,7 +327,9 @@ export default component$(({ user }: Props) => {
               </div>
               <div class="ml-3">
                 <div class="text-base font-medium text-gray-800 dark:text-gray-200">
-                  {user.email}
+                  {user.firstName && user.lastName
+                    ? `${user.firstName} ${user.lastName}`
+                    : user.email}
                 </div>
                 <div class="text-sm font-medium">🐟🐟🐟</div>
               </div>

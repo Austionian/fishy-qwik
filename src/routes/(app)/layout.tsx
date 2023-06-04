@@ -35,6 +35,8 @@ export const useUserObject = routeLoader$<MetaUserDetails>(({ cookie }) => {
     image: cookie.get("image")?.value,
     admin: Boolean(cookie.get("admin")?.value),
     email: cookie.get("email")?.value,
+    firstName: cookie.get("firstName")?.value,
+    lastName: cookie.get("lastName")?.value,
   };
 });
 
