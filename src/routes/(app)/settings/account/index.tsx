@@ -9,6 +9,8 @@ import { v4 as uuidv4 } from "uuid";
 import { getCookie, getFetchDetails, getUserDetails } from "~/helpers";
 import DeleteModal from "~/components/delete-modal";
 import type UserDetails from "~/types/UserDetails";
+import SuccessModal from "~/components/success-modal/success-modal";
+import SaveButton from "~/components/save-button/save-button";
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
   return getUserDetails(cookie);
@@ -65,6 +67,9 @@ export default component$(() => {
   const userDetails = useUserDetails();
   const image = useSignal(userDetails.value.image || "");
   const showDeleteModal = useSignal(false);
+  const hideAlert = useSignal(false);
+  const saveValue = useSignal("Save");
+  const validating = useSignal(false);
 
   const handleUpload = $(async (e: QwikChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -104,6 +109,9 @@ export default component$(() => {
         action="#"
         method="POST"
       >
+        {saveValue.value !== "Save" && !hideAlert.value ? (
+          <SuccessModal text={"Successfully updated!"} hideAlert={hideAlert} />
+        ) : null}
         <div class="px-4 py-6 sm:p-6 lg:pb-8">
           <div>
             <h2 class="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
@@ -276,12 +284,7 @@ export default component$(() => {
               >
                 Cancel
               </button>
-              <button
-                type="submit"
-                class="inline-flex justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
-              >
-                Save
-              </button>
+              <SaveButton saveValue={saveValue} validating={validating} />
             </div>
           </div>
         </div>

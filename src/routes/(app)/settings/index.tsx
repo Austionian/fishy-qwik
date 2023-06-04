@@ -1,11 +1,12 @@
-import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+import { component$, useSignal } from "@builder.io/qwik";
 import { routeLoader$, Form, zod$, routeAction$ } from "@builder.io/qwik-city";
-import { animate } from "motion";
 import { getUserDetails } from "~/helpers";
 import type UserDetails from "~/types/UserDetails";
 import PORTIONS from "~/constants/portions";
 import { saveUserDetails } from "~/services/saveUserDetails";
 import { userDetailsObject } from "~/constants/zod/userDetailsObject";
+import SuccessModal from "~/components/success-modal/success-modal";
+import SaveButton from "~/components/save-button/save-button";
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
   return getUserDetails(cookie);
@@ -42,84 +43,22 @@ export default component$(() => {
     userDetails.value.sex === "Male" || userDetails.value.sex === undefined
   );
   const saveValue = useSignal("Save");
-  const saveRef = useSignal<HTMLElement>();
   const hideAlert = useSignal(false);
-  const alertRef = useSignal<HTMLElement>();
-
-  useVisibleTask$(({ track }) => {
-    track(() => saveValue.value);
-    if (saveRef.value && alertRef.value) {
-      if (saveValue.value !== "Save") {
-        animate(
-          saveRef.value,
-          { scale: [0.5, 2, 1], opacity: [0, 1] },
-          { duration: 0.5, easing: "ease-in" }
-        );
-        animate(
-          alertRef.value,
-          { scale: [0.95, 1], opacity: [0, 1] },
-          { duration: 0.2, easing: "ease-out" }
-        );
-      }
-    }
-  });
+  const validating = useSignal(false);
 
   return (
     <Form
       class="divide-y divide-gray-200 dark:divide-white/10 lg:col-span-9"
       action={formAction}
       onSubmitCompleted$={() => {
+        validating.value = false;
         if (formAction.status === 200) {
-          saveValue.value = "";
+          saveValue.value = `\u2713`;
         }
       }}
     >
       {saveValue.value !== "Save" && !hideAlert.value ? (
-        <div
-          ref={alertRef}
-          class="rounded-md bg-teal-50 p-4 fixed top-[10px] sm:top-[70px] left-[5%] w-[90%] max-w-7xl mx-auto ring-teal-500 ring-1 z-50"
-        >
-          <div class="flex">
-            <div class="flex-shrink-0">
-              <svg
-                class="h-5 w-5 text-teal-400"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </div>
-            <div class="ml-3">
-              <p class="text-sm font-medium text-teal-800">
-                Successfully updated!
-              </p>
-            </div>
-            <div class="ml-auto pl-3">
-              <div class="-mx-1.5 -my-1.5">
-                <button
-                  type="button"
-                  class="inline-flex rounded-md bg-teal-50 p-1.5 text-teal-500 hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2 focus:ring-offset-teal-50"
-                  onClick$={() => (hideAlert.value = true)}
-                >
-                  <span class="sr-only">Dismiss</span>
-                  <svg
-                    class="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <SuccessModal text={"Successfully updated!"} hideAlert={hideAlert} />
       ) : null}
       <div class="px-4 py-6 sm:p-6 lg:pb-8 flex flex-col">
         <div>
@@ -298,15 +237,7 @@ export default component$(() => {
               Cancel
             </button>
           </a>
-          <button
-            type="submit"
-            class="inline-flex justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
-          >
-            {saveValue.value}
-            {saveValue.value === "Save" ? null : (
-              <span ref={saveRef}>{`\u2713`}</span>
-            )}
-          </button>
+          <SaveButton validating={validating} saveValue={saveValue} />
         </div>
       </div>
     </Form>

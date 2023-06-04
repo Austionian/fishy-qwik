@@ -1,5 +1,7 @@
 import { component$, useSignal } from "@builder.io/qwik";
 import { Form, routeAction$, zod$ } from "@builder.io/qwik-city";
+import SaveButton from "~/components/save-button/save-button";
+import SuccessModal from "~/components/success-modal/success-modal";
 
 import { passwordUpdateObject } from "~/constants/zod/passwordUpdateObject";
 import { getFetchDetails } from "~/helpers";
@@ -43,16 +45,26 @@ export const useUpdatePassword = routeAction$(
 export default component$(() => {
   const action = useUpdatePassword();
   const saveValue = useSignal("Save");
+  const hideAlert = useSignal(false);
+  const validating = useSignal(false);
+
   return (
     <Form
       class="divide-y divide-gray-200 dark:divide-white/10 lg:col-span-9"
       action={action}
       onSubmitCompleted$={() => {
+        validating.value = false;
         if (action.status === 200) {
-          saveValue.value = "Saved \u2713";
+          saveValue.value = "\u2713";
         }
       }}
     >
+      {saveValue.value !== "Save" && !hideAlert.value ? (
+        <SuccessModal
+          text={"Password successfully updated!"}
+          hideAlert={hideAlert}
+        />
+      ) : null}
       <div class="px-4 py-6 sm:p-6 lg:pb-8 flex flex-col">
         <div>
           <h2 class="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
@@ -134,12 +146,7 @@ export default component$(() => {
             >
               Cancel
             </button>
-            <button
-              type="submit"
-              class="inline-flex justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
-            >
-              {saveValue.value}
-            </button>
+            <SaveButton validating={validating} saveValue={saveValue} />
           </div>
         </div>
       </div>
