@@ -131,7 +131,7 @@ export default component$<Props>(({ showSearch }) => {
 
   return (
     <div
-      class="relative z-10"
+      class="relative z-50"
       role="dialog"
       aria-modal="true"
       onMouseDown$={(event) => {
