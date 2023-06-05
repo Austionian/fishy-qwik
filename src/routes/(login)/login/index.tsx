@@ -140,20 +140,13 @@ export default component$(() => {
 
   return (
     <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div class="sm:mx-auto sm:w-full sm:max-w-md">
-        <img
-          class="mx-auto h-12 w-auto bg-sky-200 rounded-xl p-1"
-          src="/images/woodlandbass.webp"
-          alt="Gigiigoo Fish"
-        />
-
-        <h1 class="my-6 text-center text-5xl text-gray-100 font-bold tracking-tight">
-          Gigiigoo
-        </h1>
-      </div>
+      <div class="sm:mx-auto sm:w-full sm:max-w-md"></div>
 
       <div class="mt-14 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
+        <div class="bg-white dark:bg-gray-900 px-4 py-8 shadow sm:rounded-lg sm:px-10">
+          <h1 class="my-6 text-center text-5xl font-bold tracking-tight dark:text-gray-100 text-gray-900">
+            Gigiigoo
+          </h1>
           <Form
             action={action}
             class="space-y-6"
@@ -171,7 +164,7 @@ export default component$(() => {
             <div>
               <label
                 for="email"
-                class="text-left block text-sm font-medium leading-6 text-gray-900"
+                class="text-left block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
               >
                 Email address
               </label>
@@ -182,10 +175,7 @@ export default component$(() => {
                   type="email"
                   autoComplete="email"
                   required
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 
-                    shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
-                    focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm 
-                    sm:leading-6"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                 />
                 {action.value?.failed && (
                   <div class="text-left text-red-400">
@@ -198,7 +188,7 @@ export default component$(() => {
             <div>
               <label
                 for="password"
-                class="text-left block text-sm font-medium leading-6 text-gray-900"
+                class="text-left block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
               >
                 Password
               </label>
@@ -209,10 +199,7 @@ export default component$(() => {
                   type="password"
                   autoComplete="password"
                   required
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 
-                    shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
-                    focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm 
-                    sm:leading-6"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                 />
                 {action.value?.failed && (
                   <div class="text-left text-red-400">
@@ -225,7 +212,7 @@ export default component$(() => {
             <div>
               <button
                 type="submit"
-                class="flex w-full justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                class="flex w-full justify-center rounded-md bg-teal-700 text-gray-100 hover:text-white dark:bg-teal-500 dark:hover:bg-teal-400 dark:text-gray-950 dark:hover:text-black px-3 py-2 text-sm font-semibold text-whiwte shadow-sm hover:bg-teal-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
                 onClick$={() => (validating.value = true)}
               >
                 {validating.value ? (
@@ -263,18 +250,18 @@ export default component$(() => {
             <div>
               <button
                 type="submit"
-                class="text-teal-600 text-sm w-full font-bold rounded hover:bg-gray-100 p-2"
+                class="text-teal-700 dark:text-teal-400 text-sm w-full font-bold rounded hover:bg-black/5 dark:hover:text-teal-300 hover:text-teal-800 dark:hover:bg-white/10 p-2"
               >
                 CONTINUE AS GUEST
               </button>
             </div>
           </Form>
 
-          <p class="mt-10 text-center text-sm text-gray-500">
+          <p class="mt-10 text-center text-sm text-gray-500 dark:text-gray-300">
             Need an account?
             <a
               href="/register"
-              class="ml-2 font-semibold leading-6 text-teal-600 hover:text-teal-500"
+              class="ml-2 font-semibold leading-6 text-teal-700 hover:text-teal-600 dark:text-teal-500 dark:hover:text-teal-400"
             >
               Create one here.
             </a>
