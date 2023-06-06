@@ -64,9 +64,9 @@ export default component$(() => {
                       key={`${i}-fish-header`}
                       scope="col"
                       class={
-                        header === "name"
+                        header === "name" || header === "lake"
                           ? "sticky top-0 z-10 border-b border-gray-300 dark:border-white/30 bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8 dark:text-gray-100"
-                          : "sticky top-0 z-10 hidden border-b border-gray-300 dark:border-white/30 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell dark:text-gray-100"
+                          : "sticky top-0 z-10 hidden border-b border-gray-300 dark:border-white/30 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter md:table-cell dark:text-gray-100"
                       }
                     >
                       {header.replace(/_/gi, " ")}
@@ -87,9 +87,9 @@ export default component$(() => {
                       <td
                         key={`${i}-${fish.name}-row`}
                         class={
-                          data_point === "name"
+                          data_point === "name" || data_point === "lake"
                             ? "whitespace-nowrap border-b border-gray-200 dark:border-white/10 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-100 sm:pl-6 lg:pl-8"
-                            : "whitespace-nowrap border-b border-gray-200 dark:border-white/10 hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-300 lg:table-cell"
+                            : "whitespace-nowrap border-b border-gray-200 dark:border-white/10 hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-300 md:table-cell"
                         }
                       >
                         {fish[data_point]}
@@ -142,7 +142,7 @@ export default component$(() => {
                       class={
                         header === "name"
                           ? "sticky top-0 z-10 border-b border-gray-300 dark:border-white/30 bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8 dark:text-gray-100"
-                          : "sticky top-0 z-10 hidden border-b border-gray-300 dark:border-white/30 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell dark:text-gray-100"
+                          : "sticky top-0 z-10 hidden border-b border-gray-300 dark:border-white/30 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell dark:text-gray-100"
                       }
                     >
                       {header.replace(/_/gi, " ")}

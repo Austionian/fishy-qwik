@@ -91,8 +91,8 @@ export default component$(({ fishData, userDetails }: Props) => {
               <span dangerouslySetInnerHTML={lake_svg} />
               {fishData.fish_data.anishinaabe_name ? (
                 <>
-                  <div class="pl-4">{fishData.fish_data.anishinaabe_name}</div>
-                  <div class="pl-4 text-lg sm:text-3xl self-end dark:text-white/60">
+                  {fishData.fish_data.anishinaabe_name}
+                  <div class="pl-4 text-lg sm:text-3xl self-end text-gray-500 dark:text-white/60">
                     {fishData.fish_data.name}
                   </div>
                 </>
