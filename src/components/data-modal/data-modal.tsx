@@ -181,12 +181,12 @@ export default component$(
                   {dataPoint.moreInfo && (
                     <div class="mt-5 text-left">
                       <h4
-                        class="text-lg font-semibold leading-6 text-gray-900 dark:text-gray-300"
+                        class="text-lg font-semibold leading-6 text-gray-900 dark:text-gray-100"
                         id="modal-about"
                       >
                         Avoidance
                       </h4>
-                      <p class="text-base leading-6 text-gray-800">
+                      <p class="text-base leading-6 text-gray-800 dark:text-gray-300">
                         {dataPoint.moreInfo}
                       </p>
                     </div>

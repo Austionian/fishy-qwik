@@ -91,10 +91,10 @@ export default component$(({ fishData, userDetails }: Props) => {
               <span dangerouslySetInnerHTML={lake_svg} />
               {fishData.fish_data.anishinaabe_name ? (
                 <>
-                  {fishData.fish_data.anishinaabe_name}
-                  <span class="text-xs pl-2 self-end mb-1">
-                    [{fishData.fish_data.name}]
-                  </span>
+                  <div class="pl-4">{fishData.fish_data.anishinaabe_name}</div>
+                  <div class="pl-4 text-lg sm:text-3xl self-end dark:text-white/60">
+                    {fishData.fish_data.name}
+                  </div>
                 </>
               ) : (
                 fishData.fish_data.name
@@ -128,7 +128,10 @@ export default component$(({ fishData, userDetails }: Props) => {
               <div class="bg-white dark:bg-gray-900/80 shadow sm:rounded-lg dark:ring-white/10 dark:ring-1">
                 <div class="px-4 py-5 sm:px-6">
                   <dl class="grid grid-cols-3 gap-x-4 gap-y-8">
-                    <div class="sm:col-span-1">
+                    <div
+                      class="group sm:col-span-1 cursor-pointer"
+                      onClick$={() => (showProtein.value = true)}
+                    >
                       <div class="flex items-center">
                         <dt class="text-sm font-medium text-gray-500 dark:text-gray-200">
                           Protein
@@ -139,8 +142,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                           height="100pt"
                           version="1.1"
                           viewBox="0 0 100 100"
-                          class="h-5 cursor-pointer w-5 hover:fill-teal-500 dark:fill-white"
-                          onClick$={() => (showProtein.value = true)}
+                          class="h-5 cursor-pointer w-5 group-hover:fill-teal-500 dark:fill-white"
                         >
                           <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
                         </svg>
@@ -152,10 +154,15 @@ export default component$(({ fishData, userDetails }: Props) => {
                         </span>
                       </dd>
                     </div>
-                    <div class="sm:col-span-1">
+
+                    <div
+                      class="group sm:col-span-1 cursor-pointer"
+                      onClick$={() => (showOmega3.value = true)}
+                    >
                       <div class="flex items-center">
-                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-200">
-                          Omega 3/6 ratio
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
+                          Omega 3/6{" "}
+                          <span class="hidden sm:contents">Ratio</span>
                         </dt>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -163,8 +170,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                           height="100pt"
                           version="1.1"
                           viewBox="0 0 100 100"
-                          class="h-5 cursor-pointer w-5 hover:fill-teal-500 dark:fill-white"
-                          onClick$={() => (showOmega3.value = true)}
+                          class="h-5 cursor-pointer w-5 group-hover:fill-teal-500 dark:fill-white"
                         >
                           <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
                         </svg>
@@ -173,6 +179,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                         {fishData.fish_data.omega_3_ratio.toFixed(3)}{" "}
                       </dd>
                     </div>
+
                     <div class="sm:col-span-1">
                       <div class="flex items-center">
                         <dt class="text-sm font-medium text-gray-500 dark:text-gray-200">
@@ -198,6 +205,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                     </div>
                   </dl>
                 </div>
+
                 <div class="border-t border-gray-200 dark:border-white/10 px-4 py-8 sm:px-6">
                   <div class="sm:col-span-2">
                     <dt class="text-sm font-medium text-gray-500 dark:text-gray-300">
@@ -207,8 +215,12 @@ export default component$(({ fishData, userDetails }: Props) => {
                       {fishData.fish_data.about}
                     </dd>
                   </div>
+
                   <dl class="mt-8 grid grid-cols-2 gap-x-4 gap-y-8">
-                    <div class="sm:col-span-1">
+                    <div
+                      class="sm:col-span-1 group cursor-pointer"
+                      onClick$={() => (showMercury.value = true)}
+                    >
                       <div class="flex items-center">
                         <dt class="text-sm font-medium text-gray-500 dark:text-gray-200">
                           Mercury
@@ -219,8 +231,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                           height="100pt"
                           version="1.1"
                           viewBox="0 0 100 100"
-                          class="h-5 cursor-pointer w-5 hover:fill-teal-500 dark:fill-white"
-                          onClick$={() => (showMercury.value = true)}
+                          class="h-5 cursor-pointer w-5 group-hover:fill-teal-500 dark:fill-white"
                         >
                           <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
                         </svg>
@@ -233,7 +244,11 @@ export default component$(({ fishData, userDetails }: Props) => {
                         </span>
                       </dd>
                     </div>
-                    <div class="sm:col-span-1">
+
+                    <div
+                      class="sm:col-span-1 group cursor-pointer"
+                      onClick$={() => (showPcb.value = true)}
+                    >
                       <div class="flex items-center">
                         <dt class="text-sm font-medium text-gray-500 dark:text-gray-200">
                           PCB
@@ -244,8 +259,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                           height="100pt"
                           version="1.1"
                           viewBox="0 0 100 100"
-                          class="h-5 cursor-pointer w-5 hover:fill-teal-500 dark:fill-white"
-                          onClick$={() => (showPcb.value = true)}
+                          class="h-5 cursor-pointer w-5 group-hover:fill-teal-500 dark:fill-white"
                         >
                           <path d="m50 16.918c-18.242 0-33.086 14.84-33.086 33.082s14.844 33.082 33.086 33.082 33.086-14.84 33.086-33.082-14.844-33.082-33.086-33.082zm0 62.164c-16.035 0-29.086-13.047-29.086-29.082s13.051-29.082 29.086-29.082 29.086 13.047 29.086 29.082-13.051 29.082-29.086 29.082zm-2-39.832h4v-6.168h-4zm0 27.668h4v-23.418h-4z" />
                         </svg>
