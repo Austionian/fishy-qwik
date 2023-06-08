@@ -122,9 +122,9 @@ export default component$(() => {
           {!hideAlert.value ? (
             <Alert
               successText={"Successfully updated!"}
-              failureText={failureText.value}
+              failureText={failureText}
               hideAlert={hideAlert}
-              success={formSuccess.value}
+              success={formSuccess}
             />
           ) : null}
           <Container>

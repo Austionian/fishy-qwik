@@ -5,7 +5,7 @@ import type UserDetails from "~/types/UserDetails";
 import PORTIONS from "~/constants/portions";
 import { saveUserDetails } from "~/services/saveUserDetails";
 import { userDetailsObject } from "~/constants/zod/userDetailsObject";
-import SuccessModal from "~/components/success-modal/success-modal";
+import Alert from "~/components/alert/alert";
 import SaveCancel from "~/components/save-cancel/save-cancel";
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
@@ -30,7 +30,10 @@ export const useUpdateUserInfoAction = routeAction$(
     );
 
     if (!res.success) {
-      console.error(res.error);
+      return {
+        error: true,
+        errorText: `Error: ${res.error}`,
+      };
     }
   },
   zod$(userDetailsObject)
@@ -43,8 +46,10 @@ export default component$(() => {
     userDetails.value.sex === "Male" || userDetails.value.sex === undefined
   );
   const saveValue = useSignal("Save");
-  const hideAlert = useSignal(false);
+  const hideAlert = useSignal(true);
   const validating = useSignal(false);
+  const failureText = useSignal("");
+  const success = useSignal(true);
 
   return (
     <Form
@@ -54,11 +59,21 @@ export default component$(() => {
         validating.value = false;
         if (formAction.status === 200) {
           saveValue.value = `\u2713`;
+        } else {
+          success.value = false;
+          failureText.value =
+            formAction.value?.errorText || "Unable to complete request.";
         }
+        hideAlert.value = false;
       }}
     >
-      {saveValue.value !== "Save" && !hideAlert.value ? (
-        <SuccessModal text={"Successfully updated!"} hideAlert={hideAlert} />
+      {!hideAlert.value ? (
+        <Alert
+          successText={"Successfully updated!"}
+          hideAlert={hideAlert}
+          success={success}
+          failureText={failureText}
+        />
       ) : null}
       <div class="px-4 py-6 sm:p-6 lg:pb-8 flex flex-col">
         <div>

@@ -31,7 +31,8 @@ export const useUpdateAccount = routeAction$(
 
     if (!user_id) {
       return {
-        error: "No user_id found.",
+        error: true,
+        errorText: "Error: You don't have permission to do this.",
       };
     }
 
@@ -57,7 +58,8 @@ export const useUpdateAccount = routeAction$(
 
     if (!response.ok) {
       return {
-        error: `Error: ${response.statusText}`,
+        error: true,
+        errorText: `Error: ${response.statusText}`,
       };
     }
 
@@ -108,10 +110,9 @@ export const serverSaveImageToDB = server$(async function (image_url: string) {
   });
 
   if (!response.ok) {
-    console.error(response.statusText);
     return {
-      failed: true,
-      error: `Error: ${response.statusText}`,
+      error: true,
+      errorText: `Error: ${response.statusText}`,
     };
   }
 });
@@ -140,6 +141,7 @@ export default component$(() => {
   const saveValue = useSignal("Save");
   const validating = useSignal(false);
   const success = useSignal(true);
+  const failureText = useSignal("");
 
   const handleUpload = $(async (e: QwikChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -183,16 +185,18 @@ export default component$(() => {
             saveValue.value = `\u2713`;
           } else {
             success.value = false;
+            failureText.value =
+              formAction.value?.errorText || "Unable to complete request.";
           }
           hideAlert.value = false;
         }}
       >
         {!hideAlert.value ? (
           <Alert
-            success={success.value}
+            success={success}
             successText={"Successfully updated!"}
             hideAlert={hideAlert}
-            failureText={""}
+            failureText={failureText}
           />
         ) : null}
         <div class="px-4 py-6 sm:p-6 lg:pb-8">
@@ -226,7 +230,7 @@ export default component$(() => {
                 </div>
               </div>
 
-              <div class="col-span-12 sm:col-span-6">
+              <div class="col-span-6 sm:col-span-6">
                 <label
                   for="firstName"
                   class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
@@ -363,12 +367,14 @@ export default component$(() => {
               </a>
             </div>
             <div class="mt-4 flex justify-end gap-x-3 px-4 py-4 sm:px-6">
-              <button
-                type="button"
-                class="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0 dark:bg-white/5 dark:text-gray-100 dark:hover:bg-white/10 dark:hover:text-white dark:ring-white/10"
-              >
-                Cancel
-              </button>
+              <a href="/">
+                <button
+                  type="button"
+                  class="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0 dark:bg-white/5 dark:text-gray-100 dark:hover:bg-white/10 dark:hover:text-white dark:ring-white/10"
+                >
+                  Cancel
+                </button>
+              </a>
               <SaveButton saveValue={saveValue} validating={validating} />
             </div>
           </div>

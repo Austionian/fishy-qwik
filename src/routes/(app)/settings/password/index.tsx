@@ -1,7 +1,7 @@
 import { component$, useSignal } from "@builder.io/qwik";
 import { Form, routeAction$, zod$ } from "@builder.io/qwik-city";
-import SuccessModal from "~/components/success-modal/success-modal";
 import SaveCancel from "~/components/save-cancel/save-cancel";
+import Alert from "~/components/alert/alert";
 
 import { passwordUpdateObject } from "~/constants/zod/passwordUpdateObject";
 import { getFetchDetails } from "~/helpers";
@@ -35,7 +35,8 @@ export const useUpdatePassword = routeAction$(
 
     if (!response.ok) {
       return {
-        error: response.statusText,
+        error: true,
+        errorText: `Error: ${response.statusText}`,
       };
     }
   },
@@ -43,25 +44,34 @@ export const useUpdatePassword = routeAction$(
 );
 
 export default component$(() => {
-  const action = useUpdatePassword();
+  const formAction = useUpdatePassword();
   const saveValue = useSignal("Save");
-  const hideAlert = useSignal(false);
+  const hideAlert = useSignal(true);
   const validating = useSignal(false);
+  const success = useSignal(true);
+  const failureText = useSignal("");
 
   return (
     <Form
       class="divide-y divide-gray-200 dark:divide-white/10 lg:col-span-9"
-      action={action}
+      action={formAction}
       onSubmitCompleted$={() => {
         validating.value = false;
-        if (action.status === 200) {
-          saveValue.value = "\u2713";
+        if (formAction.status === 200) {
+          saveValue.value = `\u2713`;
+        } else {
+          success.value = false;
+          failureText.value =
+            formAction.value?.errorText || "Unable to complete request.";
         }
+        hideAlert.value = false;
       }}
     >
-      {saveValue.value !== "Save" && !hideAlert.value ? (
-        <SuccessModal
-          text={"Password successfully updated!"}
+      {!hideAlert.value ? (
+        <Alert
+          success={success}
+          successText={"Password successfully updated!"}
+          failureText={failureText}
           hideAlert={hideAlert}
         />
       ) : null}
@@ -74,8 +84,10 @@ export default component$(() => {
             Update your password.
           </p>
         </div>
-        {action.value?.failed && (
-          <div class="text-left text-red-400">{action.value?.formErrors}</div>
+        {formAction.value?.failed && (
+          <div class="text-left text-red-400">
+            {formAction.value?.formErrors}
+          </div>
         )}
         <div class="mt-6 flex flex-col lg:flex-row">
           <div class="flex-grow space-y-6">
@@ -138,7 +150,11 @@ export default component$(() => {
           </div>
         </div>
       </div>
-      <SaveCancel validating={validating} saveValue={saveValue} />
+      <SaveCancel
+        validating={validating}
+        saveValue={saveValue}
+        cancelHref={"/"}
+      />
     </Form>
   );
 });

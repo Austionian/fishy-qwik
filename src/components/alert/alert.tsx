@@ -2,16 +2,20 @@ import { component$ } from "@builder.io/qwik";
 
 type Props = {
   successText: string;
-  failureText: string;
+  failureText: {
+    value: string;
+  };
   hideAlert: {
     value: boolean;
   };
-  success: boolean;
+  success: {
+    value: boolean;
+  };
 };
 
 export default component$(
   ({ successText, failureText, hideAlert, success }: Props) => {
-    return success ? (
+    return success.value ? (
       <div
         class={`rounded-md bg-teal-50 dark:bg-teal-800 p-4 fixed top-[10px] sm:top-[70px] left-[5%] w-[90%] max-w-7xl mx-auto ring-teal-500 dark:ring-white/10 ring-1 z-50`}
       >
@@ -77,7 +81,7 @@ export default component$(
           </div>
           <div class="ml-3">
             <p class={`text-sm font-medium text-red-800 dark:text-red-100`}>
-              {failureText}
+              {failureText.value}
             </p>
           </div>
           <div class="ml-auto pl-3">
