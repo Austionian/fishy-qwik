@@ -65,6 +65,7 @@ export const useUpdateRecipe = routeAction$(
         headers: {
           Authorization: `Bearer ${apiKey}`,
           "Content-Type": "application/json",
+          cookie: `user_id=${user_id}`,
         },
         body: JSON.stringify({
           user_id,
@@ -110,13 +111,12 @@ export default component$(() => {
             validating.value = false;
             if (!formAction.value?.error) {
               saveValue.value = `\u2713`;
-              hideAlert.value = false;
             } else {
-              hideAlert.value = false;
               formSuccess.value = false;
               failureText.value =
                 formAction.value?.errorText || "Unable to complete request.";
             }
+            hideAlert.value = false;
           }}
         >
           {!hideAlert.value ? (

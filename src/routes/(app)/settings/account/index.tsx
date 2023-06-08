@@ -16,7 +16,7 @@ import { v4 as uuidv4 } from "uuid";
 import { getCookie, getFetchDetails, getUserDetails } from "~/helpers";
 import DeleteModal from "~/components/delete-modal";
 import type UserDetails from "~/types/UserDetails";
-import SuccessModal from "~/components/success-modal/success-modal";
+import Alert from "~/components/alert/alert";
 import SaveButton from "~/components/save-button/save-button";
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
@@ -136,9 +136,10 @@ export default component$(() => {
   const userDetails = useUserDetails();
   const image = useSignal(userDetails.value.image || "");
   const showDeleteModal = useSignal(false);
-  const hideAlert = useSignal(false);
+  const hideAlert = useSignal(true);
   const saveValue = useSignal("Save");
   const validating = useSignal(false);
+  const success = useSignal(true);
 
   const handleUpload = $(async (e: QwikChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -180,11 +181,19 @@ export default component$(() => {
           validating.value = false;
           if (formAction.status === 200) {
             saveValue.value = `\u2713`;
+          } else {
+            success.value = false;
           }
+          hideAlert.value = false;
         }}
       >
-        {saveValue.value !== "Save" && !hideAlert.value ? (
-          <SuccessModal text={"Successfully updated!"} hideAlert={hideAlert} />
+        {!hideAlert.value ? (
+          <Alert
+            success={success.value}
+            successText={"Successfully updated!"}
+            hideAlert={hideAlert}
+            failureText={""}
+          />
         ) : null}
         <div class="px-4 py-6 sm:p-6 lg:pb-8">
           <div>
