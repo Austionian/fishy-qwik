@@ -55,9 +55,21 @@ export default component$(() => {
     <Form
       class="divide-y divide-gray-200 dark:divide-white/10 lg:col-span-9"
       action={formAction}
+      onSubmit$={() => {
+        if (formAction.value?.failed) {
+          validating.value = false;
+          if (
+            formAction.value.formErrors &&
+            formAction.value.formErrors?.length > 0
+          ) {
+            failureText.value = formAction.value.formErrors[0];
+          }
+          hideAlert.value = false;
+        }
+      }}
       onSubmitCompleted$={() => {
         validating.value = false;
-        if (formAction.status === 200) {
+        if (!formAction.value?.error && !formAction.value?.failed) {
           saveValue.value = `\u2713`;
         } else {
           success.value = false;
@@ -84,11 +96,6 @@ export default component$(() => {
             Update your password.
           </p>
         </div>
-        {formAction.value?.failed && (
-          <div class="text-left text-red-400">
-            {formAction.value?.formErrors}
-          </div>
-        )}
         <div class="mt-6 flex flex-col lg:flex-row">
           <div class="flex-grow space-y-6">
             <div>
@@ -107,6 +114,11 @@ export default component$(() => {
                   required
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                 />
+                {formAction.value?.failed && (
+                  <div class="text-left text-red-600 text-sm">
+                    {formAction.value?.fieldErrors?.current_password}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -126,6 +138,11 @@ export default component$(() => {
                   required
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                 />
+                {formAction.value?.failed && (
+                  <div class="text-left text-red-600 text-sm">
+                    {formAction.value?.fieldErrors?.new_password}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -145,6 +162,11 @@ export default component$(() => {
                   required
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                 />
+                {formAction.value?.failed && (
+                  <div class="text-left text-red-600 text-sm">
+                    {formAction.value?.fieldErrors?.confirm_password}
+                  </div>
+                )}
               </div>
             </div>
           </div>

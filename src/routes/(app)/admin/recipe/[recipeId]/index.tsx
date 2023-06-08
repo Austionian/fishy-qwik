@@ -109,7 +109,7 @@ export default component$(() => {
           action={formAction}
           onSubmitCompleted$={() => {
             validating.value = false;
-            if (!formAction.value?.error) {
+            if (!formAction.value?.error && !formAction.value?.failed) {
               saveValue.value = `\u2713`;
             } else {
               formSuccess.value = false;
