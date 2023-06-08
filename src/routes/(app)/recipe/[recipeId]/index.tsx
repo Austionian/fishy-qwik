@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
+import NavBack from "~/components/nav-back/nav-back";
 import { getFetchDetails } from "~/helpers";
 import type Recipe from "~/types/Recipe";
 
@@ -21,11 +22,7 @@ export default component$(() => {
   return (
     <div class="min-h-full">
       <main class="pb-10">
-        <div class="hidden sm:flex mx-auto max-w-3xl px-4 sm:px-6 md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8 mb-6">
-          <a href="/recipe" class="hover:text-teal-500 hover:cursor-pointer">
-            ‹ Back to recipes
-          </a>
-        </div>
+        <NavBack href={"/recipe"} text={"recipes"} />
         <div class="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8 mb-10">
           <div class="flex justify-center items-center flex-wrap space-x-5">
             <div class="flex-shrink-0">
@@ -42,7 +39,7 @@ export default component$(() => {
 
         <div class="mx-auto max-w-3xl px-4 sm:px-6 sm:flex sm:items-center sm:justify-between sm:space-x-5 lg:max-w-7xl lg:px-8">
           <div>
-            <h1 class="text-4xl font-bold dark:text-gray-100">
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100">
               {recipeData.value.name}
             </h1>
           </div>

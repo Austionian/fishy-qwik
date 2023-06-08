@@ -7,6 +7,7 @@ import type UserDetails from "~/types/UserDetails";
 import type Recipe from "~/types/Recipe";
 
 import DataModal from "../data-modal/data-modal";
+import NavBack from "../nav-back/nav-back";
 
 type FishData = {
   fish_data: Fish;
@@ -62,11 +63,7 @@ export default component$(({ fishData, userDetails }: Props) => {
         />
       )}
       <main class="pb-10">
-        <div class="hidden mx-auto max-w-3xl sm:block md:items-center md:justify-between md:space-x-5 lg:max-w-7xl mb-6">
-          <a href="/" class="hover:text-teal-500 hover:cursor-pointer">
-            ‹ Back to fish
-          </a>
-        </div>
+        <NavBack href={"/"} text={"fish"} />
         <div class="mx-auto max-w-3xl md:block md:items-center md:justify-between md:space-x-5 lg:max-w-7xl mb-10">
           <div class="flex justify-center items-center flex-wrap space-x-5">
             <div class="bg-teal-500/20 dark:bg-white/5 dark:ring-1 dark:ring-white/10 p-2 shadow-sm rounded mb-4 w-screen flex justify-center">

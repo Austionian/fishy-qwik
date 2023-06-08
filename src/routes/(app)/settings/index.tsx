@@ -6,7 +6,7 @@ import PORTIONS from "~/constants/portions";
 import { saveUserDetails } from "~/services/saveUserDetails";
 import { userDetailsObject } from "~/constants/zod/userDetailsObject";
 import SuccessModal from "~/components/success-modal/success-modal";
-import SaveButton from "~/components/save-button/save-button";
+import SaveCancel from "~/components/save-cancel/save-cancel";
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
   return getUserDetails(cookie);
@@ -227,19 +227,11 @@ export default component$(() => {
           </div>
         </div>
       </div>
-      <div class="divide-y divide-gray-200 dark:divide-white/10 pt-6">
-        <div class="mt-4 flex justify-end gap-x-3 px-4 py-4 sm:px-6">
-          <a href="/">
-            <button
-              type="button"
-              class="inline-flex justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0 dark:bg-white/5 dark:text-gray-100 dark:hover:bg-white/10 dark:hover:text-white dark:ring-white/10"
-            >
-              Cancel
-            </button>
-          </a>
-          <SaveButton validating={validating} saveValue={saveValue} />
-        </div>
-      </div>
+      <SaveCancel
+        validating={validating}
+        saveValue={saveValue}
+        cancelHref={"/"}
+      />
     </Form>
   );
 });

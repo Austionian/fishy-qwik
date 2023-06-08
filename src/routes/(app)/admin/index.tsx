@@ -97,7 +97,7 @@ export default component$(() => {
                     ))}
                     <td class="relative whitespace-nowrap border-b border-gray-200 dark:border-white/10 py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8">
                       <a
-                        href={`/fish/edit/${fish.id}`}
+                        href={`/admin/fish/${fish.id}`}
                         class="text-teal-600 hover:text-teal-900"
                       >
                         Edit<span class="sr-only">, {fish.name}</span>
@@ -178,7 +178,7 @@ export default component$(() => {
                     ))}
                     <td class="relative whitespace-nowrap border-b border-gray-200 dark:border-white/10 py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8">
                       <a
-                        href={`/recipe/edit/${recipe.id}`}
+                        href={`/admin/recipe/${recipe.id}`}
                         class="text-teal-600 hover:text-teal-900"
                       >
                         Edit<span class="sr-only">, {recipe.name}</span>
