@@ -14,8 +14,8 @@ import NavBack from "~/components/nav-back/nav-back";
 import SaveCancel from "~/components/save-cancel/save-cancel";
 import Alert from "~/components/alert/alert";
 
-export const useUpdateRecipe = routeAction$(
-  async (recipeForm, { cookie, env, params }) => {
+export const useNewRecipe = routeAction$(
+  async (recipeForm, { cookie, env }) => {
     const user_id = cookie.get("user_id")?.value;
     const admin = cookie.get("admin")?.value;
 
@@ -46,23 +46,20 @@ export const useUpdateRecipe = routeAction$(
 
     const { domain, apiKey } = getFetchDetails(env);
 
-    const response = await fetch(
-      `${domain}/v1/admin/recipe/${params.recipeId}`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-          cookie: `user_id=${user_id}`,
-        },
-        body: JSON.stringify({
-          user_id,
-          name,
-          ingredients: parsedIngredients,
-          steps: parsedSteps,
-        }),
-      }
-    );
+    const response = await fetch(`${domain}/v1/admin/recipe/`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        cookie: `user_id=${user_id}`,
+      },
+      body: JSON.stringify({
+        user_id,
+        name,
+        ingredients: parsedIngredients,
+        steps: parsedSteps,
+      }),
+    });
 
     if (!response.ok) {
       return {
@@ -83,7 +80,7 @@ export default component$(() => {
   const additionalSteps = useSignal(0);
   const validating = useSignal(false);
   const saveValue = useSignal("Save");
-  const formAction = useUpdateRecipe();
+  const formAction = useNewRecipe();
   const hideAlert = useSignal(true);
   const formSuccess = useSignal(true);
   const failureText = useSignal("");
