@@ -6,15 +6,16 @@ import {
   Form,
   zod$,
   z,
+  server$,
 } from "@builder.io/qwik-city";
-import { getFetchDetails } from "~/helpers";
+import { getCookie, getFetchDetails } from "~/helpers";
 import type Recipe from "~/types/Recipe";
 
 import Container from "~/components/container/container";
 import EditInput from "~/components/edit-input/edit-input";
 import NavBack from "~/components/nav-back/nav-back";
-import SaveCancel from "~/components/save-cancel/save-cancel";
 import Alert from "~/components/alert/alert";
+import SaveButton from "~/components/save-button/save-button";
 
 export const useRecipeData = routeLoader$<Recipe>(async ({ env, params }) => {
   const { apiKey, domain } = getFetchDetails(env);
@@ -24,6 +25,36 @@ export const useRecipeData = routeLoader$<Recipe>(async ({ env, params }) => {
     },
   });
   return await res.json();
+});
+
+export const serverDeleteRecipe = server$(async function (recipeId: string) {
+  const { domain, apiKey } = getFetchDetails(this?.env);
+  let user_id;
+  if (this.cookie) {
+    user_id = this?.cookie.get("user_id")?.value;
+  } else {
+    user_id = getCookie("user_id");
+  }
+
+  if (!user_id) return;
+
+  const response = await fetch(`${domain}/v1/admin/recipe/delete/${recipeId}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      cookie: `user_id=${user_id}`,
+    },
+  });
+
+  if (!response.ok) {
+    return {
+      error: true,
+      errorText: `Error: ${response.statusText}`,
+    };
+  }
+  return {
+    error: false,
+  };
 });
 
 export const useUpdateRecipe = routeAction$(
@@ -221,13 +252,38 @@ export default component$(() => {
             </div>
           </Container>
 
-          <Container>
-            <SaveCancel
-              validating={validating}
-              saveValue={saveValue}
-              cancelHref={"/admin"}
-            />
-          </Container>
+          <div class="divide-y divide-gray-200 pt-6">
+            <div class="flex justify-between">
+              <div class="mt-4 flex justify-end items-center gap-x-3 px-4 sm:px-6">
+                <a
+                  class="inline-flex justify-center text-red-700 px-3 py-2 font-semibold hover:text-red-600 cursor-pointer"
+                  onClick$={async () => {
+                    if (
+                      confirm("Are you sure you'd like to delete this recipe?")
+                    ) {
+                      const res = await serverDeleteRecipe(recipeData.value.id);
+                      if (!res?.error) {
+                        window.location.assign("/admin/");
+                      }
+                    }
+                  }}
+                >
+                  Delete Recipe
+                </a>
+              </div>
+              <div class="mt-4 flex justify-end gap-x-3 px-4 py-4 sm:px-6">
+                <a href="/">
+                  <button
+                    type="button"
+                    class="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0 dark:bg-white/5 dark:text-gray-100 dark:hover:bg-white/10 dark:hover:text-white dark:ring-white/10"
+                  >
+                    Cancel
+                  </button>
+                </a>
+                <SaveButton saveValue={saveValue} validating={validating} />
+              </div>
+            </div>
+          </div>
         </Form>
       </main>
     </div>

@@ -192,13 +192,11 @@ export default component$(() => {
             </div>
           </Container>
 
-          <Container>
-            <SaveCancel
-              validating={validating}
-              saveValue={saveValue}
-              cancelHref={"/admin"}
-            />
-          </Container>
+          <SaveCancel
+            validating={validating}
+            saveValue={saveValue}
+            cancelHref={"/admin"}
+          />
         </Form>
       </main>
     </div>
