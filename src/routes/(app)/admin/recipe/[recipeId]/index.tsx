@@ -17,15 +17,29 @@ import NavBack from "~/components/nav-back/nav-back";
 import Alert from "~/components/alert/alert";
 import SaveButton from "~/components/save-button/save-button";
 
-export const useRecipeData = routeLoader$<Recipe>(async ({ env, params }) => {
-  const { apiKey, domain } = getFetchDetails(env);
-  const res = await fetch(`${domain}/v1/recipe/${params.recipeId}`, {
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-    },
-  });
-  return await res.json();
-});
+type RecipeLoader = {
+  data: Recipe;
+  is_favorite: boolean;
+  error: boolean;
+};
+
+export const useRecipeData = routeLoader$<RecipeLoader>(
+  async ({ env, params, cookie }) => {
+    const { apiKey, domain } = getFetchDetails(env);
+    const res = await fetch(`${domain}/v1/recipe/${params.recipeId}`, {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        cookie: `user_id=${cookie.get("user_id")?.value}`,
+      },
+    });
+    if (res.ok) {
+      return await res.json();
+    }
+    return {
+      error: true,
+    };
+  }
+);
 
 export const serverDeleteRecipe = server$(async function (recipeId: string) {
   const { domain, apiKey } = getFetchDetails(this?.env);
@@ -132,7 +146,9 @@ export default component$(() => {
   const formSuccess = useSignal(true);
   const failureText = useSignal("");
 
-  return (
+  return recipeData.value.error ? (
+    <div>ERROR PROCESSING REQUEST</div>
+  ) : (
     <div class="min-h-full">
       <main class="pb-10">
         <NavBack href={"/admin"} text={"admin"} />
@@ -168,7 +184,7 @@ export default component$(() => {
               </label>
             </div>
             <div class="px-5 pb-2">
-              <EditInput value={recipeData.value.name} type={"name"} />
+              <EditInput value={recipeData.value.data.name} type={"name"} />
               {formAction.value?.failed && (
                 <div class="text-left text-red-600 text-sm">
                   {formAction.value?.fieldErrors?.name}
@@ -186,7 +202,7 @@ export default component$(() => {
               </label>
             </div>
             <div class="px-5 pb-2">
-              {recipeData.value.ingredients.map((ingredient, i) => (
+              {recipeData.value.data.ingredients.map((ingredient, i) => (
                 <EditInput
                   key={`${i}-ingredient`}
                   value={ingredient}
@@ -226,7 +242,7 @@ export default component$(() => {
               </label>
             </div>
             <div class="px-5 pb-2">
-              {recipeData.value.steps.map((step, i) => (
+              {recipeData.value.data.steps.map((step, i) => (
                 <EditInput
                   key={`${i}-step`}
                   value={step}
@@ -261,7 +277,9 @@ export default component$(() => {
                     if (
                       confirm("Are you sure you'd like to delete this recipe?")
                     ) {
-                      const res = await serverDeleteRecipe(recipeData.value.id);
+                      const res = await serverDeleteRecipe(
+                        recipeData.value.data.id
+                      );
                       if (!res?.error) {
                         window.location.assign("/admin/");
                       }
@@ -293,11 +311,11 @@ export default component$(() => {
 export const head: DocumentHead = ({ resolveValue, params }) => {
   const recipe = resolveValue(useRecipeData);
   return {
-    title: `Edit: ${recipe.name}`,
+    title: `Edit: ${recipe.data.name}`,
     meta: [
       {
         name: "description",
-        content: `Edit the ingredients and steps of ${recipe.name}`,
+        content: `Edit the ingredients and steps of ${recipe.data.name}`,
       },
       {
         name: "id",
