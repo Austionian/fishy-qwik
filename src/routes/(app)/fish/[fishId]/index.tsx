@@ -10,17 +10,21 @@ import FishDetailsPage from "~/components/fish-details-page/fish-details-page";
 type FishData = {
   fish_data: Fish;
   recipe_data: Recipe[];
+  is_favorite: boolean;
 };
 
-export const useFishData = routeLoader$<FishData>(async ({ env, params }) => {
-  const { apiKey, domain } = getFetchDetails(env);
-  const res = await fetch(`${domain}/v1/fish/${params.fishId}`, {
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-    },
-  });
-  return await res.json();
-});
+export const useFishData = routeLoader$<FishData>(
+  async ({ env, params, cookie }) => {
+    const { apiKey, domain } = getFetchDetails(env);
+    const res = await fetch(`${domain}/v1/fish/${params.fishId}`, {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        cookie: `user_id=${cookie.get("user_id")?.value}`,
+      },
+    });
+    return await res.json();
+  }
+);
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
   return getUserDetails(cookie);

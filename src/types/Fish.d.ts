@@ -1,5 +1,6 @@
 type Fish = {
   fish_id: string;
+  fish_type_id: string;
   name: string;
   anishinaabe_name: string;
   lake?: string;
