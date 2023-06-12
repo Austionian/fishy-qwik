@@ -1,15 +1,12 @@
 import { component$ } from "@builder.io/qwik";
 import Container from "../container/container";
-import NavBack from "../nav-back/nav-back";
 
 type Props = {
   message: string;
-  fourOfour?: boolean;
 };
 
-export default component$(({ message, fourOfour = false }: Props) => (
+export default component$(({ message }: Props) => (
   <Container>
-    {fourOfour && <NavBack href={"/"} text={"home"} />}
     <div class="flex flex-col justify-center items-center h-[50vh] text-2xl font-extrabold text-gray-900 dark:text-gray-100">
       <div>
         <svg
