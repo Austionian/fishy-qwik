@@ -1,9 +1,9 @@
 type MetaUserDetails = {
-  email: string | undefined;
-  admin: boolean;
-  image: string | undefined;
-  firstName: string | undefined;
-  lastName: string | undefined;
+  email?: string;
+  admin?: boolean;
+  image?: string;
+  firstName?: string;
+  lastName?: string;
 };
 
 export default MetaUserDetails;
