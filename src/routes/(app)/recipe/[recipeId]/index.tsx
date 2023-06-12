@@ -11,10 +11,11 @@ import type Recipe from "~/types/Recipe";
 type RecipeLoader = {
   data: Recipe;
   is_favorite: boolean;
+  errorMessage: string;
 };
 
 export const useRecipeData = routeLoader$<RecipeLoader>(
-  async ({ env, params, cookie }) => {
+  async ({ env, params, cookie, fail }) => {
     const { apiKey, domain } = getFetchDetails(env);
     const res = await fetch(`${domain}/v1/recipe/${params.recipeId}`, {
       headers: {
@@ -22,7 +23,13 @@ export const useRecipeData = routeLoader$<RecipeLoader>(
         cookie: `user_id=${cookie.get("user_id")?.value}`,
       },
     });
-    return await res.json();
+    try {
+      return await res.json();
+    } catch {
+      return fail(404, {
+        errorMessage: "Recipe not found.",
+      });
+    }
   }
 );
 
@@ -57,6 +64,10 @@ export default component$(() => {
   const recipeData = useRecipeData();
   const favorite = useSignal(recipeData.value.is_favorite);
   const randomNumber = useSignal(Math.floor(Math.random() * 5) + 1);
+
+  if (recipeData.value.errorMessage) {
+    return <div>{recipeData.value.errorMessage}</div>;
+  }
 
   return (
     <div class="min-h-full">
@@ -185,11 +196,11 @@ export default component$(() => {
 export const head: DocumentHead = ({ resolveValue, params }) => {
   const recipe = resolveValue(useRecipeData);
   return {
-    title: recipe.data.name,
+    title: recipe?.data?.name || "404",
     meta: [
       {
         name: "description",
-        content: `Learn the ingredients of and how to cook ${recipe.data.name}`,
+        content: `Learn the ingredients of and how to cook ${recipe?.data?.name}`,
       },
       {
         name: "id",

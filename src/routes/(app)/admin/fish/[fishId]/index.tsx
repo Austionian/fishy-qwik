@@ -11,11 +11,10 @@ type FishData = {
   fish_data: Fish;
   recipe_data: Recipe[];
   is_favorite: boolean;
-  errorMessage?: string;
 };
 
 export const useFishData = routeLoader$<FishData>(
-  async ({ env, params, cookie, fail }) => {
+  async ({ env, params, cookie }) => {
     const { apiKey, domain } = getFetchDetails(env);
     const res = await fetch(`${domain}/v1/fish/${params.fishId}`, {
       headers: {
@@ -23,13 +22,7 @@ export const useFishData = routeLoader$<FishData>(
         cookie: `user_id=${cookie.get("user_id")?.value}`,
       },
     });
-    try {
-      return await res.json();
-    } catch {
-      return fail(404, {
-        errorMessage: "Fish not found.",
-      });
-    }
+    return await res.json();
   }
 );
 
@@ -40,10 +33,6 @@ export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
 export default component$(() => {
   const fishData = useFishData();
   const userDetails = useUserDetails();
-
-  if (fishData.value?.errorMessage) {
-    return <div>{fishData.value.errorMessage}</div>;
-  }
 
   return (
     <FishDetailsPage
@@ -56,11 +45,11 @@ export default component$(() => {
 export const head: DocumentHead = ({ resolveValue, params }) => {
   const fish = resolveValue(useFishData);
   return {
-    title: fish?.fish_data?.anishinaabe_name || "404",
+    title: fish.fish_data.anishinaabe_name,
     meta: [
       {
         name: "description",
-        content: `Learn the nutritional details of a ${fish?.fish_data?.name}`,
+        content: `Learn the nutritional details of a ${fish.fish_data.name}`,
       },
       {
         name: "id",
