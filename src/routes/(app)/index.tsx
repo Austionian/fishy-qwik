@@ -7,29 +7,42 @@ import type LakeValues from "~/types/LakeValues";
 import LAKE_VALUES from "~/constants/lakes";
 
 import FishList from "~/components/fish-list/fish-list";
+import Error from "~/components/error/error";
 
-export const useFishData = routeLoader$<Fish[]>(async ({ env, query }) => {
-  const { apiKey, domain } = getFetchDetails(env);
-  let filter = query.get("lake") as LakeValues;
-  if (!LAKE_VALUES.includes(filter)) {
-    filter = "All";
+type ErrorType = {
+  errorMessage?: string;
+};
+
+export const useFishData = routeLoader$<Fish[] & ErrorType>(
+  async ({ env, query, fail }) => {
+    const { apiKey, domain } = getFetchDetails(env);
+    let filter = query.get("lake") as LakeValues;
+    if (!LAKE_VALUES.includes(filter)) {
+      filter = "All";
+    }
+    let res;
+    if (filter && filter !== "All") {
+      res = await fetch(`${domain}/v1/fishs?lake=${filter}`, {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+        },
+      });
+    } else {
+      res = await fetch(`${domain}/v1/fish_avgs`, {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+        },
+      });
+    }
+    try {
+      return await res.json();
+    } catch {
+      return fail(500, {
+        errorMessage: "Unable to complete current request.",
+      });
+    }
   }
-  let res;
-  if (filter && filter !== "All") {
-    res = await fetch(`${domain}/v1/fishs?lake=${filter}`, {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-    });
-  } else {
-    res = await fetch(`${domain}/v1/fish_avgs`, {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-    });
-  }
-  return await res.json();
-});
+);
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
   return getUserDetails(cookie);
@@ -50,6 +63,10 @@ export default component$(() => {
     data: userDetails.value,
   });
   const fishData = useFishData();
+
+  if (fishData.value.errorMessage) {
+    return <Error message={fishData.value.errorMessage} />;
+  }
   const fishStore = useStore({
     data: fishData.value,
   });
