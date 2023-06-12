@@ -6,6 +6,7 @@ import type Recipe from "~/types/Recipe";
 import type UserDetails from "~/types/UserDetails";
 
 import FishDetailsPage from "~/components/fish-details-page/fish-details-page";
+import Error from "~/components/error/error";
 
 type FishData = {
   fish_data: Fish;
@@ -42,7 +43,7 @@ export default component$(() => {
   const userDetails = useUserDetails();
 
   if (fishData.value?.errorMessage) {
-    return <div>{fishData.value.errorMessage}</div>;
+    return <Error message={fishData.value.errorMessage} />;
   }
 
   return (

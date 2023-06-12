@@ -4,6 +4,7 @@ import {
   server$,
   routeLoader$,
 } from "@builder.io/qwik-city";
+import Error from "~/components/error/error";
 import NavBack from "~/components/nav-back/nav-back";
 import { getFetchDetails } from "~/helpers";
 import type Recipe from "~/types/Recipe";
@@ -66,7 +67,7 @@ export default component$(() => {
   const randomNumber = useSignal(Math.floor(Math.random() * 5) + 1);
 
   if (recipeData.value.errorMessage) {
-    return <div>{recipeData.value.errorMessage}</div>;
+    return <Error message={recipeData.value.errorMessage} />;
   }
 
   return (
