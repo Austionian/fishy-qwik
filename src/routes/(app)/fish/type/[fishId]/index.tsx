@@ -60,7 +60,7 @@ export default component$(() => {
 export const head: DocumentHead = ({ resolveValue, params }) => {
   const fish = resolveValue(useFishData);
   return {
-    title: fish?.fish_data?.anishinaabe_name || "404",
+    title: fish?.fish_data?.anishinaabe_name || fish?.fish_data?.name || "404",
     meta: [
       {
         name: "description",
