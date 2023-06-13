@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { DocumentHead } from "@builder.io/qwik-city";
+import { type DocumentHead } from "@builder.io/qwik-city";
 import Error from "~/components/error/error";
 import Footer from "~/components/footer/footer";
 import NavBack from "~/components/nav-back/nav-back";
