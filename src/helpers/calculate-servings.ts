@@ -49,7 +49,7 @@ function getString(a: number): string {
   } else if (a > 0.75 && a <= 1) {
     return "3 meals per month";
   } else if (a > 1 && a <= 14) {
-    return `${Math.round(a * 1) / 1} meal(s) per week`;
+    return `${Math.round(a * 1) / 1} meals per week`;
   } else if (a > 14) {
     return "Unrestricted";
   } else {
