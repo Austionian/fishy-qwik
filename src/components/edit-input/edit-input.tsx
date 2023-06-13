@@ -1,7 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 
 type Props = {
-  value?: string;
+  value?: string | number;
   type: string;
   isArray?: boolean;
 };

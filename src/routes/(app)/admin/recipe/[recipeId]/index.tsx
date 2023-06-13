@@ -113,7 +113,6 @@ export const useUpdateRecipe = routeAction$(
           cookie: `user_id=${user_id}`,
         },
         body: JSON.stringify({
-          user_id,
           name,
           ingredients: parsedIngredients,
           steps: parsedSteps,
