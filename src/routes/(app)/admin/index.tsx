@@ -182,7 +182,7 @@ export default component$(() => {
                     key={`${i}-${recipe.name}-row`}
                     class={
                       data_point === "name"
-                        ? "whitespace-nowrap border-b border-gray-200 dark:border-white/10 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-100 sm:pl-6 lg:pl-8"
+                        ? "border-b border-gray-200 dark:border-white/10 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-100 sm:pl-6 lg:pl-8"
                         : "whitespace-nowrap border-b border-gray-200 dark:border-white/10 hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-300 lg:table-cell"
                     }
                   >
@@ -191,7 +191,7 @@ export default component$(() => {
                       : `${recipe[data_point]
                           .slice(0)
                           .toString()
-                          .substring(0, 35)}...`}
+                          .substring(0, 15)}...`}
                   </td>
                 ))}
                 <td class="relative whitespace-nowrap border-b border-gray-200 dark:border-white/10 py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8">
