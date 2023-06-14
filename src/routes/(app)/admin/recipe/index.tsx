@@ -76,8 +76,8 @@ export const useNewRecipe = routeAction$(
 );
 
 export default component$(() => {
-  const additionalIngredients = useSignal(0);
-  const additionalSteps = useSignal(0);
+  const additionalIngredients = useSignal(3);
+  const additionalSteps = useSignal(3);
   const validating = useSignal(false);
   const saveValue = useSignal("Save");
   const formAction = useNewRecipe();
@@ -140,7 +140,6 @@ export default component$(() => {
               </label>
             </div>
             <div class="px-5 pb-2">
-              <EditInput type={"ingredient"} isArray />
               {[...Array(additionalIngredients.value)].map((_, i) => (
                 <EditInput
                   key={`${i}-additional-ingredient`}
@@ -173,7 +172,6 @@ export default component$(() => {
               </label>
             </div>
             <div class="px-5 pb-2">
-              <EditInput type={"step"} isArray />
               {[...Array(additionalSteps.value)].map((_, i) => (
                 <EditInput key={`${i}-additional-step`} type={"step"} isArray />
               ))}
