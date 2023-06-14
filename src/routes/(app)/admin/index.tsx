@@ -1,4 +1,4 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useSignal } from "@builder.io/qwik";
 import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
 import Table from "~/components/table/table";
 import { getFetchDetails } from "~/helpers";
@@ -24,6 +24,7 @@ export const useEverything = routeLoader$<Everything>(async ({ env }) => {
 
 export default component$(() => {
   const fishData = useEverything();
+  const filter = useSignal("");
   const FISH_DATA: (keyof EverythingFish)[] = [
     "name",
     "anishinaabe_name",
@@ -34,6 +35,7 @@ export default component$(() => {
     "mercury",
   ];
   const RECIPE_DATA: (keyof Recipe)[] = ["name", "ingredients", "steps"];
+
   return (
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="sm:flex sm:items-center">
@@ -44,6 +46,13 @@ export default component$(() => {
           <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
             A list of all the fish available in the system.
           </p>
+        </div>
+        <div>
+          <input
+            bind:value={filter}
+            class="block my-2 rounded-md border-0 p-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
+            placeholder="filter"
+          />
         </div>
         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
           <a href="/admin/fish">
@@ -81,30 +90,38 @@ export default component$(() => {
           </tr>
         </thead>
         <tbody>
-          {fishData.value.fishs.map((fish, i) => (
-            <tr key={`${i}-fish-row`}>
-              {FISH_DATA.map((data_point, i) => (
-                <td
-                  key={`${i}-${fish.name}-row`}
-                  class={
-                    data_point === "name" || data_point === "lake"
-                      ? "whitespace-nowrap border-b border-gray-200 dark:border-white/10 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-100 sm:pl-6 lg:pl-8"
-                      : "whitespace-nowrap border-b border-gray-200 dark:border-white/10 hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-300 md:table-cell"
-                  }
-                >
-                  {fish[data_point]}
+          {fishData.value.fishs
+            .filter(
+              (c) =>
+                c.name.toLowerCase().indexOf(filter.value.toLowerCase()) > -1 ||
+                c.anishinaabe_name
+                  ?.toLowerCase()
+                  .indexOf(filter.value.toLowerCase()) > -1
+            )
+            .map((fish, i) => (
+              <tr key={`${i}-fish-row`}>
+                {FISH_DATA.map((data_point, i) => (
+                  <td
+                    key={`${i}-${fish.name}-row`}
+                    class={
+                      data_point === "name" || data_point === "lake"
+                        ? "whitespace-nowrap border-b border-gray-200 dark:border-white/10 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-100 sm:pl-6 lg:pl-8"
+                        : "whitespace-nowrap border-b border-gray-200 dark:border-white/10 hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-300 md:table-cell"
+                    }
+                  >
+                    {fish[data_point]}
+                  </td>
+                ))}
+                <td class="relative whitespace-nowrap border-b border-gray-200 dark:border-white/10 py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8">
+                  <a
+                    href={`/admin/fish/${fish.id}`}
+                    class="text-teal-600 hover:text-teal-900"
+                  >
+                    Edit<span class="sr-only">, {fish.name}</span>
+                  </a>
                 </td>
-              ))}
-              <td class="relative whitespace-nowrap border-b border-gray-200 dark:border-white/10 py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8">
-                <a
-                  href={`/admin/fish/${fish.id}`}
-                  class="text-teal-600 hover:text-teal-900"
-                >
-                  Edit<span class="sr-only">, {fish.name}</span>
-                </a>
-              </td>
-            </tr>
-          ))}
+              </tr>
+            ))}
         </tbody>
       </Table>
 
@@ -153,35 +170,40 @@ export default component$(() => {
           </tr>
         </thead>
         <tbody>
-          {fishData.value.recipes.map((recipe, i) => (
-            <tr key={i}>
-              {RECIPE_DATA.map((data_point, i) => (
-                <td
-                  key={`${i}-${recipe.name}-row`}
-                  class={
-                    data_point === "name"
-                      ? "whitespace-nowrap border-b border-gray-200 dark:border-white/10 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-100 sm:pl-6 lg:pl-8"
-                      : "whitespace-nowrap border-b border-gray-200 dark:border-white/10 hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-300 lg:table-cell"
-                  }
-                >
-                  {data_point === "name"
-                    ? recipe.name
-                    : `${recipe[data_point]
-                        .slice(0)
-                        .toString()
-                        .substring(0, 35)}...`}
+          {fishData.value.recipes
+            .filter(
+              (r) =>
+                r.name.toLowerCase().indexOf(filter.value.toLowerCase()) > -1
+            )
+            .map((recipe, i) => (
+              <tr key={i}>
+                {RECIPE_DATA.map((data_point, i) => (
+                  <td
+                    key={`${i}-${recipe.name}-row`}
+                    class={
+                      data_point === "name"
+                        ? "whitespace-nowrap border-b border-gray-200 dark:border-white/10 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-100 sm:pl-6 lg:pl-8"
+                        : "whitespace-nowrap border-b border-gray-200 dark:border-white/10 hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-300 lg:table-cell"
+                    }
+                  >
+                    {data_point === "name"
+                      ? recipe.name
+                      : `${recipe[data_point]
+                          .slice(0)
+                          .toString()
+                          .substring(0, 35)}...`}
+                  </td>
+                ))}
+                <td class="relative whitespace-nowrap border-b border-gray-200 dark:border-white/10 py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8">
+                  <a
+                    href={`/admin/recipe/${recipe.id}`}
+                    class="text-teal-600 hover:text-teal-900"
+                  >
+                    Edit<span class="sr-only">, {recipe.name}</span>
+                  </a>
                 </td>
-              ))}
-              <td class="relative whitespace-nowrap border-b border-gray-200 dark:border-white/10 py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8">
-                <a
-                  href={`/admin/recipe/${recipe.id}`}
-                  class="text-teal-600 hover:text-teal-900"
-                >
-                  Edit<span class="sr-only">, {recipe.name}</span>
-                </a>
-              </td>
-            </tr>
-          ))}
+              </tr>
+            ))}
         </tbody>
       </Table>
     </div>
