@@ -96,7 +96,8 @@ export default component$(() => {
                 c.name.toLowerCase().indexOf(filter.value.toLowerCase()) > -1 ||
                 c.anishinaabe_name
                   ?.toLowerCase()
-                  .indexOf(filter.value.toLowerCase()) > -1
+                  .indexOf(filter.value.toLowerCase()) > -1 ||
+                c.lake?.toLowerCase().indexOf(filter.value.toLowerCase()) > -1
             )
             .map((fish, i) => (
               <tr key={`${i}-fish-row`}>
