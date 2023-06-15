@@ -129,41 +129,53 @@ export default component$(() => {
           </div>
 
           <Container>
-            <div class="px-4 py-2 sm:px-6 pt-6">
-              <label
-                for="fish_type"
-                class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
-              >
-                Fish Type
-              </label>
-              <select
-                id="fish_type"
-                name="fish_type"
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-              >
-                {fishData.value.map((type, i) => (
-                  <option key={i} value={type.id}>
-                    {type.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div class="px-4 py-2 sm:px-6 pb-6">
-              <label
-                for="lake"
-                class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
-              >
-                Lake
-              </label>
-              <select
-                id="lake"
-                name="lake"
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-              >
-                {LAKE_VALUES.map((lake, i) => (
-                  <option key={i}>{lake}</option>
-                ))}
-              </select>
+            <div class="flex justify-between">
+              <div class="w-[50%]">
+                <div class="px-4 py-2 sm:px-6 pt-6">
+                  <label
+                    for="fish_type"
+                    class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
+                  >
+                    Fish Type
+                  </label>
+                  <select
+                    id="fish_type"
+                    name="fish_type"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
+                  >
+                    {fishData.value.map((type, i) => (
+                      <option key={i} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div class="px-4 py-2 sm:px-6 pb-6">
+                  <label
+                    for="lake"
+                    class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
+                  >
+                    Lake
+                  </label>
+                  <select
+                    id="lake"
+                    name="lake"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
+                  >
+                    {LAKE_VALUES.map((lake, i) => (
+                      <option key={i}>{lake}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div class="flex align-middle place-self-center mr-4 sm:mr-6">
+                <button
+                  type="button"
+                  class="inline-flex items-center text-sm justify-center rounded-md bg-teal-600 px-3 py-2 font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                >
+                  Create new fish type
+                </button>
+              </div>
             </div>
           </Container>
 

@@ -153,7 +153,7 @@ export default component$(() => {
             />
           ) : null}
           <NavBack href={"/admin"} text={"admin"} />
-          <div class="flex mx-auto mt-8 max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-full justify-between">
+          <div class="flex mx-auto mt-8 max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-full">
             <div>
               <h1 class="text-5xl font-extralight flex items-center dark:text-white dark:fill-white">
                 {fishData.value.fish_data.anishinaabe_name ? (
@@ -168,18 +168,22 @@ export default component$(() => {
                 )}
               </h1>
             </div>
-            <h1 class="text-5xl font-extralight flex items-center dark:text-white dark:fill-white">
+            <h1 class="text-5xl italic font-extralight flex items-center dark:text-white dark:fill-white">
               {fishData.value.fish_data.lake}
             </h1>
           </div>
 
-          <div class="flex mx-auto mt-8 max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-full justify-between">
-            <button
-              type="button"
-              class="inline-flex items-center text-sm justify-center rounded-md bg-teal-600 px-3 py-2 font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+          <div class="flex mx-auto mt-2 max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-full justify-between">
+            <a
+              href={`/admin/fish-type/${fishData.value.fish_data.fish_type_id}`}
             >
-              Edit fish type
-            </button>
+              <button
+                type="button"
+                class="inline-flex items-center text-sm justify-center rounded-md bg-teal-600 px-3 py-2 font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+              >
+                Edit fish type
+              </button>
+            </a>
           </div>
           <Container>
             <div class="px-4 py-2 sm:px-6">
