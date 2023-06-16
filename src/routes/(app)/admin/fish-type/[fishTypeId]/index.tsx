@@ -1,4 +1,9 @@
-import { $, component$, type QwikChangeEvent, useSignal } from "@builder.io/qwik";
+import {
+  $,
+  component$,
+  type QwikChangeEvent,
+  useSignal,
+} from "@builder.io/qwik";
 import {
   type DocumentHead,
   Form,
@@ -98,10 +103,10 @@ export const serverSaveFishImageToDB = server$(async function (
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
         cookie: `user_id=${user_id}`,
       },
-      body: new URLSearchParams({
+      body: JSON.stringify({
         image_url,
         woodland_image_flag: woodland_image_flag.toString(),
       }),
