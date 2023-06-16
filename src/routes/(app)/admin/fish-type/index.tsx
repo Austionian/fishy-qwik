@@ -7,12 +7,9 @@ import {
 import {
   type DocumentHead,
   Form,
-  routeLoader$,
   routeAction$,
   zod$,
   z,
-  useLocation,
-  server$,
 } from "@builder.io/qwik-city";
 import { getFetchDetails } from "~/helpers";
 import { v4 as uuidv4 } from "uuid";
@@ -24,30 +21,8 @@ import SaveButton from "~/components/save-button/save-button";
 import Alert from "~/components/alert/alert";
 import { serverHandleUpload } from "~/services/serverPresign";
 
-type FishData = {
-  id: string;
-  name: string;
-  anishinaabe_name: string;
-  fish_image?: string;
-  s3_fish_image?: string;
-  s3_woodland_image?: string;
-  woodland_fish_image?: string;
-  about: string;
-};
-
-export const useFishData = routeLoader$<FishData[]>(async ({ env, cookie }) => {
-  const { apiKey, domain } = getFetchDetails(env);
-  const res = await fetch(`${domain}/v1/fish_types`, {
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      cookie: `user_id=${cookie.get("user_id")?.value}`,
-    },
-  });
-  return await res.json();
-});
-
-export const useUpdateFishType = routeAction$(
-  async (fishTypeForm, { cookie, env, params }) => {
+export const useSaveFishType = routeAction$(
+  async (fishTypeForm, { cookie, env }) => {
     const user_id = cookie.get("user_id")?.value;
     const admin = cookie.get("admin")?.value;
 
@@ -60,23 +35,21 @@ export const useUpdateFishType = routeAction$(
 
     const { domain, apiKey } = getFetchDetails(env);
 
-    const response = await fetch(
-      `${domain}/v1/admin/fish_type/${params.fishTypeId}`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-          cookie: `user_id=${user_id}`,
-        },
-        body: JSON.stringify({
-          id: params.fishTypeId,
-          name: fishTypeForm.name,
-          anishinaabe_name: fishTypeForm.anishinaabe_name,
-          about: fishTypeForm.about,
-        }),
-      }
-    );
+    const response = await fetch(`${domain}/v1/admin/fish_type/`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        cookie: `user_id=${user_id}`,
+      },
+      body: JSON.stringify({
+        name: fishTypeForm.name,
+        anishinaabe_name: fishTypeForm.anishinaabe_name,
+        fish_image: fishTypeForm.fish_image,
+        woodland_fish_image: fishTypeForm.woodland_fish_image,
+        about: fishTypeForm.about,
+      }),
+    });
 
     if (!response.ok) {
       return {
@@ -88,75 +61,26 @@ export const useUpdateFishType = routeAction$(
   zod$({
     name: z.string().nonempty(),
     anishinaabe_name: z.string().optional(),
+    fish_image: z.string().nonempty(),
+    woodland_fish_image: z.string().optional(),
     about: z.string().nonempty(),
   })
 );
 
-export const serverSaveFishImageToDB = server$(async function (
-  fish_type_id: string,
-  image_url: string,
-  woodland_image_flag: boolean
-) {
-  const { domain, apiKey } = getFetchDetails(this?.env);
-  const user_id = this?.cookie.get("user_id")?.value;
-
-  if (!user_id) return;
-
-  const response = await fetch(
-    `${domain}/v1/admin/fish_type/${fish_type_id}/image`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-        cookie: `user_id=${user_id}`,
-      },
-      body: JSON.stringify({
-        image_url,
-        woodland_image_flag: woodland_image_flag,
-      }),
-    }
-  );
-
-  if (!response.ok) {
-    return {
-      error: true,
-      errorText: `Error: ${response.statusText}`,
-    };
-  }
-});
-
 export default component$(() => {
-  const fishData = useFishData();
-  const {
-    params: { fishTypeId },
-  } = useLocation();
-  const formAction = useUpdateFishType();
+  const formAction = useSaveFishType();
   const saveValue = useSignal("Save");
   const validating = useSignal(false);
   const formSuccess = useSignal(true);
   const failureText = useSignal("");
   const hideAlert = useSignal(true);
 
-  const fishTypeData = fishData.value.filter((c) => c.id === fishTypeId)[0];
-
-  const fishImage = useSignal(
-    fishTypeData.s3_fish_image
-      ? fishTypeData.s3_fish_image
-      : `/images/${fishTypeData.fish_image}`
-  );
-  const woodlandImage = useSignal(
-    fishTypeData.s3_woodland_image
-      ? fishTypeData.s3_woodland_image
-      : fishTypeData.woodland_fish_image
-      ? `/images/${fishTypeData.woodland_fish_image}`
-      : undefined
-  );
+  const fishImage = useSignal<string>();
+  const woodlandImage = useSignal<string>();
 
   const handleUpload = $(
     async (
       e: QwikChangeEvent<HTMLInputElement>,
-      fish_type_id: string,
       woodlandImageFlag: boolean
     ) => {
       if (e.target.files) {
@@ -181,11 +105,6 @@ export default component$(() => {
                   } else {
                     fishImage.value = imageUrl;
                   }
-                  serverSaveFishImageToDB(
-                    fish_type_id,
-                    imageUrl,
-                    woodlandImageFlag
-                  );
                 }
               })
               .catch((err) => console.error("err: ", err));
@@ -224,7 +143,7 @@ export default component$(() => {
           <div class="flex mx-auto mt-8 max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-full justify-between">
             <div>
               <h1 class="text-5xl font-extralight flex items-center dark:text-white dark:fill-white">
-                {`Edit ${fishTypeData.name}`}
+                Add New Fish Type
               </h1>
             </div>
           </div>
@@ -239,7 +158,7 @@ export default component$(() => {
               </label>
             </div>
             <div class="px-5 pb-2">
-              <EditInput type={"name"} value={fishTypeData.name} />
+              <EditInput type={"name"} />
               {formAction.value?.failed && (
                 <div class="text-left text-red-600 text-sm">
                   {formAction.value?.fieldErrors?.name}
@@ -255,10 +174,7 @@ export default component$(() => {
               </label>
             </div>
             <div class="px-5 pb-2">
-              <EditInput
-                type={"anishinaabe_name"}
-                value={fishTypeData.anishinaabe_name}
-              />
+              <EditInput type={"anishinaabe_name"} />
               {formAction.value?.failed && (
                 <div class="text-left text-red-600 text-sm">
                   {formAction.value?.fieldErrors?.anishinaabe_name}
@@ -281,7 +197,6 @@ export default component$(() => {
                       name="about"
                       id="about"
                       class="block text-sm w-full h-56 my-2 rounded-md border-0 p-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-                      value={fishTypeData.about}
                     />
                   </div>
                 </div>
@@ -310,19 +225,23 @@ export default component$(() => {
                   <div class="relative ml-5">
                     <input
                       id="fish_image"
-                      name="fish_image"
+                      name="fish_image_container"
                       type="file"
                       class="peer absolute h-full w-full rounded-md opacity-0 cursor-pointer"
-                      value={fishImage.value}
                       onChange$={(e) => {
-                        handleUpload(e, fishTypeData.id, false);
+                        handleUpload(e, false);
                       }}
                     />
+                    {formAction.value?.failed && (
+                      <div class="text-left text-red-600 text-sm">
+                        {formAction.value?.fieldErrors?.fish_image}
+                      </div>
+                    )}
                     <label
                       for="fish_image"
                       class="pointer-events-none block rounded-md px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 peer-hover:ring-gray-400 peer-focus:ring-2 peer-focus:ring-teal-500"
                     >
-                      <span>Change</span>
+                      <span>Upload</span>
                       <span class="sr-only"> fish image</span>
                     </label>
                   </div>
@@ -342,24 +261,28 @@ export default component$(() => {
               <div class="mt-2">
                 <div class="flex items-center">
                   <div class="inline-block h-44 flex-shrink-0">
-                    <img class="h-full" src={woodlandImage.value} alt="N/A" />
+                    <img class="h-full" src={woodlandImage.value} alt="" />
                   </div>
                   <div class="relative ml-5">
                     <input
                       id="woodland_fish_image"
-                      name="woodland_fish_image"
+                      name="woodland_fish_image_container"
                       type="file"
                       class="peer absolute h-full w-full rounded-md opacity-0 cursor-pointer"
-                      value={woodlandImage.value}
                       onChange$={(e) => {
-                        handleUpload(e, fishTypeData.id, true);
+                        handleUpload(e, true);
                       }}
                     />
+                    {formAction.value?.failed && (
+                      <div class="text-left text-red-600 text-sm">
+                        {formAction.value?.fieldErrors?.woodland_fish_image}
+                      </div>
+                    )}
                     <label
                       for="woodland_fish_image"
                       class="pointer-events-none block rounded-md px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 peer-hover:ring-gray-400 peer-focus:ring-2 peer-focus:ring-teal-500"
                     >
-                      <span>Change</span>
+                      <span>Upload</span>
                       <span class="sr-only"> woodland fish image</span>
                     </label>
                   </div>
@@ -367,6 +290,12 @@ export default component$(() => {
               </div>
             </div>
           </Container>
+          <input hidden name="fish_image" value={fishImage.value} />
+          <input
+            hidden
+            name="woodland_fish_image"
+            value={woodlandImage.value}
+          />
 
           <div class="divide-y divide-gray-200 pt-6">
             <div class="mt-4 flex justify-end gap-x-3 px-4 py-4 sm:px-6">
