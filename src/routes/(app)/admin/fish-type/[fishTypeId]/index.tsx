@@ -93,7 +93,7 @@ export const serverSaveFishImageToDB = server$(async function (
   if (!user_id) return;
 
   const response = await fetch(
-    `${domain}/v1/admin/fish-type/${fish_type_id}/image`,
+    `${domain}/v1/admin/fish_type/${fish_type_id}/image`,
     {
       method: "POST",
       headers: {
