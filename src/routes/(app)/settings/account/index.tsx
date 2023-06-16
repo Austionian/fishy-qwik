@@ -14,8 +14,9 @@ import {
 } from "@builder.io/qwik-city";
 import { v4 as uuidv4 } from "uuid";
 import { getCookie, getFetchDetails, getUserDetails } from "~/helpers";
-import DeleteModal from "~/components/delete-modal";
+import { serverHandleUpload } from "~/services/serverPresign";
 import type UserDetails from "~/types/UserDetails";
+import DeleteModal from "~/components/delete-modal";
 import Alert from "~/components/alert/alert";
 import SaveButton from "~/components/save-button/save-button";
 
@@ -115,21 +116,6 @@ export const serverSaveImageToDB = server$(async function (image_url: string) {
       errorText: `Error: ${response.statusText}`,
     };
   }
-});
-
-export const serverHandleUpload = server$(async function (name: string) {
-  const { apiKey, domain } = getFetchDetails(this.env);
-  const res = await fetch(`${domain}/v1/presign_s3`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name,
-    }),
-  });
-  return await res.json();
 });
 
 export default component$(() => {

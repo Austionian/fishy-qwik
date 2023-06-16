@@ -156,21 +156,11 @@ export default component$(() => {
           <div class="flex mx-auto mt-8 max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-full">
             <div>
               <h1 class="text-5xl font-extralight flex items-center dark:text-white dark:fill-white">
-                {fishData.value.fish_data.anishinaabe_name ? (
-                  <>
-                    {fishData.value.fish_data.anishinaabe_name}
-                    <div class="pl-4 text-lg sm:text-3xl self-end text-gray-500 dark:text-white/60">
-                      {fishData.value.fish_data.name}
-                    </div>
-                  </>
-                ) : (
-                  fishData.value.fish_data.name
-                )}
+                {"Edit "}
+                {fishData.value.fish_data.name} {"--- "}
+                {fishData.value.fish_data.lake}
               </h1>
             </div>
-            <h1 class="text-5xl italic font-extralight flex items-center dark:text-white dark:fill-white">
-              {fishData.value.fish_data.lake}
-            </h1>
           </div>
 
           <div class="flex mx-auto mt-2 max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-full justify-between">
