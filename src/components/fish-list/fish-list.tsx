@@ -17,6 +17,7 @@ import InfoModal from "~/components/info-modal/info-modal";
 import FishDetails from "~/components/fish-details/fish-details";
 import LakeFilters from "../lake-filters/lake-filters";
 import { server$ } from "@builder.io/qwik-city";
+import getFishImageUrl from "~/helpers/getFishImageUrl";
 
 type Props = {
   fishData: {
@@ -222,13 +223,11 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                 class="cursor-pointer min-w-[312px]"
                 onClick$={() => (window.location.href = link)}
               >
-                <img
-                  src={`/images/${fish.fish_image}`}
-                  alt={fish.name}
-                  class="h-44"
-                />
+                <img src={getFishImageUrl(fish)} alt={fish.name} class="h-44" />
               </div>
               <div class="mr-8">
+                fish.s3_fish_image ? fish.s3_fish_image : `/images/$
+                {fish.fish_image}`
                 <div class="mt-4 flex justify-between">
                   <div
                     class="cursor-pointer flex-grow whitespace-nowrap"

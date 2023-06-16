@@ -4,6 +4,7 @@ import type Fish from "~/types/Fish";
 import { LAKES } from "~/constants/lakes";
 import { server$ } from "@builder.io/qwik-city";
 import { getFetchDetails } from "~/helpers";
+import getFishImageUrl from "~/helpers/getFishImageUrl";
 
 type Props = {
   showSearch: { value: boolean };
@@ -199,7 +200,7 @@ export default component$<Props>(({ showSearch }) => {
                 <ul class="text-sm text-gray-700 dark:text-gray-300">
                   {fishResults.value?.length > 0 &&
                     filteredFish.map((fish, i) => (
-                      <a href={"/fish/type/" + fish.fish_id + "/"} key={i}>
+                      <a href={`/fish/type/${fish.fish_id}/`} key={i}>
                         <li
                           class="group flex cursor-pointer select-none items-center
                                  rounded-md px-3 py-2 hover:bg-gray-900 hover:bg-opacity-5
@@ -209,7 +210,7 @@ export default component$<Props>(({ showSearch }) => {
                           tabIndex={0}
                         >
                           <img
-                            src={`/images/${fish.fish_image}`}
+                            src={getFishImageUrl(fish)}
                             alt={fish.name}
                             class="h-8 w-14 flex-none text-gray-900 text-opacity-40"
                           />

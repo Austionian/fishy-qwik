@@ -13,6 +13,8 @@ type Fish = {
   omega_3_ratio: number;
   servings: string;
   about: string;
+  s3_fish_image?: string;
+  s3_woodland_image?: string;
 };
 
 export default Fish;

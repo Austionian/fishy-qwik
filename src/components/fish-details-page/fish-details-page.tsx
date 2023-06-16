@@ -9,6 +9,7 @@ import type Recipe from "~/types/Recipe";
 import DataModal from "../data-modal/data-modal";
 import NavBack from "../nav-back/nav-back";
 import FavoriteButton from "../favorite-button/favorite-button";
+import getFishDetailsImage from "~/helpers/getFishDetailsImageUrl";
 
 type FishData = {
   fish_data: Fish;
@@ -70,17 +71,10 @@ export default component$(({ fishData, userDetails }: Props) => {
         <div class="mx-auto max-w-3xl md:block md:items-center md:justify-between md:space-x-5 lg:max-w-7xl mb-10">
           <div class="flex justify-center items-center flex-wrap space-x-5">
             <div class="bg-teal-500/20 dark:bg-white/5 dark:ring-1 dark:ring-white/10 p-2 shadow-sm rounded mb-4 w-screen flex justify-center">
-              {fishData.fish_data.woodland_fish_image ? (
-                <img
-                  class="h-40 sm:w-auto sm:h-[300px] text-center"
-                  src={`/images/${fishData.fish_data.woodland_fish_image}`}
-                />
-              ) : (
-                <img
-                  class="h-40 sm:w-auto sm:h-[300px] text-center"
-                  src={`/images/${fishData.fish_data.fish_image}`}
-                />
-              )}
+              <img
+                class="h-40 sm:w-auto sm:h-[300px] text-center"
+                src={getFishDetailsImage(fishData.fish_data)}
+              />
             </div>
           </div>
         </div>
