@@ -108,7 +108,7 @@ export const serverSaveFishImageToDB = server$(async function (
       },
       body: JSON.stringify({
         image_url,
-        woodland_image_flag: woodland_image_flag.toString(),
+        woodland_image_flag: woodland_image_flag,
       }),
     }
   );
