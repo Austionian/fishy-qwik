@@ -226,8 +226,6 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                 <img src={getFishImageUrl(fish)} alt={fish.name} class="h-44" />
               </div>
               <div class="mr-8">
-                fish.s3_fish_image ? fish.s3_fish_image : `/images/$
-                {fish.fish_image}`
                 <div class="mt-4 flex justify-between">
                   <div
                     class="cursor-pointer flex-grow whitespace-nowrap"
