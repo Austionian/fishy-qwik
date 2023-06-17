@@ -46,6 +46,10 @@ export default component$(() => {
           <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
             A list of all the fish available in the system.
           </p>
+          <p class="mt-2 text-sm text-gray-500 dark:text-gray-500">
+            After making changes to this data. You'll need to clear your cache
+            to see the changes.
+          </p>
         </div>
         <div>
           <input

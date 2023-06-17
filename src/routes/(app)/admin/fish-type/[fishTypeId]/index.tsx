@@ -11,7 +11,6 @@ import {
   routeAction$,
   zod$,
   z,
-  useLocation,
   server$,
 } from "@builder.io/qwik-city";
 import { getFetchDetails } from "~/helpers";
@@ -23,6 +22,8 @@ import EditInput from "~/components/edit-input/edit-input";
 import SaveButton from "~/components/save-button/save-button";
 import Alert from "~/components/alert/alert";
 import { serverHandleUpload } from "~/services/serverPresign";
+import Recipe from "~/types/Recipe";
+import InputContainer from "~/components/input-container/input-container";
 
 type FishData = {
   id: string;
@@ -33,18 +34,36 @@ type FishData = {
   s3_woodland_image?: string;
   woodland_fish_image?: string;
   about: string;
+  recipes: string[];
 };
 
-export const useFishData = routeLoader$<FishData[]>(async ({ env, cookie }) => {
+type FishTypeResponse = {
+  fish_data: FishData;
+  recipe_data: string[];
+};
+
+export const useRecipeData = routeLoader$<Recipe[]>(async ({ env }) => {
   const { apiKey, domain } = getFetchDetails(env);
-  const res = await fetch(`${domain}/v1/fish_types`, {
+  const res = await fetch(`${domain}/v1/recipe/`, {
     headers: {
       Authorization: `Bearer ${apiKey}`,
-      cookie: `user_id=${cookie.get("user_id")?.value}`,
     },
   });
   return await res.json();
 });
+
+export const useFishData = routeLoader$<FishTypeResponse>(
+  async ({ env, cookie, params }) => {
+    const { apiKey, domain } = getFetchDetails(env);
+    const res = await fetch(`${domain}/v1/fish_type/${params.fishTypeId}`, {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        cookie: `user_id=${cookie.get("user_id")?.value}`,
+      },
+    });
+    return await res.json();
+  }
+);
 
 export const useUpdateFishType = routeAction$(
   async (fishTypeForm, { cookie, env, params }) => {
@@ -57,6 +76,7 @@ export const useUpdateFishType = routeAction$(
         errorText: "You do not have permission to do this.",
       };
     }
+    console.log(fishTypeForm.recipe);
 
     const { domain, apiKey } = getFetchDetails(env);
 
@@ -74,6 +94,7 @@ export const useUpdateFishType = routeAction$(
           name: fishTypeForm.name,
           anishinaabe_name: fishTypeForm.anishinaabe_name,
           about: fishTypeForm.about,
+          recipe: fishTypeForm.recipe,
         }),
       }
     );
@@ -89,6 +110,7 @@ export const useUpdateFishType = routeAction$(
     name: z.string().nonempty(),
     anishinaabe_name: z.string().optional(),
     about: z.string().nonempty(),
+    recipe: z.string().array().optional(),
   })
 );
 
@@ -128,9 +150,7 @@ export const serverSaveFishImageToDB = server$(async function (
 
 export default component$(() => {
   const fishData = useFishData();
-  const {
-    params: { fishTypeId },
-  } = useLocation();
+  const recipeData = useRecipeData();
   const formAction = useUpdateFishType();
   const saveValue = useSignal("Save");
   const validating = useSignal(false);
@@ -138,7 +158,7 @@ export default component$(() => {
   const failureText = useSignal("");
   const hideAlert = useSignal(true);
 
-  const fishTypeData = fishData.value.filter((c) => c.id === fishTypeId)[0];
+  const fishTypeData = fishData.value.fish_data;
 
   const fishImage = useSignal(
     fishTypeData.s3_fish_image
@@ -265,6 +285,56 @@ export default component$(() => {
                 </div>
               )}
             </div>
+
+            <div class="w-full sm:w-[55%] pr-5 sm:pr-0">
+              <div class="px-4 py-2 sm:px-6 pt-6">
+                <label
+                  for="recipe"
+                  class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
+                >
+                  Recipes
+                </label>
+              </div>
+              <div class="pl-5 pb-2">
+                <InputContainer>
+                  <div class="h-72 overflow-y-scroll overflow-x-hidden rounded-lg pr-4 pl-2 ring-1 ring-gray-300 dark:ring-white/10 bg-white/5">
+                    {recipeData.value.map((recipe, i) => (
+                      <div
+                        class="relative flex items-start py-1"
+                        key={`recipe-${i}`}
+                      >
+                        <div class="min-w-0 flex-1 sm:text-sm leading-6">
+                          <label
+                            for={recipe.name}
+                            class="select-none text-gray-900 dark:text-gray-100"
+                          >
+                            {recipe.name}
+                          </label>
+                        </div>
+                        <div class="ml-3 flex h-6 items-center">
+                          <input
+                            id={recipe.name}
+                            name="recipe[]"
+                            type="checkbox"
+                            value={recipe.id}
+                            class="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-600"
+                            checked={fishData.value.recipe_data.includes(
+                              recipe.id
+                            )}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {formAction.value?.failed && (
+                    <div class="text-left text-red-600 text-sm">
+                      {formAction.value?.fieldErrors?.recipe}
+                    </div>
+                  )}
+                </InputContainer>
+              </div>
+            </div>
+
             <div class="px-4 py-2 sm:px-6">
               <label
                 for="about"
@@ -274,18 +344,14 @@ export default component$(() => {
               </label>
             </div>
             <div class="px-5 pb-2">
-              <div class="space-y-5">
-                <div class="relative flex items-start">
-                  <div class="ml-1 text-sm leading-6 w-full">
-                    <textarea
-                      name="about"
-                      id="about"
-                      class="block text-sm w-full h-56 my-2 rounded-md border-0 p-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-                      value={fishTypeData.about}
-                    />
-                  </div>
-                </div>
-              </div>
+              <InputContainer>
+                <textarea
+                  name="about"
+                  id="about"
+                  class="block text-sm w-full h-56 my-2 rounded-md border-0 p-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
+                  value={fishTypeData.about}
+                />
+              </InputContainer>
               {formAction.value?.failed && (
                 <div class="text-left text-red-600 text-sm">
                   {formAction.value?.fieldErrors?.about}

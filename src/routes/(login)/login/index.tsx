@@ -1,4 +1,4 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import {
   type DocumentHead,
   zod$,
@@ -137,6 +137,10 @@ export default component$(() => {
   const action = useLoginFormAction();
   const guestAction = useGuestOption();
   const validating = useSignal(false);
+
+  useVisibleTask$(() => {
+    window.localStorage.clear();
+  });
 
   return (
     <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
