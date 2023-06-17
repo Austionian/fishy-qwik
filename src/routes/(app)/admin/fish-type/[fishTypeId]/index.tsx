@@ -157,8 +157,6 @@ export default component$(() => {
   const formSuccess = useSignal(true);
   const failureText = useSignal("");
   const hideAlert = useSignal(true);
-  const savingImage = useSignal(false);
-  const savingWoodlandImage = useSignal(false);
 
   const fishTypeData = fishData.value.fish_data;
 
@@ -382,54 +380,15 @@ export default component$(() => {
                       type="file"
                       class="peer absolute h-full w-full rounded-md opacity-0 cursor-pointer"
                       value={fishImage.value}
-                      onChange$={async (e) => {
-                        savingImage.value = true;
-                        const status = await handleUpload(
-                          e,
-                          fishTypeData.id,
-                          false
-                        );
-                        console.log(status);
-                        savingImage.value = false;
+                      onChange$={(e) => {
+                        handleUpload(e, fishTypeData.id, false);
                       }}
                     />
                     <label
                       for="fish_image"
                       class="pointer-events-none block rounded-md px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 peer-hover:ring-gray-400 peer-focus:ring-2 peer-focus:ring-teal-500"
                     >
-                      {savingImage.value ? (
-                        <svg
-                          width="38"
-                          height="38"
-                          viewBox="0 0 38 38"
-                          xmlns="http://www.w3.org/2000/svg"
-                          stroke="#fff"
-                          class="h-5 w-5"
-                        >
-                          <g fill="none" fill-rule="evenodd">
-                            <g transform="translate(1 1)" stroke-width="2">
-                              <circle
-                                stroke-opacity=".5"
-                                cx="18"
-                                cy="18"
-                                r="18"
-                              />
-                              <path d="M36 18c0-9.94-8.06-18-18-18">
-                                <animateTransform
-                                  attributeName="transform"
-                                  type="rotate"
-                                  from="0 18 18"
-                                  to="360 18 18"
-                                  dur="0.7s"
-                                  repeatCount="indefinite"
-                                />
-                              </path>
-                            </g>
-                          </g>
-                        </svg>
-                      ) : (
-                        <span>Change</span>
-                      )}
+                      <span>Change</span>
                       <span class="sr-only"> fish image</span>
                     </label>
                   </div>
@@ -458,54 +417,15 @@ export default component$(() => {
                       type="file"
                       class="peer absolute h-full w-full rounded-md opacity-0 cursor-pointer"
                       value={woodlandImage.value}
-                      onChange$={async (e) => {
-                        savingWoodlandImage.value = true;
-                        const status = await handleUpload(
-                          e,
-                          fishTypeData.id,
-                          true
-                        );
-                        console.log(status);
-                        savingWoodlandImage.value = false;
+                      onChange$={(e) => {
+                        handleUpload(e, fishTypeData.id, true);
                       }}
                     />
                     <label
                       for="woodland_fish_image"
                       class="pointer-events-none block rounded-md px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 peer-hover:ring-gray-400 peer-focus:ring-2 peer-focus:ring-teal-500"
                     >
-                      {savingWoodlandImage.value ? (
-                        <svg
-                          width="38"
-                          height="38"
-                          viewBox="0 0 38 38"
-                          xmlns="http://www.w3.org/2000/svg"
-                          stroke="#fff"
-                          class="h-5 w-5"
-                        >
-                          <g fill="none" fill-rule="evenodd">
-                            <g transform="translate(1 1)" stroke-width="2">
-                              <circle
-                                stroke-opacity=".5"
-                                cx="18"
-                                cy="18"
-                                r="18"
-                              />
-                              <path d="M36 18c0-9.94-8.06-18-18-18">
-                                <animateTransform
-                                  attributeName="transform"
-                                  type="rotate"
-                                  from="0 18 18"
-                                  to="360 18 18"
-                                  dur="0.7s"
-                                  repeatCount="indefinite"
-                                />
-                              </path>
-                            </g>
-                          </g>
-                        </svg>
-                      ) : (
-                        <span>Change</span>
-                      )}
+                      <span>Change</span>
                       <span class="sr-only"> woodland fish image</span>
                     </label>
                   </div>
