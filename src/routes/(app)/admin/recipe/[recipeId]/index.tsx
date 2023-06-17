@@ -163,6 +163,8 @@ export default component$(() => {
                 formAction.value?.errorText || "Unable to complete request.";
             }
             hideAlert.value = false;
+            additionalSteps.value = 0;
+            additionalIngredients.value = 0;
           }}
         >
           {!hideAlert.value ? (
