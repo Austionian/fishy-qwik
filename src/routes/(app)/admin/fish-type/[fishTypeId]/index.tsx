@@ -460,7 +460,7 @@ export default component$(() => {
                       value={woodlandImage.value}
                       onChange$={async (e) => {
                         savingWoodlandImage.value = true;
-                        let status = await handleUpload(
+                        const status = await handleUpload(
                           e,
                           fishTypeData.id,
                           true
