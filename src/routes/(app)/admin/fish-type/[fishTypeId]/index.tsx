@@ -382,9 +382,14 @@ export default component$(() => {
                       type="file"
                       class="peer absolute h-full w-full rounded-md opacity-0 cursor-pointer"
                       value={fishImage.value}
-                      onChange$={(e) => {
+                      onChange$={async (e) => {
                         savingImage.value = true;
-                        handleUpload(e, fishTypeData.id, false);
+                        const status = await handleUpload(
+                          e,
+                          fishTypeData.id,
+                          false
+                        );
+                        console.log(status);
                         savingImage.value = false;
                       }}
                     />
@@ -453,9 +458,14 @@ export default component$(() => {
                       type="file"
                       class="peer absolute h-full w-full rounded-md opacity-0 cursor-pointer"
                       value={woodlandImage.value}
-                      onChange$={(e) => {
+                      onChange$={async (e) => {
                         savingWoodlandImage.value = true;
-                        handleUpload(e, fishTypeData.id, true);
+                        let status = await handleUpload(
+                          e,
+                          fishTypeData.id,
+                          true
+                        );
+                        console.log(status);
                         savingWoodlandImage.value = false;
                       }}
                     />
