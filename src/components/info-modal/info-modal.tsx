@@ -5,6 +5,7 @@ import PORTIONS from "~/constants/portions";
 import type UserDetails from "~/types/UserDetails";
 import { saveUserDetails } from "~/services/saveUserDetails";
 import { userDetailsObject } from "~/constants/zod/userDetailsObject";
+import Spinner from "../spinner/spinner";
 
 type infoModalProps = {
   showUserInputModal: {
@@ -47,6 +48,7 @@ export default component$(
     );
     const backdropRef = useSignal<Element>();
     const modalRef = useSignal<Element>();
+    const validating = useSignal(false);
 
     useVisibleTask$(({ track }) => {
       track(() => showUserInputModal.value);
@@ -302,8 +304,9 @@ export default component$(
                   <button
                     type="submit"
                     class="inline-flex w-full justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 sm:col-start-2"
+                    onClick$={() => (validating.value = true)}
                   >
-                    SUBMIT
+                    {validating.value ? <Spinner /> : <span>SAVE</span>}
                   </button>
                   <button
                     type="button"
