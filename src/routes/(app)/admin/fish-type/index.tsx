@@ -23,6 +23,7 @@ import Alert from "~/components/alert/alert";
 import { serverHandleUpload } from "~/services/serverPresign";
 import type Recipe from "~/types/Recipe";
 import InputContainer from "~/components/input-container/input-container";
+import Spinner from "~/components/spinner/spinner";
 
 export const useRecipeData = routeLoader$<Recipe[]>(async ({ env }) => {
   const { apiKey, domain } = getFetchDetails(env);
@@ -90,6 +91,8 @@ export default component$(() => {
   const formSuccess = useSignal(true);
   const failureText = useSignal("");
   const hideAlert = useSignal(true);
+  const validatingImage = useSignal(false);
+  const validatingWoodlandImage = useSignal(false);
 
   const fishImage = useSignal<string>();
   const woodlandImage = useSignal<string>();
@@ -99,6 +102,11 @@ export default component$(() => {
       e: QwikChangeEvent<HTMLInputElement>,
       woodlandImageFlag: boolean
     ) => {
+      if (woodlandImageFlag) {
+        validatingWoodlandImage.value = true;
+      } else {
+        validatingImage.value = true;
+      }
       if (e.target.files) {
         const file = e.target.files[0];
         const fileName = `${uuidv4()}-${file.name}`;
@@ -124,6 +132,8 @@ export default component$(() => {
                 }
               })
               .catch((err) => console.error("err: ", err));
+            validatingImage.value = false;
+            validatingWoodlandImage.value = false;
           }
         });
       }
@@ -299,8 +309,14 @@ export default component$(() => {
                       for="fish_image"
                       class="pointer-events-none block rounded-md px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 peer-hover:ring-gray-400 peer-focus:ring-2 peer-focus:ring-teal-500"
                     >
-                      <span>Upload</span>
-                      <span class="sr-only"> fish image</span>
+                      {validatingImage.value ? (
+                        <Spinner />
+                      ) : (
+                        <>
+                          <span>Upload</span>
+                          <span class="sr-only"> fish image</span>
+                        </>
+                      )}
                     </label>
                   </div>
                 </div>
@@ -340,8 +356,14 @@ export default component$(() => {
                       for="woodland_fish_image"
                       class="pointer-events-none block rounded-md px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 peer-hover:ring-gray-400 peer-focus:ring-2 peer-focus:ring-teal-500"
                     >
-                      <span>Upload</span>
-                      <span class="sr-only"> woodland fish image</span>
+                      {validatingWoodlandImage.value ? (
+                        <Spinner />
+                      ) : (
+                        <>
+                          <span>Upload</span>
+                          <span class="sr-only"> woodland fish image</span>
+                        </>
+                      )}
                     </label>
                   </div>
                 </div>
