@@ -24,6 +24,7 @@ import Alert from "~/components/alert/alert";
 import { serverHandleUpload } from "~/services/serverPresign";
 import type Recipe from "~/types/Recipe";
 import InputContainer from "~/components/input-container/input-container";
+import Spinner from "~/components/spinner/spinner";
 
 type FishData = {
   id: string;
@@ -76,7 +77,6 @@ export const useUpdateFishType = routeAction$(
         errorText: "You do not have permission to do this.",
       };
     }
-    console.log(fishTypeForm.recipe);
 
     const { domain, apiKey } = getFetchDetails(env);
 
@@ -157,6 +157,8 @@ export default component$(() => {
   const formSuccess = useSignal(true);
   const failureText = useSignal("");
   const hideAlert = useSignal(true);
+  const validatingImage = useSignal(false);
+  const validatingWoodlandImage = useSignal(false);
 
   const fishTypeData = fishData.value.fish_data;
 
@@ -179,39 +181,40 @@ export default component$(() => {
       fish_type_id: string,
       woodlandImageFlag: boolean
     ) => {
+      if (woodlandImageFlag) {
+        validatingWoodlandImage.value = true;
+      } else {
+        validatingImage.value = true;
+      }
       if (e.target.files) {
         const file = e.target.files[0];
         const fileName = `${uuidv4()}-${file.name}`;
 
-        serverHandleUpload(fileName).then((res) => {
-          if (file) {
-            fetch(res.url, {
-              method: "PUT",
-              headers: {
-                "Content-Type": file.type,
-              },
-              body: file,
-            })
-              .then((res) => {
-                if (res.status === 200) {
-                  e.target.blur;
-                  const imageUrl = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
-                  if (woodlandImageFlag) {
-                    woodlandImage.value = imageUrl;
-                  } else {
-                    fishImage.value = imageUrl;
-                  }
-                  serverSaveFishImageToDB(
-                    fish_type_id,
-                    imageUrl,
-                    woodlandImageFlag
-                  );
-                }
-              })
-              .catch((err) => console.error("err: ", err));
+        if (file) {
+          let res = await serverHandleUpload(fileName);
+
+          let s3_res = await fetch(res.url, {
+            method: "PUT",
+            headers: {
+              "Content-Type": file.type,
+            },
+            body: file,
+          });
+
+          if (s3_res.status === 200) {
+            e.target.blur;
+            const imageUrl = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
+            if (woodlandImageFlag) {
+              woodlandImage.value = imageUrl;
+            } else {
+              fishImage.value = imageUrl;
+            }
+            serverSaveFishImageToDB(fish_type_id, imageUrl, woodlandImageFlag);
           }
-        });
+        }
       }
+      validatingImage.value = false;
+      validatingWoodlandImage.value = false;
     }
   );
 
@@ -388,8 +391,14 @@ export default component$(() => {
                       for="fish_image"
                       class="pointer-events-none block rounded-md px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 peer-hover:ring-gray-400 peer-focus:ring-2 peer-focus:ring-teal-500"
                     >
-                      <span>Change</span>
-                      <span class="sr-only"> fish image</span>
+                      {validatingImage.value ? (
+                        <Spinner />
+                      ) : (
+                        <>
+                          <span>Change</span>
+                          <span class="sr-only"> fish image</span>
+                        </>
+                      )}
                     </label>
                   </div>
                 </div>
@@ -400,7 +409,7 @@ export default component$(() => {
           <Container>
             <div class="px-4 py-2 sm:px-6">
               <label
-                for="about"
+                for="woodland_fish_image"
                 class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
               >
                 Woodland Fish Image
@@ -425,8 +434,14 @@ export default component$(() => {
                       for="woodland_fish_image"
                       class="pointer-events-none block rounded-md px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 peer-hover:ring-gray-400 peer-focus:ring-2 peer-focus:ring-teal-500"
                     >
-                      <span>Change</span>
-                      <span class="sr-only"> woodland fish image</span>
+                      {validatingWoodlandImage.value ? (
+                        <Spinner />
+                      ) : (
+                        <>
+                          <span>Change</span>
+                          <span class="sr-only"> woodland fish image</span>
+                        </>
+                      )}
                     </label>
                   </div>
                 </div>

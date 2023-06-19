@@ -111,31 +111,27 @@ export default component$(() => {
         const file = e.target.files[0];
         const fileName = `${uuidv4()}-${file.name}`;
 
-        serverHandleUpload(fileName).then((res) => {
-          if (file) {
-            fetch(res.url, {
-              method: "PUT",
-              headers: {
-                "Content-Type": file.type,
-              },
-              body: file,
-            })
-              .then((res) => {
-                if (res.status === 200) {
-                  e.target.blur;
-                  const imageUrl = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
-                  if (woodlandImageFlag) {
-                    woodlandImage.value = imageUrl;
-                  } else {
-                    fishImage.value = imageUrl;
-                  }
-                }
-              })
-              .catch((err) => console.error("err: ", err));
-            validatingImage.value = false;
-            validatingWoodlandImage.value = false;
+        if (file) {
+          const res = await serverHandleUpload(fileName);
+          const s3_res = await fetch(res.url, {
+            method: "PUT",
+            headers: {
+              "Content-Type": file.type,
+            },
+            body: file,
+          });
+          if (s3_res.status === 200) {
+            e.target.blur;
+            const imageUrl = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
+            if (woodlandImageFlag) {
+              woodlandImage.value = imageUrl;
+            } else {
+              fishImage.value = imageUrl;
+            }
           }
-        });
+        }
+        validatingImage.value = false;
+        validatingWoodlandImage.value = false;
       }
     }
   );
@@ -327,7 +323,7 @@ export default component$(() => {
           <Container>
             <div class="px-4 py-2 sm:px-6">
               <label
-                for="about"
+                for="woodland_fish_image"
                 class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
               >
                 Woodland Fish Image
