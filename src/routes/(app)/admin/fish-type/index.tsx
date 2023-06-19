@@ -296,6 +296,7 @@ export default component$(() => {
                         handleUpload(e, false);
                       }}
                     />
+                    <input hidden name="fish_image" value={fishImage.value} />
                     {formAction.value?.failed && (
                       <div class="text-left text-red-600 text-sm">
                         {formAction.value?.fieldErrors?.fish_image}
@@ -343,6 +344,11 @@ export default component$(() => {
                         handleUpload(e, true);
                       }}
                     />
+                    <input
+                      hidden
+                      name="woodland_fish_image"
+                      value={woodlandImage.value}
+                    />
                     {formAction.value?.failed && (
                       <div class="text-left text-red-600 text-sm">
                         {formAction.value?.fieldErrors?.woodland_fish_image}
@@ -366,12 +372,6 @@ export default component$(() => {
               </div>
             </div>
           </Container>
-          <input hidden name="fish_image" value={fishImage.value} />
-          <input
-            hidden
-            name="woodland_fish_image"
-            value={woodlandImage.value}
-          />
 
           <div class="divide-y divide-gray-200 pt-6">
             <div class="mt-4 flex justify-end gap-x-3 px-4 py-4 sm:px-6">

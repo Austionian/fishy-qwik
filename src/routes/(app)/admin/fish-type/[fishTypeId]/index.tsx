@@ -191,9 +191,9 @@ export default component$(() => {
         const fileName = `${uuidv4()}-${file.name}`;
 
         if (file) {
-          let res = await serverHandleUpload(fileName);
+          const res = await serverHandleUpload(fileName);
 
-          let s3_res = await fetch(res.url, {
+          const s3_res = await fetch(res.url, {
             method: "PUT",
             headers: {
               "Content-Type": file.type,
