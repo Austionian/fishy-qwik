@@ -10,6 +10,7 @@ import { getFetchDetails } from "~/helpers";
 import { v4 as uuidv4 } from "uuid";
 import { saveUserDetailsToCookies } from "~/services/saveUserDetails";
 import Spinner from "~/components/spinner/spinner";
+import LoginFormLayout from "~/components/login-form-layout/login-form-layout";
 
 export type UserLoginResponse = {
   user_id: string;
@@ -144,107 +145,98 @@ export default component$(() => {
   });
 
   return (
-    <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div class="mt-14 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white dark:bg-gray-900 px-4 py-8 shadow sm:rounded-lg sm:px-10">
-          <h1 class="my-6 text-center text-5xl font-bold tracking-tight dark:text-gray-100 text-gray-900">
-            Gigiigoo
-          </h1>
-          <Form
-            action={action}
-            class="space-y-6"
-            onSubmitCompleted$={() => {
-              if (action.value?.failed) {
-                validating.value = false;
-              }
-            }}
+    <LoginFormLayout>
+      <Form
+        action={action}
+        class="space-y-6"
+        onSubmitCompleted$={() => {
+          if (action.value?.failed) {
+            validating.value = false;
+          }
+        }}
+      >
+        {action.value?.failed && (
+          <div class="text-left text-red-400">{action.value?.formErrors}</div>
+        )}
+        <div>
+          <label
+            for="email"
+            class="text-left block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
           >
+            Email address
+          </label>
+          <div class="mt-2">
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
+            />
             {action.value?.failed && (
               <div class="text-left text-red-400">
-                {action.value?.formErrors}
+                {action.value?.fieldErrors?.email}
               </div>
             )}
-            <div>
-              <label
-                for="email"
-                class="text-left block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
-              >
-                Email address
-              </label>
-              <div class="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-                />
-                {action.value?.failed && (
-                  <div class="text-left text-red-400">
-                    {action.value?.fieldErrors?.email}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <label
-                for="password"
-                class="text-left block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
-              >
-                Password
-              </label>
-              <div class="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="password"
-                  required
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-                />
-                {action.value?.failed && (
-                  <div class="text-left text-red-400">
-                    {action.value?.fieldErrors?.password}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                class="flex w-full justify-center rounded-md bg-teal-700 text-gray-100 hover:text-white dark:bg-teal-500 dark:hover:bg-teal-400 dark:text-gray-950 dark:hover:text-black px-3 py-2 text-sm font-semibold text-whiwte shadow-sm hover:bg-teal-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-                onClick$={() => (validating.value = true)}
-              >
-                {validating.value ? <Spinner /> : "SIGN IN"}
-              </button>
-            </div>
-          </Form>
-          <Form action={guestAction} class="mt-5">
-            <div>
-              <button
-                type="submit"
-                class="text-teal-700 dark:text-teal-400 text-sm w-full font-bold rounded hover:bg-black/5 dark:hover:text-teal-300 hover:text-teal-800 dark:hover:bg-white/10 p-2"
-              >
-                CONTINUE AS GUEST
-              </button>
-            </div>
-          </Form>
-
-          <p class="mt-10 text-center text-sm text-gray-500 dark:text-gray-300">
-            Need an account?
-            <a
-              href="/register"
-              class="ml-2 font-semibold leading-6 text-teal-700 hover:text-teal-600 dark:text-teal-500 dark:hover:text-teal-400"
-            >
-              Create one here.
-            </a>
-          </p>
+          </div>
         </div>
-      </div>
-    </div>
+
+        <div>
+          <label
+            for="password"
+            class="text-left block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
+          >
+            Password
+          </label>
+          <div class="mt-2">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="password"
+              required
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
+            />
+            {action.value?.failed && (
+              <div class="text-left text-red-400">
+                {action.value?.fieldErrors?.password}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div>
+          <button
+            type="submit"
+            class="flex w-full justify-center rounded-md bg-teal-700 text-gray-100 hover:text-white dark:bg-teal-500 dark:hover:bg-teal-400 dark:text-gray-950 dark:hover:text-black px-3 py-2 text-sm font-semibold text-whiwte shadow-sm hover:bg-teal-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+            onClick$={() => (validating.value = true)}
+          >
+            {validating.value ? <Spinner /> : "SIGN IN"}
+          </button>
+        </div>
+      </Form>
+      <Form action={guestAction} class="mt-5">
+        <div>
+          <button
+            type="submit"
+            class="text-teal-700 dark:text-teal-400 text-sm w-full font-bold rounded hover:bg-black/5 dark:hover:text-teal-300 hover:text-teal-800 dark:hover:bg-white/10 p-2"
+          >
+            CONTINUE AS GUEST
+          </button>
+        </div>
+      </Form>
+
+      <p class="mt-10 text-center text-sm text-gray-500 dark:text-gray-300">
+        Need an account?
+        <a
+          href="/register"
+          class="ml-2 font-semibold leading-6 text-teal-700 hover:text-teal-600 dark:text-teal-500 dark:hover:text-teal-400"
+        >
+          Create one here.
+        </a>
+      </p>
+    </LoginFormLayout>
   );
 });
 
