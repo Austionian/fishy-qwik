@@ -1,6 +1,6 @@
 import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { animate } from "motion";
-import type Fish from "~/types/Fish";
+import type FishType from "~/types/FishType";
 import { LAKES } from "~/constants/lakes";
 import { server$ } from "@builder.io/qwik-city";
 import { getFetchDetails } from "~/helpers";
@@ -30,7 +30,7 @@ export default component$<Props>(({ showSearch }) => {
   const inputRef = useSignal<Element>();
   const backdropRef = useSignal<Element>();
   const search = useSignal("");
-  const fishResults = useSignal<Fish[]>([]);
+  const fishResults = useSignal<FishType[]>([]);
   const recipeResults = useSignal<Recipe[]>([]);
 
   const filteredFish = fishResults.value.filter(
@@ -200,7 +200,7 @@ export default component$<Props>(({ showSearch }) => {
                 <ul class="text-sm text-gray-700 dark:text-gray-300">
                   {fishResults.value?.length > 0 &&
                     filteredFish.map((fish, i) => (
-                      <a href={`/fish/type/${fish.fish_id}/`} key={i}>
+                      <a href={`/fish/type/${fish.id}/`} key={i}>
                         <li
                           class="group flex cursor-pointer select-none items-center
                                  rounded-md px-3 py-2 hover:bg-gray-900 hover:bg-opacity-5
