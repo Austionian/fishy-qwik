@@ -68,8 +68,8 @@ export default component$<Props>(({ showSearch }) => {
       typeof window.localStorage.getItem("recipes") === undefined
     ) {
       const data = await fetchSearchData();
-      const fish = data.fish_result;
-      const recipes = data.recipe_result;
+      const fish = data.fishs;
+      const recipes = data.recipes;
 
       fishResults.value = fish;
       recipeResults.value = recipes;
