@@ -39,8 +39,8 @@ type FishData = {
 };
 
 type FishTypeResponse = {
-  fish_data: FishData;
-  recipe_data: string[];
+  fish: FishData;
+  recipes: string[];
 };
 
 export const useRecipeData = routeLoader$<Recipe[]>(async ({ env }) => {
@@ -56,12 +56,15 @@ export const useRecipeData = routeLoader$<Recipe[]>(async ({ env }) => {
 export const useFishData = routeLoader$<FishTypeResponse>(
   async ({ env, cookie, params }) => {
     const { apiKey, domain } = getFetchDetails(env);
-    const res = await fetch(`${domain}/v1/fish_type/${params.fishTypeId}`, {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        cookie: `user_id=${cookie.get("user_id")?.value}`,
-      },
-    });
+    const res = await fetch(
+      `${domain}/v1/admin/fish_type/${params.fishTypeId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          cookie: `user_id=${cookie.get("user_id")?.value}`,
+        },
+      }
+    );
     return await res.json();
   }
 );
@@ -160,7 +163,7 @@ export default component$(() => {
   const validatingImage = useSignal(false);
   const validatingWoodlandImage = useSignal(false);
 
-  const fishTypeData = fishData.value.fish_data;
+  const fishTypeData = fishData.value.fish;
 
   const fishImage = useSignal(
     fishTypeData.s3_fish_image
@@ -321,9 +324,7 @@ export default component$(() => {
                             type="checkbox"
                             value={recipe.id}
                             class="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-600"
-                            checked={fishData.value.recipe_data.includes(
-                              recipe.id
-                            )}
+                            checked={fishData.value.recipes.includes(recipe.id)}
                           />
                         </div>
                       </div>
