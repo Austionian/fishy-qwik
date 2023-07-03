@@ -13,8 +13,8 @@ export const serverDeleteAccount = server$(async function () {
     };
   }
 
-  const response = await fetch(`${domain}/v1/user/delete/${user_id}`, {
-    method: "POST",
+  const response = await fetch(`${domain}/v1/user/${user_id}`, {
+    method: "DELETE",
     headers: {
       Authorization: `Bearer ${apiKey}`,
     },

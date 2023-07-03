@@ -52,8 +52,8 @@ export const serverDeleteRecipe = server$(async function (recipeId: string) {
 
   if (!user_id) return;
 
-  const response = await fetch(`${domain}/v1/admin/recipe/delete/${recipeId}`, {
-    method: "POST",
+  const response = await fetch(`${domain}/v1/admin/recipe/${recipeId}`, {
+    method: "DELETE",
     headers: {
       Authorization: `Bearer ${apiKey}`,
       cookie: `user_id=${user_id}`,
@@ -106,7 +106,7 @@ export const useUpdateRecipe = routeAction$(
     const response = await fetch(
       `${domain}/v1/admin/recipe/${params.recipeId}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${apiKey}`,
           "Content-Type": "application/json",

@@ -53,7 +53,7 @@ export const useUpdateFish = routeAction$(
     const { domain, apiKey } = getFetchDetails(env);
 
     const response = await fetch(`${domain}/v1/admin/fish/${params.fishId}`, {
-      method: "POST",
+      method: "PUT",
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
@@ -95,8 +95,8 @@ export const serverDeleteFish = server$(async function (fishId: string) {
 
   if (!user_id) return;
 
-  const response = await fetch(`${domain}/v1/admin/fish/delete/${fishId}`, {
-    method: "POST",
+  const response = await fetch(`${domain}/v1/admin/fish/${fishId}`, {
+    method: "DELETE",
     headers: {
       Authorization: `Bearer ${apiKey}`,
       cookie: `user_id=${user_id}`,

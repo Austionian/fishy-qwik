@@ -86,7 +86,7 @@ export const useUpdateFishType = routeAction$(
     const response = await fetch(
       `${domain}/v1/admin/fish_type/${params.fishTypeId}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${apiKey}`,
           "Content-Type": "application/json",
@@ -130,7 +130,7 @@ export const serverSaveFishImageToDB = server$(async function (
   const response = await fetch(
     `${domain}/v1/admin/fish_type/${fish_type_id}/image`,
     {
-      method: "POST",
+      method: "PUT",
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
