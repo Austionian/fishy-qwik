@@ -26,7 +26,7 @@ const LAKE_VALUES = ["Michigan", "Huron", "Superior", "Store"];
 
 export const useFishData = routeLoader$<FishData[]>(async ({ env, cookie }) => {
   const { apiKey, domain } = getFetchDetails(env);
-  const res = await fetch(`${domain}/v1/admin/fish_types`, {
+  const res = await fetch(`${domain}/v1/admin/fish_type/`, {
     headers: {
       Authorization: `Bearer ${apiKey}`,
       cookie: `user_id=${cookie.get("user_id")?.value}`,
