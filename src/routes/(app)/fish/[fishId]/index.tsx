@@ -7,6 +7,7 @@ import type UserDetails from "~/types/UserDetails";
 
 import FishDetailsPage from "~/components/fish-details-page/fish-details-page";
 import Error from "~/components/error/error";
+import getCookieForFetch from "~/helpers/getCookieForFetch";
 
 type FishData = {
   fish_data: Fish;
@@ -21,7 +22,7 @@ export const useFishData = routeLoader$<FishData>(
     const res = await fetch(`${domain}/v1/fish/${params.fishId}`, {
       headers: {
         Authorization: `Bearer ${apiKey}`,
-        cookie: `user_id=${cookie.get("user_id")?.value}`,
+        cookie: getCookieForFetch(cookie),
       },
     });
     try {

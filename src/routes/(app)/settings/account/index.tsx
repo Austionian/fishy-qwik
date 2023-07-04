@@ -19,6 +19,7 @@ import type UserDetails from "~/types/UserDetails";
 import DeleteModal from "~/components/delete-modal";
 import Alert from "~/components/alert/alert";
 import SaveButton from "~/components/save-button/save-button";
+import { GUEST } from "~/constants/constants";
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
   return getUserDetails(cookie);
@@ -30,7 +31,7 @@ export const useUpdateAccount = routeAction$(
     const TWO_WEEKS_FROM_TODAY_DATE = new Date(Date.now() + TWO_WEEKS_MS);
     const user_id = cookie.get("user_id")?.value;
 
-    if (!user_id) {
+    if (!user_id || user_id === GUEST) {
       return {
         error: true,
         errorText: "Error: You don't have permission to do this.",
@@ -214,6 +215,11 @@ export default component$(() => {
                     value={userDetails.value.email}
                   />
                 </div>
+                {formAction.value?.failed && (
+                  <div class="text-left text-red-600 text-sm">
+                    {formAction.value?.fieldErrors?.email}
+                  </div>
+                )}
               </div>
 
               <div class="col-span-6 sm:col-span-6">
@@ -231,6 +237,11 @@ export default component$(() => {
                   class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                   value={userDetails.value.firstName}
                 />
+                {formAction.value?.failed && (
+                  <div class="text-left text-red-600 text-sm">
+                    {formAction.value?.fieldErrors?.firstName}
+                  </div>
+                )}
               </div>
 
               <div class="col-span-12 sm:col-span-6">
@@ -248,6 +259,11 @@ export default component$(() => {
                   class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                   value={userDetails.value.lastName}
                 />
+                {formAction.value?.failed && (
+                  <div class="text-left text-red-600 text-sm">
+                    {formAction.value?.fieldErrors?.lastName}
+                  </div>
+                )}
               </div>
             </div>
 

@@ -2,6 +2,7 @@ import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { server$ } from "@builder.io/qwik-city";
 import { animate } from "motion";
 import { getFetchDetails } from "~/helpers";
+import getCookieForFetch from "~/helpers/getCookieForFetch";
 
 type Props = {
   favorite: {
@@ -16,7 +17,6 @@ export const serverSaveFishFavorite = server$(async function (
   fish_id: string
 ) {
   const { domain, apiKey } = getFetchDetails(this?.env);
-  const user_id = this.cookie.get("user_id")?.value;
 
   const response = await fetch(
     `${domain}/v1/${favorite ? "favorite" : "unfavorite"}/fish/${fish_id}`,
@@ -24,7 +24,7 @@ export const serverSaveFishFavorite = server$(async function (
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
-        cookie: `user_id=${user_id}`,
+        cookie: getCookieForFetch(this.cookie),
       },
     }
   );
@@ -43,7 +43,6 @@ export const serverSaveRecipeFavorite = server$(async function (
   recipe_id: string
 ) {
   const { domain, apiKey } = getFetchDetails(this?.env);
-  const user_id = this.cookie.get("user_id")?.value;
 
   const response = await fetch(
     `${domain}/v1/${favorite ? "favorite" : "unfavorite"}/recipe/${recipe_id}`,
@@ -51,7 +50,7 @@ export const serverSaveRecipeFavorite = server$(async function (
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
-        cookie: `user_id=${user_id}`,
+        cookie: getCookieForFetch(this.cookie),
       },
     }
   );

@@ -14,6 +14,7 @@ import Container from "~/components/container/container";
 import EditInput from "~/components/edit-input/edit-input";
 import SaveButton from "~/components/save-button/save-button";
 import Alert from "~/components/alert/alert";
+import getCookieForFetch from "~/helpers/getCookieForFetch";
 
 type FishData = {
   id: string;
@@ -29,7 +30,7 @@ export const useFishData = routeLoader$<FishData[]>(async ({ env, cookie }) => {
   const res = await fetch(`${domain}/v1/admin/fish_type/`, {
     headers: {
       Authorization: `Bearer ${apiKey}`,
-      cookie: `user_id=${cookie.get("user_id")?.value}`,
+      cookie: getCookieForFetch(cookie),
     },
   });
   return await res.json();

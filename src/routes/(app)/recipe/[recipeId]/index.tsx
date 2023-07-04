@@ -6,6 +6,7 @@ import type Recipe from "~/types/Recipe";
 import Error from "~/components/error/error";
 import NavBack from "~/components/nav-back/nav-back";
 import FavoriteButton from "~/components/favorite-button/favorite-button";
+import getCookieForFetch from "~/helpers/getCookieForFetch";
 
 type RecipeLoader = {
   data: Recipe;
@@ -19,7 +20,7 @@ export const useRecipeData = routeLoader$<RecipeLoader>(
     const res = await fetch(`${domain}/v1/recipe/${params.recipeId}`, {
       headers: {
         Authorization: `Bearer ${apiKey}`,
-        cookie: `user_id=${cookie.get("user_id")?.value}`,
+        cookie: getCookieForFetch(cookie),
       },
     });
     try {

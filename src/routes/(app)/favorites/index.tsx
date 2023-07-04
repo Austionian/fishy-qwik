@@ -3,6 +3,7 @@ import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import { getFetchDetails } from "~/helpers";
 
 import Error from "~/components/error/error";
+import getCookieForFetch from "~/helpers/getCookieForFetch";
 
 type Fish = {
   id: string;
@@ -27,11 +28,10 @@ type ErrorType = {
 export const useFavoriteData = routeLoader$<Favorites & ErrorType>(
   async ({ env, fail, cookie }) => {
     const { apiKey, domain } = getFetchDetails(env);
-    const user_id = cookie.get("user_id")?.value;
     const res = await fetch(`${domain}/v1/favorite/`, {
       headers: {
         Authorization: `Bearer ${apiKey}`,
-        cookie: `user_id=${user_id}`,
+        cookie: getCookieForFetch(cookie),
       },
     });
     try {

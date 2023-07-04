@@ -23,7 +23,10 @@ export const useFishData = routeLoader$<FishData>(
       {
         headers: {
           Authorization: `Bearer ${apiKey}`,
-          cookie: `user_id=${cookie.get("user_id")?.value}`,
+          cookie:
+            cookie.get("user_id")?.value !== "GUEST"
+              ? `user_id=${cookie.get("user_id")?.value}`
+              : "",
         },
       }
     );

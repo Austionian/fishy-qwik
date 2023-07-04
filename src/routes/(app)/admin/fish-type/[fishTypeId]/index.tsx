@@ -25,6 +25,7 @@ import { serverHandleUpload } from "~/services/serverPresign";
 import type Recipe from "~/types/Recipe";
 import InputContainer from "~/components/input-container/input-container";
 import Spinner from "~/components/spinner/spinner";
+import getCookieForFetch from "~/helpers/getCookieForFetch";
 
 type FishData = {
   id: string;
@@ -61,7 +62,7 @@ export const useFishData = routeLoader$<FishTypeResponse>(
       {
         headers: {
           Authorization: `Bearer ${apiKey}`,
-          cookie: `user_id=${cookie.get("user_id")?.value}`,
+          cookie: getCookieForFetch(cookie),
         },
       }
     );
