@@ -64,6 +64,8 @@ export default component$(({ user }: Props) => {
       ? user.email
       : "Guest";
 
+  const isGuest = !user.email;
+
   return (
     <nav
       class="bg-white dark:bg-gray-900/80 shadow dark:border-b dark:border-white/10"
@@ -249,15 +251,17 @@ export default component$(({ user }: Props) => {
                     aria-labelledby="user-menu-button"
                     tabIndex={0}
                   >
-                    <a
-                      href="/settings/"
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
-                      role="menuitem"
-                      tabIndex={0}
-                      id="user-menu-item-0"
-                    >
-                      Your Profile
-                    </a>
+                    {!isGuest && (
+                      <a
+                        href="/settings/"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
+                        role="menuitem"
+                        tabIndex={0}
+                        id="user-menu-item-0"
+                      >
+                        Your Profile
+                      </a>
+                    )}
                     <Form action={signOutAction}>
                       <button
                         type="submit"
@@ -340,19 +344,20 @@ export default component$(({ user }: Props) => {
               </div>
             </div>
             <div class="mt-3 space-y-1 px-2">
-              <a
-                href="/settings/"
-                class={
-                  location.url.pathname === "/settings/" ||
-                  location.url.pathname === "/settings/password/" ||
-                  location.url.pathname === "/settings/account/"
-                    ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-white/10 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-teal-500 cursor-default"
-                    : "w-full text-left block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
-                }
-              >
-                Your Profile
-              </a>
-
+              {!isGuest && (
+                <a
+                  href="/settings/"
+                  class={
+                    location.url.pathname === "/settings/" ||
+                    location.url.pathname === "/settings/password/" ||
+                    location.url.pathname === "/settings/account/"
+                      ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-white/10 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-teal-500 cursor-default"
+                      : "w-full text-left block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                  }
+                >
+                  Your Profile
+                </a>
+              )}
               <Form action={signOutAction}>
                 <button
                   type="submit"
