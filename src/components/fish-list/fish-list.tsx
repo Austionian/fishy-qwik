@@ -99,20 +99,6 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
     }
   });
 
-  // useVisibleTask$(({ track }) => {
-  //   track(() => fishData.data);
-  //   track(() => sortBy.value);
-  //
-  //   const li = document.querySelectorAll(".fishCard");
-  //   if (!li[0]) return;
-  //
-  //   animate(
-  //     li,
-  //     { opacity: [0, 1], scale: [0, 1] },
-  //     { delay: stagger(0.1), easing: "ease-in-out" }
-  //   );
-  // });
-
   return (
     <>
       {showUserDetialsModal.value && (

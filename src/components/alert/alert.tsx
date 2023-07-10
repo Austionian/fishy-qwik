@@ -16,9 +16,7 @@ type Props = {
 export default component$(
   ({ successText, failureText, hideAlert, success }: Props) => {
     return success.value ? (
-      <div
-        class={`rounded-md bg-teal-50 dark:bg-teal-800 p-4 fixed top-[10px] sm:top-[70px] left-[5%] w-[90%] max-w-7xl mx-auto ring-teal-500 dark:ring-white/10 ring-1 z-50`}
-      >
+      <div class="rounded-md bg-teal-50 dark:bg-teal-800 p-4 fixed top-[10px] sm:top-[70px] left-[50%] transform translate-x-[-50%] w-[90%] max-w-7xl mx-auto ring-teal-500 dark:ring-white/10 ring-1 z-50">
         <div class="flex">
           <div class="flex-shrink-0">
             <svg

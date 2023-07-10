@@ -48,14 +48,12 @@ export default component$(() => {
         <NavBack href={"/recipe"} text={"recipes"} />
         <div class="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8 mb-10">
           <div class="flex justify-center items-center flex-wrap space-x-5">
-            <div class="flex-shrink-0">
-              <div class="relative my-2">
-                <img
-                  src={`/images/dish${randomNumber.value}.webp`}
-                  alt={"Stock fish dish image"}
-                  class="h-[300px] sm:h-56 w-[90vw] object-cover rounded-md"
-                />
-              </div>
+            <div class="relative my-2">
+              <img
+                src={`/images/dish${randomNumber.value}.webp`}
+                alt={"Stock fish dish image"}
+                class="h-[300px] sm:h-56 w-[90vw] object-cover rounded-md"
+              />
             </div>
           </div>
         </div>

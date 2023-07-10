@@ -1,4 +1,4 @@
-import { Cookie } from "@builder.io/qwik-city";
+import { type Cookie } from "@builder.io/qwik-city";
 
 const getCookieForFetch = (cookie: Cookie) => {
   return !cookie.get("user_id") || cookie.get("user_id")?.value === "GUEST"
