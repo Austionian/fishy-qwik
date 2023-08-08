@@ -25,7 +25,7 @@
     "@builder.io/qwik": "1.2.5",
     "@builder.io/qwik-city": "1.2.5",
     "@types/eslint": "8.21.2",
-    "@types/node": "^18.17.1",
+    "@types/node": "^18.17.3",
     "@types/node-fetch": "latest",
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "5.55.0",
@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.4",
-    "chart.js": "^4.3.2",
+    "chart.js": "^4.3.3",
     "motion": "^10.16.2",
     "uuid": "^9.0.0"
   }
