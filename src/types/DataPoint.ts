@@ -1,6 +1,6 @@
 import type { dataPoints } from "~/constants/dataPoints";
 
-type DataPoint = {
+export type DataPoint = {
   title: string;
   query: string;
   about: string[];
@@ -9,12 +9,10 @@ type DataPoint = {
   link: string;
 };
 
-type ChartData = {
+export type ChartData = {
   name: string;
   anishinaabe_name: string;
   value: number;
 };
 
-type Points = keyof typeof dataPoints;
-
-export { DataPoint, Points, ChartData };
+export type Points = keyof typeof dataPoints;
