@@ -23,7 +23,7 @@ type FishData = {
   about: string;
 };
 
-const LAKE_VALUES = ["Michigan", "Huron", "Superior", "Store"];
+const LAKE_VALUES = ["Michigan", "Huron", "Superior", "Store", "Inland"];
 
 export const useFishData = routeLoader$<FishData[]>(async ({ env, cookie }) => {
   const { apiKey, domain } = getFetchDetails(env);

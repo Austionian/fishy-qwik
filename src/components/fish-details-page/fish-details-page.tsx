@@ -136,7 +136,6 @@ export default component$(({ fishData, userDetails }: Props) => {
                         </svg>
                       </div>
                       <dd class="mt-1 text-lg text-gray-900 dark:text-gray-100">
-                        {fishData.fish_data.protein.toFixed(3)}
                         <span class="text-xs text-gray-700 dark:text-gray-300">
                           g per 100g
                         </span>
@@ -164,7 +163,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                         </svg>
                       </div>
                       <dd class="mt-1 text-lg text-gray-900 dark:text-gray-100">
-                        {fishData.fish_data.omega_3_ratio.toFixed(3)}{" "}
+                        {fishData.fish_data.omega_3_ratio.toFixed(2)}{" "}
                       </dd>
                     </div>
 
@@ -225,7 +224,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                         </svg>
                       </div>
                       <dd class="mt-1 text-gray-900 dark:text-gray-100">
-                        {fishData.fish_data.mercury.toFixed(3)}
+                        {fishData.fish_data.mercury.toFixed(2)}
                         <span class="text-xs text-gray-700 dark:text-gray-300">
                           {" "}
                           ppm
@@ -253,7 +252,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                         </svg>
                       </div>
                       <dd class="mt-1 text-gray-900 dark:text-gray-100">
-                        {fishData.fish_data.pcb.toFixed(3)}{" "}
+                        {fishData.fish_data.pcb.toFixed(2)}{" "}
                         <span class="text-xs text-gray-700 dark:text-gray-300">
                           ppm
                         </span>
