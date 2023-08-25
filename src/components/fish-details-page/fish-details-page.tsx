@@ -137,7 +137,7 @@ export default component$(({ fishData, userDetails }: Props) => {
                       </div>
                       <dd class="mt-1 text-lg text-gray-900 dark:text-gray-100">
                         <span class="text-xs text-gray-700 dark:text-gray-300">
-                          g per 100g
+                          {fishData.fish_data.protein.toFixed(2)}g per 100g
                         </span>
                       </dd>
                     </div>
