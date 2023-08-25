@@ -14,6 +14,11 @@ const LINKS = [
     pathname: "/admin/",
     href: "/admin/",
   },
+  {
+    title: "Analytics",
+    pathname: "https://fishy-analytics.pages.dev",
+    href: "https://fishy-analytics.pages.dev",
+  },
 ];
 
 export default LINKS;
