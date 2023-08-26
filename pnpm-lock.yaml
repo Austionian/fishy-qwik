@@ -16,11 +16,11 @@ dependencies:
 
 devDependencies:
   '@builder.io/qwik':
-    specifier: 1.2.8
-    version: 1.2.8(undici@5.21.0)
+    specifier: 1.2.6
+    version: 1.2.6(undici@5.21.0)
   '@builder.io/qwik-city':
-    specifier: 1.2.8
-    version: 1.2.8
+    specifier: 1.2.6
+    version: 1.2.6
   '@types/eslint':
     specifier: 8.21.2
     version: 8.21.2
@@ -87,15 +87,15 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  /@builder.io/qwik-city@1.2.8:
-    resolution: {integrity: sha512-Y0VJ8a08+DGgr8C5GmzJfBFtw+oPjqtfOmewLxFKdyQNAAIiCMkZg9y7DApj5uIDhf954/faw0k5vG4G+GSyfw==}
+  /@builder.io/qwik-city@1.2.6:
+    resolution: {integrity: sha512-/uo58NysxpdsiEwuuKo8HDM9UYYAofrniupor2v5vci3Dr6PTXcvKAFJ1Z+SdJGv2uxr5hvKsbVohnVYa9jxYg==}
     engines: {node: '>=16.8.0 <18.0.0 || >=18.11'}
     dependencies:
       '@mdx-js/mdx': 2.3.0
       '@types/mdx': 2.0.5
       source-map: 0.7.4
       svgo: 3.0.2
-      vfile: 6.0.1
+      vfile: 5.3.7
       vite-imagetools: 5.0.8
       zod: 3.22.2
     transitivePeerDependencies:
@@ -103,8 +103,8 @@ packages:
       - supports-color
     dev: true
 
-  /@builder.io/qwik@1.2.8(undici@5.21.0):
-    resolution: {integrity: sha512-I9bQ6flHeic5pI8ChXx1xAvMyjNOIcOdI7VY6sneiYcVLjW3JtdHKKcdk2QMtrMuIIljN6j/xiyn9MBB2Vxqxg==}
+  /@builder.io/qwik@1.2.6(undici@5.21.0):
+    resolution: {integrity: sha512-Cm1sLAimML55I5T1RI80R1lLgI4cnSeQt5obQtcMKa8wMmf2/luEyQaEkeN2fV3sp/gaVXCfAuKaddXK6ONdww==}
     engines: {node: '>=16.8.0 <18.0.0 || >=18.11'}
     hasBin: true
     peerDependencies:
@@ -870,10 +870,6 @@ packages:
 
   /@types/unist@2.0.7:
     resolution: {integrity: sha512-cputDpIbFgLUaGQn6Vqg3/YsJwxUwHLO13v3i5ouxT4lat0khip9AEWxtERujXV9wxIB1EyF97BSJFt6vpdI8g==}
-    dev: true
-
-  /@types/unist@3.0.0:
-    resolution: {integrity: sha512-MFETx3tbTjE7Uk6vvnWINA/1iJ7LuMdO4fcq8UfF0pRbj01aGLduVvQcRyswuACJdpnHgg8E3rQLhaRdNEJS0w==}
     dev: true
 
   /@types/uuid@9.0.2:
@@ -3976,12 +3972,6 @@ packages:
       '@types/unist': 2.0.7
     dev: true
 
-  /unist-util-stringify-position@4.0.0:
-    resolution: {integrity: sha512-0ASV06AAoKCDkS2+xw5RXJywruurpbC4JZSm7nr7MOt1ojAzvyyaO+UxZf18j8FCF6kmzCZKcAgN/yu2gm2XgQ==}
-    dependencies:
-      '@types/unist': 3.0.0
-    dev: true
-
   /unist-util-visit-parents@5.1.3:
     resolution: {integrity: sha512-x6+y8g7wWMyQhL1iZfhIPhDAs7Xwbn9nRosDXl7qoPTSCy0yNxnKc+hWokFifWQIDGi154rdUqKvbCa4+1kLhg==}
     dependencies:
@@ -4040,13 +4030,6 @@ packages:
       unist-util-stringify-position: 3.0.3
     dev: true
 
-  /vfile-message@4.0.2:
-    resolution: {integrity: sha512-jRDZ1IMLttGj41KcZvlrYAaI3CfqpLpfpf+Mfig13viT6NKvRzWZ+lXz0Y5D60w6uJIBAOGq9mSHf0gktF0duw==}
-    dependencies:
-      '@types/unist': 3.0.0
-      unist-util-stringify-position: 4.0.0
-    dev: true
-
   /vfile@5.3.7:
     resolution: {integrity: sha512-r7qlzkgErKjobAmyNIkkSpizsFPYiUPuJb5pNW1RB4JcYVZhs4lIbVqk8XPk033CV/1z8ss5pkax8SuhGpcG8g==}
     dependencies:
@@ -4054,14 +4037,6 @@ packages:
       is-buffer: 2.0.5
       unist-util-stringify-position: 3.0.3
       vfile-message: 3.1.4
-    dev: true
-
-  /vfile@6.0.1:
-    resolution: {integrity: sha512-1bYqc7pt6NIADBJ98UiG0Bn/CHIVOoZ/IyEkqIruLg0mE1BKzkOXY2D6CSqQIcKqgadppE5lrxgWXJmXd7zZJw==}
-    dependencies:
-      '@types/unist': 3.0.0
-      unist-util-stringify-position: 4.0.0
-      vfile-message: 4.0.2
     dev: true
 
   /vite-imagetools@5.0.8:
