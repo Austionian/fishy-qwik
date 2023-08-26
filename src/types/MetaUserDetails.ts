@@ -4,6 +4,7 @@ type MetaUserDetails = {
   image?: string;
   firstName?: string;
   lastName?: string;
+  user_id?: string;
 };
 
 export default MetaUserDetails;

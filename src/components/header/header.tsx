@@ -4,7 +4,7 @@ import { animate } from "motion";
 import Search from "../search/search";
 import LINKS from "~/constants/links";
 import type MetaUserDetails from "~/types/MetaUserDetails";
-import { deleteAllCookies } from "~/helpers";
+import { deleteAllCookies, getCookie } from "~/helpers";
 
 export const useSignOut = globalAction$(
   async (_, { cookie, redirect, platform }) => {
@@ -92,10 +92,14 @@ export default component$(({ user }: Props) => {
             <div class="hidden lg:ml-10 lg:flex lg:space-x-8">
               <div class="flex space-x-4">
                 {LINKS.map((link, i) => {
-                  if (link.title === "Admin" && user.admin) {
+                  if (user.admin && link.admin_only) {
+                    const href =
+                      link.title === "Analytics"
+                        ? `${link.href}?user_id=${user.user_id}`
+                        : link.href;
                     return (
                       <a
-                        href={link.href}
+                        href={href}
                         key={i}
                         class={
                           location.url.pathname === link.pathname
@@ -106,7 +110,7 @@ export default component$(({ user }: Props) => {
                         {link.title}
                       </a>
                     );
-                  } else if (link.title !== "Admin") {
+                  } else {
                     return (
                       <a
                         href={link.href}
@@ -285,10 +289,14 @@ export default component$(({ user }: Props) => {
         <div class="lg:hidden" id="mobile-menu">
           <div class="space-y-1 px-2 pb-3 pt-2">
             {LINKS.map((link, i) => {
-              if (link.title === "Admin" && user.admin) {
+              if (user.admin && link.admin_only) {
+                const href =
+                  link.title === "Analytics"
+                    ? `${link.href}?user_id=${getCookie("user_id")}`
+                    : link.href;
                 return (
                   <a
-                    href={link.href}
+                    href={href}
                     key={i}
                     class={
                       location.url.pathname === link.pathname
@@ -299,7 +307,7 @@ export default component$(({ user }: Props) => {
                     {link.title}
                   </a>
                 );
-              } else if (link.title !== "Admin") {
+              } else {
                 return (
                   <a
                     href={link.href}
