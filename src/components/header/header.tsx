@@ -110,10 +110,7 @@ export default component$(({ user }: Props) => {
                         {link.title}
                       </a>
                     );
-                  } else if (
-                    link.title === "Admin" ||
-                    link.title === "Analytics"
-                  ) {
+                  } else if (link.admin_only) {
                     return <></>;
                   } else {
                     return (
@@ -312,7 +309,7 @@ export default component$(({ user }: Props) => {
                     {link.title}
                   </a>
                 );
-              } else if (link.title === "Admin" || link.title === "Analytics") {
+              } else if (link.admin_only) {
                 return <></>;
               } else {
                 return (
