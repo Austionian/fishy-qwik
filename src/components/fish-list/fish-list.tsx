@@ -35,6 +35,7 @@ export const fetchFish = server$(async function (lakeName: string) {
   const res = await fetch(`${domain}/v1/fishs?lake=${lakeName}`, {
     headers: {
       Authorization: `Bearer ${apiKey}`,
+      "Cache-Control": "max-age=3600",
     },
   });
   return await res.json();
@@ -188,10 +189,10 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
               >
                 <img src={getFishImageUrl(fish)} alt={fish.name} class="h-44" />
               </div>
-              <div class="mr-8 lg:ml-10 lg:w-full">
+              <div class="mr-0 lg:mr-8 lg:ml-10 lg:w-full">
                 <div class="mt-4 flex justify-between">
                   <div
-                    class="cursor-pointer flex-grow whitespace-nowrap"
+                    class="cursor-pointer flex-grow"
                     onClick$={() => (window.location.href = link)}
                   >
                     <p class="font-extralight text-xl group-hover:text-teal-500 dark:text-gray-200">
