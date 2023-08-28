@@ -66,6 +66,16 @@ export default component$(({ user }: Props) => {
 
   const isGuest = !user.email;
 
+  const linkSelected =
+    "inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900 dark:text-teal-500";
+  const linkUnselected =
+    "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100";
+
+  const mobileLinkSelected =
+    "block border-l-4 border-teal-500 bg-teal-50 dark:bg-white/10 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-teal-500 cursor-default";
+  const mobileLinkUnselected =
+    "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200";
+
   return (
     <nav
       class="bg-white dark:bg-gray-900/80 shadow dark:border-b dark:border-white/10"
@@ -93,18 +103,14 @@ export default component$(({ user }: Props) => {
               <div class="flex space-x-4">
                 {LINKS.map((link, i) => {
                   if (user.admin && link.admin_only) {
-                    const href =
-                      link.title === "Analytics"
-                        ? `${link.href}?user_id=${user.user_id}`
-                        : link.href;
                     return (
                       <a
-                        href={href}
+                        href={link.href}
                         key={i}
                         class={
                           location.url.pathname === link.pathname
-                            ? "inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900 dark:text-teal-500"
-                            : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100"
+                            ? linkSelected
+                            : linkUnselected
                         }
                       >
                         {link.title}
@@ -119,8 +125,8 @@ export default component$(({ user }: Props) => {
                         key={i}
                         class={
                           location.url.pathname === link.pathname
-                            ? "inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900 dark:text-teal-500"
-                            : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-100"
+                            ? linkSelected
+                            : linkUnselected
                         }
                       >
                         {link.title}
@@ -292,18 +298,14 @@ export default component$(({ user }: Props) => {
           <div class="space-y-1 px-2 pb-3 pt-2">
             {LINKS.map((link, i) => {
               if (user.admin && link.admin_only) {
-                const href =
-                  link.title === "Analytics"
-                    ? `${link.href}?user_id=${getCookie("user_id")}`
-                    : link.href;
                 return (
                   <a
-                    href={href}
+                    href={link.href}
                     key={i}
                     class={
                       location.url.pathname === link.pathname
-                        ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-white/10 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-teal-500 cursor-default"
-                        : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                        ? mobileLinkSelected
+                        : mobileLinkUnselected
                     }
                   >
                     {link.title}
@@ -318,8 +320,8 @@ export default component$(({ user }: Props) => {
                     key={i}
                     class={
                       location.url.pathname === link.pathname
-                        ? "block border-l-4 border-teal-500 bg-teal-50 dark:bg-white/10 py-2 pl-3 pr-4 text-base font-medium text-teal-700 dark:text-teal-500 cursor-default"
-                        : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                        ? mobileLinkSelected
+                        : mobileLinkUnselected
                     }
                   >
                     {link.title}

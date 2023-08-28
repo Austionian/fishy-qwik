@@ -19,8 +19,8 @@ const LINKS = [
   },
   {
     title: "Analytics",
-    pathname: "https://fishy-analytics.pages.dev",
-    href: "https://fishy-analytics.pages.dev",
+    pathname: "/analytics/",
+    href: "/analytics/",
     admin_only: true,
   },
 ];

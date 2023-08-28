@@ -34,17 +34,17 @@ export default component$(() => {
           media="(prefers-color-scheme: dark)"
         />
         <link rel="manifest" href="/manifest.json" />
-        <RouterHead />
-        <script
-          dangerouslySetInnerHTML={`
-          if (window.matchMedia("(prefers-color-scheme: dark)").matches &&
-            localStorage.theme !== 'light') {
-            localStorage.theme = 'dark';
-          }
-        
-          document.documentElement.className = localStorage.theme || 'dark';
-        `}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Flow+Rounded&display=swap"
+          rel="stylesheet"
+        />
+        <RouterHead />
       </head>
       <body lang="en">
         <RouterOutlet />
