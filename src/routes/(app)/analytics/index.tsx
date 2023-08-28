@@ -626,9 +626,9 @@ export default component$(() => {
                           </time>
                           {dayjs(user.latest_login).diff(
                             new Date(),
-                            "w",
+                            "d",
                             true
-                          ) < 2 ? (
+                          ) >= -14 ? (
                             <>
                               <div class="flex-none rounded-full p-1 text-green-400 bg-green-400/10">
                                 <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
