@@ -45,7 +45,7 @@ export default component$(() => {
               <button type="button" class="-m-2.5 p-2.5">
                 <span class="sr-only">Close sidebar</span>
                 <svg
-                  class="h-6 w-6 text-white"
+                  class="h-6 w-6 text-black dark:text-white"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
@@ -92,7 +92,7 @@ export default component$(() => {
                       <li>
                         <a
                           href="#"
-                          class="bg-gray-800 text-white group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                          class="bg-gray-800 text-black dark:text-white group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                         >
                           <svg
                             class="h-6 w-6 shrink-0"
@@ -207,7 +207,7 @@ export default component$(() => {
                     </ul>
                   </li>
                   <li>
-                    <div class="text-xs font-semibold leading-6 text-gray-400">
+                    <div class="text-xs font-semibold leading-6 text-gray-600 dark:text-gray-400">
                       Your teams
                     </div>
                     <ul role="list" class="-mx-2 mt-2 space-y-1">
@@ -216,7 +216,7 @@ export default component$(() => {
                           href="#"
                           class="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                         >
-                          <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
+                          <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-600 dark:text-gray-400 group-hover:text-white">
                             P
                           </span>
                           <span class="truncate">Planetaria</span>
@@ -227,7 +227,7 @@ export default component$(() => {
                           href="#"
                           class="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                         >
-                          <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
+                          <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-600 dark:text-gray-400 group-hover:text-white">
                             P
                           </span>
                           <span class="truncate">Protocol</span>
@@ -238,7 +238,7 @@ export default component$(() => {
                           href="#"
                           class="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                         >
-                          <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
+                          <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-600 dark:text-gray-400 group-hover:text-white">
                             T
                           </span>
                           <span class="truncate">Tailwind Labs</span>
@@ -249,7 +249,7 @@ export default component$(() => {
                   <li class="-mx-6 mt-auto">
                     <a
                       href="#"
-                      class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
+                      class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-black dark:text-white hover:bg-gray-800"
                     >
                       <span class="sr-only">Your profile</span>
                       <span aria-hidden="true">Tom Cook</span>
@@ -295,7 +295,7 @@ export default component$(() => {
                   <li>
                     <a
                       href="#"
-                      class="bg-gray-800 text-white group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                      class="bg-gray-800 text-black dark:text-white group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                     >
                       <svg
                         class="h-6 w-6 shrink-0"
@@ -410,7 +410,7 @@ export default component$(() => {
                 </ul>
               </li>
               <li>
-                <div class="text-xs font-semibold leading-6 text-gray-400">
+                <div class="text-xs font-semibold leading-6 text-gray-600 dark:text-gray-400">
                   Your teams
                 </div>
                 <ul role="list" class="-mx-2 mt-2 space-y-1">
@@ -419,7 +419,7 @@ export default component$(() => {
                       href="#"
                       class="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                     >
-                      <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
+                      <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-600 dark:text-gray-400 group-hover:text-white">
                         P
                       </span>
                       <span class="truncate">Planetaria</span>
@@ -430,7 +430,7 @@ export default component$(() => {
                       href="#"
                       class="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                     >
-                      <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
+                      <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-600 dark:text-gray-400 group-hover:text-white">
                         P
                       </span>
                       <span class="truncate">Protocol</span>
@@ -441,7 +441,7 @@ export default component$(() => {
                       href="#"
                       class="text-gray-400 hover:text-white hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                     >
-                      <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
+                      <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-600 dark:text-gray-400 group-hover:text-white">
                         T
                       </span>
                       <span class="truncate">Tailwind Labs</span>
@@ -452,7 +452,7 @@ export default component$(() => {
               <li class="-mx-6 mt-auto">
                 <a
                   href="#"
-                  class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
+                  class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-black dark:text-white hover:bg-gray-800"
                 >
                   <span class="sr-only">Your profile</span>
                   <span aria-hidden="true">Tom Cook</span>
@@ -470,10 +470,10 @@ export default component$(() => {
             <nav class="flex overflow-x-auto border-b border-white/10 py-4">
               <ul
                 role="list"
-                class="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-400 sm:px-6 lg:px-8"
+                class="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-600 dark:text-gray-400 sm:px-6 lg:px-8"
               >
                 <li>
-                  <a href="#" class="text-indigo-400">
+                  <a href="#" class="text-teal-400">
                     Overview
                   </a>
                 </li>
@@ -500,64 +500,68 @@ export default component$(() => {
               </ul>
             </nav>
 
-            <div class="flex flex-col items-start justify-between gap-x-8 gap-y-4 bg-gray-700/10 px-4 py-4 sm:flex-row sm:items-center sm:px-6 lg:px-8">
+            <div class="flex flex-col items-start justify-between gap-x-8 gap-y-4 bg-black/5 dark:bg-gray-700/10 px-4 py-4 sm:flex-row sm:items-center sm:px-6 lg:px-8">
               <div>
                 <div class="flex items-center gap-x-3">
                   <div class="flex-none rounded-full bg-green-400/10 p-1 text-green-400">
                     <div class="h-2 w-2 rounded-full bg-current"></div>
                   </div>
                   <h1 class="flex gap-x-3 text-base leading-7">
-                    <span class="font-semibold text-white">Planetaria</span>
+                    <span class="font-semibold text-black dark:text-white">
+                      Planetaria
+                    </span>
                     <span class="text-gray-600">/</span>
-                    <span class="font-semibold text-white">mobile-api</span>
+                    <span class="font-semibold text-black dark:text-white">
+                      mobile-api
+                    </span>
                   </h1>
                 </div>
-                <p class="mt-2 text-xs leading-6 text-gray-400">
+                <p class="mt-2 text-xs leading-6 text-gray-600 dark:text-gray-400">
                   Deploys from GitHub via main branch
                 </p>
               </div>
-              <div class="order-first flex-none rounded-full bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 ring-1 ring-inset ring-indigo-400/30 sm:order-none">
+              <div class="order-first flex-none rounded-full bg-teal-400/10 px-2 py-1 text-xs font-medium text-teal-400 ring-1 ring-inset ring-teal-400/30 sm:order-none">
                 Production
               </div>
             </div>
 
-            <div class="grid grid-cols-1 bg-gray-700/10 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="grid grid-cols-1 bg-black/5 dark:bg-gray-700/10 sm:grid-cols-2 lg:grid-cols-4">
               <div class="border-t border-white/5 py-6 px-4 sm:px-6 lg:px-8">
-                <p class="font-sans text-sm font-medium leading-6 text-gray-400">
+                <p class="font-sans text-sm font-medium leading-6 text-gray-600 dark:text-gray-400">
                   Registered Users
                 </p>
                 <p class="mt-2 flex items-baseline gap-x-2">
-                  <span class="font-mono text-4xl font-semibold tracking-tight text-white">
+                  <span class="font-mono text-4xl font-semibold tracking-tight text-black dark:text-white">
                     {data.value.number_of_registered_users}
                   </span>
                 </p>
               </div>
               <div class="border-t border-white/5 py-6 px-4 sm:px-6 lg:px-8 sm:border-l">
-                <p class="font-sans text-sm font-medium leading-6 text-gray-400">
+                <p class="font-sans text-sm font-medium leading-6 text-gray-600 dark:text-gray-400">
                   Current Active Users
                 </p>
                 <p class="mt-2 flex items-baseline gap-x-2">
-                  <span class="text-4xl font-semibold tracking-tight text-white">
+                  <span class="text-4xl font-semibold tracking-tight text-black dark:text-white">
                     3.65
                   </span>
                 </p>
               </div>
               <div class="border-t border-white/5 py-6 px-4 sm:px-6 lg:px-8 lg:border-l">
-                <p class="font-mono text-sm font-medium leading-6 text-gray-400">
+                <p class="font-mono text-sm font-medium leading-6 text-gray-600 dark:text-gray-400">
                   New Users in the Last Month
                 </p>
                 <p class="mt-2 flex items-baseline gap-x-2">
-                  <span class="text-4xl font-semibold tracking-tight text-white">
+                  <span class="text-4xl font-semibold tracking-tight text-black dark:text-white">
                     3
                   </span>
                 </p>
               </div>
               <div class="border-t border-white/5 py-6 px-4 sm:px-6 lg:px-8 sm:border-l">
-                <p class="text-sm font-medium leading-6 text-gray-400">
+                <p class="text-sm font-medium leading-6 text-gray-600 dark:text-gray-400">
                   Success rate
                 </p>
                 <p class="mt-2 flex items-baseline gap-x-2">
-                  <span class="text-4xl font-semibold tracking-tight text-white">
+                  <span class="text-4xl font-semibold tracking-tight text-black dark:text-white">
                     98.5%
                   </span>
                 </p>
@@ -566,7 +570,7 @@ export default component$(() => {
           </header>
 
           <div class="border-t border-white/10 pt-11">
-            <h2 class="font-sans px-4 text-base font-semibold leading-7 text-white sm:px-6 lg:px-8">
+            <h2 class="font-sans px-4 text-base font-semibold leading-7 text-black dark:text-white sm:px-6 lg:px-8">
               Users
             </h2>
             <table class="mt-6 w-full whitespace-nowrap text-left">
@@ -577,7 +581,7 @@ export default component$(() => {
                 <col class="lg:w-1/12" />
                 <col class="lg:w-1/12" />
               </colgroup>
-              <thead class="border-b border-white/10 text-sm leading-6 text-white">
+              <thead class="border-b border-white/10 text-sm leading-6 text-black dark:text-white">
                 <tr>
                   <th
                     scope="col"
@@ -611,7 +615,7 @@ export default component$(() => {
                     <tr key={user.email}>
                       <td class="py-4 pl-4 pr-8 sm:pl-6 lg:pl-8">
                         <div class="flex items-center gap-x-4">
-                          <div class="truncate text-sm font-medium leading-6 text-white">
+                          <div class="truncate text-sm font-medium leading-6 text-black dark:text-white">
                             {user.email}
                           </div>
                         </div>
@@ -633,7 +637,7 @@ export default component$(() => {
                               <div class="flex-none rounded-full p-1 text-green-400 bg-green-400/10">
                                 <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
                               </div>
-                              <div class="hidden text-white sm:block">
+                              <div class="hidden text-black dark:text-white sm:block">
                                 Active
                               </div>
                             </>
@@ -642,17 +646,17 @@ export default component$(() => {
                               <div class="flex-none rounded-full p-1 text-yellow-400 bg-yellow-400/10">
                                 <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
                               </div>
-                              <div class="hidden text-white sm:block">
+                              <div class="hidden text-black dark:text-white sm:block">
                                 Inactive
                               </div>
                             </>
                           )}
                         </div>
                       </td>
-                      <td class="hidden py-4 pl-0 pr-8 text-sm leading-6 text-gray-400 md:table-cell lg:pr-20">
+                      <td class="hidden py-4 pl-0 pr-8 text-sm leading-6 text-gray-600 dark:text-gray-400 md:table-cell lg:pr-20">
                         {dayjs(user.created_at).format("MMM D, YYYY")}
                       </td>
-                      <td class="hidden py-4 pl-0 pr-4 text-right text-sm leading-6 text-gray-400 sm:table-cell sm:pr-6 lg:pr-8">
+                      <td class="hidden py-4 pl-0 pr-4 text-right text-sm leading-6 text-gray-600 dark:text-gray-400 sm:table-cell sm:pr-6 lg:pr-8">
                         <time dateTime="2023-01-23T11:00">
                           {dayjs(user.latest_login).fromNow()}
                         </time>
