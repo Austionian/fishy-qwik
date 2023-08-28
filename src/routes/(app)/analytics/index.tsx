@@ -467,7 +467,7 @@ export default component$(() => {
       <div>
         <main>
           <header>
-            <nav class="flex overflow-x-auto border-b border-white/10 py-4">
+            <nav class="flex overflow-x-auto border-b border-black/10 dark:border-white/10 py-4">
               <ul
                 role="list"
                 class="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-600 dark:text-gray-400 sm:px-6 lg:px-8"
@@ -500,7 +500,7 @@ export default component$(() => {
               </ul>
             </nav>
 
-            <div class="flex flex-col items-start justify-between gap-x-8 gap-y-4 bg-black/5 dark:bg-gray-700/10 px-4 py-4 sm:flex-row sm:items-center sm:px-6 lg:px-8">
+            <div class="flex flex-col items-start justify-between gap-x-8 gap-y-4 bg-gray-500/5 dark:bg-gray-700/10 px-4 py-4 sm:flex-row sm:items-center sm:px-6 lg:px-8">
               <div>
                 <div class="flex items-center gap-x-3">
                   <div class="flex-none rounded-full bg-green-400/10 p-1 text-green-400">
@@ -525,8 +525,8 @@ export default component$(() => {
               </div>
             </div>
 
-            <div class="grid grid-cols-1 bg-black/5 dark:bg-gray-700/10 sm:grid-cols-2 lg:grid-cols-4">
-              <div class="border-t border-white/5 py-6 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 bg-gray-500/5 dark:bg-gray-700/10 sm:grid-cols-2 lg:grid-cols-4">
+              <div class="border-t border-black/5 dark:border-white/5 py-6 px-4 sm:px-6 lg:px-8">
                 <p class="font-sans text-sm font-medium leading-6 text-gray-600 dark:text-gray-400">
                   Registered Users
                 </p>
@@ -536,7 +536,7 @@ export default component$(() => {
                   </span>
                 </p>
               </div>
-              <div class="border-t border-white/5 py-6 px-4 sm:px-6 lg:px-8 sm:border-l">
+              <div class="border-t border-black/5 dark:border-white/5 py-6 px-4 sm:px-6 lg:px-8 sm:border-l">
                 <p class="font-sans text-sm font-medium leading-6 text-gray-600 dark:text-gray-400">
                   Current Active Users
                 </p>
@@ -546,7 +546,7 @@ export default component$(() => {
                   </span>
                 </p>
               </div>
-              <div class="border-t border-white/5 py-6 px-4 sm:px-6 lg:px-8 lg:border-l">
+              <div class="border-t border-black/5 dark:border-white/5 py-6 px-4 sm:px-6 lg:px-8 lg:border-l">
                 <p class="font-mono text-sm font-medium leading-6 text-gray-600 dark:text-gray-400">
                   New Users in the Last Month
                 </p>
@@ -556,7 +556,7 @@ export default component$(() => {
                   </span>
                 </p>
               </div>
-              <div class="border-t border-white/5 py-6 px-4 sm:px-6 lg:px-8 sm:border-l">
+              <div class="border-t border-black/5 dark:border-white/5 py-6 px-4 sm:px-6 lg:px-8 sm:border-l">
                 <p class="text-sm font-medium leading-6 text-gray-600 dark:text-gray-400">
                   Success rate
                 </p>
@@ -569,7 +569,7 @@ export default component$(() => {
             </div>
           </header>
 
-          <div class="border-t border-white/10 pt-11">
+          <div class="border-t border-black/10 dark:border-white/10 pt-11">
             <h2 class="font-sans px-4 text-base font-semibold leading-7 text-black dark:text-white sm:px-6 lg:px-8">
               Users
             </h2>
@@ -581,7 +581,7 @@ export default component$(() => {
                 <col class="lg:w-1/12" />
                 <col class="lg:w-1/12" />
               </colgroup>
-              <thead class="border-b border-white/10 text-sm leading-6 text-black dark:text-white">
+              <thead class="border-b boder-black/10 dark:border-white/10 text-sm leading-6 text-black dark:text-white">
                 <tr>
                   <th
                     scope="col"
@@ -609,7 +609,7 @@ export default component$(() => {
                   </th>
                 </tr>
               </thead>
-              <tbody class="font-mono divide-y divide-white/5">
+              <tbody class="font-mono divide-y divide-black/5 dark:divide-white/5">
                 {data.value.user_data.map((user) => {
                   return (
                     <tr key={user.email}>
