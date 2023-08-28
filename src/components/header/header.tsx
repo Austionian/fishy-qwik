@@ -4,7 +4,7 @@ import { animate } from "motion";
 import Search from "../search/search";
 import LINKS from "~/constants/links";
 import type MetaUserDetails from "~/types/MetaUserDetails";
-import { deleteAllCookies, getCookie } from "~/helpers";
+import { deleteAllCookies } from "~/helpers";
 
 export const useSignOut = globalAction$(
   async (_, { cookie, redirect, platform }) => {
