@@ -20,7 +20,7 @@ export default component$(({ fish }: Props) => (
               {data.title}
             </dt>
             <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">
-              {fish[key].toFixed(2)}
+              {fish[key].toFixed(3)}
               <span class="text-xs text-gray-700 dark:text-gray-300">
                 {data.postfix}
               </span>

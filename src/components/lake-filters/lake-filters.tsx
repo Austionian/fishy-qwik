@@ -10,7 +10,7 @@ type Props = {
 export default component$(({ filterBy }: Props) => (
   <div class="flex flex-row">
     {LAKES.map((lake, i) => (
-      <div class={i === 0 ? "mr-2 mb-2" : "mb-2 mx-2"} key={i}>
+      <div class={i === 0 ? "mr-1 lg:mr-2 mb-2" : "mb-2 mr-1 lg:mx-2"} key={i}>
         <button
           type="button"
           class={
