@@ -17,9 +17,6 @@ export const useFishData = routeLoader$<Fish[] & ErrorType>(
   async ({ env, query, fail }) => {
     const { apiKey, domain } = getFetchDetails(env);
     let filter = (query.get("lake") as LakeValues) || "All";
-    if (!LAKE_VALUES.includes(filter)) {
-      filter = "All";
-    }
     let res;
     if (filter === "All") {
       res = await fetch(`${domain}/v1/fish_avgs`, {

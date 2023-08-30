@@ -53,7 +53,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
     fishData.data.sort(sorter[sortBy.value].fn);
   });
 
-  useTask$(async ({ track }) => {
+  useVisibleTask$(async ({ track }) => {
     track(() => filterBy.value);
 
     if (isBrowser) {
