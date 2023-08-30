@@ -71,10 +71,6 @@ export default component$(() => {
     data: fishData.value,
   });
 
-  useVisibleTask$(async () => {
-    window.localStorage.setItem(fishFilter, JSON.stringify(fish.data));
-  });
-
   return (
     <FishList
       fishData={fish}
