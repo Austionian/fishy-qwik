@@ -72,7 +72,7 @@ export default component$(() => {
   });
 
   useVisibleTask$(async () => {
-    window.localStorage.setItem(fishFilter, JSON.stringify(fishData.value));
+    window.localStorage.setItem(fishFilter, JSON.stringify(fishStore.data));
   });
 
   return (
