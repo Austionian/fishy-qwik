@@ -1,4 +1,4 @@
-import { component$, useStore, useVisibleTask$ } from "@builder.io/qwik";
+import { component$, useStore } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import { getUserDetails, getFetchDetails } from "~/helpers";
 import type Fish from "~/types/Fish";
