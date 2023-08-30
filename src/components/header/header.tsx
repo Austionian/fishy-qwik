@@ -10,7 +10,7 @@ export const useSignOut = globalAction$(
   async (_, { cookie, redirect, platform }) => {
     const user_id = cookie.get("user_id")?.value;
     if (import.meta.env.PROD && user_id !== "GUEST") {
-      await platform.env.FISHY_KV.delete(user_id);
+      await platform.env?.FISHY_KV.delete(user_id);
     }
 
     deleteAllCookies(cookie);

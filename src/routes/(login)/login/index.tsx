@@ -63,7 +63,7 @@ export const useLoginFormAction = routeAction$(
     const token = uuidv4();
     if (import.meta.env.PROD) {
       // add session to kv
-      await platform.env.FISHY_KV.put(res.user_id, token, {
+      await platform.env?.FISHY_KV.put(res.user_id, token, {
         expirationTtl: TWO_WEEKS_SEC,
       });
     }

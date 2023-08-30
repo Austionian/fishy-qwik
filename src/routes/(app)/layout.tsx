@@ -22,7 +22,7 @@ export const onRequest: RequestHandler = async ({
       throw redirect(302, `/login/?redirect=${request.url}`);
     }
     if (user_id !== GUEST) {
-      const token: string = (await platform.env.FISHY_KV.get(user_id)) || "";
+      const token: string = (await platform.env?.FISHY_KV.get(user_id)) || "";
       if (!token || cookie.get("token")?.value !== token) {
         throw redirect(302, `/login/?redirect=${request.url}`);
       }
