@@ -16,7 +16,7 @@ type ErrorType = {
 export const useFishData = routeLoader$<Fish[] & ErrorType>(
   async ({ env, query, fail }) => {
     const { apiKey, domain } = getFetchDetails(env);
-    let filter = (query.get("lake") as LakeValues) || "All";
+    const filter = (query.get("lake") as LakeValues) || "All";
     let res;
     if (filter === "All") {
       res = await fetch(`${domain}/v1/fish_avgs`, {
