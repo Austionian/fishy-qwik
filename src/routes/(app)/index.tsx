@@ -25,14 +25,12 @@ export const useFishData = routeLoader$<Fish[] & ErrorType>(
       res = await fetch(`${domain}/v1/fishs?lake=${filter}`, {
         headers: {
           Authorization: `Bearer ${apiKey}`,
-          "Cache-Control": "max-age=3600",
         },
       });
     } else {
       res = await fetch(`${domain}/v1/fish_avgs`, {
         headers: {
           Authorization: `Bearer ${apiKey}`,
-          "Cache-Control": "max-age=3600",
         },
       });
     }

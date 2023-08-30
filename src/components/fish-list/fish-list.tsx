@@ -35,7 +35,6 @@ export const fetchFish = server$(async function (lakeName: string) {
   const res = await fetch(`${domain}/v1/fishs?lake=${lakeName}`, {
     headers: {
       Authorization: `Bearer ${apiKey}`,
-      "Cache-Control": "max-age=3600",
     },
   });
   return await res.json();

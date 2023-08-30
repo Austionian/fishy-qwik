@@ -541,8 +541,17 @@ export default component$(() => {
                   Current Active Users
                 </p>
                 <p class="mt-2 flex items-baseline gap-x-2">
-                  <span class="text-4xl font-semibold tracking-tight text-black dark:text-white">
-                    3.65
+                  <span class="font-mono text-4xl font-semibold tracking-tight text-black dark:text-white">
+                    {
+                      data.value.user_data.filter(
+                        (user) =>
+                          dayjs(user.latest_login).diff(
+                            new Date(),
+                            "d",
+                            true
+                          ) >= -14
+                      ).length
+                    }
                   </span>
                 </p>
               </div>
@@ -551,8 +560,14 @@ export default component$(() => {
                   New Users in the Last Month
                 </p>
                 <p class="mt-2 flex items-baseline gap-x-2">
-                  <span class="text-4xl font-semibold tracking-tight text-black dark:text-white">
-                    3
+                  <span class="font-mono text-4xl font-semibold tracking-tight text-black dark:text-white">
+                    {
+                      data.value.user_data.filter(
+                        (user) =>
+                          dayjs(user.created_at).diff(new Date(), "d", true) >=
+                          -30
+                      ).length
+                    }
                   </span>
                 </p>
               </div>
@@ -569,7 +584,7 @@ export default component$(() => {
             </div>
           </header>
 
-          <div class="border-t border-black/10 dark:border-white/10 pt-11">
+          <div class="border-t border-black/10 dark:border-white/10 pt-11 overflow-x-auto">
             <h2 class="font-sans px-4 text-base font-semibold leading-7 text-black dark:text-white sm:px-6 lg:px-8">
               Users
             </h2>
