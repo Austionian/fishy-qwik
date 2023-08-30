@@ -67,17 +67,17 @@ export default component$(() => {
   if (fishData.value.errorMessage) {
     return <Error message={fishData.value.errorMessage} />;
   }
-  const fishStore = useStore({
+  const fish = useStore({
     data: fishData.value,
   });
 
   useVisibleTask$(async () => {
-    window.localStorage.setItem(fishFilter, JSON.stringify(fishStore.data));
+    window.localStorage.setItem(fishFilter, JSON.stringify(fish.data));
   });
 
   return (
     <FishList
-      fishData={fishStore}
+      fishData={fish}
       userDetails={userDetailsStore}
       fishFilter={fishFilter}
     />
