@@ -1,4 +1,4 @@
-import { component$, useStore } from "@builder.io/qwik";
+import { component$, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
 import { getUserDetails, getFetchDetails } from "~/helpers";
 import type Fish from "~/types/Fish";
@@ -21,14 +21,14 @@ export const useFishData = routeLoader$<Fish[] & ErrorType>(
       filter = "All";
     }
     let res;
-    if (filter !== "All") {
-      res = await fetch(`${domain}/v1/fishs?lake=${filter}`, {
+    if (filter === "All") {
+      res = await fetch(`${domain}/v1/fish_avgs`, {
         headers: {
           Authorization: `Bearer ${apiKey}`,
         },
       });
     } else {
-      res = await fetch(`${domain}/v1/fish_avgs`, {
+      res = await fetch(`${domain}/v1/fishs?lake=${filter}`, {
         headers: {
           Authorization: `Bearer ${apiKey}`,
         },
@@ -67,13 +67,17 @@ export default component$(() => {
   if (fishData.value.errorMessage) {
     return <Error message={fishData.value.errorMessage} />;
   }
-  const fish = useStore({
+  const fishStore = useStore({
     data: fishData.value,
+  });
+
+  useVisibleTask$(async () => {
+    window.localStorage.setItem(fishFilter, JSON.stringify(fishStore.data));
   });
 
   return (
     <FishList
-      fishData={fish}
+      fishData={fishStore}
       userDetails={userDetailsStore}
       fishFilter={fishFilter}
     />
