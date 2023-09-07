@@ -202,6 +202,13 @@ export default component$(({ fishData, userDetails }: Props) => {
                     <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">
                       {fishData.fish_data.about}
                     </dd>
+                    <dd class="mt-4 text-xs text-gray-800 dark:text-gray-200">
+                      The advice herein does not cover local and state
+                      advisories on areas of concern or perflourinated
+                      chemicals. This advice covers fish caught within the 1836
+                      treaty boundaries including some fish purchased at local
+                      markets within the same geographical area.
+                    </dd>
                   </div>
 
                   <dl class="mt-8 grid grid-cols-2 gap-x-4 gap-y-8">
