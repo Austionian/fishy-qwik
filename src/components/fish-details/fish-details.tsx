@@ -13,7 +13,7 @@ export default component$(({ fish }: Props) => (
     {Object.keys(dataPoints).map((point, i) => {
       const key = point as Points;
       const data: DataPoint = dataPoints[key];
-      return (
+      return fish[key].toFixed(3) !== "0.000" ? (
         <div class="sm:col-span-1" key={i}>
           <dl>
             <dt class="text-sm font-medium text-gray-500 dark:text-gray-100">
@@ -27,6 +27,8 @@ export default component$(({ fish }: Props) => (
             </dd>
           </dl>
         </div>
+      ) : (
+        <div></div>
       );
     })}
   </div>
