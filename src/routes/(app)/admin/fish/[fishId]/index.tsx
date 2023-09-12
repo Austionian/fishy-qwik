@@ -175,6 +175,11 @@ export default component$(() => {
               </button>
             </a>
           </div>
+          <div class="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-2 sm:px-6 lg:max-w-full text-gray-300 dark:text-gray-600">
+            <div class="space-y-2 w-full">
+              <div>All fields required. Enter 0 if value is unknown.</div>
+            </div>
+          </div>
           <Container>
             <div class="px-4 py-2 sm:px-6">
               <label
