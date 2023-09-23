@@ -206,7 +206,7 @@ export default component$(
                     for="sex"
                     class="text-sm font-semibold text-gray-900 dark:text-gray-100"
                   >
-                    Sex
+                    Sex (Assigned at Birth)
                   </label>
                   <div class="mt-2">
                     <select
@@ -244,17 +244,17 @@ export default component$(
                       >
                         <option
                           selected={
-                            userDetails.data.plan_to_get_pregnant === "true"
-                          }
-                        >
-                          Yes
-                        </option>
-                        <option
-                          selected={
                             userDetails.data.plan_to_get_pregnant === "false"
                           }
                         >
                           No
+                        </option>
+                        <option
+                          selected={
+                            userDetails.data.plan_to_get_pregnant === "true"
+                          }
+                        >
+                          Yes
                         </option>
                       </select>
                     </div>

@@ -186,16 +186,16 @@ export default component$(() => {
                   }
                 >
                   <option
-                    selected={userDetails.value.plan_to_get_pregnant === "true"}
-                  >
-                    Yes
-                  </option>
-                  <option
                     selected={
                       userDetails.value.plan_to_get_pregnant === "false"
                     }
                   >
                     No
+                  </option>
+                  <option
+                    selected={userDetails.value.plan_to_get_pregnant === "true"}
+                  >
+                    Yes
                   </option>
                 </select>
               </div>

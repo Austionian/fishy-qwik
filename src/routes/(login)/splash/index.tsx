@@ -6,15 +6,16 @@ export default component$(() => {
       <div class="mt-14 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white dark:bg-gray-900 px-4 py-4 sm:py-8 shadow sm:rounded-lg sm:px-10">
           <div class="pb-2 sm:pb-4 sm:mt-8">
-            <h1 class="text-3xl sm:text-5xl text-gray-900 dark:text-gray-100 font-bold">
-              Boozhoo!
+            <h1 class="text-3xl sm:text-4xl text-gray-900 dark:text-gray-100 font-bold">
+              Boozhoo! <em>Hello!</em>
             </h1>
           </div>
           <div class="text-left text-gray-800 dark:text-gray-200 font-extralight px-2">
             <p class="leading-6">
-              This app calculates your safe consumption levels of fish that are
-              caught in the 1836 Treaty territories monitored by the
-              Chippewa-Ottawa Resource Authority!
+              Welcome to the Giigooinaan "Our Fish " App. Giigooinaan calculates
+              your safe consumption levels of fish that are caught in the 1836
+              Treaty territories across northern Michigan and monitored by the
+              Chippewa-Ottawa Resource Authority.
             </p>
           </div>
           <div class="mt-2 sm:mt-7 flex justify-center">
