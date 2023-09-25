@@ -293,8 +293,9 @@ export default component$(
                             class="text-center ml-3 block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
                           >
                             <img
-                              src={`/public/images/${portion.value}oz.png`}
-                              class="w-20"
+                              src={`/images/${portion.value}oz.png`}
+                              class="w-16 sm:w-20"
+                              alt={`Image representing the ${portion.value} oz portion size`}
                             />
                             {portion.label}
                           </label>
