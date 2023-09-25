@@ -290,8 +290,12 @@ export default component$(
                           />
                           <label
                             for={portion.label}
-                            class="ml-3 block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
+                            class="text-center ml-3 block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
                           >
+                            <img
+                              src={`/public/images/${portion.value}oz.png`}
+                              class="w-20"
+                            />
                             {portion.label}
                           </label>
                         </div>
