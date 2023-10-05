@@ -11,7 +11,6 @@ const deleteAllCookies = (cookie: Cookie) => {
   cookie.delete("age", { path: "/" });
   cookie.delete("plan_to_get_pregnant", { path: "/" });
   cookie.delete("portion", { path: "/" });
-  cookie.delete("sex", { path: "/" });
   cookie.delete("weight", { path: "/" });
   cookie.delete("image", { path: "/" });
   cookie.delete("firstName", { path: "/" });

@@ -209,8 +209,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                         userDetails.data.age,
                         userDetails.data.weight,
                         userDetails.data.portion,
-                        userDetails.data.sex,
-                        userDetails.data.plan_to_get_pregnant || "",
+                        userDetails.data.plan_to_get_pregnant,
                         fish
                       )}
                     </span>

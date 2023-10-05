@@ -20,15 +20,13 @@ export const useSignUpFormAction = globalAction$(
   async (infoForm, { cookie }) => {
     const weight = infoForm.weight;
     const age = infoForm.age;
-    const sex = infoForm.sex;
-    const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "";
+    const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "false";
     const portion = infoForm.portion;
 
     const res = await saveUserDetails(
       cookie,
       weight,
       age,
-      sex,
       plan_to_get_pregnant,
       portion
     );
@@ -43,12 +41,12 @@ export const useSignUpFormAction = globalAction$(
 export default component$(
   ({ showUserInputModal, userDetails }: infoModalProps) => {
     const formAction = useSignUpFormAction();
-    const isMale = useSignal(
-      userDetails.data.sex === "Male" || userDetails.data.sex === undefined
-    );
     const backdropRef = useSignal<Element>();
     const modalRef = useSignal<Element>();
     const validating = useSignal(false);
+    const plan_to_get_pregnant = useSignal(
+      userDetails.data.plan_to_get_pregnant || "false"
+    );
 
     useVisibleTask$(({ track }) => {
       track(() => showUserInputModal.value);
@@ -203,63 +201,27 @@ export default component$(
                 </div>
                 <div class="my-2">
                   <label
-                    for="sex"
+                    for="plan_to_get_pregnant"
                     class="text-sm font-semibold text-gray-900 dark:text-gray-100"
                   >
-                    Sex (Assigned at Birth)
+                    Plan to get pregnant?
                   </label>
                   <div class="mt-2">
                     <select
-                      id="sex"
-                      name="sex"
+                      id="plan_to_get_pregnant"
+                      name="plan_to_get_pregnant"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-                      value={userDetails.data.sex || "Male"}
+                      value={plan_to_get_pregnant.value}
                       onChange$={(e) => {
-                        isMale.value = e.target.value === "Male";
-                        userDetails.data.sex = e.target.value;
+                        userDetails.data.plan_to_get_pregnant = e.target.value;
+                        plan_to_get_pregnant.value = e.target.value;
                       }}
                     >
-                      <option>Male</option>
-                      <option>Female</option>
+                      <option value="false">No</option>
+                      <option value="true">Yes</option>
                     </select>
                   </div>
                 </div>
-                {!isMale.value && (
-                  <div class="my-2">
-                    <label
-                      for="plan_to_get_pregnant"
-                      class="text-sm font-semibold text-gray-900 dark:text-gray-100"
-                    >
-                      Plan to get pregnant?
-                    </label>
-                    <div class="mt-2">
-                      <select
-                        id="plan_to_get_pregnant"
-                        name="plan_to_get_pregnant"
-                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-                        onChange$={(e) =>
-                          (userDetails.data.plan_to_get_pregnant =
-                            e.target.value)
-                        }
-                      >
-                        <option
-                          selected={
-                            userDetails.data.plan_to_get_pregnant === "false"
-                          }
-                        >
-                          No
-                        </option>
-                        <option
-                          selected={
-                            userDetails.data.plan_to_get_pregnant === "true"
-                          }
-                        >
-                          Yes
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                )}
                 <div class="my-2">
                   <label class="text-sm font-semibold text-gray-900 dark:text-gray-100">
                     Portion Size

@@ -4,7 +4,6 @@ export default (
   age: string | undefined,
   weight: string | undefined,
   portion: string | undefined,
-  sex: string | undefined,
   plan_to_get_pregnant: string | undefined,
   fishData: Fish
 ) => {
@@ -16,7 +15,8 @@ export default (
   if (isNaN(portion_p) || isNaN(age_p) || isNaN(weight_p)) return uncalculated;
 
   let mult: number;
-  if (age_p <= 18 || (sex === "Female" && plan_to_get_pregnant === "Yes")) {
+  console.log(plan_to_get_pregnant);
+  if (age_p <= 18 || plan_to_get_pregnant === "true") {
     mult = 1;
   } else {
     mult = 3;

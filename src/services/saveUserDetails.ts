@@ -6,7 +6,6 @@ const serverSaveUserDetails = server$(async function (
   user_id: string,
   weight: number,
   age: number,
-  sex: string,
   plan_to_get_pregnant: string,
   portion: string
 ) {
@@ -23,7 +22,6 @@ const serverSaveUserDetails = server$(async function (
       user_id,
       weight: weightStr,
       age: ageStr,
-      sex,
       plan_to_get_pregnant,
       portion_size: portion,
     }),
@@ -46,7 +44,6 @@ export const saveUserDetails = $(
     cookie: Cookie,
     weight: number,
     age: number,
-    sex: string,
     plan_to_get_pregnant: string,
     portion: string
   ) => {
@@ -56,17 +53,13 @@ export const saveUserDetails = $(
     const ONE_DAY_FROM_TODAY_DATE = new Date(Date.now() + ONE_DAY_MS);
     const GUEST = "GUEST";
 
-    const plan_to_get_pregnant_value =
-      plan_to_get_pregnant === "Yes" ? "true" : "false";
-
     const user_id = cookie.get("user_id")?.value || "";
     if (user_id !== "" && user_id !== GUEST) {
       const res = await serverSaveUserDetails(
         user_id,
         weight,
         age,
-        sex,
-        plan_to_get_pregnant_value,
+        plan_to_get_pregnant,
         portion
       );
 
@@ -81,8 +74,7 @@ export const saveUserDetails = $(
       expire_date,
       age,
       weight,
-      sex,
-      plan_to_get_pregnant_value,
+      plan_to_get_pregnant,
       portion
     );
 
@@ -97,7 +89,6 @@ export const saveUserDetailsToCookies = (
   expire_date: Date,
   age: number | undefined,
   weight: number | undefined,
-  sex: string | undefined,
   plan_to_get_pregnant: string | undefined,
   portion: string | undefined,
   first_name?: string | undefined,
@@ -112,13 +103,6 @@ export const saveUserDetailsToCookies = (
   }
   if (weight) {
     cookie.set("weight", weight, {
-      path: "/",
-      sameSite: "strict",
-      expires: expire_date,
-    });
-  }
-  if (sex) {
-    cookie.set("sex", sex, {
       path: "/",
       sameSite: "strict",
       expires: expire_date,

@@ -18,7 +18,6 @@ export type UserLoginResponse = {
   data: {
     weight?: number;
     age?: number;
-    sex?: string;
     plan_to_get_pregnant?: string;
     portion_size?: string;
     image_url?: string;
@@ -73,7 +72,6 @@ export const useLoginFormAction = routeAction$(
       TWO_WEEKS_FROM_TODAY_DATE,
       res.data.age,
       res.data.weight,
-      res.data.sex,
       res.data.plan_to_get_pregnant,
       res.data.portion_size,
       res.data.first_name,

@@ -178,14 +178,12 @@ export default component$(({ fishData, userDetails }: Props) => {
                         {!userDetails.needed &&
                         userDetails.weight !== undefined &&
                         userDetails.age !== undefined &&
-                        userDetails.sex !== undefined &&
                         userDetails.portion !== undefined
                           ? calculateServings(
                               userDetails.age,
                               userDetails.weight,
                               userDetails.portion,
-                              userDetails.sex,
-                              userDetails.plan_to_get_pregnant || "",
+                              userDetails.plan_to_get_pregnant,
                               fishData.fish_data
                             )
                           : "? servings per week"}

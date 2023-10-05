@@ -16,7 +16,6 @@ export const useUpdateUserInfoAction = routeAction$(
   async (infoForm, { cookie }) => {
     const weight = infoForm.weight;
     const age = infoForm.age;
-    const sex = infoForm.sex;
     const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "";
     const portion = infoForm.portion;
 
@@ -24,7 +23,6 @@ export const useUpdateUserInfoAction = routeAction$(
       cookie,
       weight,
       age,
-      sex,
       plan_to_get_pregnant,
       portion
     );
@@ -42,9 +40,6 @@ export const useUpdateUserInfoAction = routeAction$(
 export default component$(() => {
   const userDetails = useUserDetails();
   const formAction = useUpdateUserInfoAction();
-  const isMale = useSignal(
-    userDetails.value.sex === "Male" || userDetails.value.sex === undefined
-  );
   const saveValue = useSignal("Save");
   const hideAlert = useSignal(true);
   const validating = useSignal(false);
@@ -144,63 +139,33 @@ export default component$(() => {
           </div>
           <div class="my-2">
             <label
-              for="sex"
+              for="plan_to_get_pregnant"
               class="text-sm font-semibold text-gray-900 dark:text-gray-100"
             >
-              Sex
+              Plan to get pregnant?
             </label>
             <div class="mt-2">
               <select
-                id="sex"
-                name="sex"
+                id="plan_to_get_pregnant"
+                name="plan_to_get_pregnant"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-                onChange$={(e) => {
-                  isMale.value = e.target.value === "Male";
-                  userDetails.value.sex = e.target.value;
-                }}
+                onChange$={(e) =>
+                  (userDetails.value.plan_to_get_pregnant = e.target.value)
+                }
               >
-                <option selected={userDetails.value.sex === "Male"}>
-                  Male
+                <option
+                  selected={userDetails.value.plan_to_get_pregnant === "false"}
+                >
+                  No
                 </option>
-                <option selected={userDetails.value.sex === "Female"}>
-                  Female
+                <option
+                  selected={userDetails.value.plan_to_get_pregnant === "true"}
+                >
+                  Yes
                 </option>
               </select>
             </div>
           </div>
-          {!isMale.value && (
-            <div class="my-2">
-              <label
-                for="plan_to_get_pregnant"
-                class="text-sm font-semibold text-gray-900 dark:text-gray-100"
-              >
-                Plan to get pregnant?
-              </label>
-              <div class="mt-2">
-                <select
-                  id="plan_to_get_pregnant"
-                  name="plan_to_get_pregnant"
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-                  onChange$={(e) =>
-                    (userDetails.value.plan_to_get_pregnant = e.target.value)
-                  }
-                >
-                  <option
-                    selected={
-                      userDetails.value.plan_to_get_pregnant === "false"
-                    }
-                  >
-                    No
-                  </option>
-                  <option
-                    selected={userDetails.value.plan_to_get_pregnant === "true"}
-                  >
-                    Yes
-                  </option>
-                </select>
-              </div>
-            </div>
-          )}
           <div class="my-2">
             <label class="text-sm font-semibold text-gray-900 dark:text-gray-100">
               Portion Size
