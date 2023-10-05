@@ -1,6 +1,5 @@
 import type Fish from "~/types/Fish";
-import { calculateServings, getCookie } from "~/helpers";
-import { getRawValue } from "~/helpers/calculate-servings";
+import { getCookie, getRawValue } from "~/helpers";
 
 const SORT_VALUES = [
   "Name",
