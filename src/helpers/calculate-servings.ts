@@ -7,6 +7,49 @@ export default (
   plan_to_get_pregnant: string | undefined,
   fishData: Fish
 ) => {
+  const [mult, coeficient] = getCoeficient(
+    age,
+    weight,
+    portion,
+    plan_to_get_pregnant
+  );
+
+  if (typeof mult === "string" || typeof coeficient === "string") {
+    return mult || coeficient;
+  }
+
+  const rawValue = getCalculation(coeficient, mult, fishData);
+
+  return getString(rawValue);
+};
+
+export const getRawValue = (
+  age: string | undefined,
+  weight: string | undefined,
+  portion: string | undefined,
+  plan_to_get_pregnant: string | undefined,
+  fishData: Fish
+) => {
+  const [mult, coeficient] = getCoeficient(
+    age,
+    weight,
+    portion,
+    plan_to_get_pregnant
+  );
+
+  if (typeof mult === "string" || typeof coeficient === "string") {
+    return mult || coeficient;
+  }
+
+  return getCalculation(coeficient, mult, fishData);
+};
+
+const getCoeficient = (
+  age: string | undefined,
+  weight: string | undefined,
+  portion: string | undefined,
+  plan_to_get_pregnant: string | undefined
+) => {
   const uncalculated = "? servings per month";
   const age_p = parseInt(age || "");
   const weight_p = parseInt(weight || "");
@@ -25,25 +68,24 @@ export default (
 
   const coeficient = onza / (weight_p * 0.454);
 
-  return getCalculation(coeficient, mult, fishData);
+  return [mult, coeficient];
 };
 
 function getCalculation(coeficiente: number, mult: number, fish: Fish) {
   const a = (0.7 / (coeficiente * fish.mercury)) * mult;
   const b = 0.35 / (coeficiente * fish.pcb);
   if (a <= b) {
-    return getString(a);
-  } else {
-    return getString(b);
+    return a;
   }
+  return b;
 }
 
 function getString(a: number): string {
-  if (a < 0.24) {
+  if (a <= 0.24) {
     return "None, ever";
-  } else if (a > 0.25 && a <= 0.49) {
+  } else if (a > 0.25 && a <= 0.5) {
     return "1 meal per month";
-  } else if (a > 0.5 && a <= 0.74) {
+  } else if (a > 0.5 && a <= 0.75) {
     return "2 meals per month";
   } else if (a > 0.75 && a <= 1) {
     return "3 meals per month";

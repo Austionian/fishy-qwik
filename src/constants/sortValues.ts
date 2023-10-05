@@ -1,5 +1,6 @@
 import type Fish from "~/types/Fish";
 import { calculateServings, getCookie } from "~/helpers";
+import { getRawValue } from "~/helpers/calculate-servings";
 
 const SORT_VALUES = [
   "Name",
@@ -50,51 +51,20 @@ export function byName(a: Fish, b: Fish) {
   return 0;
 }
 
-function getServingVal(v: string) {
-  let result;
-  const matches = v.match("([0-9]+).*|(Unrestricted)|(None).*");
-  if (matches) {
-    result = matches[1] || matches[2] || matches[3];
-  }
-  if (v.match(".*(week)")) {
-    result = Number(result) * 4;
-  }
-  if (result === "Unrestricted") {
-    result = 99;
-  }
-  if (result === "None") {
-    result = 0;
-  }
-  return result;
-}
-
 function byServings(a: Fish, b: Fish) {
   const weight = getCookie("weight");
   const age = getCookie("age");
   const portion = getCookie("portion");
   const plan_to_get_pregnant = getCookie("plan_to_get_pregnant");
 
-  const a_val = getServingVal(
-    calculateServings(age, weight, portion, plan_to_get_pregnant, a)
-  );
-  const b_val = getServingVal(
-    calculateServings(age, weight, portion, plan_to_get_pregnant, b)
-  );
-
-  console.log("weight", weight);
-  console.log("age", age);
-  console.log("portion", portion);
-  console.log("plan_to_get_pregnant", plan_to_get_pregnant);
+  const a_val = getRawValue(age, weight, portion, plan_to_get_pregnant, a);
+  const b_val = getRawValue(age, weight, portion, plan_to_get_pregnant, b);
 
   if (a.name === "Tilapia") {
     return 1;
   }
   if (b.name === "Tilapia") {
     return -1;
-  }
-
-  if (a.name === "Walleye") {
-    console.log("walleye", a_val);
   }
 
   if (Number(a_val) < Number(b_val)) {

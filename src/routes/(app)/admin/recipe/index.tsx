@@ -96,7 +96,6 @@ export default component$(() => {
             if (!formAction.value?.error && !formAction.value?.failed) {
               saveValue.value = `\u2713`;
             } else {
-              console.log("here");
               formSuccess.value = false;
               failureText.value =
                 formAction.value?.errorText || "Unable to complete request.";
