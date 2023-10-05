@@ -15,7 +15,6 @@ export default (
   if (isNaN(portion_p) || isNaN(age_p) || isNaN(weight_p)) return uncalculated;
 
   let mult: number;
-  console.log(plan_to_get_pregnant);
   if (age_p <= 18 || plan_to_get_pregnant === "true") {
     mult = 1;
   } else {

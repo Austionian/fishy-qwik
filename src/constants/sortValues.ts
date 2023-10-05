@@ -81,11 +81,20 @@ function byServings(a: Fish, b: Fish) {
     calculateServings(age, weight, portion, plan_to_get_pregnant, b)
   );
 
+  console.log("weight", weight);
+  console.log("age", age);
+  console.log("portion", portion);
+  console.log("plan_to_get_pregnant", plan_to_get_pregnant);
+
   if (a.name === "Tilapia") {
     return 1;
   }
   if (b.name === "Tilapia") {
     return -1;
+  }
+
+  if (a.name === "Walleye") {
+    console.log("walleye", a_val);
   }
 
   if (Number(a_val) < Number(b_val)) {

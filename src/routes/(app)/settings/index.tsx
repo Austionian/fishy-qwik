@@ -16,7 +16,7 @@ export const useUpdateUserInfoAction = routeAction$(
   async (infoForm, { cookie }) => {
     const weight = infoForm.weight;
     const age = infoForm.age;
-    const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "";
+    const plan_to_get_pregnant = infoForm.plan_to_get_pregnant || "false";
     const portion = infoForm.portion;
 
     const res = await saveUserDetails(
@@ -45,6 +45,9 @@ export default component$(() => {
   const validating = useSignal(false);
   const failureText = useSignal("");
   const success = useSignal(true);
+  const plan_to_get_pregnant = useSignal(
+    userDetails.value.plan_to_get_pregnant || "false"
+  );
 
   return (
     <Form
@@ -149,20 +152,14 @@ export default component$(() => {
                 id="plan_to_get_pregnant"
                 name="plan_to_get_pregnant"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-                onChange$={(e) =>
-                  (userDetails.value.plan_to_get_pregnant = e.target.value)
-                }
+                value={plan_to_get_pregnant.value}
+                onChange$={(e) => {
+                  userDetails.value.plan_to_get_pregnant = e.target.value;
+                  plan_to_get_pregnant.value = e.target.value;
+                }}
               >
-                <option
-                  selected={userDetails.value.plan_to_get_pregnant === "false"}
-                >
-                  No
-                </option>
-                <option
-                  selected={userDetails.value.plan_to_get_pregnant === "true"}
-                >
-                  Yes
-                </option>
+                <option value="false">No</option>
+                <option value="true">Yes</option>
               </select>
             </div>
           </div>
