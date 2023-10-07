@@ -530,7 +530,8 @@ export default component$(() => {
                     hour: "numeric",
                     minute: "numeric",
                     second: "numeric",
-                  })}
+                  })}{" "}
+                  UTC
                 </p>
               </div>
               <div class="order-first flex-none rounded-full bg-teal-400/10 px-2 py-1 text-xs font-medium text-teal-400 ring-1 ring-inset ring-teal-400/30 sm:order-none">
