@@ -7,6 +7,12 @@ import { getFetchDetails } from "~/helpers";
 type Data = {
   number_of_registered_users: number;
   user_data: UserData[];
+  most_liked_fish: string;
+  most_liked_fish_id: string;
+  fish_like_count: number;
+  most_liked_recipe: string;
+  most_liked_recipe_id: string;
+  recipe_like_count: number;
 };
 
 type UserData = {
@@ -35,7 +41,7 @@ export default component$(() => {
   dayjs.extend(relativeTime);
   const data = useGetData();
   return (
-    <div class="font-flow">
+    <div>
       {/* <div class="fixed inset-0 flex">
       <div class="relative z-50 xl:hidden" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-900/80"></div>
@@ -467,6 +473,7 @@ export default component$(() => {
       <div>
         <main>
           <header>
+            {/*
             <nav class="flex overflow-x-auto border-b border-black/10 dark:border-white/10 py-4">
               <ul
                 role="list"
@@ -499,6 +506,7 @@ export default component$(() => {
                 </li>
               </ul>
             </nav>
+            */}
 
             <div class="flex flex-col items-start justify-between gap-x-8 gap-y-4 bg-gray-500/5 dark:bg-gray-700/10 px-4 py-4 sm:flex-row sm:items-center sm:px-6 lg:px-8">
               <div>
@@ -508,16 +516,21 @@ export default component$(() => {
                   </div>
                   <h1 class="flex gap-x-3 text-base leading-7">
                     <span class="font-semibold text-black dark:text-white">
-                      Planetaria
-                    </span>
-                    <span class="text-gray-600">/</span>
-                    <span class="font-semibold text-black dark:text-white">
-                      mobile-api
+                      MCW Fish App Analytics
                     </span>
                   </h1>
                 </div>
                 <p class="mt-2 text-xs leading-6 text-gray-600 dark:text-gray-400">
-                  Deploys from GitHub via main branch
+                  As of{" "}
+                  {new Date().toLocaleString(undefined, {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    second: "numeric",
+                  })}
                 </p>
               </div>
               <div class="order-first flex-none rounded-full bg-teal-400/10 px-2 py-1 text-xs font-medium text-teal-400 ring-1 ring-inset ring-teal-400/30 sm:order-none">
@@ -525,7 +538,7 @@ export default component$(() => {
               </div>
             </div>
 
-            <div class="grid grid-cols-1 bg-gray-500/5 dark:bg-gray-700/10 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="grid grid-cols-1 bg-gray-500/5 dark:bg-gray-700/10 sm:grid-cols-2 lg:grid-cols-3">
               <div class="border-t border-black/5 dark:border-white/5 py-6 px-4 sm:px-6 lg:px-8">
                 <p class="font-sans text-sm font-medium leading-6 text-gray-600 dark:text-gray-400">
                   Registered Users
@@ -571,15 +584,38 @@ export default component$(() => {
                   </span>
                 </p>
               </div>
+            </div>
+
+            <div class="grid grid-cols-1 bg-gray-500/5 dark:bg-gray-700/10 sm:grid-cols-2">
+              <div class="border-t border-black/5 dark:border-white/5 py-6 px-4 sm:px-6 lg:px-8">
+                <p class="font-sans text-sm font-medium leading-6 text-gray-600 dark:text-gray-400">
+                  Most Liked Fish
+                </p>
+                <a href={`/fish/type/${data.value.most_liked_fish_id}`}>
+                  <p class="mt-2 flex items-baseline gap-x-2">
+                    <span class="font-mono text-4xl font-semibold tracking-tight text-black dark:text-white hover:text-teal-400">
+                      {data.value.most_liked_fish}{" "}
+                      <span class="text-gray-500">
+                        ({data.value.fish_like_count})
+                      </span>
+                    </span>
+                  </p>
+                </a>
+              </div>
               <div class="border-t border-black/5 dark:border-white/5 py-6 px-4 sm:px-6 lg:px-8 sm:border-l">
-                <p class="text-sm font-medium leading-6 text-gray-600 dark:text-gray-400">
-                  Success rate
+                <p class="font-sans text-sm font-medium leading-6 text-gray-600 dark:text-gray-400">
+                  Most Liked Recipe
                 </p>
-                <p class="mt-2 flex items-baseline gap-x-2">
-                  <span class="text-4xl font-semibold tracking-tight text-black dark:text-white">
-                    98.5%
-                  </span>
-                </p>
+                <a href={`/recipe/${data.value.most_liked_recipe_id}`}>
+                  <p class="mt-2 flex items-baseline gap-x-2">
+                    <span class="font-mono text-4xl font-semibold tracking-tight text-black dark:text-white hover:text-teal-400">
+                      {data.value.most_liked_recipe}
+                      <span class="text-gray-500">
+                        ({data.value.recipe_like_count})
+                      </span>
+                    </span>
+                  </p>
+                </a>
               </div>
             </div>
           </header>
