@@ -3,6 +3,7 @@ type Recipe = {
   name: string;
   ingredients: string[];
   steps: string[];
+  image_url?: string;
 };
 
 export default Recipe;

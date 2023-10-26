@@ -193,7 +193,8 @@ export default component$(() => {
                   >
                     {data_point === "name"
                       ? recipe.name
-                      : `${recipe[data_point]
+                      : // @ts-ignore -- Safety: steps and ingredients will never be undefined.
+                        `${recipe[data_point]
                           .slice(0)
                           .toString()
                           .substring(0, 15)}...`}
