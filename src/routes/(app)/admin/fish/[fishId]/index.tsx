@@ -35,7 +35,7 @@ export const useFishData = routeLoader$<FishData>(
       },
     });
     return await res.json();
-  }
+  },
 );
 
 export const useUpdateFish = routeAction$(
@@ -76,12 +76,12 @@ export const useUpdateFish = routeAction$(
     }
   },
   zod$({
-    mercury: z.string().nonempty(),
-    omega_3: z.string().nonempty(),
-    omega_3_ratio: z.string().nonempty(),
-    pcb: z.string().nonempty(),
-    protein: z.string().nonempty(),
-  })
+    mercury: z.string().min(1),
+    omega_3: z.string().min(1),
+    omega_3_ratio: z.string().min(1),
+    pcb: z.string().min(1),
+    protein: z.string().min(1),
+  }),
 );
 
 export const serverDeleteFish = server$(async function (fishId: string) {
@@ -284,7 +284,7 @@ export default component$(() => {
                       confirm("Are you sure you'd like to delete this fish?")
                     ) {
                       const res = await serverDeleteFish(
-                        fishData.value.fish_data.fish_id
+                        fishData.value.fish_data.fish_id,
                       );
                       if (!res?.error) {
                         window.location.assign("/admin/");

@@ -82,10 +82,10 @@ export const useUpdateAccount = routeAction$(
     });
   },
   zod$({
-    email: z.string().email().nonempty(),
+    email: z.string().email().min(1),
     firstName: z.string(),
     lastName: z.string(),
-  })
+  }),
 );
 
 export const serverSaveImageToDB = server$(async function (image_url: string) {

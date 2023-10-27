@@ -76,14 +76,14 @@ export const useSaveFish = routeAction$(
     }
   },
   zod$({
-    fish_type: z.string().nonempty(),
-    lake: z.string().nonempty(),
-    mercury: z.string().nonempty(),
-    omega_3: z.string().nonempty(),
-    omega_3_ratio: z.string().nonempty(),
-    pcb: z.string().nonempty(),
-    protein: z.string().nonempty(),
-  })
+    fish_type: z.string().min(1),
+    lake: z.string().min(1),
+    mercury: z.string().min(1),
+    omega_3: z.string().min(1),
+    omega_3_ratio: z.string().min(1),
+    pcb: z.string().min(1),
+    protein: z.string().min(1),
+  }),
 );
 
 export default component$(() => {

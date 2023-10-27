@@ -38,7 +38,7 @@ export const useRecipeData = routeLoader$<RecipeLoader>(
     return {
       error: true,
     };
-  }
+  },
 );
 
 export const serverDeleteRecipe = server$(async function (recipeId: string) {
@@ -117,7 +117,7 @@ export const useUpdateRecipe = routeAction$(
           ingredients: parsedIngredients,
           steps: parsedSteps,
         }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -128,10 +128,10 @@ export const useUpdateRecipe = routeAction$(
     }
   },
   zod$({
-    name: z.string().nonempty(),
+    name: z.string().min(1),
     ingredient: z.string().array().nonempty(),
     step: z.string().array().nonempty(),
-  })
+  }),
 );
 
 export default component$(() => {
@@ -279,7 +279,7 @@ export default component$(() => {
                       confirm("Are you sure you'd like to delete this recipe?")
                     ) {
                       const res = await serverDeleteRecipe(
-                        recipeData.value.data.id
+                        recipeData.value.data.id,
                       );
                       if (!res?.error) {
                         window.location.assign("/admin/");

@@ -74,13 +74,13 @@ export const useSaveFishType = routeAction$(
     }
   },
   zod$({
-    name: z.string().nonempty(),
+    name: z.string().min(1),
     anishinaabe_name: z.string().optional(),
-    fish_image: z.string().nonempty(),
+    fish_image: z.string().min(1),
     woodland_fish_image: z.string().optional(),
-    about: z.string().nonempty(),
+    about: z.string().min(1),
     recipe: z.string().array().optional(),
-  })
+  }),
 );
 
 export default component$(() => {
@@ -100,7 +100,7 @@ export default component$(() => {
   const handleUpload = $(
     async (
       e: QwikChangeEvent<HTMLInputElement>,
-      woodlandImageFlag: boolean
+      woodlandImageFlag: boolean,
     ) => {
       if (woodlandImageFlag) {
         validatingWoodlandImage.value = true;
@@ -133,7 +133,7 @@ export default component$(() => {
         validatingImage.value = false;
         validatingWoodlandImage.value = false;
       }
-    }
+    },
   );
 
   return (

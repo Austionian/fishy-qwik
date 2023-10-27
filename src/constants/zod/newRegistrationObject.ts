@@ -2,7 +2,7 @@ import { z } from "@builder.io/qwik-city";
 
 export const newRegistrationObject = z
   .object({
-    email: z.string().email().nonempty(),
+    email: z.string().email().min(1),
     password: z.string().min(7),
     confirmPassword: z.string().min(7),
   })

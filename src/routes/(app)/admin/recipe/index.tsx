@@ -69,10 +69,10 @@ export const useNewRecipe = routeAction$(
     }
   },
   zod$({
-    name: z.string().nonempty(),
+    name: z.string().min(1),
     ingredient: z.string().array().nonempty(),
     step: z.string().array().nonempty(),
-  })
+  }),
 );
 
 export default component$(() => {

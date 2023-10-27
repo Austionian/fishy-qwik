@@ -64,10 +64,10 @@ export const useFishData = routeLoader$<FishTypeResponse>(
           Authorization: `Bearer ${apiKey}`,
           cookie: getCookieForFetch(cookie),
         },
-      }
+      },
     );
     return await res.json();
-  }
+  },
 );
 
 export const useUpdateFishType = routeAction$(
@@ -100,7 +100,7 @@ export const useUpdateFishType = routeAction$(
           about: fishTypeForm.about,
           recipe: fishTypeForm.recipe,
         }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -111,17 +111,17 @@ export const useUpdateFishType = routeAction$(
     }
   },
   zod$({
-    name: z.string().nonempty(),
+    name: z.string().min(1),
     anishinaabe_name: z.string().optional(),
-    about: z.string().nonempty(),
+    about: z.string().min(1),
     recipe: z.string().array().optional(),
-  })
+  }),
 );
 
 export const serverSaveFishImageToDB = server$(async function (
   fish_type_id: string,
   image_url: string,
-  woodland_image_flag: boolean
+  woodland_image_flag: boolean,
 ) {
   const { domain, apiKey } = getFetchDetails(this?.env);
   const user_id = this?.cookie.get("user_id")?.value;
@@ -141,7 +141,7 @@ export const serverSaveFishImageToDB = server$(async function (
         image_url,
         woodland_image_flag: woodland_image_flag,
       }),
-    }
+    },
   );
 
   if (!response.ok) {
@@ -169,21 +169,21 @@ export default component$(() => {
   const fishImage = useSignal(
     fishTypeData.s3_fish_image
       ? fishTypeData.s3_fish_image
-      : `/images/${fishTypeData.fish_image}`
+      : `/images/${fishTypeData.fish_image}`,
   );
   const woodlandImage = useSignal(
     fishTypeData.s3_woodland_image
       ? fishTypeData.s3_woodland_image
       : fishTypeData.woodland_fish_image
       ? `/images/${fishTypeData.woodland_fish_image}`
-      : undefined
+      : undefined,
   );
 
   const handleUpload = $(
     async (
       e: QwikChangeEvent<HTMLInputElement>,
       fish_type_id: string,
-      woodlandImageFlag: boolean
+      woodlandImageFlag: boolean,
     ) => {
       if (woodlandImageFlag) {
         validatingWoodlandImage.value = true;
@@ -219,7 +219,7 @@ export default component$(() => {
       }
       validatingImage.value = false;
       validatingWoodlandImage.value = false;
-    }
+    },
   );
 
   return (

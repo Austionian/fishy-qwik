@@ -75,7 +75,7 @@ export const useLoginFormAction = routeAction$(
       res.data.plan_to_get_pregnant,
       res.data.portion_size,
       res.data.first_name,
-      res.data.last_name
+      res.data.last_name,
     );
 
     if (res.data.image_url) {
@@ -116,9 +116,9 @@ export const useLoginFormAction = routeAction$(
     throw redirect(303, redirectUrl);
   },
   zod$({
-    email: z.string().email().nonempty(),
-    password: z.string().nonempty(),
-  })
+    email: z.string().email().min(1),
+    password: z.string().min(1),
+  }),
 );
 
 export const useGuestOption = routeAction$(async (_, { cookie, redirect }) => {
