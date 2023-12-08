@@ -1,4 +1,9 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import {
+  $,
+  component$,
+  useSignal,
+  type QwikChangeEvent,
+} from "@builder.io/qwik";
 import {
   type DocumentHead,
   routeLoader$,
@@ -9,6 +14,8 @@ import {
   server$,
 } from "@builder.io/qwik-city";
 import { getCookie, getFetchDetails } from "~/helpers";
+import { v4 as uuidv4 } from "uuid";
+import { serverHandleUpload } from "~/services/serverPresign";
 import type Recipe from "~/types/Recipe";
 
 import Container from "~/components/container/container";
@@ -16,6 +23,7 @@ import EditInput from "~/components/edit-input/edit-input";
 import NavBack from "~/components/nav-back/nav-back";
 import Alert from "~/components/alert/alert";
 import SaveButton from "~/components/save-button/save-button";
+import Spinner from "~/components/spinner/spinner";
 
 type RecipeLoader = {
   data: Recipe;
@@ -71,6 +79,35 @@ export const serverDeleteRecipe = server$(async function (recipeId: string) {
   };
 });
 
+export const serverSaveFishImageToDB = server$(async function (
+  recipe_id: string,
+  image_url: string,
+) {
+  const { domain, apiKey } = getFetchDetails(this?.env);
+  const user_id = this?.cookie.get("user_id")?.value;
+
+  if (!user_id) return;
+
+  const response = await fetch(`${domain}/v1/admin/recipe/${recipe_id}/image`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      cookie: `user_id=${user_id}`,
+    },
+    body: JSON.stringify({
+      image_url,
+    }),
+  });
+
+  if (!response.ok) {
+    return {
+      error: true,
+      errorText: `Error: ${response.statusText}`,
+    };
+  }
+});
+
 export const useUpdateRecipe = routeAction$(
   async (recipeForm, { cookie, env, params }) => {
     const user_id = cookie.get("user_id")?.value;
@@ -84,6 +121,7 @@ export const useUpdateRecipe = routeAction$(
     }
 
     const name = recipeForm.name;
+    const image_url = recipeForm.recipe_image;
     const ingredients = recipeForm.ingredient;
     const parsedIngredients: string[] = [];
     const steps = recipeForm.step;
@@ -114,6 +152,7 @@ export const useUpdateRecipe = routeAction$(
         },
         body: JSON.stringify({
           name,
+          image_url,
           ingredients: parsedIngredients,
           steps: parsedSteps,
         }),
@@ -129,6 +168,7 @@ export const useUpdateRecipe = routeAction$(
   },
   zod$({
     name: z.string().min(1),
+    recipe_image: z.string(),
     ingredient: z.string().array().nonempty(),
     step: z.string().array().nonempty(),
   }),
@@ -144,6 +184,41 @@ export default component$(() => {
   const hideAlert = useSignal(true);
   const formSuccess = useSignal(true);
   const failureText = useSignal("");
+  const validatingImage = useSignal(false);
+
+  const recipeImage = useSignal(
+    recipeData.value.data.image_url ? recipeData.value.data.image_url : "",
+  );
+
+  const handleUpload = $(
+    async (e: QwikChangeEvent<HTMLInputElement>, recipe_id: string) => {
+      validatingImage.value = true;
+      if (e.target.files) {
+        const file = e.target.files[0];
+        const fileName = `${uuidv4()}-${file.name}`;
+
+        if (file) {
+          const res = await serverHandleUpload(fileName);
+
+          const s3_res = await fetch(res.url, {
+            method: "PUT",
+            headers: {
+              "Content-Type": file.type,
+            },
+            body: file,
+          });
+
+          if (s3_res.status === 200) {
+            e.target.blur;
+            const imageUrl = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
+            recipeImage.value = imageUrl;
+            serverSaveFishImageToDB(recipe_id, imageUrl);
+          }
+        }
+      }
+      validatingImage.value = false;
+    },
+  );
 
   return recipeData.value.error ? (
     <div>ERROR PROCESSING REQUEST</div>
@@ -193,6 +268,54 @@ export default component$(() => {
               )}
             </div>
           </Container>
+
+          <Container>
+            <div class="px-4 py-2 sm:px-6">
+              <label
+                for="recipe_image"
+                class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
+              >
+                Recipe Image{" "}
+                <p class="text-xs text-gray-500 dark:text-gray-300">
+                  If no image given, random image will be supplied when the
+                  recipe is loaded.
+                </p>
+              </label>
+              <div class="mt-2">
+                <div class="flex items-center">
+                  <div class="inline-block h-44 flex-shrink-0">
+                    <img class="h-full" src={recipeImage.value} alt="" />
+                  </div>
+                  <div class="relative ml-5">
+                    <input
+                      id="recipe_image"
+                      name="recipe_image"
+                      type="file"
+                      class="peer absolute h-full w-full rounded-md opacity-0 cursor-pointer"
+                      value={recipeImage.value}
+                      onChange$={(e) => {
+                        handleUpload(e, recipeData.value.data.id);
+                      }}
+                    />
+                    <label
+                      for="recipe_image"
+                      class="pointer-events-none block rounded-md px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 peer-hover:ring-gray-400 peer-focus:ring-2 peer-focus:ring-teal-500"
+                    >
+                      {validatingImage.value ? (
+                        <Spinner />
+                      ) : (
+                        <>
+                          <span>Change</span>
+                          <span class="sr-only"> recipe image</span>
+                        </>
+                      )}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Container>
+
           <Container>
             <div class="px-4 py-2 sm:px-6">
               <label
