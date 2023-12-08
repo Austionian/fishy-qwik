@@ -30,7 +30,7 @@ export const useRecipeData = routeLoader$<RecipeLoader>(
         errorMessage: "Recipe not found.",
       });
     }
-  }
+  },
 );
 
 export default component$(() => {
@@ -50,7 +50,11 @@ export default component$(() => {
           <div class="flex justify-center items-center flex-wrap space-x-5">
             <div class="relative my-2">
               <img
-                src={`/images/dish${randomNumber.value}.webp`}
+                src={
+                  recipeData.value.data.image_url
+                    ? recipeData.value.data.image_url
+                    : `/images/dish${randomNumber.value}.webp`
+                }
                 alt={"Stock fish dish image"}
                 class="h-[300px] sm:h-56 w-[90vw] object-cover rounded-md"
               />
