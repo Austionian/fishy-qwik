@@ -11,6 +11,8 @@ import { v4 as uuidv4 } from "uuid";
 import { saveUserDetailsToCookies } from "~/services/saveUserDetails";
 import Spinner from "~/components/spinner/spinner";
 import LoginFormLayout from "~/components/login-form-layout/login-form-layout";
+import { Label } from "~/components/label/label";
+import { Input } from "~/components/input/input";
 
 export type UserLoginResponse = {
   user_id: string;
@@ -157,21 +159,9 @@ export default component$(() => {
           <div class="text-left text-red-400">{action.value?.formErrors}</div>
         )}
         <div>
-          <label
-            for="email"
-            class="text-left block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
-          >
-            Email address
-          </label>
+          <Label label="Email address" f="email" />
           <div class="mt-2">
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-            />
+            <Input label="email" />
             {action.value?.failed && (
               <div class="text-left text-red-400">
                 {action.value?.fieldErrors?.email}
@@ -181,21 +171,9 @@ export default component$(() => {
         </div>
 
         <div>
-          <label
-            for="password"
-            class="text-left block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100"
-          >
-            Password
-          </label>
+          <Label label="Password" f="password" />
           <div class="mt-2">
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="password"
-              required
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-            />
+            <Input label="password" />
             {action.value?.failed && (
               <div class="text-left text-red-400">
                 {action.value?.fieldErrors?.password}
