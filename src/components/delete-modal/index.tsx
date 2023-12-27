@@ -45,7 +45,7 @@ export const useDeleteAction = globalAction$(
 
     deleteAllCookies(cookie);
     throw redirect(302, "/login");
-  }
+  },
 );
 
 type DeleteModalProps = {
@@ -59,6 +59,7 @@ export default component$(({ showDeleteModal }: DeleteModalProps) => {
   const backdropRef = useSignal<Element>();
   const modalRef = useSignal<Element>();
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
     track(() => showDeleteModal.value);
     if (backdropRef.value && modalRef.value) {
@@ -69,7 +70,7 @@ export default component$(({ showDeleteModal }: DeleteModalProps) => {
           {
             duration: 0.1,
             easing: "ease-out",
-          }
+          },
         );
         animate(
           modalRef.value,
@@ -77,7 +78,7 @@ export default component$(({ showDeleteModal }: DeleteModalProps) => {
           {
             duration: 0.1,
             easing: "ease-out",
-          }
+          },
         );
       }
     }

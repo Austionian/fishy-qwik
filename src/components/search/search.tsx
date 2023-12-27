@@ -38,21 +38,23 @@ export default component$<Props>(({ showSearch }) => {
       c.name.toLowerCase().indexOf(search.value.toLowerCase()) > -1 ||
       (c.anishinaabe_name &&
         c.anishinaabe_name.toLowerCase().indexOf(search.value.toLowerCase()) >
-          -1)
+          -1),
   );
 
   const filteredRecipes = recipeResults.value.filter(
-    (c) => c.recipe_name.toLowerCase().indexOf(search.value.toLowerCase()) > -1
+    (c) => c.recipe_name.toLowerCase().indexOf(search.value.toLowerCase()) > -1,
   );
 
   const filteredLakes = LAKES?.filter(
-    (c) => c.name.toLowerCase().indexOf(search.value.toLowerCase()) > -1
+    (c) => c.name.toLowerCase().indexOf(search.value.toLowerCase()) > -1,
   );
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(() => inputRef.value?.focus());
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
     window.document.body.style.overflow = "hidden";
     cleanup(() => {
@@ -60,6 +62,7 @@ export default component$<Props>(({ showSearch }) => {
     });
   });
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async () => {
     if (
       !window.localStorage.getItem("fish") ||
@@ -86,17 +89,18 @@ export default component$<Props>(({ showSearch }) => {
     } else {
       if (window.localStorage.getItem("fish")) {
         fishResults.value = JSON.parse(
-          window.localStorage.getItem("fish") || "[]"
+          window.localStorage.getItem("fish") || "[]",
         );
       }
       if (window.localStorage.getItem("recipes")) {
         recipeResults.value = JSON.parse(
-          window.localStorage.getItem("recipes") || "[]"
+          window.localStorage.getItem("recipes") || "[]",
         );
       }
     }
   });
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
     track(() => showSearch.value);
     if (backdropRef.value && modalRef.value) {
@@ -107,7 +111,7 @@ export default component$<Props>(({ showSearch }) => {
           {
             duration: 0.1,
             easing: "ease-out",
-          }
+          },
         );
         animate(
           modalRef.value,
@@ -115,7 +119,7 @@ export default component$<Props>(({ showSearch }) => {
           {
             duration: 0.1,
             easing: "ease-out",
-          }
+          },
         );
       } else {
         animate(
@@ -124,7 +128,7 @@ export default component$<Props>(({ showSearch }) => {
           {
             duration: 0.2,
             easing: "ease-in",
-          }
+          },
         );
       }
     }

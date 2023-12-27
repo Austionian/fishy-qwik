@@ -28,14 +28,14 @@ export const useSignUpFormAction = globalAction$(
       weight,
       age,
       plan_to_get_pregnant,
-      portion
+      portion,
     );
 
     if (!res.success) {
       console.error(res.error);
     }
   },
-  zod$(userDetailsObject)
+  zod$(userDetailsObject),
 );
 
 export default component$(
@@ -45,9 +45,10 @@ export default component$(
     const modalRef = useSignal<Element>();
     const validating = useSignal(false);
     const plan_to_get_pregnant = useSignal(
-      userDetails.data.plan_to_get_pregnant || "false"
+      userDetails.data.plan_to_get_pregnant || "false",
     );
 
+    // eslint-disable-next-line qwik/no-use-visible-task
     useVisibleTask$(({ track }) => {
       track(() => showUserInputModal.value);
       if (backdropRef.value && modalRef.value) {
@@ -58,7 +59,7 @@ export default component$(
             {
               duration: 0.1,
               easing: "ease-out",
-            }
+            },
           );
           animate(
             modalRef.value,
@@ -66,7 +67,7 @@ export default component$(
             {
               duration: 0.1,
               easing: "ease-out",
-            }
+            },
           );
         }
       }
@@ -155,9 +156,10 @@ export default component$(
                       name="weight"
                       id="weight"
                       value={userDetails.data.weight}
-                      onChange$={(e) =>
-                        (userDetails.data.weight = e.target.value)
-                      }
+                      onChange$={(e) => {
+                        const t = e.target as HTMLInputElement;
+                        userDetails.data.weight = t.value;
+                      }}
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                       placeholder="200"
                       aria-describedby="weight-currency"
@@ -188,7 +190,10 @@ export default component$(
                       name="age"
                       id="age"
                       value={userDetails.data.age}
-                      onChange$={(e) => (userDetails.data.age = e.target.value)}
+                      onChange$={(e) => {
+                        const t = e.target as HTMLInputElement;
+                        userDetails.data.age = t.value;
+                      }}
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                       placeholder="44"
                     />
@@ -213,8 +218,9 @@ export default component$(
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
                       value={plan_to_get_pregnant.value}
                       onChange$={(e) => {
-                        userDetails.data.plan_to_get_pregnant = e.target.value;
-                        plan_to_get_pregnant.value = e.target.value;
+                        const t = e.target as HTMLInputElement;
+                        userDetails.data.plan_to_get_pregnant = t.value;
+                        plan_to_get_pregnant.value = t.value;
                       }}
                     >
                       <option value="false">No</option>
@@ -245,9 +251,10 @@ export default component$(
                             name="portion"
                             type="radio"
                             checked={portion.value === userDetails.data.portion}
-                            onChange$={(e) =>
-                              (userDetails.data.portion = e.target.value)
-                            }
+                            onChange$={(e) => {
+                              const t = e.target as HTMLInputElement;
+                              userDetails.data.portion = t.value;
+                            }}
                             class="h-4 w-4 border-gray-300 text-teal-600 focus:ring-teal-600"
                           />
                           <label
@@ -289,5 +296,5 @@ export default component$(
         </div>
       </div>
     );
-  }
+  },
 );

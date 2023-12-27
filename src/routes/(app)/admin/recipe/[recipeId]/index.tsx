@@ -1,9 +1,4 @@
-import {
-  $,
-  component$,
-  useSignal,
-  type QwikChangeEvent,
-} from "@builder.io/qwik";
+import { $, component$, useSignal } from "@builder.io/qwik";
 import {
   type DocumentHead,
   routeLoader$,
@@ -190,35 +185,34 @@ export default component$(() => {
     recipeData.value.data.image_url ? recipeData.value.data.image_url : "",
   );
 
-  const handleUpload = $(
-    async (e: QwikChangeEvent<HTMLInputElement>, recipe_id: string) => {
-      validatingImage.value = true;
-      if (e.target.files) {
-        const file = e.target.files[0];
-        const fileName = `${uuidv4()}-${file.name}`;
+  const handleUpload = $(async (e: Event, recipe_id: string) => {
+    validatingImage.value = true;
+    const t = e.target as HTMLInputElement;
+    if (t?.files) {
+      const file = t.files[0];
+      const fileName = `${uuidv4()}-${file.name}`;
 
-        if (file) {
-          const res = await serverHandleUpload(fileName);
+      if (file) {
+        const res = await serverHandleUpload(fileName);
 
-          const s3_res = await fetch(res.url, {
-            method: "PUT",
-            headers: {
-              "Content-Type": file.type,
-            },
-            body: file,
-          });
+        const s3_res = await fetch(res.url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": file.type,
+          },
+          body: file,
+        });
 
-          if (s3_res.status === 200) {
-            e.target.blur;
-            const imageUrl = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
-            recipeImage.value = imageUrl;
-            serverSaveFishImageToDB(recipe_id, imageUrl);
-          }
+        if (s3_res.status === 200) {
+          t.blur;
+          const imageUrl = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
+          recipeImage.value = imageUrl;
+          serverSaveFishImageToDB(recipe_id, imageUrl);
         }
       }
-      validatingImage.value = false;
-    },
-  );
+    }
+    validatingImage.value = false;
+  });
 
   return recipeData.value.error ? (
     <div>ERROR PROCESSING REQUEST</div>

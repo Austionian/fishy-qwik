@@ -19,6 +19,7 @@ export const useThemeProvider = () => {
 
   useContextProvider(ThemeContext, store);
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
     const change = track(() => store.theme);
 

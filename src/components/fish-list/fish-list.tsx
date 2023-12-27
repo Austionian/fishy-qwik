@@ -53,6 +53,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
     fishData.data.sort(sorter[sortBy.value].fn);
   });
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async ({ track }) => {
     track(() => filterBy.value);
 
@@ -62,7 +63,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
         window.localStorage.getItem(filterBy.value) !== undefined
       ) {
         fishData.data = JSON.parse(
-          window.localStorage.getItem(filterBy.value) || "[]"
+          window.localStorage.getItem(filterBy.value) || "[]",
         );
         fishData.data.sort(sorter[sortBy.value].fn);
       } else {
@@ -74,6 +75,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
     }
   });
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
     track(() => showSortMenu.value);
     if (ref.value) {
@@ -84,7 +86,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
           {
             duration: 0.1,
             easing: "ease-out",
-          }
+          },
         );
       } else {
         animate(
@@ -93,7 +95,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
           {
             duration: 0.075,
             easing: "ease-in",
-          }
+          },
         );
       }
     }
@@ -179,7 +181,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                 i === fishData.data.length - 1
                   ? "rounded-bl-lg rounded-br-lg"
                   : "",
-                "block lg:flex lg:justify-between group relative bg-white dark:bg-gray-900/80 dark:ring-1 dark:ring-white/10 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500 fishCard"
+                "block lg:flex lg:justify-between group relative bg-white dark:bg-gray-900/80 dark:ring-1 dark:ring-white/10 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-teal-500 fishCard",
               )}
             >
               <div
@@ -210,7 +212,7 @@ export default component$(({ fishData, userDetails, fishFilter }: Props) => {
                         userDetails.data.weight,
                         userDetails.data.portion,
                         userDetails.data.plan_to_get_pregnant,
-                        fish
+                        fish,
                       )}
                     </span>
                   </div>

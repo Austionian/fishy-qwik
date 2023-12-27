@@ -14,6 +14,7 @@ type Props = {
 export default component$(({ validating, saveValue }: Props) => {
   const saveRef = useSignal<HTMLElement>();
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
     track(() => saveValue.value);
     if (saveRef.value) {
@@ -21,7 +22,7 @@ export default component$(({ validating, saveValue }: Props) => {
         animate(
           saveRef.value,
           { scale: [0.5, 2, 1], opacity: [0, 1] },
-          { duration: 0.5, easing: "ease-in" }
+          { duration: 0.5, easing: "ease-in" },
         );
       }
     }

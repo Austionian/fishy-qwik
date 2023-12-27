@@ -1,9 +1,4 @@
-import {
-  $,
-  component$,
-  useSignal,
-  type QwikChangeEvent,
-} from "@builder.io/qwik";
+import { $, component$, useSignal } from "@builder.io/qwik";
 import {
   type DocumentHead,
   routeAction$,
@@ -100,40 +95,36 @@ export default component$(() => {
 
   const recipeImage = useSignal<string>("");
 
-  const handleUpload = $(
-    async (
-      e: QwikChangeEvent<HTMLInputElement>,
-      woodlandImageFlag: boolean,
-    ) => {
-      if (woodlandImageFlag) {
-        validatingWoodlandImage.value = true;
-      } else {
-        validatingImage.value = true;
-      }
-      if (e.target.files) {
-        const file = e.target.files[0];
-        const fileName = `${uuidv4()}-${file.name}`;
+  const handleUpload = $(async (e: Event, woodlandImageFlag: boolean) => {
+    if (woodlandImageFlag) {
+      validatingWoodlandImage.value = true;
+    } else {
+      validatingImage.value = true;
+    }
+    const t = e.target as HTMLInputElement;
+    if (t?.files) {
+      const file = t.files[0];
+      const fileName = `${uuidv4()}-${file.name}`;
 
-        if (file) {
-          const res = await serverHandleUpload(fileName);
-          const s3_res = await fetch(res.url, {
-            method: "PUT",
-            headers: {
-              "Content-Type": file.type,
-            },
-            body: file,
-          });
-          if (s3_res.status === 200) {
-            e.target.blur;
-            const imageUrl = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
-            recipeImage.value = imageUrl;
-          }
+      if (file) {
+        const res = await serverHandleUpload(fileName);
+        const s3_res = await fetch(res.url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": file.type,
+          },
+          body: file,
+        });
+        if (s3_res.status === 200) {
+          t.blur;
+          const imageUrl = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
+          recipeImage.value = imageUrl;
         }
-        validatingImage.value = false;
-        validatingWoodlandImage.value = false;
       }
-    },
-  );
+      validatingImage.value = false;
+      validatingWoodlandImage.value = false;
+    }
+  });
 
   return (
     <div class="min-h-full">

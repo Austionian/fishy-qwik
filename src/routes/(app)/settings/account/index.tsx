@@ -1,9 +1,4 @@
-import {
-  component$,
-  type QwikChangeEvent,
-  useSignal,
-  $,
-} from "@builder.io/qwik";
+import { component$, useSignal, $ } from "@builder.io/qwik";
 import {
   routeLoader$,
   routeAction$,
@@ -130,9 +125,10 @@ export default component$(() => {
   const success = useSignal(true);
   const failureText = useSignal("");
 
-  const handleUpload = $(async (e: QwikChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
+  const handleUpload = $(async (e: Event) => {
+    const t = e.target as HTMLInputElement;
+    if (t?.files) {
+      const file = t.files[0];
       const fileName = `${uuidv4()}-${file.name}`;
 
       serverHandleUpload(fileName).then((res) => {
@@ -146,7 +142,7 @@ export default component$(() => {
           })
             .then((res) => {
               if (res.status === 200) {
-                e.target.blur;
+                t.blur;
                 image.value = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
                 document.cookie = `image=${image.value}; path=/`;
                 serverSaveImageToDB(image.value);
@@ -212,7 +208,11 @@ export default component$(() => {
                     id="email"
                     autoComplete="email"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-                    value={userDetails.value.email}
+                    value={
+                      userDetails.value.email == "true"
+                        ? ""
+                        : userDetails.value.email
+                    }
                   />
                 </div>
                 {formAction.value?.failed && (

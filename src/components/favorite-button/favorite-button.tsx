@@ -14,7 +14,7 @@ type Props = {
 
 export const serverSaveFishFavorite = server$(async function (
   favorite: boolean,
-  fish_id: string
+  fish_id: string,
 ) {
   const { domain, apiKey } = getFetchDetails(this?.env);
 
@@ -26,7 +26,7 @@ export const serverSaveFishFavorite = server$(async function (
         Authorization: `Bearer ${apiKey}`,
         cookie: getCookieForFetch(this.cookie),
       },
-    }
+    },
   );
 
   if (!response.ok) {
@@ -40,7 +40,7 @@ export const serverSaveFishFavorite = server$(async function (
 
 export const serverSaveRecipeFavorite = server$(async function (
   favorite: boolean,
-  recipe_id: string
+  recipe_id: string,
 ) {
   const { domain, apiKey } = getFetchDetails(this?.env);
 
@@ -52,7 +52,7 @@ export const serverSaveRecipeFavorite = server$(async function (
         Authorization: `Bearer ${apiKey}`,
         cookie: getCookieForFetch(this.cookie),
       },
-    }
+    },
   );
 
   if (!response.ok) {
@@ -67,6 +67,7 @@ export const serverSaveRecipeFavorite = server$(async function (
 export default component$(({ favorite, type, id }: Props) => {
   const heart = useSignal<HTMLElement>();
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
     track(() => favorite.value);
 
@@ -77,7 +78,7 @@ export default component$(({ favorite, type, id }: Props) => {
         {
           duration: 0.4,
           easing: "ease-in-out",
-        }
+        },
       );
     }
   });

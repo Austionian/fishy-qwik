@@ -1,9 +1,4 @@
-import {
-  $,
-  component$,
-  type QwikChangeEvent,
-  useSignal,
-} from "@builder.io/qwik";
+import { $, component$, useSignal } from "@builder.io/qwik";
 import {
   type DocumentHead,
   Form,
@@ -180,18 +175,15 @@ export default component$(() => {
   );
 
   const handleUpload = $(
-    async (
-      e: QwikChangeEvent<HTMLInputElement>,
-      fish_type_id: string,
-      woodlandImageFlag: boolean,
-    ) => {
+    async (e: Event, fish_type_id: string, woodlandImageFlag: boolean) => {
       if (woodlandImageFlag) {
         validatingWoodlandImage.value = true;
       } else {
         validatingImage.value = true;
       }
-      if (e.target.files) {
-        const file = e.target.files[0];
+      const t = e.target as HTMLInputElement;
+      if (t?.files) {
+        const file = t.files[0];
         const fileName = `${uuidv4()}-${file.name}`;
 
         if (file) {
@@ -206,7 +198,7 @@ export default component$(() => {
           });
 
           if (s3_res.status === 200) {
-            e.target.blur;
+            t.blur;
             const imageUrl = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
             if (woodlandImageFlag) {
               woodlandImage.value = imageUrl;

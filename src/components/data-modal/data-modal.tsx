@@ -26,7 +26,7 @@ export const serverGetData = server$(async function (dataPoint, fishData) {
       headers: {
         Authorization: `Bearer ${apiKey}`,
       },
-    }
+    },
   );
   return await res.json();
 });
@@ -37,6 +37,7 @@ export default component$(
     const modalRef = useSignal<Element>();
     const chart = useSignal<HTMLCanvasElement>();
 
+    // eslint-disable-next-line qwik/no-use-visible-task
     useVisibleTask$(({ cleanup }) => {
       window.document.body.style.overflow = "hidden";
       cleanup(() => {
@@ -44,6 +45,7 @@ export default component$(
       });
     });
 
+    // eslint-disable-next-line qwik/no-use-visible-task
     useVisibleTask$(({ track }) => {
       track(() => showDataModal.value);
       if (backdropRef.value && modalRef.value) {
@@ -54,7 +56,7 @@ export default component$(
             {
               duration: 0.1,
               easing: "ease-out",
-            }
+            },
           );
           animate(
             modalRef.value,
@@ -62,7 +64,7 @@ export default component$(
             {
               duration: 0.1,
               easing: "ease-out",
-            }
+            },
           );
         } else {
           animate(
@@ -71,12 +73,13 @@ export default component$(
             {
               duration: 0.2,
               easing: "ease-in",
-            }
+            },
           );
         }
       }
     });
 
+    // eslint-disable-next-line qwik/no-use-visible-task
     useVisibleTask$(async () => {
       const data = await serverGetData(dataPoint, fishData);
       if (chart.value) {
@@ -210,5 +213,5 @@ export default component$(
         </div>
       </div>
     );
-  }
+  },
 );

@@ -107,8 +107,9 @@ export default component$(() => {
       } else {
         validatingImage.value = true;
       }
-      if (e.target.files) {
-        const file = e.target.files[0];
+      const t = e.target as HTMLInputElement;
+      if (t?.files) {
+        const file = t.files[0];
         const fileName = `${uuidv4()}-${file.name}`;
 
         if (file) {
@@ -121,7 +122,7 @@ export default component$(() => {
             body: file,
           });
           if (s3_res.status === 200) {
-            e.target.blur;
+            t.blur;
             const imageUrl = `https://mcwfishapp.s3.us-east-2.amazonaws.com/${fileName}`;
             if (woodlandImageFlag) {
               woodlandImage.value = imageUrl;

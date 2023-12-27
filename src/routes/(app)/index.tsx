@@ -38,7 +38,7 @@ export const useFishData = routeLoader$<Fish[] & ErrorType>(
         errorMessage: "Unable to complete current request.",
       });
     }
-  }
+  },
 );
 
 export const useUserDetails = routeLoader$<UserDetails>(async ({ cookie }) => {
@@ -68,6 +68,7 @@ export default component$(() => {
     data: fishData.value,
   });
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async () => {
     window.localStorage.setItem(fishFilter, JSON.stringify(fishStore.data));
   });
