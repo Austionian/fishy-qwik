@@ -10,6 +10,9 @@
  :root {
   @apply dark:bg-[#111827] dark:text-white;
  }
+ .dark {
+     color-scheme: dark;
+ }
 }
 @tailwind components;
 @tailwind utilities;
