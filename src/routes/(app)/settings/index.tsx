@@ -158,15 +158,24 @@ export default component$(() => {
                 id="plan_to_get_pregnant"
                 name="plan_to_get_pregnant"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6 dark:bg-white/5 dark:text-white dark:ring-white/10"
-                value={plan_to_get_pregnant.value}
                 onChange$={(e) => {
                   const t = e.target as HTMLInputElement;
                   userDetails.value.plan_to_get_pregnant = t?.value;
                   plan_to_get_pregnant.value = t?.value;
                 }}
               >
-                <option value="false">No</option>
-                <option value="true">Yes</option>
+                <option
+                  value="false"
+                  selected={plan_to_get_pregnant.value === "false"}
+                >
+                  No
+                </option>
+                <option
+                  value="true"
+                  selected={plan_to_get_pregnant.value === "true"}
+                >
+                  Yes
+                </option>
               </select>
             </div>
           </div>
