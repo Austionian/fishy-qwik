@@ -8,7 +8,7 @@
 @tailwind base;
 @layer base {
  :root {
-  @apply dark:bg-gray-900/80 dark:text-white;
+  @apply dark:bg-gray-900 dark:from-bg-gray-900/80 dark:to-bg-gray-900/80 dark:text-white;
  }
 }
 @tailwind components;
