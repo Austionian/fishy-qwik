@@ -23,6 +23,7 @@ export default component$(() => {
     <QwikCityProvider>
       <head>
         <meta charSet="utf-8" />
+        <meta name="color-scheme" content="light dark" />
         <meta
           name="theme-color"
           content="#fff"
