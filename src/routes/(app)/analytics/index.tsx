@@ -13,6 +13,8 @@ type Data = {
   most_liked_recipe: string;
   most_liked_recipe_id: string;
   recipe_like_count: number;
+  number_of_active_users: number;
+  number_of_registered_users_in_last_month: number;
 };
 
 type UserData = {
@@ -93,16 +95,7 @@ export default component$(() => {
                 </p>
                 <p class="mt-2 flex items-baseline gap-x-2">
                   <span class="font-mono text-4xl font-semibold tracking-tight text-black dark:text-white">
-                    {
-                      data.value.user_data.filter(
-                        (user) =>
-                          dayjs(user.latest_login).diff(
-                            new Date(),
-                            "d",
-                            true,
-                          ) >= -14,
-                      ).length
-                    }
+                    {data.value.number_of_active_users}
                   </span>
                 </p>
               </div>
@@ -112,13 +105,7 @@ export default component$(() => {
                 </p>
                 <p class="mt-2 flex items-baseline gap-x-2">
                   <span class="font-mono text-4xl font-semibold tracking-tight text-black dark:text-white">
-                    {
-                      data.value.user_data.filter(
-                        (user) =>
-                          dayjs(user.created_at).diff(new Date(), "d", true) >=
-                          -30,
-                      ).length
-                    }
+                    {data.value.number_of_registered_users_in_last_month}
                   </span>
                 </p>
               </div>
