@@ -242,11 +242,6 @@ export default component$(() => {
                 })}
               </tbody>
             </table>
-            {data.value.number_of_registered_users > 10 && (
-              <div class="p-4 flex justify-center self-center">
-                ... and {data.value.number_of_registered_users - 10} more
-              </div>
-            )}
           </div>
         </main>
       </div>
