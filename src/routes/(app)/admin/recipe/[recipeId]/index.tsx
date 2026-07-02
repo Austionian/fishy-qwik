@@ -337,7 +337,7 @@ export default component$(() => {
               ))}
               {formAction.value?.failed && (
                 <div class="text-left text-red-600 text-sm">
-                  {formAction.value?.fieldErrors?.ingredient}
+                  {formAction.value?.fieldErrors?.["ingredient[]"]}
                 </div>
               )}
               <button
@@ -373,7 +373,7 @@ export default component$(() => {
               ))}
               {formAction.value?.failed && (
                 <div class="text-left text-red-600 text-sm">
-                  {formAction.value?.fieldErrors?.step}
+                  {formAction.value?.fieldErrors?.["step[]"]}
                 </div>
               )}
               <button
